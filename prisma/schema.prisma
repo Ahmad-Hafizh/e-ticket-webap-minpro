@@ -1,0 +1,83 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+
+// user schema
+model User{
+  user_id Int @id @default(autoincrement())
+  name String
+  email String @unique
+  password String
+  created_at DateTime @default(now())
+  profile_id Int @unique
+  points Point[]
+  referral Referral[] @relation(name: "referral_account")
+  referred Referral? @relation(fields: [referred_id], references: [referral_id])
+  referred_id Int
+
+  @@map("users")
+}
+
+model Profile {
+  profile_id Int @id @default(autoincrement())
+  pfp_url String?
+  phone String?
+  role Role @default(user)
+  job_title String?
+  company String?
+  addresses Address[]
+
+  @@map("profile")
+}
+
+model Address{
+  address_id Int @id @default(autoincrement())
+  profile Profile @relation(fields: [profile_id],references: [profile_id])
+  profile_id Int
+  address_name String
+  address String
+  city String
+  country String
+  zipcode String?
+
+  @@map("address")
+}
+
+model Point{
+  point_id Int @id @default(autoincrement())
+  user User @relation(fields: [user_id], references: [user_id])
+  user_id Int
+  amount Int
+  added_date DateTime @default(now())
+  expired_date DateTime 
+
+  @@map("points")
+}
+
+model Referral{
+  referral_id Int @id @default(autoincrement())
+  referral_code String
+  user User @relation(fields: [user_id], references: [user_id], name: "referral_account")
+  user_id Int
+  referred User[] 
+
+  @@map("referral")
+}
+
+enum Role {
+  user
+  organizer
+}
