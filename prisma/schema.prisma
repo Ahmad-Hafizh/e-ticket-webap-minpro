@@ -21,24 +21,29 @@ model User{
   name String
   email String @unique
   password String
+  pfp_url String?
   created_at DateTime @default(now())
-  profile_id Int @unique
+  profile Profile?
+  isVerified Boolean @default(false)
+  referred_id Int?
+  referral Referral?
+  referred Referral? @relation(fields: [referred_id], references: [referral_id], name: "referred_user")
   points Point[]
-  referral Referral[] @relation(name: "referral_account")
-  referred Referral? @relation(fields: [referred_id], references: [referral_id])
-  referred_id Int
+  coupons Coupon[]
 
   @@map("users")
 }
 
 model Profile {
   profile_id Int @id @default(autoincrement())
-  pfp_url String?
   phone String?
   role Role @default(user)
   job_title String?
   company String?
   addresses Address[]
+  social_medias Social_media[]
+  user_id Int @unique
+  user User @relation(fields: [user_id], references: [user_id])
 
   @@map("profile")
 }
@@ -47,7 +52,7 @@ model Address{
   address_id Int @id @default(autoincrement())
   profile Profile @relation(fields: [profile_id],references: [profile_id])
   profile_id Int
-  address_name String
+  address_name AddressName
   address String
   city String
   country String
@@ -69,15 +74,55 @@ model Point{
 
 model Referral{
   referral_id Int @id @default(autoincrement())
-  referral_code String
-  user User @relation(fields: [user_id], references: [user_id], name: "referral_account")
-  user_id Int
-  referred User[] 
+  referral_code String @unique
+  user_id Int @unique
+  user User @relation(fields: [user_id], references: [user_id])
+  referred_users User[] @relation(name: "referred_user") 
 
   @@map("referral")
+}
+
+model Social_media{
+  social_id Int @id @default(autoincrement())
+  profile Profile @relation(fields: [profile_id], references: [profile_id])
+  profile_id Int
+  platform Platform
+  account_name String
+  url String
+
+  @@map("social_media")
+}
+
+model Coupon{
+  coupon_id Int @id @default(autoincrement())
+  coupon_name String
+  user_id Int
+  user User @relation(fields: [user_id],references: [user_id])
+  coupon_code String
+  discount Int
+  max_amount Int?
+  start_date DateTime @default(now())
+  expired_date DateTime
+
+  @@map("coupons")
 }
 
 enum Role {
   user
   organizer
+}
+
+enum AddressName {
+home
+shipping
+work
+}
+
+enum Platform {
+  instagram
+  twitter
+  linkedIn
+  whatsapp
+  line
+  behance
 }
