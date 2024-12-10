@@ -31,6 +31,7 @@ model User{
   points Point[]
   coupons Coupon[]
 
+
   @@map("users")
 }
 
@@ -105,6 +106,21 @@ model Coupon{
   expired_date DateTime
 
   @@map("coupons")
+}
+
+model Event{
+  event_id Int @id @default(autoincrement())
+  user_id Int
+  description String
+  category_id Int
+  coupon_id Int
+  createdAt DateTime
+  updatedAt DateTime
+}
+
+model Event_category{
+  event_cateogry_id Int @id @default(autoincrement())
+  category_name String @unique
 }
 
 enum Role {
