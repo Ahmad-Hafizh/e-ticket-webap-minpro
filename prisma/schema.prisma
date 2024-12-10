@@ -31,6 +31,8 @@ model User{
   points Point[]
   coupons Coupon[]
 
+  events Event[]
+
 
   @@map("users")
 }
@@ -111,6 +113,7 @@ model Coupon{
 model Event{
   event_id Int @id @default(autoincrement())
   user_id Int
+  user User @relation(fields: [user_id],references: [user_id])
   description String
   category_id Int
   coupon_id Int
