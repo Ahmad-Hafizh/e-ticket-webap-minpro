@@ -1,0 +1,29 @@
+{
+  "eventTitle": "Music Festival 2024",
+  "eventDescription": "lorem ipsum",
+  "eventTimeDate": {
+    "eventDate": "2024-12-25",
+    "eventTime": "12.00"
+  },
+  "eventCategory": [1, 2],
+  "eventLocation": {
+    "addressName": "Taman Balaikota",
+    "address": "Jalan Kertajaya",
+    "city": "Surabaya",
+    "country": "Indonesia",
+    "zipcode": "10001"
+  },
+  "ticketTypes": [
+    {
+      "type": "Presale",
+      "price": 100,
+      "quantityAvailable": 500
+    },
+    {
+      "type": "On the Spot",
+      "price": 75,
+      "quantityAvailable": 1000
+    }
+  ],
+  "eventImg": "http://anythinganything.com"
+}
