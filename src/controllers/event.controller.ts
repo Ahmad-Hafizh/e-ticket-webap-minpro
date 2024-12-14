@@ -107,6 +107,7 @@ export class EventController {
   //updateEvent behaviour
   //This API will update the existing event. If user leave the form empty, it will return the previous value (or no change will be made).
   //Require a complete form (event + ticket types)
+  //Also need a userID which can be obtained through a res.locals property
   //Broken return.. (Success create event, but return error, not sure why)
   async updateEvent(
     req: Request,
@@ -180,7 +181,7 @@ export class EventController {
         });
 
         //Update Event
-        const event = await tx.event.update({
+        await tx.event.update({
           where: { event_id: params },
           data: {
             user_id: userId,
@@ -216,7 +217,7 @@ export class EventController {
 
             if (ticketExist) {
               //If exist, update existing ticket
-              const updateTicket = await tx.ticket_types.update({
+              await tx.ticket_types.update({
                 where: {
                   ticket_types_id: ticketExist.ticket_types_id,
                 },
@@ -229,7 +230,7 @@ export class EventController {
               });
             } else {
               //If not, create new ticket
-              const createTicket = await tx.ticket_types.create({
+              await tx.ticket_types.create({
                 data: {
                   event_id: checkEventExist.event_id,
                   types: ticket.types,
@@ -255,6 +256,7 @@ export class EventController {
   //deleteEvent behaviour
   //This API will delete the existing event, its location, and its ticket_types
   //Will not delete a city and country as it may be used by other event
+  //Also need a userID which can be obtained through a res.locals property
   //Broken return.. (Success create event, but return error, not sure why)
   async deleteEvent(
     req: Request,
