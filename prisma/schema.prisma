@@ -125,7 +125,11 @@ model Event{
   event_location_id Int @unique
   event_location Event_Location @relation(fields: [event_location_id], references: [event_location_id])
   ticket_types Ticket_types[]
-  time_date DateTime
+  startDate DateTime
+  endDate DateTime
+  startTime String
+  endTime String
+  timezone String
   createdAt DateTime @default(now())
   updatedAt DateTime
 

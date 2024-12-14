@@ -12,7 +12,10 @@ export class EventRouter {
   }
 
   private initializeRouters(): void {
-    this.route.post("/create", this.eventController.createEvent);
+    this.route.post("/", this.eventController.createEvent);
+    this.route.get("/:id", this.eventController.getSpecificEvent);
+    this.route.patch("/:id", this.eventController.updateEvent);
+    this.route.delete("/:id", this.eventController.deleteEvent);
   }
 
   public getRouter(): Router {
