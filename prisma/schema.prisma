@@ -144,7 +144,6 @@ model Event_category{
   @@map("event_category")
 }
 
-
 //Event location
 model Event_Location {
   event_location_id Int @id @default(autoincrement())
@@ -165,6 +164,7 @@ model Location_city { //Sort event by city
   city_name String @unique
   event_location Event_Location[]
 
+
   @@map("location_city")
 }
 
@@ -172,6 +172,7 @@ model Location_country { //Sort event by country
   location_country_id Int @id @default(autoincrement())
   country_name String @unique
   event_location Event_Location[]
+
 
   @@map("location_country")
 }
