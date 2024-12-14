@@ -2,6 +2,7 @@ import express, { Application, Request, Response, NextFunction } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import { UserRouter } from "./routers/user.routers";
+import { EventRouter } from "./routers/event.router";
 dotenv.config();
 
 const PORT = process.env.PORT || 8080;
@@ -30,6 +31,9 @@ class App {
 
     const userRouter = new UserRouter();
     this.app.use("/users", userRouter.getRouter());
+
+    const eventRouter = new EventRouter();
+    this.app.use("/event", eventRouter.getRouter());
   }
 
   public startServer(): void {

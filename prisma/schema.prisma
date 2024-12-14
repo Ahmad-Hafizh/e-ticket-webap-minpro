@@ -117,11 +117,19 @@ model Event{
   event_id Int @id @default(autoincrement())
   user_id Int 
   user User @relation(fields: [user_id],references: [user_id])
-  event_details Event_detail[] //Expected to hold multiple event details (different occasion, day, etc)
   event_category Event_category[] @relation("Event_categories") //Expected to hold multiple categories per event
   title String
   description String
+  imgEvent String
   coupon_id Int //Decide the schema of coupon in relation to event! ***
+  event_location_id Int @unique
+  event_location Event_Location @relation(fields: [event_location_id], references: [event_location_id])
+  ticket_types Ticket_types[]
+  startDate DateTime
+  endDate DateTime
+  startTime String
+  endTime String
+  timezone String
   createdAt DateTime @default(now())
   updatedAt DateTime
 
@@ -136,47 +144,35 @@ model Event_category{
   @@map("event_category")
 }
 
-model Event_detail {
-  event_details_id Int @id @default(autoincrement())
-  event_id Int 
-  event Event @relation(fields: [event_id], references: [event_id])
-  event_location_id Int @unique
-  event_location Event_Location @relation(fields: [event_location_id], references: [event_location_id])
-  ticket_types Ticket_types[]
-  title String
-  description String
-  time_date DateTime
-
-  @@map("event_detail")
-}
-
 //Event location
 model Event_Location {
   event_location_id Int @id @default(autoincrement())
   address_name String
   address String
-  location_city_id Int @unique
+  location_city_id Int 
   city Location_city @relation(fields: [location_city_id], references: [location_city_id])
-  location_country_id Int @unique
+  location_country_id Int 
   country Location_country @relation(fields: [location_country_id], references: [location_country_id])
   zipcode String?
-  event_details Event_detail?
+  event Event?
 
   @@map("event_location")
 }
 
 model Location_city { //Sort event by city
   location_city_id Int @id @default(autoincrement())
-  city_name String
-  event_location Event_Location?
+  city_name String @unique
+  event_location Event_Location[]
+
 
   @@map("location_city")
 }
 
 model Location_country { //Sort event by country
   location_country_id Int @id @default(autoincrement())
-  country_name String
-  event_location Event_Location?
+  country_name String @unique
+  event_location Event_Location[]
+
 
   @@map("location_country")
 }
@@ -185,8 +181,8 @@ model Location_country { //Sort event by country
 //Transaction
 model Ticket_types {
   ticket_types_id Int @id @default(autoincrement())
-  event_details_id Int
-  event_details Event_detail @relation(fields: [event_details_id], references: [event_details_id])
+  event_id Int
+  event Event @relation(fields: [event_id], references: [event_id])
   types String
   price Int
   quantity_available Int
@@ -216,11 +212,17 @@ model Transaction {
   user User @relation(fields: [user_id],references: [user_id])
   coupon_id Int //Decide the schema of coupon in relation to transaction! ***
   total_amount Int //Price after discount
-  payment_method Int //Explore more about Midtrans API! ***
+  payment_method PaymentMethod //Explore more about Midtrans API! ***
   createdAt DateTime @default(now())
   isPaid Boolean
 
   @@map("transaction")
+}
+
+enum PaymentMethod {
+  CREDIT_CARD
+  BANK_TRANSFER
+  E_WALLET
 }
 
 enum Role {

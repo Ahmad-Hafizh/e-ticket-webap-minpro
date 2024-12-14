@@ -1,0 +1,32 @@
+{
+  "eventTitle": "Music Festival 2024",
+  "eventDescription": "lorem ipsum",
+  "eventTimeDate": {
+    "startDate": "2024-12-12",
+    "endDate": "2024-12-15",
+    "startTime": "10:00",
+    "endTime": "18:00",
+    "timezone": "UTC+7"
+  },
+  "eventCategory": ["Music", "Festival"],
+  "eventLocation": {
+    "addressName": "Taman Balaikota",
+    "address": "Jalan Kertajaya",
+    "city": "Surabaya",
+    "country": "Indonesia",
+    "zipcode": "10001"
+  },
+  "ticketTypes": [
+    {
+      "types": "Presale",
+      "price": 100,
+      "quantityAvailable": 500
+    },
+    {
+      "types": "On the Spot",
+      "price": 75,
+      "quantityAvailable": 1000
+    }
+  ],
+  "eventImg": "http://anythinganything.com"
+}
