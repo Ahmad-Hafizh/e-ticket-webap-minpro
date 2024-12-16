@@ -1,5 +1,8 @@
 import { Router } from "express";
 import { EventController } from "../controllers/event.controller";
+import { createEventValidator } from "../middlewares/eventValidator";
+import { verifyToken } from "../middlewares/verifyToken";
+import { organizerAuthorization } from "../middlewares/orgAuthor";
 
 export class EventRouter {
   private route: Router;
@@ -12,10 +15,27 @@ export class EventRouter {
   }
 
   private initializeRouters(): void {
-    this.route.post("/", this.eventController.createEvent);
+    this.route.post(
+      "/",
+      // verifyToken,
+      // organizerAuthorization,
+      // createEventValidator,
+      this.eventController.createEvent
+    );
     this.route.get("/:id", this.eventController.getSpecificEvent);
-    this.route.patch("/:id", this.eventController.updateEvent);
-    this.route.delete("/:id", this.eventController.deleteEvent);
+    this.route.get("/", this.eventController.filterEvent);
+    this.route.patch(
+      "/:id",
+      // verifyToken,
+      // organizerAuthorization,
+      this.eventController.updateEvent
+    );
+    this.route.delete(
+      "/:id",
+      // verifyToken,
+      // organizerAuthorization,
+      this.eventController.deleteEvent
+    );
   }
 
   public getRouter(): Router {
