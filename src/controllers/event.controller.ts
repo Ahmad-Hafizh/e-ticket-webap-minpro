@@ -92,7 +92,6 @@ export class EventController {
           data: ticket,
           skipDuplicates: true,
         });
-        return;
       });
 
       // await transporter.sendMail({
@@ -109,7 +108,7 @@ export class EventController {
         res,
         "Event created successfully!",
         201,
-        response
+        res
       );
     } catch (error) {
       return ResponseHandler.error(
