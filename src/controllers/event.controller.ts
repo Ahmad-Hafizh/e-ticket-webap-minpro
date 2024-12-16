@@ -1,6 +1,7 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction, query } from "express";
 import { prisma } from "../config/prisma";
 import ResponseHandler from "../utils/responseHandler";
+import { transporter } from "../config/nodemailer";
 
 //
 export class EventController {
@@ -17,7 +18,7 @@ export class EventController {
     next: NextFunction
   ): Promise<any> {
     try {
-      const userId = 11;
+      const user = { id: 17 };
       const {
         eventTitle,
         eventDescription,
@@ -57,7 +58,7 @@ export class EventController {
         //Created Event
         const event = await tx.event.create({
           data: {
-            user_id: userId,
+            user_id: user.id,
             event_category: {
               connect: eventCategory.map((value: string) => ({
                 category_name: value,
@@ -93,14 +94,29 @@ export class EventController {
         });
       });
 
+      // await transporter.sendMail({
+      //   from: "e-ticket",
+      //   to: user.email,
+      //   subject: "Your event is ready to rock",
+      //   html: `<div>
+      //      <h1>Thank you ${user.name}, your event is ready to rock.</h1>
+      //      <p>Invite people to attract more audience</p>
+      //      </div>`,
+      // });
+
       return ResponseHandler.success(
         res,
         "Event created successfully!",
-        200,
+        201,
         res
       );
     } catch (error) {
-      return ResponseHandler.error(res, "Created Event Failed", 500, error);
+      return ResponseHandler.error(
+        res,
+        "Created Event Failed, internal server error",
+        500,
+        error
+      );
     }
   }
 
@@ -116,7 +132,7 @@ export class EventController {
   ): Promise<any> {
     try {
       const params = parseInt(req.params.id);
-      const userId = 11;
+      const userId = res.locals.dcrypt.id;
       const {
         eventTitle,
         eventDescription,
@@ -245,11 +261,16 @@ export class EventController {
       return ResponseHandler.success(
         res,
         "Event updated Successfully",
-        201,
+        200,
         res
       );
     } catch (error) {
-      return ResponseHandler.error(res, "Failed to update event!", 500, error);
+      return ResponseHandler.error(
+        res,
+        "Failed to update event! Internal server error!",
+        500,
+        error
+      );
     }
   }
 
@@ -303,7 +324,12 @@ export class EventController {
         res
       );
     } catch (error) {
-      return ResponseHandler.error(res, "Failed to delete event", 500, error);
+      return ResponseHandler.error(
+        res,
+        "Failed to delete event! Internal server error!",
+        500,
+        error
+      );
     }
   }
 
@@ -323,25 +349,94 @@ export class EventController {
       });
       return ResponseHandler.success(res, "Get Event Success", 200, response);
     } catch (error) {
-      return ResponseHandler.error(res, "Get Event Failed", 500, error);
+      return ResponseHandler.error(
+        res,
+        "Get Event Failed! Internal server error!",
+        500,
+        error
+      );
     }
   }
 
   //ADVANCED CRUD
 
-  //LIST API NEED FOR FILTERING FUNCTION:
+  //API query:
+  //cat = category
+  //eo = creator
+  //startdate = start date
+  //enddate = end date
+  //city = city
+  //country = country
+  //pricemin = minimum price
+  //pricemax = maximum price
+  //sortby = sorting by
+  //orderby = order by
 
-  //getEventByCategory
+  //Behvaiour = API can be called following the above query. Can be mixed and matched.
+  //Category query can be called with multiple value, e.g. localhost/event?cat=music,theatre => to filter event in the music and theatre category
+  async filterEvent(req: Request, res: Response): Promise<any> {
+    try {
+      const {
+        cat, //cat name
+        eo, //userid
+        startdate,
+        enddate,
+        city, //city id
+        country, //country id
+        pricemin,
+        pricemax,
+        sortby,
+        orderby,
+      } = req.query;
+      const result = await prisma.event.findMany({
+        where: {
+          event_category: {
+            some: {
+              category_name: Array.isArray(cat)
+                ? { in: cat }
+                : cat || undefined, //If cat is array (multiple queries, then use the keyword "in")
+            },
+          },
+          user_id: (parseInt(eo as string) as number) || undefined, //query by user
+          ticket_types: {
+            every: {
+              price: {
+                gte: parseInt(pricemin as string) || undefined, //query by price min
+                lte: parseInt(pricemax as string) || undefined, //query by price max
+              },
+            },
+          },
+          event_location: {
+            location_city_id: parseInt(city as string) || undefined, //query by city
+            location_country_id: parseInt(country as string) || undefined, //query by country
+          },
+          startDate: {
+            gte: new Date(startdate as string) || undefined,
+          },
+          endDate: {
+            lte: new Date(enddate as string) || undefined,
+          },
+        },
 
-  //getEventByUserCreator
+        include: {
+          event_category: true,
+          event_location: true,
+          ticket_types: true,
+        },
 
-  //getEventByDate (descending and ascending)
+        orderBy: {
+          [sortby as string]: orderby || undefined, //Akses properti sortby (isinya nama properti).
+        },
+      });
+      return ResponseHandler.success(res, "Filter Success", 200, result);
+    } catch (error) {
+      return ResponseHandler.error(res, "Filter Error", 500, error);
+    }
+  }
 
-  //getEventByPrice (descending and ascending)
-
-  //getEventByLocation (city and country)
-
-  //getEventByRating
-
-  //getEventByMostPurchased (HOT EVENT)
+  //getEventByMostPurchased (HOT EVENT) => REDIS
+  async hotEvent(req: Request, res: Response): Promise<any> {
+    try {
+    } catch (error) {}
+  }
 }

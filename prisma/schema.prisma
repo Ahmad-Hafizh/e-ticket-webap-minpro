@@ -25,6 +25,8 @@ model User{
   created_at DateTime @default(now())
   profile Profile?
   isVerified Boolean @default(false)
+  role Role @default(user)
+
   referred_id Int?
   referral Referral?
   referred Referral? @relation(fields: [referred_id], references: [referral_id], name: "referred_user")
@@ -41,7 +43,6 @@ model User{
 model Profile {
   profile_id Int @id @default(autoincrement())
   phone String?
-  role Role @default(user)
   job_title String?
   company String?
   addresses Address[]

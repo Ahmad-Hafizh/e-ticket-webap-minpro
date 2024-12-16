@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { prisma } from '../config/prisma';
 import ResponseHandler from '../utils/responseHandler';
-import { verify } from 'jsonwebtoken';
 import { transporter } from '../config/nodemailer';
 import { sign } from 'jsonwebtoken';
 import { compareSync } from 'bcrypt';
@@ -10,15 +9,32 @@ import { hashPassword } from '../utils/hashPassword';
 export class UserController {
   async signUp(req: Request, res: Response, next: NextFunction): Promise<any> {
     try {
-      const user = res.locals.user;
+      // checking if user already exist
+      const isUserExist = await prisma.user.findUnique({
+        where: { email: req.body.email },
+      });
+
+      // if user already exist return response error rc 404
+      if (isUserExist) {
+        return ResponseHandler.error(res, 'email is already used', 404);
+      }
+
+      // check if refferal code is available
+      // if there is no referral code available
+      const user = await prisma.user.create({
+        data: { ...req.body, password: await hashPassword(req.body.password) },
+      });
+
       await prisma.profile.create({ data: { user_id: user.user_id } });
-      const referral_code: string = Math.round(Math.random() * 10000).toString();
+      const referral_code: string = `${user.name.slice(0, 4).toUpperCase()}${Math.round(Math.random() * 10000).toString()}`;
+
       await prisma.referral.create({
         data: { referral_code, user_id: user.user_id },
       });
 
       // parsing string to token
-      const authToken = sign({ email: user.email }, process.env.TOKEN_KEY || 'secretkey');
+      const authToken = sign({ email: user.email, user_id: user.user_id }, process.env.TOKEN_KEY || 'secretkey');
+
       // sending email with authtoken
       await transporter.sendMail({
         from: 'e-ticket',
@@ -30,20 +46,68 @@ export class UserController {
            <a href='http://localhost:3000/users/verify-email?a_t=${authToken}'>Verify Account</a>
            </div>`,
       });
-
       return ResponseHandler.success(res, 'sign up is success', 201, { ...user, authToken });
     } catch (error) {
       return ResponseHandler.error(res, 'sign up is failed', 500, error);
     }
   }
 
+  async addReferral(req: Request, res: Response, next: NextFunction): Promise<any> {
+    try {
+      const userToken = res.locals.dcrypt;
+      const findReferral = await prisma.referral.findUnique({
+        where: { referral_code: req.body.referral_code.toString() },
+        include: {
+          user: true,
+        },
+      });
+
+      // check if referral data is available
+      if (!findReferral) {
+        return ResponseHandler.error(res, 'referral not found', 404);
+      }
+      // if user input his own referral code
+      if (findReferral?.user.email === userToken.email) {
+        return ResponseHandler.error(res, 'cannot referred your self', 403);
+      }
+
+      // creating user data
+      const user = await prisma.user.update({
+        where: { email: userToken.email, user_id: userToken.user_id },
+        data: { referred_id: findReferral?.referral_id },
+      });
+
+      // define expired date for the point
+      const expired_date = new Date();
+      expired_date.setMonth(expired_date.getMonth() + 3);
+      //adding 10,000 point to the referrer point wallet
+      await prisma.point.create({
+        data: { user_id: findReferral.user_id, amount: 10000, expired_date },
+      });
+
+      await prisma.coupon.create({
+        data: {
+          coupon_name: 'Referral Coupon',
+          user_id: user.user_id,
+          coupon_code: Math.round(Math.random() * 10000).toString(),
+          discount: 10,
+          expired_date,
+        },
+      });
+
+      return ResponseHandler.success(res, 'adding referral is success', 200);
+    } catch (error) {
+      return ResponseHandler.error(res, 'adding referral is failed', 500, error);
+    }
+  }
+
   // verifying account method
   async verifyEmail(req: Request, res: Response, next: NextFunction): Promise<any> {
     try {
-      const token = res.locals.dcrypt;
+      const userToken = res.locals.dcrypt;
       // checking if user exist
       const isUserExist = await prisma.user.findUnique({
-        where: { email: token.email },
+        where: { email: userToken.email },
       });
 
       if (!isUserExist) {
@@ -64,26 +128,32 @@ export class UserController {
 
   async signIn(req: Request, res: Response, next: NextFunction): Promise<any> {
     try {
+      // check if user exist
       const isUserExist = await prisma.user.findUnique({
         where: { email: req.body.email },
       });
 
+      // if not exist response error
       if (!isUserExist) {
         return ResponseHandler.error(res, 'account is not found', 404);
       }
 
+      // comapring the input password with the hash password
       const comparePassword = compareSync(req.body.password, isUserExist.password);
 
+      // if not same send response error
       if (!comparePassword) {
         return ResponseHandler.error(res, 'Password is incorrect', 404);
       }
 
-      const token = sign({ user_id: isUserExist.user_id, email: isUserExist.email }, process.env.TOKEN_KEY || 'secretkey');
+      // send token
+      const token = sign({ user_id: isUserExist.user_id, email: isUserExist.email, role: isUserExist.role, isVerified: isUserExist.isVerified }, process.env.TOKEN_KEY || 'secretkey');
 
       return ResponseHandler.success(res, 'verfication is success', 200, {
         name: isUserExist.name,
         email: isUserExist.email,
         pfp_url: isUserExist.pfp_url,
+        isVerified: isUserExist.isVerified,
         token,
       });
     } catch (error) {
@@ -102,16 +172,41 @@ export class UserController {
         return ResponseHandler.error(res, 'account not exist', 404);
       }
 
-      const newToken = sign({ user_id: isUserExist.user_id, email: isUserExist.email }, process.env.TOKEN_KEY || 'secretkey');
+      const newToken = sign({ user_id: isUserExist.user_id, email: isUserExist.email, role: isUserExist.role, isVerified: isUserExist.isVerified }, process.env.TOKEN_KEY || 'secretkey');
 
       return ResponseHandler.success(res, 'keep login is success', 200, {
         name: isUserExist.name,
         email: isUserExist.email,
         pfp_url: isUserExist.pfp_url,
+        isVerified: isUserExist.isVerified,
         newToken,
       });
     } catch (error) {
       return ResponseHandler.error(res, 'keep login is failed', 500, error);
+    }
+  }
+
+  async updateUserRole(req: Request, res: Response, next: NextFunction): Promise<any> {
+    try {
+      const userToken = res.locals.dcrypt;
+      const isUserExist = await prisma.user.findUnique({
+        where: { user_id: userToken.user_id, email: userToken.email },
+      });
+
+      if (!isUserExist) {
+        return ResponseHandler.error(res, 'account not exist', 404);
+      }
+
+      const user = await prisma.user.update({
+        where: { email: isUserExist.email, user_id: isUserExist.user_id },
+        data: {
+          role: 'organizer',
+        },
+      });
+
+      return ResponseHandler.success(res, 'update user role is success', 200, user);
+    } catch (error) {
+      return ResponseHandler.error(res, 'update user role is failed', 500, error);
     }
   }
 
