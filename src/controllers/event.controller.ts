@@ -29,7 +29,7 @@ export class EventController {
         eventImg,
       } = req.body;
 
-      await prisma.$transaction(async (tx) => {
+      const response = await prisma.$transaction(async (tx) => {
         //Create and/or update city
         const city = await tx.location_city.upsert({
           where: { city_name: eventLocation.city },
