@@ -147,6 +147,26 @@ exports.Prisma.AddressScalarFieldEnum = {
   zipcode: 'zipcode'
 };
 
+exports.Prisma.OrganizerScalarFieldEnum = {
+  organizer_id: 'organizer_id',
+  organizer_name: 'organizer_name',
+  organizer_email: 'organizer_email',
+  organizer_phone: 'organizer_phone',
+  organizer_address: 'organizer_address',
+  organizer_logo: 'organizer_logo',
+  organizer_banner: 'organizer_banner',
+  organizer_bio: 'organizer_bio',
+  user_id: 'user_id'
+};
+
+exports.Prisma.Bank_accountScalarFieldEnum = {
+  bank_account_id: 'bank_account_id',
+  bank_name: 'bank_name',
+  bank_account_name: 'bank_account_name',
+  bank_account_number: 'bank_account_number',
+  organizer_id: 'organizer_id'
+};
+
 exports.Prisma.PointScalarFieldEnum = {
   point_id: 'point_id',
   user_id: 'user_id',
@@ -182,7 +202,7 @@ exports.Prisma.CouponScalarFieldEnum = {
 
 exports.Prisma.EventScalarFieldEnum = {
   event_id: 'event_id',
-  user_id: 'user_id',
+  organizer_id: 'organizer_id',
   title: 'title',
   description: 'description',
   imgEvent: 'imgEvent',
@@ -292,6 +312,8 @@ exports.Prisma.ModelName = {
   User: 'User',
   Profile: 'Profile',
   Address: 'Address',
+  Organizer: 'Organizer',
+  Bank_account: 'Bank_account',
   Point: 'Point',
   Referral: 'Referral',
   Social_media: 'Social_media',

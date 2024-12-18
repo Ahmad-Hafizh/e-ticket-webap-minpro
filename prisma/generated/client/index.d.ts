@@ -29,6 +29,16 @@ export type Profile = $Result.DefaultSelection<Prisma.$ProfilePayload>
  */
 export type Address = $Result.DefaultSelection<Prisma.$AddressPayload>
 /**
+ * Model Organizer
+ * 
+ */
+export type Organizer = $Result.DefaultSelection<Prisma.$OrganizerPayload>
+/**
+ * Model Bank_account
+ * 
+ */
+export type Bank_account = $Result.DefaultSelection<Prisma.$Bank_accountPayload>
+/**
  * Model Point
  * 
  */
@@ -300,6 +310,26 @@ export class PrismaClient<
     * ```
     */
   get address(): Prisma.AddressDelegate<ExtArgs>;
+
+  /**
+   * `prisma.organizer`: Exposes CRUD operations for the **Organizer** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Organizers
+    * const organizers = await prisma.organizer.findMany()
+    * ```
+    */
+  get organizer(): Prisma.OrganizerDelegate<ExtArgs>;
+
+  /**
+   * `prisma.bank_account`: Exposes CRUD operations for the **Bank_account** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Bank_accounts
+    * const bank_accounts = await prisma.bank_account.findMany()
+    * ```
+    */
+  get bank_account(): Prisma.Bank_accountDelegate<ExtArgs>;
 
   /**
    * `prisma.point`: Exposes CRUD operations for the **Point** model.
@@ -863,6 +893,8 @@ export namespace Prisma {
     User: 'User',
     Profile: 'Profile',
     Address: 'Address',
+    Organizer: 'Organizer',
+    Bank_account: 'Bank_account',
     Point: 'Point',
     Referral: 'Referral',
     Social_media: 'Social_media',
@@ -890,7 +922,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "user" | "profile" | "address" | "point" | "referral" | "social_media" | "coupon" | "event" | "event_category" | "event_Location" | "location_city" | "location_country" | "ticket_types" | "transaction_Detail" | "transaction"
+      modelProps: "user" | "profile" | "address" | "organizer" | "bank_account" | "point" | "referral" | "social_media" | "coupon" | "event" | "event_category" | "event_Location" | "location_city" | "location_country" | "ticket_types" | "transaction_Detail" | "transaction"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1101,6 +1133,146 @@ export namespace Prisma {
           count: {
             args: Prisma.AddressCountArgs<ExtArgs>
             result: $Utils.Optional<AddressCountAggregateOutputType> | number
+          }
+        }
+      }
+      Organizer: {
+        payload: Prisma.$OrganizerPayload<ExtArgs>
+        fields: Prisma.OrganizerFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.OrganizerFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrganizerPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.OrganizerFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrganizerPayload>
+          }
+          findFirst: {
+            args: Prisma.OrganizerFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrganizerPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.OrganizerFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrganizerPayload>
+          }
+          findMany: {
+            args: Prisma.OrganizerFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrganizerPayload>[]
+          }
+          create: {
+            args: Prisma.OrganizerCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrganizerPayload>
+          }
+          createMany: {
+            args: Prisma.OrganizerCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.OrganizerCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrganizerPayload>[]
+          }
+          delete: {
+            args: Prisma.OrganizerDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrganizerPayload>
+          }
+          update: {
+            args: Prisma.OrganizerUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrganizerPayload>
+          }
+          deleteMany: {
+            args: Prisma.OrganizerDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.OrganizerUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.OrganizerUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrganizerPayload>
+          }
+          aggregate: {
+            args: Prisma.OrganizerAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateOrganizer>
+          }
+          groupBy: {
+            args: Prisma.OrganizerGroupByArgs<ExtArgs>
+            result: $Utils.Optional<OrganizerGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.OrganizerCountArgs<ExtArgs>
+            result: $Utils.Optional<OrganizerCountAggregateOutputType> | number
+          }
+        }
+      }
+      Bank_account: {
+        payload: Prisma.$Bank_accountPayload<ExtArgs>
+        fields: Prisma.Bank_accountFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.Bank_accountFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Bank_accountPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.Bank_accountFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Bank_accountPayload>
+          }
+          findFirst: {
+            args: Prisma.Bank_accountFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Bank_accountPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.Bank_accountFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Bank_accountPayload>
+          }
+          findMany: {
+            args: Prisma.Bank_accountFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Bank_accountPayload>[]
+          }
+          create: {
+            args: Prisma.Bank_accountCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Bank_accountPayload>
+          }
+          createMany: {
+            args: Prisma.Bank_accountCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.Bank_accountCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Bank_accountPayload>[]
+          }
+          delete: {
+            args: Prisma.Bank_accountDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Bank_accountPayload>
+          }
+          update: {
+            args: Prisma.Bank_accountUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Bank_accountPayload>
+          }
+          deleteMany: {
+            args: Prisma.Bank_accountDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.Bank_accountUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.Bank_accountUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Bank_accountPayload>
+          }
+          aggregate: {
+            args: Prisma.Bank_accountAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateBank_account>
+          }
+          groupBy: {
+            args: Prisma.Bank_accountGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Bank_accountGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.Bank_accountCountArgs<ExtArgs>
+            result: $Utils.Optional<Bank_accountCountAggregateOutputType> | number
           }
         }
       }
@@ -2107,7 +2279,6 @@ export namespace Prisma {
   export type UserCountOutputType = {
     points: number
     coupons: number
-    events: number
     transaction_details: number
     transaction: number
   }
@@ -2115,7 +2286,6 @@ export namespace Prisma {
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     points?: boolean | UserCountOutputTypeCountPointsArgs
     coupons?: boolean | UserCountOutputTypeCountCouponsArgs
-    events?: boolean | UserCountOutputTypeCountEventsArgs
     transaction_details?: boolean | UserCountOutputTypeCountTransaction_detailsArgs
     transaction?: boolean | UserCountOutputTypeCountTransactionArgs
   }
@@ -2143,13 +2313,6 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountCouponsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: CouponWhereInput
-  }
-
-  /**
-   * UserCountOutputType without action
-   */
-  export type UserCountOutputTypeCountEventsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: EventWhereInput
   }
 
   /**
@@ -2204,6 +2367,37 @@ export namespace Prisma {
    */
   export type ProfileCountOutputTypeCountSocial_mediasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: Social_mediaWhereInput
+  }
+
+
+  /**
+   * Count Type OrganizerCountOutputType
+   */
+
+  export type OrganizerCountOutputType = {
+    events: number
+  }
+
+  export type OrganizerCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    events?: boolean | OrganizerCountOutputTypeCountEventsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * OrganizerCountOutputType without action
+   */
+  export type OrganizerCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrganizerCountOutputType
+     */
+    select?: OrganizerCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * OrganizerCountOutputType without action
+   */
+  export type OrganizerCountOutputTypeCountEventsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: EventWhereInput
   }
 
 
@@ -2614,7 +2808,7 @@ export namespace Prisma {
     referred?: boolean | User$referredArgs<ExtArgs>
     points?: boolean | User$pointsArgs<ExtArgs>
     coupons?: boolean | User$couponsArgs<ExtArgs>
-    events?: boolean | User$eventsArgs<ExtArgs>
+    organizer?: boolean | User$organizerArgs<ExtArgs>
     transaction_details?: boolean | User$transaction_detailsArgs<ExtArgs>
     transaction?: boolean | User$transactionArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -2651,7 +2845,7 @@ export namespace Prisma {
     referred?: boolean | User$referredArgs<ExtArgs>
     points?: boolean | User$pointsArgs<ExtArgs>
     coupons?: boolean | User$couponsArgs<ExtArgs>
-    events?: boolean | User$eventsArgs<ExtArgs>
+    organizer?: boolean | User$organizerArgs<ExtArgs>
     transaction_details?: boolean | User$transaction_detailsArgs<ExtArgs>
     transaction?: boolean | User$transactionArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -2668,7 +2862,7 @@ export namespace Prisma {
       referred: Prisma.$ReferralPayload<ExtArgs> | null
       points: Prisma.$PointPayload<ExtArgs>[]
       coupons: Prisma.$CouponPayload<ExtArgs>[]
-      events: Prisma.$EventPayload<ExtArgs>[]
+      organizer: Prisma.$OrganizerPayload<ExtArgs> | null
       transaction_details: Prisma.$Transaction_DetailPayload<ExtArgs>[]
       transaction: Prisma.$TransactionPayload<ExtArgs>[]
     }
@@ -3051,7 +3245,7 @@ export namespace Prisma {
     referred<T extends User$referredArgs<ExtArgs> = {}>(args?: Subset<T, User$referredArgs<ExtArgs>>): Prisma__ReferralClient<$Result.GetResult<Prisma.$ReferralPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
     points<T extends User$pointsArgs<ExtArgs> = {}>(args?: Subset<T, User$pointsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PointPayload<ExtArgs>, T, "findMany"> | Null>
     coupons<T extends User$couponsArgs<ExtArgs> = {}>(args?: Subset<T, User$couponsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CouponPayload<ExtArgs>, T, "findMany"> | Null>
-    events<T extends User$eventsArgs<ExtArgs> = {}>(args?: Subset<T, User$eventsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findMany"> | Null>
+    organizer<T extends User$organizerArgs<ExtArgs> = {}>(args?: Subset<T, User$organizerArgs<ExtArgs>>): Prisma__OrganizerClient<$Result.GetResult<Prisma.$OrganizerPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
     transaction_details<T extends User$transaction_detailsArgs<ExtArgs> = {}>(args?: Subset<T, User$transaction_detailsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Transaction_DetailPayload<ExtArgs>, T, "findMany"> | Null>
     transaction<T extends User$transactionArgs<ExtArgs> = {}>(args?: Subset<T, User$transactionArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findMany"> | Null>
     /**
@@ -3495,23 +3689,18 @@ export namespace Prisma {
   }
 
   /**
-   * User.events
+   * User.organizer
    */
-  export type User$eventsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$organizerArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Event
+     * Select specific fields to fetch from the Organizer
      */
-    select?: EventSelect<ExtArgs> | null
+    select?: OrganizerSelect<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: EventInclude<ExtArgs> | null
-    where?: EventWhereInput
-    orderBy?: EventOrderByWithRelationInput | EventOrderByWithRelationInput[]
-    cursor?: EventWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: EventScalarFieldEnum | EventScalarFieldEnum[]
+    include?: OrganizerInclude<ExtArgs> | null
+    where?: OrganizerWhereInput
   }
 
   /**
@@ -5582,6 +5771,2041 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: AddressInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Organizer
+   */
+
+  export type AggregateOrganizer = {
+    _count: OrganizerCountAggregateOutputType | null
+    _avg: OrganizerAvgAggregateOutputType | null
+    _sum: OrganizerSumAggregateOutputType | null
+    _min: OrganizerMinAggregateOutputType | null
+    _max: OrganizerMaxAggregateOutputType | null
+  }
+
+  export type OrganizerAvgAggregateOutputType = {
+    organizer_id: number | null
+    user_id: number | null
+  }
+
+  export type OrganizerSumAggregateOutputType = {
+    organizer_id: number | null
+    user_id: number | null
+  }
+
+  export type OrganizerMinAggregateOutputType = {
+    organizer_id: number | null
+    organizer_name: string | null
+    organizer_email: string | null
+    organizer_phone: string | null
+    organizer_address: string | null
+    organizer_logo: string | null
+    organizer_banner: string | null
+    organizer_bio: string | null
+    user_id: number | null
+  }
+
+  export type OrganizerMaxAggregateOutputType = {
+    organizer_id: number | null
+    organizer_name: string | null
+    organizer_email: string | null
+    organizer_phone: string | null
+    organizer_address: string | null
+    organizer_logo: string | null
+    organizer_banner: string | null
+    organizer_bio: string | null
+    user_id: number | null
+  }
+
+  export type OrganizerCountAggregateOutputType = {
+    organizer_id: number
+    organizer_name: number
+    organizer_email: number
+    organizer_phone: number
+    organizer_address: number
+    organizer_logo: number
+    organizer_banner: number
+    organizer_bio: number
+    user_id: number
+    _all: number
+  }
+
+
+  export type OrganizerAvgAggregateInputType = {
+    organizer_id?: true
+    user_id?: true
+  }
+
+  export type OrganizerSumAggregateInputType = {
+    organizer_id?: true
+    user_id?: true
+  }
+
+  export type OrganizerMinAggregateInputType = {
+    organizer_id?: true
+    organizer_name?: true
+    organizer_email?: true
+    organizer_phone?: true
+    organizer_address?: true
+    organizer_logo?: true
+    organizer_banner?: true
+    organizer_bio?: true
+    user_id?: true
+  }
+
+  export type OrganizerMaxAggregateInputType = {
+    organizer_id?: true
+    organizer_name?: true
+    organizer_email?: true
+    organizer_phone?: true
+    organizer_address?: true
+    organizer_logo?: true
+    organizer_banner?: true
+    organizer_bio?: true
+    user_id?: true
+  }
+
+  export type OrganizerCountAggregateInputType = {
+    organizer_id?: true
+    organizer_name?: true
+    organizer_email?: true
+    organizer_phone?: true
+    organizer_address?: true
+    organizer_logo?: true
+    organizer_banner?: true
+    organizer_bio?: true
+    user_id?: true
+    _all?: true
+  }
+
+  export type OrganizerAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Organizer to aggregate.
+     */
+    where?: OrganizerWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Organizers to fetch.
+     */
+    orderBy?: OrganizerOrderByWithRelationInput | OrganizerOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: OrganizerWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Organizers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Organizers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Organizers
+    **/
+    _count?: true | OrganizerCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: OrganizerAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: OrganizerSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: OrganizerMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: OrganizerMaxAggregateInputType
+  }
+
+  export type GetOrganizerAggregateType<T extends OrganizerAggregateArgs> = {
+        [P in keyof T & keyof AggregateOrganizer]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateOrganizer[P]>
+      : GetScalarType<T[P], AggregateOrganizer[P]>
+  }
+
+
+
+
+  export type OrganizerGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OrganizerWhereInput
+    orderBy?: OrganizerOrderByWithAggregationInput | OrganizerOrderByWithAggregationInput[]
+    by: OrganizerScalarFieldEnum[] | OrganizerScalarFieldEnum
+    having?: OrganizerScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: OrganizerCountAggregateInputType | true
+    _avg?: OrganizerAvgAggregateInputType
+    _sum?: OrganizerSumAggregateInputType
+    _min?: OrganizerMinAggregateInputType
+    _max?: OrganizerMaxAggregateInputType
+  }
+
+  export type OrganizerGroupByOutputType = {
+    organizer_id: number
+    organizer_name: string
+    organizer_email: string
+    organizer_phone: string
+    organizer_address: string
+    organizer_logo: string | null
+    organizer_banner: string | null
+    organizer_bio: string | null
+    user_id: number
+    _count: OrganizerCountAggregateOutputType | null
+    _avg: OrganizerAvgAggregateOutputType | null
+    _sum: OrganizerSumAggregateOutputType | null
+    _min: OrganizerMinAggregateOutputType | null
+    _max: OrganizerMaxAggregateOutputType | null
+  }
+
+  type GetOrganizerGroupByPayload<T extends OrganizerGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<OrganizerGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof OrganizerGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], OrganizerGroupByOutputType[P]>
+            : GetScalarType<T[P], OrganizerGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type OrganizerSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    organizer_id?: boolean
+    organizer_name?: boolean
+    organizer_email?: boolean
+    organizer_phone?: boolean
+    organizer_address?: boolean
+    organizer_logo?: boolean
+    organizer_banner?: boolean
+    organizer_bio?: boolean
+    user_id?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    bank_account?: boolean | Organizer$bank_accountArgs<ExtArgs>
+    events?: boolean | Organizer$eventsArgs<ExtArgs>
+    _count?: boolean | OrganizerCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["organizer"]>
+
+  export type OrganizerSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    organizer_id?: boolean
+    organizer_name?: boolean
+    organizer_email?: boolean
+    organizer_phone?: boolean
+    organizer_address?: boolean
+    organizer_logo?: boolean
+    organizer_banner?: boolean
+    organizer_bio?: boolean
+    user_id?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["organizer"]>
+
+  export type OrganizerSelectScalar = {
+    organizer_id?: boolean
+    organizer_name?: boolean
+    organizer_email?: boolean
+    organizer_phone?: boolean
+    organizer_address?: boolean
+    organizer_logo?: boolean
+    organizer_banner?: boolean
+    organizer_bio?: boolean
+    user_id?: boolean
+  }
+
+  export type OrganizerInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    bank_account?: boolean | Organizer$bank_accountArgs<ExtArgs>
+    events?: boolean | Organizer$eventsArgs<ExtArgs>
+    _count?: boolean | OrganizerCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type OrganizerIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $OrganizerPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Organizer"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      bank_account: Prisma.$Bank_accountPayload<ExtArgs> | null
+      events: Prisma.$EventPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      organizer_id: number
+      organizer_name: string
+      organizer_email: string
+      organizer_phone: string
+      organizer_address: string
+      organizer_logo: string | null
+      organizer_banner: string | null
+      organizer_bio: string | null
+      user_id: number
+    }, ExtArgs["result"]["organizer"]>
+    composites: {}
+  }
+
+  type OrganizerGetPayload<S extends boolean | null | undefined | OrganizerDefaultArgs> = $Result.GetResult<Prisma.$OrganizerPayload, S>
+
+  type OrganizerCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<OrganizerFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: OrganizerCountAggregateInputType | true
+    }
+
+  export interface OrganizerDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Organizer'], meta: { name: 'Organizer' } }
+    /**
+     * Find zero or one Organizer that matches the filter.
+     * @param {OrganizerFindUniqueArgs} args - Arguments to find a Organizer
+     * @example
+     * // Get one Organizer
+     * const organizer = await prisma.organizer.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends OrganizerFindUniqueArgs>(args: SelectSubset<T, OrganizerFindUniqueArgs<ExtArgs>>): Prisma__OrganizerClient<$Result.GetResult<Prisma.$OrganizerPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Organizer that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {OrganizerFindUniqueOrThrowArgs} args - Arguments to find a Organizer
+     * @example
+     * // Get one Organizer
+     * const organizer = await prisma.organizer.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends OrganizerFindUniqueOrThrowArgs>(args: SelectSubset<T, OrganizerFindUniqueOrThrowArgs<ExtArgs>>): Prisma__OrganizerClient<$Result.GetResult<Prisma.$OrganizerPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Organizer that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrganizerFindFirstArgs} args - Arguments to find a Organizer
+     * @example
+     * // Get one Organizer
+     * const organizer = await prisma.organizer.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends OrganizerFindFirstArgs>(args?: SelectSubset<T, OrganizerFindFirstArgs<ExtArgs>>): Prisma__OrganizerClient<$Result.GetResult<Prisma.$OrganizerPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Organizer that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrganizerFindFirstOrThrowArgs} args - Arguments to find a Organizer
+     * @example
+     * // Get one Organizer
+     * const organizer = await prisma.organizer.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends OrganizerFindFirstOrThrowArgs>(args?: SelectSubset<T, OrganizerFindFirstOrThrowArgs<ExtArgs>>): Prisma__OrganizerClient<$Result.GetResult<Prisma.$OrganizerPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Organizers that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrganizerFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Organizers
+     * const organizers = await prisma.organizer.findMany()
+     * 
+     * // Get first 10 Organizers
+     * const organizers = await prisma.organizer.findMany({ take: 10 })
+     * 
+     * // Only select the `organizer_id`
+     * const organizerWithOrganizer_idOnly = await prisma.organizer.findMany({ select: { organizer_id: true } })
+     * 
+     */
+    findMany<T extends OrganizerFindManyArgs>(args?: SelectSubset<T, OrganizerFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrganizerPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Organizer.
+     * @param {OrganizerCreateArgs} args - Arguments to create a Organizer.
+     * @example
+     * // Create one Organizer
+     * const Organizer = await prisma.organizer.create({
+     *   data: {
+     *     // ... data to create a Organizer
+     *   }
+     * })
+     * 
+     */
+    create<T extends OrganizerCreateArgs>(args: SelectSubset<T, OrganizerCreateArgs<ExtArgs>>): Prisma__OrganizerClient<$Result.GetResult<Prisma.$OrganizerPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Organizers.
+     * @param {OrganizerCreateManyArgs} args - Arguments to create many Organizers.
+     * @example
+     * // Create many Organizers
+     * const organizer = await prisma.organizer.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends OrganizerCreateManyArgs>(args?: SelectSubset<T, OrganizerCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Organizers and returns the data saved in the database.
+     * @param {OrganizerCreateManyAndReturnArgs} args - Arguments to create many Organizers.
+     * @example
+     * // Create many Organizers
+     * const organizer = await prisma.organizer.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Organizers and only return the `organizer_id`
+     * const organizerWithOrganizer_idOnly = await prisma.organizer.createManyAndReturn({ 
+     *   select: { organizer_id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends OrganizerCreateManyAndReturnArgs>(args?: SelectSubset<T, OrganizerCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrganizerPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Organizer.
+     * @param {OrganizerDeleteArgs} args - Arguments to delete one Organizer.
+     * @example
+     * // Delete one Organizer
+     * const Organizer = await prisma.organizer.delete({
+     *   where: {
+     *     // ... filter to delete one Organizer
+     *   }
+     * })
+     * 
+     */
+    delete<T extends OrganizerDeleteArgs>(args: SelectSubset<T, OrganizerDeleteArgs<ExtArgs>>): Prisma__OrganizerClient<$Result.GetResult<Prisma.$OrganizerPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Organizer.
+     * @param {OrganizerUpdateArgs} args - Arguments to update one Organizer.
+     * @example
+     * // Update one Organizer
+     * const organizer = await prisma.organizer.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends OrganizerUpdateArgs>(args: SelectSubset<T, OrganizerUpdateArgs<ExtArgs>>): Prisma__OrganizerClient<$Result.GetResult<Prisma.$OrganizerPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Organizers.
+     * @param {OrganizerDeleteManyArgs} args - Arguments to filter Organizers to delete.
+     * @example
+     * // Delete a few Organizers
+     * const { count } = await prisma.organizer.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends OrganizerDeleteManyArgs>(args?: SelectSubset<T, OrganizerDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Organizers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrganizerUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Organizers
+     * const organizer = await prisma.organizer.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends OrganizerUpdateManyArgs>(args: SelectSubset<T, OrganizerUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Organizer.
+     * @param {OrganizerUpsertArgs} args - Arguments to update or create a Organizer.
+     * @example
+     * // Update or create a Organizer
+     * const organizer = await prisma.organizer.upsert({
+     *   create: {
+     *     // ... data to create a Organizer
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Organizer we want to update
+     *   }
+     * })
+     */
+    upsert<T extends OrganizerUpsertArgs>(args: SelectSubset<T, OrganizerUpsertArgs<ExtArgs>>): Prisma__OrganizerClient<$Result.GetResult<Prisma.$OrganizerPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Organizers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrganizerCountArgs} args - Arguments to filter Organizers to count.
+     * @example
+     * // Count the number of Organizers
+     * const count = await prisma.organizer.count({
+     *   where: {
+     *     // ... the filter for the Organizers we want to count
+     *   }
+     * })
+    **/
+    count<T extends OrganizerCountArgs>(
+      args?: Subset<T, OrganizerCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], OrganizerCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Organizer.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrganizerAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends OrganizerAggregateArgs>(args: Subset<T, OrganizerAggregateArgs>): Prisma.PrismaPromise<GetOrganizerAggregateType<T>>
+
+    /**
+     * Group by Organizer.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrganizerGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends OrganizerGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: OrganizerGroupByArgs['orderBy'] }
+        : { orderBy?: OrganizerGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, OrganizerGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetOrganizerGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Organizer model
+   */
+  readonly fields: OrganizerFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Organizer.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__OrganizerClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    bank_account<T extends Organizer$bank_accountArgs<ExtArgs> = {}>(args?: Subset<T, Organizer$bank_accountArgs<ExtArgs>>): Prisma__Bank_accountClient<$Result.GetResult<Prisma.$Bank_accountPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    events<T extends Organizer$eventsArgs<ExtArgs> = {}>(args?: Subset<T, Organizer$eventsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Organizer model
+   */ 
+  interface OrganizerFieldRefs {
+    readonly organizer_id: FieldRef<"Organizer", 'Int'>
+    readonly organizer_name: FieldRef<"Organizer", 'String'>
+    readonly organizer_email: FieldRef<"Organizer", 'String'>
+    readonly organizer_phone: FieldRef<"Organizer", 'String'>
+    readonly organizer_address: FieldRef<"Organizer", 'String'>
+    readonly organizer_logo: FieldRef<"Organizer", 'String'>
+    readonly organizer_banner: FieldRef<"Organizer", 'String'>
+    readonly organizer_bio: FieldRef<"Organizer", 'String'>
+    readonly user_id: FieldRef<"Organizer", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Organizer findUnique
+   */
+  export type OrganizerFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Organizer
+     */
+    select?: OrganizerSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrganizerInclude<ExtArgs> | null
+    /**
+     * Filter, which Organizer to fetch.
+     */
+    where: OrganizerWhereUniqueInput
+  }
+
+  /**
+   * Organizer findUniqueOrThrow
+   */
+  export type OrganizerFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Organizer
+     */
+    select?: OrganizerSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrganizerInclude<ExtArgs> | null
+    /**
+     * Filter, which Organizer to fetch.
+     */
+    where: OrganizerWhereUniqueInput
+  }
+
+  /**
+   * Organizer findFirst
+   */
+  export type OrganizerFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Organizer
+     */
+    select?: OrganizerSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrganizerInclude<ExtArgs> | null
+    /**
+     * Filter, which Organizer to fetch.
+     */
+    where?: OrganizerWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Organizers to fetch.
+     */
+    orderBy?: OrganizerOrderByWithRelationInput | OrganizerOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Organizers.
+     */
+    cursor?: OrganizerWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Organizers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Organizers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Organizers.
+     */
+    distinct?: OrganizerScalarFieldEnum | OrganizerScalarFieldEnum[]
+  }
+
+  /**
+   * Organizer findFirstOrThrow
+   */
+  export type OrganizerFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Organizer
+     */
+    select?: OrganizerSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrganizerInclude<ExtArgs> | null
+    /**
+     * Filter, which Organizer to fetch.
+     */
+    where?: OrganizerWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Organizers to fetch.
+     */
+    orderBy?: OrganizerOrderByWithRelationInput | OrganizerOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Organizers.
+     */
+    cursor?: OrganizerWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Organizers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Organizers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Organizers.
+     */
+    distinct?: OrganizerScalarFieldEnum | OrganizerScalarFieldEnum[]
+  }
+
+  /**
+   * Organizer findMany
+   */
+  export type OrganizerFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Organizer
+     */
+    select?: OrganizerSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrganizerInclude<ExtArgs> | null
+    /**
+     * Filter, which Organizers to fetch.
+     */
+    where?: OrganizerWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Organizers to fetch.
+     */
+    orderBy?: OrganizerOrderByWithRelationInput | OrganizerOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Organizers.
+     */
+    cursor?: OrganizerWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Organizers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Organizers.
+     */
+    skip?: number
+    distinct?: OrganizerScalarFieldEnum | OrganizerScalarFieldEnum[]
+  }
+
+  /**
+   * Organizer create
+   */
+  export type OrganizerCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Organizer
+     */
+    select?: OrganizerSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrganizerInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Organizer.
+     */
+    data: XOR<OrganizerCreateInput, OrganizerUncheckedCreateInput>
+  }
+
+  /**
+   * Organizer createMany
+   */
+  export type OrganizerCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Organizers.
+     */
+    data: OrganizerCreateManyInput | OrganizerCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Organizer createManyAndReturn
+   */
+  export type OrganizerCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Organizer
+     */
+    select?: OrganizerSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Organizers.
+     */
+    data: OrganizerCreateManyInput | OrganizerCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrganizerIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Organizer update
+   */
+  export type OrganizerUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Organizer
+     */
+    select?: OrganizerSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrganizerInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Organizer.
+     */
+    data: XOR<OrganizerUpdateInput, OrganizerUncheckedUpdateInput>
+    /**
+     * Choose, which Organizer to update.
+     */
+    where: OrganizerWhereUniqueInput
+  }
+
+  /**
+   * Organizer updateMany
+   */
+  export type OrganizerUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Organizers.
+     */
+    data: XOR<OrganizerUpdateManyMutationInput, OrganizerUncheckedUpdateManyInput>
+    /**
+     * Filter which Organizers to update
+     */
+    where?: OrganizerWhereInput
+  }
+
+  /**
+   * Organizer upsert
+   */
+  export type OrganizerUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Organizer
+     */
+    select?: OrganizerSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrganizerInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Organizer to update in case it exists.
+     */
+    where: OrganizerWhereUniqueInput
+    /**
+     * In case the Organizer found by the `where` argument doesn't exist, create a new Organizer with this data.
+     */
+    create: XOR<OrganizerCreateInput, OrganizerUncheckedCreateInput>
+    /**
+     * In case the Organizer was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<OrganizerUpdateInput, OrganizerUncheckedUpdateInput>
+  }
+
+  /**
+   * Organizer delete
+   */
+  export type OrganizerDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Organizer
+     */
+    select?: OrganizerSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrganizerInclude<ExtArgs> | null
+    /**
+     * Filter which Organizer to delete.
+     */
+    where: OrganizerWhereUniqueInput
+  }
+
+  /**
+   * Organizer deleteMany
+   */
+  export type OrganizerDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Organizers to delete
+     */
+    where?: OrganizerWhereInput
+  }
+
+  /**
+   * Organizer.bank_account
+   */
+  export type Organizer$bank_accountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Bank_account
+     */
+    select?: Bank_accountSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Bank_accountInclude<ExtArgs> | null
+    where?: Bank_accountWhereInput
+  }
+
+  /**
+   * Organizer.events
+   */
+  export type Organizer$eventsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Event
+     */
+    select?: EventSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventInclude<ExtArgs> | null
+    where?: EventWhereInput
+    orderBy?: EventOrderByWithRelationInput | EventOrderByWithRelationInput[]
+    cursor?: EventWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: EventScalarFieldEnum | EventScalarFieldEnum[]
+  }
+
+  /**
+   * Organizer without action
+   */
+  export type OrganizerDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Organizer
+     */
+    select?: OrganizerSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrganizerInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Bank_account
+   */
+
+  export type AggregateBank_account = {
+    _count: Bank_accountCountAggregateOutputType | null
+    _avg: Bank_accountAvgAggregateOutputType | null
+    _sum: Bank_accountSumAggregateOutputType | null
+    _min: Bank_accountMinAggregateOutputType | null
+    _max: Bank_accountMaxAggregateOutputType | null
+  }
+
+  export type Bank_accountAvgAggregateOutputType = {
+    bank_account_id: number | null
+    organizer_id: number | null
+  }
+
+  export type Bank_accountSumAggregateOutputType = {
+    bank_account_id: number | null
+    organizer_id: number | null
+  }
+
+  export type Bank_accountMinAggregateOutputType = {
+    bank_account_id: number | null
+    bank_name: string | null
+    bank_account_name: string | null
+    bank_account_number: string | null
+    organizer_id: number | null
+  }
+
+  export type Bank_accountMaxAggregateOutputType = {
+    bank_account_id: number | null
+    bank_name: string | null
+    bank_account_name: string | null
+    bank_account_number: string | null
+    organizer_id: number | null
+  }
+
+  export type Bank_accountCountAggregateOutputType = {
+    bank_account_id: number
+    bank_name: number
+    bank_account_name: number
+    bank_account_number: number
+    organizer_id: number
+    _all: number
+  }
+
+
+  export type Bank_accountAvgAggregateInputType = {
+    bank_account_id?: true
+    organizer_id?: true
+  }
+
+  export type Bank_accountSumAggregateInputType = {
+    bank_account_id?: true
+    organizer_id?: true
+  }
+
+  export type Bank_accountMinAggregateInputType = {
+    bank_account_id?: true
+    bank_name?: true
+    bank_account_name?: true
+    bank_account_number?: true
+    organizer_id?: true
+  }
+
+  export type Bank_accountMaxAggregateInputType = {
+    bank_account_id?: true
+    bank_name?: true
+    bank_account_name?: true
+    bank_account_number?: true
+    organizer_id?: true
+  }
+
+  export type Bank_accountCountAggregateInputType = {
+    bank_account_id?: true
+    bank_name?: true
+    bank_account_name?: true
+    bank_account_number?: true
+    organizer_id?: true
+    _all?: true
+  }
+
+  export type Bank_accountAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Bank_account to aggregate.
+     */
+    where?: Bank_accountWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Bank_accounts to fetch.
+     */
+    orderBy?: Bank_accountOrderByWithRelationInput | Bank_accountOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: Bank_accountWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Bank_accounts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Bank_accounts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Bank_accounts
+    **/
+    _count?: true | Bank_accountCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Bank_accountAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Bank_accountSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Bank_accountMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Bank_accountMaxAggregateInputType
+  }
+
+  export type GetBank_accountAggregateType<T extends Bank_accountAggregateArgs> = {
+        [P in keyof T & keyof AggregateBank_account]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateBank_account[P]>
+      : GetScalarType<T[P], AggregateBank_account[P]>
+  }
+
+
+
+
+  export type Bank_accountGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Bank_accountWhereInput
+    orderBy?: Bank_accountOrderByWithAggregationInput | Bank_accountOrderByWithAggregationInput[]
+    by: Bank_accountScalarFieldEnum[] | Bank_accountScalarFieldEnum
+    having?: Bank_accountScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Bank_accountCountAggregateInputType | true
+    _avg?: Bank_accountAvgAggregateInputType
+    _sum?: Bank_accountSumAggregateInputType
+    _min?: Bank_accountMinAggregateInputType
+    _max?: Bank_accountMaxAggregateInputType
+  }
+
+  export type Bank_accountGroupByOutputType = {
+    bank_account_id: number
+    bank_name: string
+    bank_account_name: string
+    bank_account_number: string
+    organizer_id: number
+    _count: Bank_accountCountAggregateOutputType | null
+    _avg: Bank_accountAvgAggregateOutputType | null
+    _sum: Bank_accountSumAggregateOutputType | null
+    _min: Bank_accountMinAggregateOutputType | null
+    _max: Bank_accountMaxAggregateOutputType | null
+  }
+
+  type GetBank_accountGroupByPayload<T extends Bank_accountGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Bank_accountGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Bank_accountGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Bank_accountGroupByOutputType[P]>
+            : GetScalarType<T[P], Bank_accountGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type Bank_accountSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    bank_account_id?: boolean
+    bank_name?: boolean
+    bank_account_name?: boolean
+    bank_account_number?: boolean
+    organizer_id?: boolean
+    organizer?: boolean | OrganizerDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["bank_account"]>
+
+  export type Bank_accountSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    bank_account_id?: boolean
+    bank_name?: boolean
+    bank_account_name?: boolean
+    bank_account_number?: boolean
+    organizer_id?: boolean
+    organizer?: boolean | OrganizerDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["bank_account"]>
+
+  export type Bank_accountSelectScalar = {
+    bank_account_id?: boolean
+    bank_name?: boolean
+    bank_account_name?: boolean
+    bank_account_number?: boolean
+    organizer_id?: boolean
+  }
+
+  export type Bank_accountInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    organizer?: boolean | OrganizerDefaultArgs<ExtArgs>
+  }
+  export type Bank_accountIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    organizer?: boolean | OrganizerDefaultArgs<ExtArgs>
+  }
+
+  export type $Bank_accountPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Bank_account"
+    objects: {
+      organizer: Prisma.$OrganizerPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      bank_account_id: number
+      bank_name: string
+      bank_account_name: string
+      bank_account_number: string
+      organizer_id: number
+    }, ExtArgs["result"]["bank_account"]>
+    composites: {}
+  }
+
+  type Bank_accountGetPayload<S extends boolean | null | undefined | Bank_accountDefaultArgs> = $Result.GetResult<Prisma.$Bank_accountPayload, S>
+
+  type Bank_accountCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<Bank_accountFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: Bank_accountCountAggregateInputType | true
+    }
+
+  export interface Bank_accountDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Bank_account'], meta: { name: 'Bank_account' } }
+    /**
+     * Find zero or one Bank_account that matches the filter.
+     * @param {Bank_accountFindUniqueArgs} args - Arguments to find a Bank_account
+     * @example
+     * // Get one Bank_account
+     * const bank_account = await prisma.bank_account.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends Bank_accountFindUniqueArgs>(args: SelectSubset<T, Bank_accountFindUniqueArgs<ExtArgs>>): Prisma__Bank_accountClient<$Result.GetResult<Prisma.$Bank_accountPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Bank_account that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {Bank_accountFindUniqueOrThrowArgs} args - Arguments to find a Bank_account
+     * @example
+     * // Get one Bank_account
+     * const bank_account = await prisma.bank_account.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends Bank_accountFindUniqueOrThrowArgs>(args: SelectSubset<T, Bank_accountFindUniqueOrThrowArgs<ExtArgs>>): Prisma__Bank_accountClient<$Result.GetResult<Prisma.$Bank_accountPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Bank_account that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Bank_accountFindFirstArgs} args - Arguments to find a Bank_account
+     * @example
+     * // Get one Bank_account
+     * const bank_account = await prisma.bank_account.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends Bank_accountFindFirstArgs>(args?: SelectSubset<T, Bank_accountFindFirstArgs<ExtArgs>>): Prisma__Bank_accountClient<$Result.GetResult<Prisma.$Bank_accountPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Bank_account that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Bank_accountFindFirstOrThrowArgs} args - Arguments to find a Bank_account
+     * @example
+     * // Get one Bank_account
+     * const bank_account = await prisma.bank_account.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends Bank_accountFindFirstOrThrowArgs>(args?: SelectSubset<T, Bank_accountFindFirstOrThrowArgs<ExtArgs>>): Prisma__Bank_accountClient<$Result.GetResult<Prisma.$Bank_accountPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Bank_accounts that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Bank_accountFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Bank_accounts
+     * const bank_accounts = await prisma.bank_account.findMany()
+     * 
+     * // Get first 10 Bank_accounts
+     * const bank_accounts = await prisma.bank_account.findMany({ take: 10 })
+     * 
+     * // Only select the `bank_account_id`
+     * const bank_accountWithBank_account_idOnly = await prisma.bank_account.findMany({ select: { bank_account_id: true } })
+     * 
+     */
+    findMany<T extends Bank_accountFindManyArgs>(args?: SelectSubset<T, Bank_accountFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Bank_accountPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Bank_account.
+     * @param {Bank_accountCreateArgs} args - Arguments to create a Bank_account.
+     * @example
+     * // Create one Bank_account
+     * const Bank_account = await prisma.bank_account.create({
+     *   data: {
+     *     // ... data to create a Bank_account
+     *   }
+     * })
+     * 
+     */
+    create<T extends Bank_accountCreateArgs>(args: SelectSubset<T, Bank_accountCreateArgs<ExtArgs>>): Prisma__Bank_accountClient<$Result.GetResult<Prisma.$Bank_accountPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Bank_accounts.
+     * @param {Bank_accountCreateManyArgs} args - Arguments to create many Bank_accounts.
+     * @example
+     * // Create many Bank_accounts
+     * const bank_account = await prisma.bank_account.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends Bank_accountCreateManyArgs>(args?: SelectSubset<T, Bank_accountCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Bank_accounts and returns the data saved in the database.
+     * @param {Bank_accountCreateManyAndReturnArgs} args - Arguments to create many Bank_accounts.
+     * @example
+     * // Create many Bank_accounts
+     * const bank_account = await prisma.bank_account.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Bank_accounts and only return the `bank_account_id`
+     * const bank_accountWithBank_account_idOnly = await prisma.bank_account.createManyAndReturn({ 
+     *   select: { bank_account_id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends Bank_accountCreateManyAndReturnArgs>(args?: SelectSubset<T, Bank_accountCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Bank_accountPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Bank_account.
+     * @param {Bank_accountDeleteArgs} args - Arguments to delete one Bank_account.
+     * @example
+     * // Delete one Bank_account
+     * const Bank_account = await prisma.bank_account.delete({
+     *   where: {
+     *     // ... filter to delete one Bank_account
+     *   }
+     * })
+     * 
+     */
+    delete<T extends Bank_accountDeleteArgs>(args: SelectSubset<T, Bank_accountDeleteArgs<ExtArgs>>): Prisma__Bank_accountClient<$Result.GetResult<Prisma.$Bank_accountPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Bank_account.
+     * @param {Bank_accountUpdateArgs} args - Arguments to update one Bank_account.
+     * @example
+     * // Update one Bank_account
+     * const bank_account = await prisma.bank_account.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends Bank_accountUpdateArgs>(args: SelectSubset<T, Bank_accountUpdateArgs<ExtArgs>>): Prisma__Bank_accountClient<$Result.GetResult<Prisma.$Bank_accountPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Bank_accounts.
+     * @param {Bank_accountDeleteManyArgs} args - Arguments to filter Bank_accounts to delete.
+     * @example
+     * // Delete a few Bank_accounts
+     * const { count } = await prisma.bank_account.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends Bank_accountDeleteManyArgs>(args?: SelectSubset<T, Bank_accountDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Bank_accounts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Bank_accountUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Bank_accounts
+     * const bank_account = await prisma.bank_account.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends Bank_accountUpdateManyArgs>(args: SelectSubset<T, Bank_accountUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Bank_account.
+     * @param {Bank_accountUpsertArgs} args - Arguments to update or create a Bank_account.
+     * @example
+     * // Update or create a Bank_account
+     * const bank_account = await prisma.bank_account.upsert({
+     *   create: {
+     *     // ... data to create a Bank_account
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Bank_account we want to update
+     *   }
+     * })
+     */
+    upsert<T extends Bank_accountUpsertArgs>(args: SelectSubset<T, Bank_accountUpsertArgs<ExtArgs>>): Prisma__Bank_accountClient<$Result.GetResult<Prisma.$Bank_accountPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Bank_accounts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Bank_accountCountArgs} args - Arguments to filter Bank_accounts to count.
+     * @example
+     * // Count the number of Bank_accounts
+     * const count = await prisma.bank_account.count({
+     *   where: {
+     *     // ... the filter for the Bank_accounts we want to count
+     *   }
+     * })
+    **/
+    count<T extends Bank_accountCountArgs>(
+      args?: Subset<T, Bank_accountCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Bank_accountCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Bank_account.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Bank_accountAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Bank_accountAggregateArgs>(args: Subset<T, Bank_accountAggregateArgs>): Prisma.PrismaPromise<GetBank_accountAggregateType<T>>
+
+    /**
+     * Group by Bank_account.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Bank_accountGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends Bank_accountGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: Bank_accountGroupByArgs['orderBy'] }
+        : { orderBy?: Bank_accountGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, Bank_accountGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetBank_accountGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Bank_account model
+   */
+  readonly fields: Bank_accountFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Bank_account.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__Bank_accountClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    organizer<T extends OrganizerDefaultArgs<ExtArgs> = {}>(args?: Subset<T, OrganizerDefaultArgs<ExtArgs>>): Prisma__OrganizerClient<$Result.GetResult<Prisma.$OrganizerPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Bank_account model
+   */ 
+  interface Bank_accountFieldRefs {
+    readonly bank_account_id: FieldRef<"Bank_account", 'Int'>
+    readonly bank_name: FieldRef<"Bank_account", 'String'>
+    readonly bank_account_name: FieldRef<"Bank_account", 'String'>
+    readonly bank_account_number: FieldRef<"Bank_account", 'String'>
+    readonly organizer_id: FieldRef<"Bank_account", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Bank_account findUnique
+   */
+  export type Bank_accountFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Bank_account
+     */
+    select?: Bank_accountSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Bank_accountInclude<ExtArgs> | null
+    /**
+     * Filter, which Bank_account to fetch.
+     */
+    where: Bank_accountWhereUniqueInput
+  }
+
+  /**
+   * Bank_account findUniqueOrThrow
+   */
+  export type Bank_accountFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Bank_account
+     */
+    select?: Bank_accountSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Bank_accountInclude<ExtArgs> | null
+    /**
+     * Filter, which Bank_account to fetch.
+     */
+    where: Bank_accountWhereUniqueInput
+  }
+
+  /**
+   * Bank_account findFirst
+   */
+  export type Bank_accountFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Bank_account
+     */
+    select?: Bank_accountSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Bank_accountInclude<ExtArgs> | null
+    /**
+     * Filter, which Bank_account to fetch.
+     */
+    where?: Bank_accountWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Bank_accounts to fetch.
+     */
+    orderBy?: Bank_accountOrderByWithRelationInput | Bank_accountOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Bank_accounts.
+     */
+    cursor?: Bank_accountWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Bank_accounts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Bank_accounts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Bank_accounts.
+     */
+    distinct?: Bank_accountScalarFieldEnum | Bank_accountScalarFieldEnum[]
+  }
+
+  /**
+   * Bank_account findFirstOrThrow
+   */
+  export type Bank_accountFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Bank_account
+     */
+    select?: Bank_accountSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Bank_accountInclude<ExtArgs> | null
+    /**
+     * Filter, which Bank_account to fetch.
+     */
+    where?: Bank_accountWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Bank_accounts to fetch.
+     */
+    orderBy?: Bank_accountOrderByWithRelationInput | Bank_accountOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Bank_accounts.
+     */
+    cursor?: Bank_accountWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Bank_accounts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Bank_accounts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Bank_accounts.
+     */
+    distinct?: Bank_accountScalarFieldEnum | Bank_accountScalarFieldEnum[]
+  }
+
+  /**
+   * Bank_account findMany
+   */
+  export type Bank_accountFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Bank_account
+     */
+    select?: Bank_accountSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Bank_accountInclude<ExtArgs> | null
+    /**
+     * Filter, which Bank_accounts to fetch.
+     */
+    where?: Bank_accountWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Bank_accounts to fetch.
+     */
+    orderBy?: Bank_accountOrderByWithRelationInput | Bank_accountOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Bank_accounts.
+     */
+    cursor?: Bank_accountWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Bank_accounts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Bank_accounts.
+     */
+    skip?: number
+    distinct?: Bank_accountScalarFieldEnum | Bank_accountScalarFieldEnum[]
+  }
+
+  /**
+   * Bank_account create
+   */
+  export type Bank_accountCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Bank_account
+     */
+    select?: Bank_accountSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Bank_accountInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Bank_account.
+     */
+    data: XOR<Bank_accountCreateInput, Bank_accountUncheckedCreateInput>
+  }
+
+  /**
+   * Bank_account createMany
+   */
+  export type Bank_accountCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Bank_accounts.
+     */
+    data: Bank_accountCreateManyInput | Bank_accountCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Bank_account createManyAndReturn
+   */
+  export type Bank_accountCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Bank_account
+     */
+    select?: Bank_accountSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Bank_accounts.
+     */
+    data: Bank_accountCreateManyInput | Bank_accountCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Bank_accountIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Bank_account update
+   */
+  export type Bank_accountUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Bank_account
+     */
+    select?: Bank_accountSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Bank_accountInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Bank_account.
+     */
+    data: XOR<Bank_accountUpdateInput, Bank_accountUncheckedUpdateInput>
+    /**
+     * Choose, which Bank_account to update.
+     */
+    where: Bank_accountWhereUniqueInput
+  }
+
+  /**
+   * Bank_account updateMany
+   */
+  export type Bank_accountUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Bank_accounts.
+     */
+    data: XOR<Bank_accountUpdateManyMutationInput, Bank_accountUncheckedUpdateManyInput>
+    /**
+     * Filter which Bank_accounts to update
+     */
+    where?: Bank_accountWhereInput
+  }
+
+  /**
+   * Bank_account upsert
+   */
+  export type Bank_accountUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Bank_account
+     */
+    select?: Bank_accountSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Bank_accountInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Bank_account to update in case it exists.
+     */
+    where: Bank_accountWhereUniqueInput
+    /**
+     * In case the Bank_account found by the `where` argument doesn't exist, create a new Bank_account with this data.
+     */
+    create: XOR<Bank_accountCreateInput, Bank_accountUncheckedCreateInput>
+    /**
+     * In case the Bank_account was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<Bank_accountUpdateInput, Bank_accountUncheckedUpdateInput>
+  }
+
+  /**
+   * Bank_account delete
+   */
+  export type Bank_accountDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Bank_account
+     */
+    select?: Bank_accountSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Bank_accountInclude<ExtArgs> | null
+    /**
+     * Filter which Bank_account to delete.
+     */
+    where: Bank_accountWhereUniqueInput
+  }
+
+  /**
+   * Bank_account deleteMany
+   */
+  export type Bank_accountDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Bank_accounts to delete
+     */
+    where?: Bank_accountWhereInput
+  }
+
+  /**
+   * Bank_account without action
+   */
+  export type Bank_accountDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Bank_account
+     */
+    select?: Bank_accountSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Bank_accountInclude<ExtArgs> | null
   }
 
 
@@ -9533,21 +11757,21 @@ export namespace Prisma {
 
   export type EventAvgAggregateOutputType = {
     event_id: number | null
-    user_id: number | null
+    organizer_id: number | null
     coupon_id: number | null
     event_location_id: number | null
   }
 
   export type EventSumAggregateOutputType = {
     event_id: number | null
-    user_id: number | null
+    organizer_id: number | null
     coupon_id: number | null
     event_location_id: number | null
   }
 
   export type EventMinAggregateOutputType = {
     event_id: number | null
-    user_id: number | null
+    organizer_id: number | null
     title: string | null
     description: string | null
     imgEvent: string | null
@@ -9564,7 +11788,7 @@ export namespace Prisma {
 
   export type EventMaxAggregateOutputType = {
     event_id: number | null
-    user_id: number | null
+    organizer_id: number | null
     title: string | null
     description: string | null
     imgEvent: string | null
@@ -9581,7 +11805,7 @@ export namespace Prisma {
 
   export type EventCountAggregateOutputType = {
     event_id: number
-    user_id: number
+    organizer_id: number
     title: number
     description: number
     imgEvent: number
@@ -9600,21 +11824,21 @@ export namespace Prisma {
 
   export type EventAvgAggregateInputType = {
     event_id?: true
-    user_id?: true
+    organizer_id?: true
     coupon_id?: true
     event_location_id?: true
   }
 
   export type EventSumAggregateInputType = {
     event_id?: true
-    user_id?: true
+    organizer_id?: true
     coupon_id?: true
     event_location_id?: true
   }
 
   export type EventMinAggregateInputType = {
     event_id?: true
-    user_id?: true
+    organizer_id?: true
     title?: true
     description?: true
     imgEvent?: true
@@ -9631,7 +11855,7 @@ export namespace Prisma {
 
   export type EventMaxAggregateInputType = {
     event_id?: true
-    user_id?: true
+    organizer_id?: true
     title?: true
     description?: true
     imgEvent?: true
@@ -9648,7 +11872,7 @@ export namespace Prisma {
 
   export type EventCountAggregateInputType = {
     event_id?: true
-    user_id?: true
+    organizer_id?: true
     title?: true
     description?: true
     imgEvent?: true
@@ -9752,7 +11976,7 @@ export namespace Prisma {
 
   export type EventGroupByOutputType = {
     event_id: number
-    user_id: number
+    organizer_id: number
     title: string
     description: string
     imgEvent: string
@@ -9788,7 +12012,7 @@ export namespace Prisma {
 
   export type EventSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     event_id?: boolean
-    user_id?: boolean
+    organizer_id?: boolean
     title?: boolean
     description?: boolean
     imgEvent?: boolean
@@ -9801,7 +12025,7 @@ export namespace Prisma {
     timezone?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    organizer?: boolean | OrganizerDefaultArgs<ExtArgs>
     event_category?: boolean | Event$event_categoryArgs<ExtArgs>
     event_location?: boolean | Event_LocationDefaultArgs<ExtArgs>
     ticket_types?: boolean | Event$ticket_typesArgs<ExtArgs>
@@ -9810,7 +12034,7 @@ export namespace Prisma {
 
   export type EventSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     event_id?: boolean
-    user_id?: boolean
+    organizer_id?: boolean
     title?: boolean
     description?: boolean
     imgEvent?: boolean
@@ -9823,13 +12047,13 @@ export namespace Prisma {
     timezone?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    organizer?: boolean | OrganizerDefaultArgs<ExtArgs>
     event_location?: boolean | Event_LocationDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["event"]>
 
   export type EventSelectScalar = {
     event_id?: boolean
-    user_id?: boolean
+    organizer_id?: boolean
     title?: boolean
     description?: boolean
     imgEvent?: boolean
@@ -9845,28 +12069,28 @@ export namespace Prisma {
   }
 
   export type EventInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    organizer?: boolean | OrganizerDefaultArgs<ExtArgs>
     event_category?: boolean | Event$event_categoryArgs<ExtArgs>
     event_location?: boolean | Event_LocationDefaultArgs<ExtArgs>
     ticket_types?: boolean | Event$ticket_typesArgs<ExtArgs>
     _count?: boolean | EventCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type EventIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    organizer?: boolean | OrganizerDefaultArgs<ExtArgs>
     event_location?: boolean | Event_LocationDefaultArgs<ExtArgs>
   }
 
   export type $EventPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Event"
     objects: {
-      user: Prisma.$UserPayload<ExtArgs>
+      organizer: Prisma.$OrganizerPayload<ExtArgs>
       event_category: Prisma.$Event_categoryPayload<ExtArgs>[]
       event_location: Prisma.$Event_LocationPayload<ExtArgs>
       ticket_types: Prisma.$Ticket_typesPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       event_id: number
-      user_id: number
+      organizer_id: number
       title: string
       description: string
       imgEvent: string
@@ -10243,7 +12467,7 @@ export namespace Prisma {
    */
   export interface Prisma__EventClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    organizer<T extends OrganizerDefaultArgs<ExtArgs> = {}>(args?: Subset<T, OrganizerDefaultArgs<ExtArgs>>): Prisma__OrganizerClient<$Result.GetResult<Prisma.$OrganizerPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
     event_category<T extends Event$event_categoryArgs<ExtArgs> = {}>(args?: Subset<T, Event$event_categoryArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Event_categoryPayload<ExtArgs>, T, "findMany"> | Null>
     event_location<T extends Event_LocationDefaultArgs<ExtArgs> = {}>(args?: Subset<T, Event_LocationDefaultArgs<ExtArgs>>): Prisma__Event_LocationClient<$Result.GetResult<Prisma.$Event_LocationPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
     ticket_types<T extends Event$ticket_typesArgs<ExtArgs> = {}>(args?: Subset<T, Event$ticket_typesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Ticket_typesPayload<ExtArgs>, T, "findMany"> | Null>
@@ -10277,7 +12501,7 @@ export namespace Prisma {
    */ 
   interface EventFieldRefs {
     readonly event_id: FieldRef<"Event", 'Int'>
-    readonly user_id: FieldRef<"Event", 'Int'>
+    readonly organizer_id: FieldRef<"Event", 'Int'>
     readonly title: FieldRef<"Event", 'String'>
     readonly description: FieldRef<"Event", 'String'>
     readonly imgEvent: FieldRef<"Event", 'String'>
@@ -17596,6 +19820,32 @@ export namespace Prisma {
   export type AddressScalarFieldEnum = (typeof AddressScalarFieldEnum)[keyof typeof AddressScalarFieldEnum]
 
 
+  export const OrganizerScalarFieldEnum: {
+    organizer_id: 'organizer_id',
+    organizer_name: 'organizer_name',
+    organizer_email: 'organizer_email',
+    organizer_phone: 'organizer_phone',
+    organizer_address: 'organizer_address',
+    organizer_logo: 'organizer_logo',
+    organizer_banner: 'organizer_banner',
+    organizer_bio: 'organizer_bio',
+    user_id: 'user_id'
+  };
+
+  export type OrganizerScalarFieldEnum = (typeof OrganizerScalarFieldEnum)[keyof typeof OrganizerScalarFieldEnum]
+
+
+  export const Bank_accountScalarFieldEnum: {
+    bank_account_id: 'bank_account_id',
+    bank_name: 'bank_name',
+    bank_account_name: 'bank_account_name',
+    bank_account_number: 'bank_account_number',
+    organizer_id: 'organizer_id'
+  };
+
+  export type Bank_accountScalarFieldEnum = (typeof Bank_accountScalarFieldEnum)[keyof typeof Bank_accountScalarFieldEnum]
+
+
   export const PointScalarFieldEnum: {
     point_id: 'point_id',
     user_id: 'user_id',
@@ -17643,7 +19893,7 @@ export namespace Prisma {
 
   export const EventScalarFieldEnum: {
     event_id: 'event_id',
-    user_id: 'user_id',
+    organizer_id: 'organizer_id',
     title: 'title',
     description: 'description',
     imgEvent: 'imgEvent',
@@ -17902,7 +20152,7 @@ export namespace Prisma {
     referred?: XOR<ReferralNullableScalarRelationFilter, ReferralWhereInput> | null
     points?: PointListRelationFilter
     coupons?: CouponListRelationFilter
-    events?: EventListRelationFilter
+    organizer?: XOR<OrganizerNullableScalarRelationFilter, OrganizerWhereInput> | null
     transaction_details?: Transaction_DetailListRelationFilter
     transaction?: TransactionListRelationFilter
   }
@@ -17922,7 +20172,7 @@ export namespace Prisma {
     referred?: ReferralOrderByWithRelationInput
     points?: PointOrderByRelationAggregateInput
     coupons?: CouponOrderByRelationAggregateInput
-    events?: EventOrderByRelationAggregateInput
+    organizer?: OrganizerOrderByWithRelationInput
     transaction_details?: Transaction_DetailOrderByRelationAggregateInput
     transaction?: TransactionOrderByRelationAggregateInput
   }
@@ -17945,7 +20195,7 @@ export namespace Prisma {
     referred?: XOR<ReferralNullableScalarRelationFilter, ReferralWhereInput> | null
     points?: PointListRelationFilter
     coupons?: CouponListRelationFilter
-    events?: EventListRelationFilter
+    organizer?: XOR<OrganizerNullableScalarRelationFilter, OrganizerWhereInput> | null
     transaction_details?: Transaction_DetailListRelationFilter
     transaction?: TransactionListRelationFilter
   }, "user_id" | "email">
@@ -18110,6 +20360,146 @@ export namespace Prisma {
     city?: StringWithAggregatesFilter<"Address"> | string
     country?: StringWithAggregatesFilter<"Address"> | string
     zipcode?: StringNullableWithAggregatesFilter<"Address"> | string | null
+  }
+
+  export type OrganizerWhereInput = {
+    AND?: OrganizerWhereInput | OrganizerWhereInput[]
+    OR?: OrganizerWhereInput[]
+    NOT?: OrganizerWhereInput | OrganizerWhereInput[]
+    organizer_id?: IntFilter<"Organizer"> | number
+    organizer_name?: StringFilter<"Organizer"> | string
+    organizer_email?: StringFilter<"Organizer"> | string
+    organizer_phone?: StringFilter<"Organizer"> | string
+    organizer_address?: StringFilter<"Organizer"> | string
+    organizer_logo?: StringNullableFilter<"Organizer"> | string | null
+    organizer_banner?: StringNullableFilter<"Organizer"> | string | null
+    organizer_bio?: StringNullableFilter<"Organizer"> | string | null
+    user_id?: IntFilter<"Organizer"> | number
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    bank_account?: XOR<Bank_accountNullableScalarRelationFilter, Bank_accountWhereInput> | null
+    events?: EventListRelationFilter
+  }
+
+  export type OrganizerOrderByWithRelationInput = {
+    organizer_id?: SortOrder
+    organizer_name?: SortOrder
+    organizer_email?: SortOrder
+    organizer_phone?: SortOrder
+    organizer_address?: SortOrder
+    organizer_logo?: SortOrderInput | SortOrder
+    organizer_banner?: SortOrderInput | SortOrder
+    organizer_bio?: SortOrderInput | SortOrder
+    user_id?: SortOrder
+    user?: UserOrderByWithRelationInput
+    bank_account?: Bank_accountOrderByWithRelationInput
+    events?: EventOrderByRelationAggregateInput
+  }
+
+  export type OrganizerWhereUniqueInput = Prisma.AtLeast<{
+    organizer_id?: number
+    organizer_name?: string
+    organizer_email?: string
+    user_id?: number
+    AND?: OrganizerWhereInput | OrganizerWhereInput[]
+    OR?: OrganizerWhereInput[]
+    NOT?: OrganizerWhereInput | OrganizerWhereInput[]
+    organizer_phone?: StringFilter<"Organizer"> | string
+    organizer_address?: StringFilter<"Organizer"> | string
+    organizer_logo?: StringNullableFilter<"Organizer"> | string | null
+    organizer_banner?: StringNullableFilter<"Organizer"> | string | null
+    organizer_bio?: StringNullableFilter<"Organizer"> | string | null
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    bank_account?: XOR<Bank_accountNullableScalarRelationFilter, Bank_accountWhereInput> | null
+    events?: EventListRelationFilter
+  }, "organizer_id" | "organizer_name" | "organizer_email" | "user_id">
+
+  export type OrganizerOrderByWithAggregationInput = {
+    organizer_id?: SortOrder
+    organizer_name?: SortOrder
+    organizer_email?: SortOrder
+    organizer_phone?: SortOrder
+    organizer_address?: SortOrder
+    organizer_logo?: SortOrderInput | SortOrder
+    organizer_banner?: SortOrderInput | SortOrder
+    organizer_bio?: SortOrderInput | SortOrder
+    user_id?: SortOrder
+    _count?: OrganizerCountOrderByAggregateInput
+    _avg?: OrganizerAvgOrderByAggregateInput
+    _max?: OrganizerMaxOrderByAggregateInput
+    _min?: OrganizerMinOrderByAggregateInput
+    _sum?: OrganizerSumOrderByAggregateInput
+  }
+
+  export type OrganizerScalarWhereWithAggregatesInput = {
+    AND?: OrganizerScalarWhereWithAggregatesInput | OrganizerScalarWhereWithAggregatesInput[]
+    OR?: OrganizerScalarWhereWithAggregatesInput[]
+    NOT?: OrganizerScalarWhereWithAggregatesInput | OrganizerScalarWhereWithAggregatesInput[]
+    organizer_id?: IntWithAggregatesFilter<"Organizer"> | number
+    organizer_name?: StringWithAggregatesFilter<"Organizer"> | string
+    organizer_email?: StringWithAggregatesFilter<"Organizer"> | string
+    organizer_phone?: StringWithAggregatesFilter<"Organizer"> | string
+    organizer_address?: StringWithAggregatesFilter<"Organizer"> | string
+    organizer_logo?: StringNullableWithAggregatesFilter<"Organizer"> | string | null
+    organizer_banner?: StringNullableWithAggregatesFilter<"Organizer"> | string | null
+    organizer_bio?: StringNullableWithAggregatesFilter<"Organizer"> | string | null
+    user_id?: IntWithAggregatesFilter<"Organizer"> | number
+  }
+
+  export type Bank_accountWhereInput = {
+    AND?: Bank_accountWhereInput | Bank_accountWhereInput[]
+    OR?: Bank_accountWhereInput[]
+    NOT?: Bank_accountWhereInput | Bank_accountWhereInput[]
+    bank_account_id?: IntFilter<"Bank_account"> | number
+    bank_name?: StringFilter<"Bank_account"> | string
+    bank_account_name?: StringFilter<"Bank_account"> | string
+    bank_account_number?: StringFilter<"Bank_account"> | string
+    organizer_id?: IntFilter<"Bank_account"> | number
+    organizer?: XOR<OrganizerScalarRelationFilter, OrganizerWhereInput>
+  }
+
+  export type Bank_accountOrderByWithRelationInput = {
+    bank_account_id?: SortOrder
+    bank_name?: SortOrder
+    bank_account_name?: SortOrder
+    bank_account_number?: SortOrder
+    organizer_id?: SortOrder
+    organizer?: OrganizerOrderByWithRelationInput
+  }
+
+  export type Bank_accountWhereUniqueInput = Prisma.AtLeast<{
+    bank_account_id?: number
+    organizer_id?: number
+    AND?: Bank_accountWhereInput | Bank_accountWhereInput[]
+    OR?: Bank_accountWhereInput[]
+    NOT?: Bank_accountWhereInput | Bank_accountWhereInput[]
+    bank_name?: StringFilter<"Bank_account"> | string
+    bank_account_name?: StringFilter<"Bank_account"> | string
+    bank_account_number?: StringFilter<"Bank_account"> | string
+    organizer?: XOR<OrganizerScalarRelationFilter, OrganizerWhereInput>
+  }, "bank_account_id" | "organizer_id">
+
+  export type Bank_accountOrderByWithAggregationInput = {
+    bank_account_id?: SortOrder
+    bank_name?: SortOrder
+    bank_account_name?: SortOrder
+    bank_account_number?: SortOrder
+    organizer_id?: SortOrder
+    _count?: Bank_accountCountOrderByAggregateInput
+    _avg?: Bank_accountAvgOrderByAggregateInput
+    _max?: Bank_accountMaxOrderByAggregateInput
+    _min?: Bank_accountMinOrderByAggregateInput
+    _sum?: Bank_accountSumOrderByAggregateInput
+  }
+
+  export type Bank_accountScalarWhereWithAggregatesInput = {
+    AND?: Bank_accountScalarWhereWithAggregatesInput | Bank_accountScalarWhereWithAggregatesInput[]
+    OR?: Bank_accountScalarWhereWithAggregatesInput[]
+    NOT?: Bank_accountScalarWhereWithAggregatesInput | Bank_accountScalarWhereWithAggregatesInput[]
+    bank_account_id?: IntWithAggregatesFilter<"Bank_account"> | number
+    bank_name?: StringWithAggregatesFilter<"Bank_account"> | string
+    bank_account_name?: StringWithAggregatesFilter<"Bank_account"> | string
+    bank_account_number?: StringWithAggregatesFilter<"Bank_account"> | string
+    organizer_id?: IntWithAggregatesFilter<"Bank_account"> | number
   }
 
   export type PointWhereInput = {
@@ -18353,7 +20743,7 @@ export namespace Prisma {
     OR?: EventWhereInput[]
     NOT?: EventWhereInput | EventWhereInput[]
     event_id?: IntFilter<"Event"> | number
-    user_id?: IntFilter<"Event"> | number
+    organizer_id?: IntFilter<"Event"> | number
     title?: StringFilter<"Event"> | string
     description?: StringFilter<"Event"> | string
     imgEvent?: StringFilter<"Event"> | string
@@ -18366,7 +20756,7 @@ export namespace Prisma {
     timezone?: StringFilter<"Event"> | string
     createdAt?: DateTimeFilter<"Event"> | Date | string
     updatedAt?: DateTimeFilter<"Event"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    organizer?: XOR<OrganizerScalarRelationFilter, OrganizerWhereInput>
     event_category?: Event_categoryListRelationFilter
     event_location?: XOR<Event_LocationScalarRelationFilter, Event_LocationWhereInput>
     ticket_types?: Ticket_typesListRelationFilter
@@ -18374,7 +20764,7 @@ export namespace Prisma {
 
   export type EventOrderByWithRelationInput = {
     event_id?: SortOrder
-    user_id?: SortOrder
+    organizer_id?: SortOrder
     title?: SortOrder
     description?: SortOrder
     imgEvent?: SortOrder
@@ -18387,7 +20777,7 @@ export namespace Prisma {
     timezone?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    user?: UserOrderByWithRelationInput
+    organizer?: OrganizerOrderByWithRelationInput
     event_category?: Event_categoryOrderByRelationAggregateInput
     event_location?: Event_LocationOrderByWithRelationInput
     ticket_types?: Ticket_typesOrderByRelationAggregateInput
@@ -18399,7 +20789,7 @@ export namespace Prisma {
     AND?: EventWhereInput | EventWhereInput[]
     OR?: EventWhereInput[]
     NOT?: EventWhereInput | EventWhereInput[]
-    user_id?: IntFilter<"Event"> | number
+    organizer_id?: IntFilter<"Event"> | number
     title?: StringFilter<"Event"> | string
     description?: StringFilter<"Event"> | string
     imgEvent?: StringFilter<"Event"> | string
@@ -18411,7 +20801,7 @@ export namespace Prisma {
     timezone?: StringFilter<"Event"> | string
     createdAt?: DateTimeFilter<"Event"> | Date | string
     updatedAt?: DateTimeFilter<"Event"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    organizer?: XOR<OrganizerScalarRelationFilter, OrganizerWhereInput>
     event_category?: Event_categoryListRelationFilter
     event_location?: XOR<Event_LocationScalarRelationFilter, Event_LocationWhereInput>
     ticket_types?: Ticket_typesListRelationFilter
@@ -18419,7 +20809,7 @@ export namespace Prisma {
 
   export type EventOrderByWithAggregationInput = {
     event_id?: SortOrder
-    user_id?: SortOrder
+    organizer_id?: SortOrder
     title?: SortOrder
     description?: SortOrder
     imgEvent?: SortOrder
@@ -18444,7 +20834,7 @@ export namespace Prisma {
     OR?: EventScalarWhereWithAggregatesInput[]
     NOT?: EventScalarWhereWithAggregatesInput | EventScalarWhereWithAggregatesInput[]
     event_id?: IntWithAggregatesFilter<"Event"> | number
-    user_id?: IntWithAggregatesFilter<"Event"> | number
+    organizer_id?: IntWithAggregatesFilter<"Event"> | number
     title?: StringWithAggregatesFilter<"Event"> | string
     description?: StringWithAggregatesFilter<"Event"> | string
     imgEvent?: StringWithAggregatesFilter<"Event"> | string
@@ -18864,7 +21254,7 @@ export namespace Prisma {
     referred?: ReferralCreateNestedOneWithoutReferred_usersInput
     points?: PointCreateNestedManyWithoutUserInput
     coupons?: CouponCreateNestedManyWithoutUserInput
-    events?: EventCreateNestedManyWithoutUserInput
+    organizer?: OrganizerCreateNestedOneWithoutUserInput
     transaction_details?: Transaction_DetailCreateNestedManyWithoutUserInput
     transaction?: TransactionCreateNestedManyWithoutUserInput
   }
@@ -18883,7 +21273,7 @@ export namespace Prisma {
     referral?: ReferralUncheckedCreateNestedOneWithoutUserInput
     points?: PointUncheckedCreateNestedManyWithoutUserInput
     coupons?: CouponUncheckedCreateNestedManyWithoutUserInput
-    events?: EventUncheckedCreateNestedManyWithoutUserInput
+    organizer?: OrganizerUncheckedCreateNestedOneWithoutUserInput
     transaction_details?: Transaction_DetailUncheckedCreateNestedManyWithoutUserInput
     transaction?: TransactionUncheckedCreateNestedManyWithoutUserInput
   }
@@ -18901,7 +21291,7 @@ export namespace Prisma {
     referred?: ReferralUpdateOneWithoutReferred_usersNestedInput
     points?: PointUpdateManyWithoutUserNestedInput
     coupons?: CouponUpdateManyWithoutUserNestedInput
-    events?: EventUpdateManyWithoutUserNestedInput
+    organizer?: OrganizerUpdateOneWithoutUserNestedInput
     transaction_details?: Transaction_DetailUpdateManyWithoutUserNestedInput
     transaction?: TransactionUpdateManyWithoutUserNestedInput
   }
@@ -18920,7 +21310,7 @@ export namespace Prisma {
     referral?: ReferralUncheckedUpdateOneWithoutUserNestedInput
     points?: PointUncheckedUpdateManyWithoutUserNestedInput
     coupons?: CouponUncheckedUpdateManyWithoutUserNestedInput
-    events?: EventUncheckedUpdateManyWithoutUserNestedInput
+    organizer?: OrganizerUncheckedUpdateOneWithoutUserNestedInput
     transaction_details?: Transaction_DetailUncheckedUpdateManyWithoutUserNestedInput
     transaction?: TransactionUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -19083,6 +21473,146 @@ export namespace Prisma {
     city?: StringFieldUpdateOperationsInput | string
     country?: StringFieldUpdateOperationsInput | string
     zipcode?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type OrganizerCreateInput = {
+    organizer_name: string
+    organizer_email: string
+    organizer_phone: string
+    organizer_address: string
+    organizer_logo?: string | null
+    organizer_banner?: string | null
+    organizer_bio?: string | null
+    user: UserCreateNestedOneWithoutOrganizerInput
+    bank_account?: Bank_accountCreateNestedOneWithoutOrganizerInput
+    events?: EventCreateNestedManyWithoutOrganizerInput
+  }
+
+  export type OrganizerUncheckedCreateInput = {
+    organizer_id?: number
+    organizer_name: string
+    organizer_email: string
+    organizer_phone: string
+    organizer_address: string
+    organizer_logo?: string | null
+    organizer_banner?: string | null
+    organizer_bio?: string | null
+    user_id: number
+    bank_account?: Bank_accountUncheckedCreateNestedOneWithoutOrganizerInput
+    events?: EventUncheckedCreateNestedManyWithoutOrganizerInput
+  }
+
+  export type OrganizerUpdateInput = {
+    organizer_name?: StringFieldUpdateOperationsInput | string
+    organizer_email?: StringFieldUpdateOperationsInput | string
+    organizer_phone?: StringFieldUpdateOperationsInput | string
+    organizer_address?: StringFieldUpdateOperationsInput | string
+    organizer_logo?: NullableStringFieldUpdateOperationsInput | string | null
+    organizer_banner?: NullableStringFieldUpdateOperationsInput | string | null
+    organizer_bio?: NullableStringFieldUpdateOperationsInput | string | null
+    user?: UserUpdateOneRequiredWithoutOrganizerNestedInput
+    bank_account?: Bank_accountUpdateOneWithoutOrganizerNestedInput
+    events?: EventUpdateManyWithoutOrganizerNestedInput
+  }
+
+  export type OrganizerUncheckedUpdateInput = {
+    organizer_id?: IntFieldUpdateOperationsInput | number
+    organizer_name?: StringFieldUpdateOperationsInput | string
+    organizer_email?: StringFieldUpdateOperationsInput | string
+    organizer_phone?: StringFieldUpdateOperationsInput | string
+    organizer_address?: StringFieldUpdateOperationsInput | string
+    organizer_logo?: NullableStringFieldUpdateOperationsInput | string | null
+    organizer_banner?: NullableStringFieldUpdateOperationsInput | string | null
+    organizer_bio?: NullableStringFieldUpdateOperationsInput | string | null
+    user_id?: IntFieldUpdateOperationsInput | number
+    bank_account?: Bank_accountUncheckedUpdateOneWithoutOrganizerNestedInput
+    events?: EventUncheckedUpdateManyWithoutOrganizerNestedInput
+  }
+
+  export type OrganizerCreateManyInput = {
+    organizer_id?: number
+    organizer_name: string
+    organizer_email: string
+    organizer_phone: string
+    organizer_address: string
+    organizer_logo?: string | null
+    organizer_banner?: string | null
+    organizer_bio?: string | null
+    user_id: number
+  }
+
+  export type OrganizerUpdateManyMutationInput = {
+    organizer_name?: StringFieldUpdateOperationsInput | string
+    organizer_email?: StringFieldUpdateOperationsInput | string
+    organizer_phone?: StringFieldUpdateOperationsInput | string
+    organizer_address?: StringFieldUpdateOperationsInput | string
+    organizer_logo?: NullableStringFieldUpdateOperationsInput | string | null
+    organizer_banner?: NullableStringFieldUpdateOperationsInput | string | null
+    organizer_bio?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type OrganizerUncheckedUpdateManyInput = {
+    organizer_id?: IntFieldUpdateOperationsInput | number
+    organizer_name?: StringFieldUpdateOperationsInput | string
+    organizer_email?: StringFieldUpdateOperationsInput | string
+    organizer_phone?: StringFieldUpdateOperationsInput | string
+    organizer_address?: StringFieldUpdateOperationsInput | string
+    organizer_logo?: NullableStringFieldUpdateOperationsInput | string | null
+    organizer_banner?: NullableStringFieldUpdateOperationsInput | string | null
+    organizer_bio?: NullableStringFieldUpdateOperationsInput | string | null
+    user_id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type Bank_accountCreateInput = {
+    bank_name: string
+    bank_account_name: string
+    bank_account_number: string
+    organizer: OrganizerCreateNestedOneWithoutBank_accountInput
+  }
+
+  export type Bank_accountUncheckedCreateInput = {
+    bank_account_id?: number
+    bank_name: string
+    bank_account_name: string
+    bank_account_number: string
+    organizer_id: number
+  }
+
+  export type Bank_accountUpdateInput = {
+    bank_name?: StringFieldUpdateOperationsInput | string
+    bank_account_name?: StringFieldUpdateOperationsInput | string
+    bank_account_number?: StringFieldUpdateOperationsInput | string
+    organizer?: OrganizerUpdateOneRequiredWithoutBank_accountNestedInput
+  }
+
+  export type Bank_accountUncheckedUpdateInput = {
+    bank_account_id?: IntFieldUpdateOperationsInput | number
+    bank_name?: StringFieldUpdateOperationsInput | string
+    bank_account_name?: StringFieldUpdateOperationsInput | string
+    bank_account_number?: StringFieldUpdateOperationsInput | string
+    organizer_id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type Bank_accountCreateManyInput = {
+    bank_account_id?: number
+    bank_name: string
+    bank_account_name: string
+    bank_account_number: string
+    organizer_id: number
+  }
+
+  export type Bank_accountUpdateManyMutationInput = {
+    bank_name?: StringFieldUpdateOperationsInput | string
+    bank_account_name?: StringFieldUpdateOperationsInput | string
+    bank_account_number?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type Bank_accountUncheckedUpdateManyInput = {
+    bank_account_id?: IntFieldUpdateOperationsInput | number
+    bank_name?: StringFieldUpdateOperationsInput | string
+    bank_account_name?: StringFieldUpdateOperationsInput | string
+    bank_account_number?: StringFieldUpdateOperationsInput | string
+    organizer_id?: IntFieldUpdateOperationsInput | number
   }
 
   export type PointCreateInput = {
@@ -19316,7 +21846,7 @@ export namespace Prisma {
     timezone: string
     createdAt?: Date | string
     updatedAt: Date | string
-    user: UserCreateNestedOneWithoutEventsInput
+    organizer: OrganizerCreateNestedOneWithoutEventsInput
     event_category?: Event_categoryCreateNestedManyWithoutEventInput
     event_location: Event_LocationCreateNestedOneWithoutEventInput
     ticket_types?: Ticket_typesCreateNestedManyWithoutEventInput
@@ -19324,7 +21854,7 @@ export namespace Prisma {
 
   export type EventUncheckedCreateInput = {
     event_id?: number
-    user_id: number
+    organizer_id: number
     title: string
     description: string
     imgEvent: string
@@ -19353,7 +21883,7 @@ export namespace Prisma {
     timezone?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutEventsNestedInput
+    organizer?: OrganizerUpdateOneRequiredWithoutEventsNestedInput
     event_category?: Event_categoryUpdateManyWithoutEventNestedInput
     event_location?: Event_LocationUpdateOneRequiredWithoutEventNestedInput
     ticket_types?: Ticket_typesUpdateManyWithoutEventNestedInput
@@ -19361,7 +21891,7 @@ export namespace Prisma {
 
   export type EventUncheckedUpdateInput = {
     event_id?: IntFieldUpdateOperationsInput | number
-    user_id?: IntFieldUpdateOperationsInput | number
+    organizer_id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     imgEvent?: StringFieldUpdateOperationsInput | string
@@ -19380,7 +21910,7 @@ export namespace Prisma {
 
   export type EventCreateManyInput = {
     event_id?: number
-    user_id: number
+    organizer_id: number
     title: string
     description: string
     imgEvent: string
@@ -19411,7 +21941,7 @@ export namespace Prisma {
 
   export type EventUncheckedUpdateManyInput = {
     event_id?: IntFieldUpdateOperationsInput | number
-    user_id?: IntFieldUpdateOperationsInput | number
+    organizer_id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     imgEvent?: StringFieldUpdateOperationsInput | string
@@ -19876,10 +22406,9 @@ export namespace Prisma {
     none?: CouponWhereInput
   }
 
-  export type EventListRelationFilter = {
-    every?: EventWhereInput
-    some?: EventWhereInput
-    none?: EventWhereInput
+  export type OrganizerNullableScalarRelationFilter = {
+    is?: OrganizerWhereInput | null
+    isNot?: OrganizerWhereInput | null
   }
 
   export type Transaction_DetailListRelationFilter = {
@@ -19904,10 +22433,6 @@ export namespace Prisma {
   }
 
   export type CouponOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type EventOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -20186,6 +22711,106 @@ export namespace Prisma {
     _max?: NestedEnumAddressNameFilter<$PrismaModel>
   }
 
+  export type Bank_accountNullableScalarRelationFilter = {
+    is?: Bank_accountWhereInput | null
+    isNot?: Bank_accountWhereInput | null
+  }
+
+  export type EventListRelationFilter = {
+    every?: EventWhereInput
+    some?: EventWhereInput
+    none?: EventWhereInput
+  }
+
+  export type EventOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type OrganizerCountOrderByAggregateInput = {
+    organizer_id?: SortOrder
+    organizer_name?: SortOrder
+    organizer_email?: SortOrder
+    organizer_phone?: SortOrder
+    organizer_address?: SortOrder
+    organizer_logo?: SortOrder
+    organizer_banner?: SortOrder
+    organizer_bio?: SortOrder
+    user_id?: SortOrder
+  }
+
+  export type OrganizerAvgOrderByAggregateInput = {
+    organizer_id?: SortOrder
+    user_id?: SortOrder
+  }
+
+  export type OrganizerMaxOrderByAggregateInput = {
+    organizer_id?: SortOrder
+    organizer_name?: SortOrder
+    organizer_email?: SortOrder
+    organizer_phone?: SortOrder
+    organizer_address?: SortOrder
+    organizer_logo?: SortOrder
+    organizer_banner?: SortOrder
+    organizer_bio?: SortOrder
+    user_id?: SortOrder
+  }
+
+  export type OrganizerMinOrderByAggregateInput = {
+    organizer_id?: SortOrder
+    organizer_name?: SortOrder
+    organizer_email?: SortOrder
+    organizer_phone?: SortOrder
+    organizer_address?: SortOrder
+    organizer_logo?: SortOrder
+    organizer_banner?: SortOrder
+    organizer_bio?: SortOrder
+    user_id?: SortOrder
+  }
+
+  export type OrganizerSumOrderByAggregateInput = {
+    organizer_id?: SortOrder
+    user_id?: SortOrder
+  }
+
+  export type OrganizerScalarRelationFilter = {
+    is?: OrganizerWhereInput
+    isNot?: OrganizerWhereInput
+  }
+
+  export type Bank_accountCountOrderByAggregateInput = {
+    bank_account_id?: SortOrder
+    bank_name?: SortOrder
+    bank_account_name?: SortOrder
+    bank_account_number?: SortOrder
+    organizer_id?: SortOrder
+  }
+
+  export type Bank_accountAvgOrderByAggregateInput = {
+    bank_account_id?: SortOrder
+    organizer_id?: SortOrder
+  }
+
+  export type Bank_accountMaxOrderByAggregateInput = {
+    bank_account_id?: SortOrder
+    bank_name?: SortOrder
+    bank_account_name?: SortOrder
+    bank_account_number?: SortOrder
+    organizer_id?: SortOrder
+  }
+
+  export type Bank_accountMinOrderByAggregateInput = {
+    bank_account_id?: SortOrder
+    bank_name?: SortOrder
+    bank_account_name?: SortOrder
+    bank_account_number?: SortOrder
+    organizer_id?: SortOrder
+  }
+
+  export type Bank_accountSumOrderByAggregateInput = {
+    bank_account_id?: SortOrder
+    organizer_id?: SortOrder
+  }
+
   export type PointCountOrderByAggregateInput = {
     point_id?: SortOrder
     user_id?: SortOrder
@@ -20385,7 +23010,7 @@ export namespace Prisma {
 
   export type EventCountOrderByAggregateInput = {
     event_id?: SortOrder
-    user_id?: SortOrder
+    organizer_id?: SortOrder
     title?: SortOrder
     description?: SortOrder
     imgEvent?: SortOrder
@@ -20402,14 +23027,14 @@ export namespace Prisma {
 
   export type EventAvgOrderByAggregateInput = {
     event_id?: SortOrder
-    user_id?: SortOrder
+    organizer_id?: SortOrder
     coupon_id?: SortOrder
     event_location_id?: SortOrder
   }
 
   export type EventMaxOrderByAggregateInput = {
     event_id?: SortOrder
-    user_id?: SortOrder
+    organizer_id?: SortOrder
     title?: SortOrder
     description?: SortOrder
     imgEvent?: SortOrder
@@ -20426,7 +23051,7 @@ export namespace Prisma {
 
   export type EventMinOrderByAggregateInput = {
     event_id?: SortOrder
-    user_id?: SortOrder
+    organizer_id?: SortOrder
     title?: SortOrder
     description?: SortOrder
     imgEvent?: SortOrder
@@ -20443,7 +23068,7 @@ export namespace Prisma {
 
   export type EventSumOrderByAggregateInput = {
     event_id?: SortOrder
-    user_id?: SortOrder
+    organizer_id?: SortOrder
     coupon_id?: SortOrder
     event_location_id?: SortOrder
   }
@@ -20782,11 +23407,10 @@ export namespace Prisma {
     connect?: CouponWhereUniqueInput | CouponWhereUniqueInput[]
   }
 
-  export type EventCreateNestedManyWithoutUserInput = {
-    create?: XOR<EventCreateWithoutUserInput, EventUncheckedCreateWithoutUserInput> | EventCreateWithoutUserInput[] | EventUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: EventCreateOrConnectWithoutUserInput | EventCreateOrConnectWithoutUserInput[]
-    createMany?: EventCreateManyUserInputEnvelope
-    connect?: EventWhereUniqueInput | EventWhereUniqueInput[]
+  export type OrganizerCreateNestedOneWithoutUserInput = {
+    create?: XOR<OrganizerCreateWithoutUserInput, OrganizerUncheckedCreateWithoutUserInput>
+    connectOrCreate?: OrganizerCreateOrConnectWithoutUserInput
+    connect?: OrganizerWhereUniqueInput
   }
 
   export type Transaction_DetailCreateNestedManyWithoutUserInput = {
@@ -20829,11 +23453,10 @@ export namespace Prisma {
     connect?: CouponWhereUniqueInput | CouponWhereUniqueInput[]
   }
 
-  export type EventUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<EventCreateWithoutUserInput, EventUncheckedCreateWithoutUserInput> | EventCreateWithoutUserInput[] | EventUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: EventCreateOrConnectWithoutUserInput | EventCreateOrConnectWithoutUserInput[]
-    createMany?: EventCreateManyUserInputEnvelope
-    connect?: EventWhereUniqueInput | EventWhereUniqueInput[]
+  export type OrganizerUncheckedCreateNestedOneWithoutUserInput = {
+    create?: XOR<OrganizerCreateWithoutUserInput, OrganizerUncheckedCreateWithoutUserInput>
+    connectOrCreate?: OrganizerCreateOrConnectWithoutUserInput
+    connect?: OrganizerWhereUniqueInput
   }
 
   export type Transaction_DetailUncheckedCreateNestedManyWithoutUserInput = {
@@ -20928,18 +23551,14 @@ export namespace Prisma {
     deleteMany?: CouponScalarWhereInput | CouponScalarWhereInput[]
   }
 
-  export type EventUpdateManyWithoutUserNestedInput = {
-    create?: XOR<EventCreateWithoutUserInput, EventUncheckedCreateWithoutUserInput> | EventCreateWithoutUserInput[] | EventUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: EventCreateOrConnectWithoutUserInput | EventCreateOrConnectWithoutUserInput[]
-    upsert?: EventUpsertWithWhereUniqueWithoutUserInput | EventUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: EventCreateManyUserInputEnvelope
-    set?: EventWhereUniqueInput | EventWhereUniqueInput[]
-    disconnect?: EventWhereUniqueInput | EventWhereUniqueInput[]
-    delete?: EventWhereUniqueInput | EventWhereUniqueInput[]
-    connect?: EventWhereUniqueInput | EventWhereUniqueInput[]
-    update?: EventUpdateWithWhereUniqueWithoutUserInput | EventUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: EventUpdateManyWithWhereWithoutUserInput | EventUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: EventScalarWhereInput | EventScalarWhereInput[]
+  export type OrganizerUpdateOneWithoutUserNestedInput = {
+    create?: XOR<OrganizerCreateWithoutUserInput, OrganizerUncheckedCreateWithoutUserInput>
+    connectOrCreate?: OrganizerCreateOrConnectWithoutUserInput
+    upsert?: OrganizerUpsertWithoutUserInput
+    disconnect?: OrganizerWhereInput | boolean
+    delete?: OrganizerWhereInput | boolean
+    connect?: OrganizerWhereUniqueInput
+    update?: XOR<XOR<OrganizerUpdateToOneWithWhereWithoutUserInput, OrganizerUpdateWithoutUserInput>, OrganizerUncheckedUpdateWithoutUserInput>
   }
 
   export type Transaction_DetailUpdateManyWithoutUserNestedInput = {
@@ -21034,18 +23653,14 @@ export namespace Prisma {
     deleteMany?: CouponScalarWhereInput | CouponScalarWhereInput[]
   }
 
-  export type EventUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<EventCreateWithoutUserInput, EventUncheckedCreateWithoutUserInput> | EventCreateWithoutUserInput[] | EventUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: EventCreateOrConnectWithoutUserInput | EventCreateOrConnectWithoutUserInput[]
-    upsert?: EventUpsertWithWhereUniqueWithoutUserInput | EventUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: EventCreateManyUserInputEnvelope
-    set?: EventWhereUniqueInput | EventWhereUniqueInput[]
-    disconnect?: EventWhereUniqueInput | EventWhereUniqueInput[]
-    delete?: EventWhereUniqueInput | EventWhereUniqueInput[]
-    connect?: EventWhereUniqueInput | EventWhereUniqueInput[]
-    update?: EventUpdateWithWhereUniqueWithoutUserInput | EventUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: EventUpdateManyWithWhereWithoutUserInput | EventUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: EventScalarWhereInput | EventScalarWhereInput[]
+  export type OrganizerUncheckedUpdateOneWithoutUserNestedInput = {
+    create?: XOR<OrganizerCreateWithoutUserInput, OrganizerUncheckedCreateWithoutUserInput>
+    connectOrCreate?: OrganizerCreateOrConnectWithoutUserInput
+    upsert?: OrganizerUpsertWithoutUserInput
+    disconnect?: OrganizerWhereInput | boolean
+    delete?: OrganizerWhereInput | boolean
+    connect?: OrganizerWhereUniqueInput
+    update?: XOR<XOR<OrganizerUpdateToOneWithWhereWithoutUserInput, OrganizerUpdateWithoutUserInput>, OrganizerUncheckedUpdateWithoutUserInput>
   }
 
   export type Transaction_DetailUncheckedUpdateManyWithoutUserNestedInput = {
@@ -21192,6 +23807,108 @@ export namespace Prisma {
     update?: XOR<XOR<ProfileUpdateToOneWithWhereWithoutAddressesInput, ProfileUpdateWithoutAddressesInput>, ProfileUncheckedUpdateWithoutAddressesInput>
   }
 
+  export type UserCreateNestedOneWithoutOrganizerInput = {
+    create?: XOR<UserCreateWithoutOrganizerInput, UserUncheckedCreateWithoutOrganizerInput>
+    connectOrCreate?: UserCreateOrConnectWithoutOrganizerInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type Bank_accountCreateNestedOneWithoutOrganizerInput = {
+    create?: XOR<Bank_accountCreateWithoutOrganizerInput, Bank_accountUncheckedCreateWithoutOrganizerInput>
+    connectOrCreate?: Bank_accountCreateOrConnectWithoutOrganizerInput
+    connect?: Bank_accountWhereUniqueInput
+  }
+
+  export type EventCreateNestedManyWithoutOrganizerInput = {
+    create?: XOR<EventCreateWithoutOrganizerInput, EventUncheckedCreateWithoutOrganizerInput> | EventCreateWithoutOrganizerInput[] | EventUncheckedCreateWithoutOrganizerInput[]
+    connectOrCreate?: EventCreateOrConnectWithoutOrganizerInput | EventCreateOrConnectWithoutOrganizerInput[]
+    createMany?: EventCreateManyOrganizerInputEnvelope
+    connect?: EventWhereUniqueInput | EventWhereUniqueInput[]
+  }
+
+  export type Bank_accountUncheckedCreateNestedOneWithoutOrganizerInput = {
+    create?: XOR<Bank_accountCreateWithoutOrganizerInput, Bank_accountUncheckedCreateWithoutOrganizerInput>
+    connectOrCreate?: Bank_accountCreateOrConnectWithoutOrganizerInput
+    connect?: Bank_accountWhereUniqueInput
+  }
+
+  export type EventUncheckedCreateNestedManyWithoutOrganizerInput = {
+    create?: XOR<EventCreateWithoutOrganizerInput, EventUncheckedCreateWithoutOrganizerInput> | EventCreateWithoutOrganizerInput[] | EventUncheckedCreateWithoutOrganizerInput[]
+    connectOrCreate?: EventCreateOrConnectWithoutOrganizerInput | EventCreateOrConnectWithoutOrganizerInput[]
+    createMany?: EventCreateManyOrganizerInputEnvelope
+    connect?: EventWhereUniqueInput | EventWhereUniqueInput[]
+  }
+
+  export type UserUpdateOneRequiredWithoutOrganizerNestedInput = {
+    create?: XOR<UserCreateWithoutOrganizerInput, UserUncheckedCreateWithoutOrganizerInput>
+    connectOrCreate?: UserCreateOrConnectWithoutOrganizerInput
+    upsert?: UserUpsertWithoutOrganizerInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutOrganizerInput, UserUpdateWithoutOrganizerInput>, UserUncheckedUpdateWithoutOrganizerInput>
+  }
+
+  export type Bank_accountUpdateOneWithoutOrganizerNestedInput = {
+    create?: XOR<Bank_accountCreateWithoutOrganizerInput, Bank_accountUncheckedCreateWithoutOrganizerInput>
+    connectOrCreate?: Bank_accountCreateOrConnectWithoutOrganizerInput
+    upsert?: Bank_accountUpsertWithoutOrganizerInput
+    disconnect?: Bank_accountWhereInput | boolean
+    delete?: Bank_accountWhereInput | boolean
+    connect?: Bank_accountWhereUniqueInput
+    update?: XOR<XOR<Bank_accountUpdateToOneWithWhereWithoutOrganizerInput, Bank_accountUpdateWithoutOrganizerInput>, Bank_accountUncheckedUpdateWithoutOrganizerInput>
+  }
+
+  export type EventUpdateManyWithoutOrganizerNestedInput = {
+    create?: XOR<EventCreateWithoutOrganizerInput, EventUncheckedCreateWithoutOrganizerInput> | EventCreateWithoutOrganizerInput[] | EventUncheckedCreateWithoutOrganizerInput[]
+    connectOrCreate?: EventCreateOrConnectWithoutOrganizerInput | EventCreateOrConnectWithoutOrganizerInput[]
+    upsert?: EventUpsertWithWhereUniqueWithoutOrganizerInput | EventUpsertWithWhereUniqueWithoutOrganizerInput[]
+    createMany?: EventCreateManyOrganizerInputEnvelope
+    set?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    disconnect?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    delete?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    connect?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    update?: EventUpdateWithWhereUniqueWithoutOrganizerInput | EventUpdateWithWhereUniqueWithoutOrganizerInput[]
+    updateMany?: EventUpdateManyWithWhereWithoutOrganizerInput | EventUpdateManyWithWhereWithoutOrganizerInput[]
+    deleteMany?: EventScalarWhereInput | EventScalarWhereInput[]
+  }
+
+  export type Bank_accountUncheckedUpdateOneWithoutOrganizerNestedInput = {
+    create?: XOR<Bank_accountCreateWithoutOrganizerInput, Bank_accountUncheckedCreateWithoutOrganizerInput>
+    connectOrCreate?: Bank_accountCreateOrConnectWithoutOrganizerInput
+    upsert?: Bank_accountUpsertWithoutOrganizerInput
+    disconnect?: Bank_accountWhereInput | boolean
+    delete?: Bank_accountWhereInput | boolean
+    connect?: Bank_accountWhereUniqueInput
+    update?: XOR<XOR<Bank_accountUpdateToOneWithWhereWithoutOrganizerInput, Bank_accountUpdateWithoutOrganizerInput>, Bank_accountUncheckedUpdateWithoutOrganizerInput>
+  }
+
+  export type EventUncheckedUpdateManyWithoutOrganizerNestedInput = {
+    create?: XOR<EventCreateWithoutOrganizerInput, EventUncheckedCreateWithoutOrganizerInput> | EventCreateWithoutOrganizerInput[] | EventUncheckedCreateWithoutOrganizerInput[]
+    connectOrCreate?: EventCreateOrConnectWithoutOrganizerInput | EventCreateOrConnectWithoutOrganizerInput[]
+    upsert?: EventUpsertWithWhereUniqueWithoutOrganizerInput | EventUpsertWithWhereUniqueWithoutOrganizerInput[]
+    createMany?: EventCreateManyOrganizerInputEnvelope
+    set?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    disconnect?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    delete?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    connect?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    update?: EventUpdateWithWhereUniqueWithoutOrganizerInput | EventUpdateWithWhereUniqueWithoutOrganizerInput[]
+    updateMany?: EventUpdateManyWithWhereWithoutOrganizerInput | EventUpdateManyWithWhereWithoutOrganizerInput[]
+    deleteMany?: EventScalarWhereInput | EventScalarWhereInput[]
+  }
+
+  export type OrganizerCreateNestedOneWithoutBank_accountInput = {
+    create?: XOR<OrganizerCreateWithoutBank_accountInput, OrganizerUncheckedCreateWithoutBank_accountInput>
+    connectOrCreate?: OrganizerCreateOrConnectWithoutBank_accountInput
+    connect?: OrganizerWhereUniqueInput
+  }
+
+  export type OrganizerUpdateOneRequiredWithoutBank_accountNestedInput = {
+    create?: XOR<OrganizerCreateWithoutBank_accountInput, OrganizerUncheckedCreateWithoutBank_accountInput>
+    connectOrCreate?: OrganizerCreateOrConnectWithoutBank_accountInput
+    upsert?: OrganizerUpsertWithoutBank_accountInput
+    connect?: OrganizerWhereUniqueInput
+    update?: XOR<XOR<OrganizerUpdateToOneWithWhereWithoutBank_accountInput, OrganizerUpdateWithoutBank_accountInput>, OrganizerUncheckedUpdateWithoutBank_accountInput>
+  }
+
   export type UserCreateNestedOneWithoutPointsInput = {
     create?: XOR<UserCreateWithoutPointsInput, UserUncheckedCreateWithoutPointsInput>
     connectOrCreate?: UserCreateOrConnectWithoutPointsInput
@@ -21294,10 +24011,10 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCouponsInput, UserUpdateWithoutCouponsInput>, UserUncheckedUpdateWithoutCouponsInput>
   }
 
-  export type UserCreateNestedOneWithoutEventsInput = {
-    create?: XOR<UserCreateWithoutEventsInput, UserUncheckedCreateWithoutEventsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutEventsInput
-    connect?: UserWhereUniqueInput
+  export type OrganizerCreateNestedOneWithoutEventsInput = {
+    create?: XOR<OrganizerCreateWithoutEventsInput, OrganizerUncheckedCreateWithoutEventsInput>
+    connectOrCreate?: OrganizerCreateOrConnectWithoutEventsInput
+    connect?: OrganizerWhereUniqueInput
   }
 
   export type Event_categoryCreateNestedManyWithoutEventInput = {
@@ -21332,12 +24049,12 @@ export namespace Prisma {
     connect?: Ticket_typesWhereUniqueInput | Ticket_typesWhereUniqueInput[]
   }
 
-  export type UserUpdateOneRequiredWithoutEventsNestedInput = {
-    create?: XOR<UserCreateWithoutEventsInput, UserUncheckedCreateWithoutEventsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutEventsInput
-    upsert?: UserUpsertWithoutEventsInput
-    connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutEventsInput, UserUpdateWithoutEventsInput>, UserUncheckedUpdateWithoutEventsInput>
+  export type OrganizerUpdateOneRequiredWithoutEventsNestedInput = {
+    create?: XOR<OrganizerCreateWithoutEventsInput, OrganizerUncheckedCreateWithoutEventsInput>
+    connectOrCreate?: OrganizerCreateOrConnectWithoutEventsInput
+    upsert?: OrganizerUpsertWithoutEventsInput
+    connect?: OrganizerWhereUniqueInput
+    update?: XOR<XOR<OrganizerUpdateToOneWithWhereWithoutEventsInput, OrganizerUpdateWithoutEventsInput>, OrganizerUncheckedUpdateWithoutEventsInput>
   }
 
   export type Event_categoryUpdateManyWithoutEventNestedInput = {
@@ -22072,49 +24789,34 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type EventCreateWithoutUserInput = {
-    title: string
-    description: string
-    imgEvent: string
-    coupon_id: number
-    startDate: Date | string
-    endDate: Date | string
-    startTime: string
-    endTime: string
-    timezone: string
-    createdAt?: Date | string
-    updatedAt: Date | string
-    event_category?: Event_categoryCreateNestedManyWithoutEventInput
-    event_location: Event_LocationCreateNestedOneWithoutEventInput
-    ticket_types?: Ticket_typesCreateNestedManyWithoutEventInput
+  export type OrganizerCreateWithoutUserInput = {
+    organizer_name: string
+    organizer_email: string
+    organizer_phone: string
+    organizer_address: string
+    organizer_logo?: string | null
+    organizer_banner?: string | null
+    organizer_bio?: string | null
+    bank_account?: Bank_accountCreateNestedOneWithoutOrganizerInput
+    events?: EventCreateNestedManyWithoutOrganizerInput
   }
 
-  export type EventUncheckedCreateWithoutUserInput = {
-    event_id?: number
-    title: string
-    description: string
-    imgEvent: string
-    coupon_id: number
-    event_location_id: number
-    startDate: Date | string
-    endDate: Date | string
-    startTime: string
-    endTime: string
-    timezone: string
-    createdAt?: Date | string
-    updatedAt: Date | string
-    event_category?: Event_categoryUncheckedCreateNestedManyWithoutEventInput
-    ticket_types?: Ticket_typesUncheckedCreateNestedManyWithoutEventInput
+  export type OrganizerUncheckedCreateWithoutUserInput = {
+    organizer_id?: number
+    organizer_name: string
+    organizer_email: string
+    organizer_phone: string
+    organizer_address: string
+    organizer_logo?: string | null
+    organizer_banner?: string | null
+    organizer_bio?: string | null
+    bank_account?: Bank_accountUncheckedCreateNestedOneWithoutOrganizerInput
+    events?: EventUncheckedCreateNestedManyWithoutOrganizerInput
   }
 
-  export type EventCreateOrConnectWithoutUserInput = {
-    where: EventWhereUniqueInput
-    create: XOR<EventCreateWithoutUserInput, EventUncheckedCreateWithoutUserInput>
-  }
-
-  export type EventCreateManyUserInputEnvelope = {
-    data: EventCreateManyUserInput | EventCreateManyUserInput[]
-    skipDuplicates?: boolean
+  export type OrganizerCreateOrConnectWithoutUserInput = {
+    where: OrganizerWhereUniqueInput
+    create: XOR<OrganizerCreateWithoutUserInput, OrganizerUncheckedCreateWithoutUserInput>
   }
 
   export type Transaction_DetailCreateWithoutUserInput = {
@@ -22300,40 +25002,40 @@ export namespace Prisma {
     expired_date?: DateTimeFilter<"Coupon"> | Date | string
   }
 
-  export type EventUpsertWithWhereUniqueWithoutUserInput = {
-    where: EventWhereUniqueInput
-    update: XOR<EventUpdateWithoutUserInput, EventUncheckedUpdateWithoutUserInput>
-    create: XOR<EventCreateWithoutUserInput, EventUncheckedCreateWithoutUserInput>
+  export type OrganizerUpsertWithoutUserInput = {
+    update: XOR<OrganizerUpdateWithoutUserInput, OrganizerUncheckedUpdateWithoutUserInput>
+    create: XOR<OrganizerCreateWithoutUserInput, OrganizerUncheckedCreateWithoutUserInput>
+    where?: OrganizerWhereInput
   }
 
-  export type EventUpdateWithWhereUniqueWithoutUserInput = {
-    where: EventWhereUniqueInput
-    data: XOR<EventUpdateWithoutUserInput, EventUncheckedUpdateWithoutUserInput>
+  export type OrganizerUpdateToOneWithWhereWithoutUserInput = {
+    where?: OrganizerWhereInput
+    data: XOR<OrganizerUpdateWithoutUserInput, OrganizerUncheckedUpdateWithoutUserInput>
   }
 
-  export type EventUpdateManyWithWhereWithoutUserInput = {
-    where: EventScalarWhereInput
-    data: XOR<EventUpdateManyMutationInput, EventUncheckedUpdateManyWithoutUserInput>
+  export type OrganizerUpdateWithoutUserInput = {
+    organizer_name?: StringFieldUpdateOperationsInput | string
+    organizer_email?: StringFieldUpdateOperationsInput | string
+    organizer_phone?: StringFieldUpdateOperationsInput | string
+    organizer_address?: StringFieldUpdateOperationsInput | string
+    organizer_logo?: NullableStringFieldUpdateOperationsInput | string | null
+    organizer_banner?: NullableStringFieldUpdateOperationsInput | string | null
+    organizer_bio?: NullableStringFieldUpdateOperationsInput | string | null
+    bank_account?: Bank_accountUpdateOneWithoutOrganizerNestedInput
+    events?: EventUpdateManyWithoutOrganizerNestedInput
   }
 
-  export type EventScalarWhereInput = {
-    AND?: EventScalarWhereInput | EventScalarWhereInput[]
-    OR?: EventScalarWhereInput[]
-    NOT?: EventScalarWhereInput | EventScalarWhereInput[]
-    event_id?: IntFilter<"Event"> | number
-    user_id?: IntFilter<"Event"> | number
-    title?: StringFilter<"Event"> | string
-    description?: StringFilter<"Event"> | string
-    imgEvent?: StringFilter<"Event"> | string
-    coupon_id?: IntFilter<"Event"> | number
-    event_location_id?: IntFilter<"Event"> | number
-    startDate?: DateTimeFilter<"Event"> | Date | string
-    endDate?: DateTimeFilter<"Event"> | Date | string
-    startTime?: StringFilter<"Event"> | string
-    endTime?: StringFilter<"Event"> | string
-    timezone?: StringFilter<"Event"> | string
-    createdAt?: DateTimeFilter<"Event"> | Date | string
-    updatedAt?: DateTimeFilter<"Event"> | Date | string
+  export type OrganizerUncheckedUpdateWithoutUserInput = {
+    organizer_id?: IntFieldUpdateOperationsInput | number
+    organizer_name?: StringFieldUpdateOperationsInput | string
+    organizer_email?: StringFieldUpdateOperationsInput | string
+    organizer_phone?: StringFieldUpdateOperationsInput | string
+    organizer_address?: StringFieldUpdateOperationsInput | string
+    organizer_logo?: NullableStringFieldUpdateOperationsInput | string | null
+    organizer_banner?: NullableStringFieldUpdateOperationsInput | string | null
+    organizer_bio?: NullableStringFieldUpdateOperationsInput | string | null
+    bank_account?: Bank_accountUncheckedUpdateOneWithoutOrganizerNestedInput
+    events?: EventUncheckedUpdateManyWithoutOrganizerNestedInput
   }
 
   export type Transaction_DetailUpsertWithWhereUniqueWithoutUserInput = {
@@ -22455,7 +25157,7 @@ export namespace Prisma {
     referred?: ReferralCreateNestedOneWithoutReferred_usersInput
     points?: PointCreateNestedManyWithoutUserInput
     coupons?: CouponCreateNestedManyWithoutUserInput
-    events?: EventCreateNestedManyWithoutUserInput
+    organizer?: OrganizerCreateNestedOneWithoutUserInput
     transaction_details?: Transaction_DetailCreateNestedManyWithoutUserInput
     transaction?: TransactionCreateNestedManyWithoutUserInput
   }
@@ -22473,7 +25175,7 @@ export namespace Prisma {
     referral?: ReferralUncheckedCreateNestedOneWithoutUserInput
     points?: PointUncheckedCreateNestedManyWithoutUserInput
     coupons?: CouponUncheckedCreateNestedManyWithoutUserInput
-    events?: EventUncheckedCreateNestedManyWithoutUserInput
+    organizer?: OrganizerUncheckedCreateNestedOneWithoutUserInput
     transaction_details?: Transaction_DetailUncheckedCreateNestedManyWithoutUserInput
     transaction?: TransactionUncheckedCreateNestedManyWithoutUserInput
   }
@@ -22562,7 +25264,7 @@ export namespace Prisma {
     referred?: ReferralUpdateOneWithoutReferred_usersNestedInput
     points?: PointUpdateManyWithoutUserNestedInput
     coupons?: CouponUpdateManyWithoutUserNestedInput
-    events?: EventUpdateManyWithoutUserNestedInput
+    organizer?: OrganizerUpdateOneWithoutUserNestedInput
     transaction_details?: Transaction_DetailUpdateManyWithoutUserNestedInput
     transaction?: TransactionUpdateManyWithoutUserNestedInput
   }
@@ -22580,7 +25282,7 @@ export namespace Prisma {
     referral?: ReferralUncheckedUpdateOneWithoutUserNestedInput
     points?: PointUncheckedUpdateManyWithoutUserNestedInput
     coupons?: CouponUncheckedUpdateManyWithoutUserNestedInput
-    events?: EventUncheckedUpdateManyWithoutUserNestedInput
+    organizer?: OrganizerUncheckedUpdateOneWithoutUserNestedInput
     transaction_details?: Transaction_DetailUncheckedUpdateManyWithoutUserNestedInput
     transaction?: TransactionUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -22635,6 +25337,281 @@ export namespace Prisma {
     social_medias?: Social_mediaUncheckedUpdateManyWithoutProfileNestedInput
   }
 
+  export type UserCreateWithoutOrganizerInput = {
+    name: string
+    email: string
+    password: string
+    pfp_url?: string | null
+    created_at?: Date | string
+    isVerified?: boolean
+    role?: $Enums.Role
+    profile?: ProfileCreateNestedOneWithoutUserInput
+    referral?: ReferralCreateNestedOneWithoutUserInput
+    referred?: ReferralCreateNestedOneWithoutReferred_usersInput
+    points?: PointCreateNestedManyWithoutUserInput
+    coupons?: CouponCreateNestedManyWithoutUserInput
+    transaction_details?: Transaction_DetailCreateNestedManyWithoutUserInput
+    transaction?: TransactionCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutOrganizerInput = {
+    user_id?: number
+    name: string
+    email: string
+    password: string
+    pfp_url?: string | null
+    created_at?: Date | string
+    isVerified?: boolean
+    role?: $Enums.Role
+    referred_id?: number | null
+    profile?: ProfileUncheckedCreateNestedOneWithoutUserInput
+    referral?: ReferralUncheckedCreateNestedOneWithoutUserInput
+    points?: PointUncheckedCreateNestedManyWithoutUserInput
+    coupons?: CouponUncheckedCreateNestedManyWithoutUserInput
+    transaction_details?: Transaction_DetailUncheckedCreateNestedManyWithoutUserInput
+    transaction?: TransactionUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutOrganizerInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutOrganizerInput, UserUncheckedCreateWithoutOrganizerInput>
+  }
+
+  export type Bank_accountCreateWithoutOrganizerInput = {
+    bank_name: string
+    bank_account_name: string
+    bank_account_number: string
+  }
+
+  export type Bank_accountUncheckedCreateWithoutOrganizerInput = {
+    bank_account_id?: number
+    bank_name: string
+    bank_account_name: string
+    bank_account_number: string
+  }
+
+  export type Bank_accountCreateOrConnectWithoutOrganizerInput = {
+    where: Bank_accountWhereUniqueInput
+    create: XOR<Bank_accountCreateWithoutOrganizerInput, Bank_accountUncheckedCreateWithoutOrganizerInput>
+  }
+
+  export type EventCreateWithoutOrganizerInput = {
+    title: string
+    description: string
+    imgEvent: string
+    coupon_id: number
+    startDate: Date | string
+    endDate: Date | string
+    startTime: string
+    endTime: string
+    timezone: string
+    createdAt?: Date | string
+    updatedAt: Date | string
+    event_category?: Event_categoryCreateNestedManyWithoutEventInput
+    event_location: Event_LocationCreateNestedOneWithoutEventInput
+    ticket_types?: Ticket_typesCreateNestedManyWithoutEventInput
+  }
+
+  export type EventUncheckedCreateWithoutOrganizerInput = {
+    event_id?: number
+    title: string
+    description: string
+    imgEvent: string
+    coupon_id: number
+    event_location_id: number
+    startDate: Date | string
+    endDate: Date | string
+    startTime: string
+    endTime: string
+    timezone: string
+    createdAt?: Date | string
+    updatedAt: Date | string
+    event_category?: Event_categoryUncheckedCreateNestedManyWithoutEventInput
+    ticket_types?: Ticket_typesUncheckedCreateNestedManyWithoutEventInput
+  }
+
+  export type EventCreateOrConnectWithoutOrganizerInput = {
+    where: EventWhereUniqueInput
+    create: XOR<EventCreateWithoutOrganizerInput, EventUncheckedCreateWithoutOrganizerInput>
+  }
+
+  export type EventCreateManyOrganizerInputEnvelope = {
+    data: EventCreateManyOrganizerInput | EventCreateManyOrganizerInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserUpsertWithoutOrganizerInput = {
+    update: XOR<UserUpdateWithoutOrganizerInput, UserUncheckedUpdateWithoutOrganizerInput>
+    create: XOR<UserCreateWithoutOrganizerInput, UserUncheckedCreateWithoutOrganizerInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutOrganizerInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutOrganizerInput, UserUncheckedUpdateWithoutOrganizerInput>
+  }
+
+  export type UserUpdateWithoutOrganizerInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    pfp_url?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    profile?: ProfileUpdateOneWithoutUserNestedInput
+    referral?: ReferralUpdateOneWithoutUserNestedInput
+    referred?: ReferralUpdateOneWithoutReferred_usersNestedInput
+    points?: PointUpdateManyWithoutUserNestedInput
+    coupons?: CouponUpdateManyWithoutUserNestedInput
+    transaction_details?: Transaction_DetailUpdateManyWithoutUserNestedInput
+    transaction?: TransactionUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutOrganizerInput = {
+    user_id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    pfp_url?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    referred_id?: NullableIntFieldUpdateOperationsInput | number | null
+    profile?: ProfileUncheckedUpdateOneWithoutUserNestedInput
+    referral?: ReferralUncheckedUpdateOneWithoutUserNestedInput
+    points?: PointUncheckedUpdateManyWithoutUserNestedInput
+    coupons?: CouponUncheckedUpdateManyWithoutUserNestedInput
+    transaction_details?: Transaction_DetailUncheckedUpdateManyWithoutUserNestedInput
+    transaction?: TransactionUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type Bank_accountUpsertWithoutOrganizerInput = {
+    update: XOR<Bank_accountUpdateWithoutOrganizerInput, Bank_accountUncheckedUpdateWithoutOrganizerInput>
+    create: XOR<Bank_accountCreateWithoutOrganizerInput, Bank_accountUncheckedCreateWithoutOrganizerInput>
+    where?: Bank_accountWhereInput
+  }
+
+  export type Bank_accountUpdateToOneWithWhereWithoutOrganizerInput = {
+    where?: Bank_accountWhereInput
+    data: XOR<Bank_accountUpdateWithoutOrganizerInput, Bank_accountUncheckedUpdateWithoutOrganizerInput>
+  }
+
+  export type Bank_accountUpdateWithoutOrganizerInput = {
+    bank_name?: StringFieldUpdateOperationsInput | string
+    bank_account_name?: StringFieldUpdateOperationsInput | string
+    bank_account_number?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type Bank_accountUncheckedUpdateWithoutOrganizerInput = {
+    bank_account_id?: IntFieldUpdateOperationsInput | number
+    bank_name?: StringFieldUpdateOperationsInput | string
+    bank_account_name?: StringFieldUpdateOperationsInput | string
+    bank_account_number?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type EventUpsertWithWhereUniqueWithoutOrganizerInput = {
+    where: EventWhereUniqueInput
+    update: XOR<EventUpdateWithoutOrganizerInput, EventUncheckedUpdateWithoutOrganizerInput>
+    create: XOR<EventCreateWithoutOrganizerInput, EventUncheckedCreateWithoutOrganizerInput>
+  }
+
+  export type EventUpdateWithWhereUniqueWithoutOrganizerInput = {
+    where: EventWhereUniqueInput
+    data: XOR<EventUpdateWithoutOrganizerInput, EventUncheckedUpdateWithoutOrganizerInput>
+  }
+
+  export type EventUpdateManyWithWhereWithoutOrganizerInput = {
+    where: EventScalarWhereInput
+    data: XOR<EventUpdateManyMutationInput, EventUncheckedUpdateManyWithoutOrganizerInput>
+  }
+
+  export type EventScalarWhereInput = {
+    AND?: EventScalarWhereInput | EventScalarWhereInput[]
+    OR?: EventScalarWhereInput[]
+    NOT?: EventScalarWhereInput | EventScalarWhereInput[]
+    event_id?: IntFilter<"Event"> | number
+    organizer_id?: IntFilter<"Event"> | number
+    title?: StringFilter<"Event"> | string
+    description?: StringFilter<"Event"> | string
+    imgEvent?: StringFilter<"Event"> | string
+    coupon_id?: IntFilter<"Event"> | number
+    event_location_id?: IntFilter<"Event"> | number
+    startDate?: DateTimeFilter<"Event"> | Date | string
+    endDate?: DateTimeFilter<"Event"> | Date | string
+    startTime?: StringFilter<"Event"> | string
+    endTime?: StringFilter<"Event"> | string
+    timezone?: StringFilter<"Event"> | string
+    createdAt?: DateTimeFilter<"Event"> | Date | string
+    updatedAt?: DateTimeFilter<"Event"> | Date | string
+  }
+
+  export type OrganizerCreateWithoutBank_accountInput = {
+    organizer_name: string
+    organizer_email: string
+    organizer_phone: string
+    organizer_address: string
+    organizer_logo?: string | null
+    organizer_banner?: string | null
+    organizer_bio?: string | null
+    user: UserCreateNestedOneWithoutOrganizerInput
+    events?: EventCreateNestedManyWithoutOrganizerInput
+  }
+
+  export type OrganizerUncheckedCreateWithoutBank_accountInput = {
+    organizer_id?: number
+    organizer_name: string
+    organizer_email: string
+    organizer_phone: string
+    organizer_address: string
+    organizer_logo?: string | null
+    organizer_banner?: string | null
+    organizer_bio?: string | null
+    user_id: number
+    events?: EventUncheckedCreateNestedManyWithoutOrganizerInput
+  }
+
+  export type OrganizerCreateOrConnectWithoutBank_accountInput = {
+    where: OrganizerWhereUniqueInput
+    create: XOR<OrganizerCreateWithoutBank_accountInput, OrganizerUncheckedCreateWithoutBank_accountInput>
+  }
+
+  export type OrganizerUpsertWithoutBank_accountInput = {
+    update: XOR<OrganizerUpdateWithoutBank_accountInput, OrganizerUncheckedUpdateWithoutBank_accountInput>
+    create: XOR<OrganizerCreateWithoutBank_accountInput, OrganizerUncheckedCreateWithoutBank_accountInput>
+    where?: OrganizerWhereInput
+  }
+
+  export type OrganizerUpdateToOneWithWhereWithoutBank_accountInput = {
+    where?: OrganizerWhereInput
+    data: XOR<OrganizerUpdateWithoutBank_accountInput, OrganizerUncheckedUpdateWithoutBank_accountInput>
+  }
+
+  export type OrganizerUpdateWithoutBank_accountInput = {
+    organizer_name?: StringFieldUpdateOperationsInput | string
+    organizer_email?: StringFieldUpdateOperationsInput | string
+    organizer_phone?: StringFieldUpdateOperationsInput | string
+    organizer_address?: StringFieldUpdateOperationsInput | string
+    organizer_logo?: NullableStringFieldUpdateOperationsInput | string | null
+    organizer_banner?: NullableStringFieldUpdateOperationsInput | string | null
+    organizer_bio?: NullableStringFieldUpdateOperationsInput | string | null
+    user?: UserUpdateOneRequiredWithoutOrganizerNestedInput
+    events?: EventUpdateManyWithoutOrganizerNestedInput
+  }
+
+  export type OrganizerUncheckedUpdateWithoutBank_accountInput = {
+    organizer_id?: IntFieldUpdateOperationsInput | number
+    organizer_name?: StringFieldUpdateOperationsInput | string
+    organizer_email?: StringFieldUpdateOperationsInput | string
+    organizer_phone?: StringFieldUpdateOperationsInput | string
+    organizer_address?: StringFieldUpdateOperationsInput | string
+    organizer_logo?: NullableStringFieldUpdateOperationsInput | string | null
+    organizer_banner?: NullableStringFieldUpdateOperationsInput | string | null
+    organizer_bio?: NullableStringFieldUpdateOperationsInput | string | null
+    user_id?: IntFieldUpdateOperationsInput | number
+    events?: EventUncheckedUpdateManyWithoutOrganizerNestedInput
+  }
+
   export type UserCreateWithoutPointsInput = {
     name: string
     email: string
@@ -22647,7 +25624,7 @@ export namespace Prisma {
     referral?: ReferralCreateNestedOneWithoutUserInput
     referred?: ReferralCreateNestedOneWithoutReferred_usersInput
     coupons?: CouponCreateNestedManyWithoutUserInput
-    events?: EventCreateNestedManyWithoutUserInput
+    organizer?: OrganizerCreateNestedOneWithoutUserInput
     transaction_details?: Transaction_DetailCreateNestedManyWithoutUserInput
     transaction?: TransactionCreateNestedManyWithoutUserInput
   }
@@ -22665,7 +25642,7 @@ export namespace Prisma {
     profile?: ProfileUncheckedCreateNestedOneWithoutUserInput
     referral?: ReferralUncheckedCreateNestedOneWithoutUserInput
     coupons?: CouponUncheckedCreateNestedManyWithoutUserInput
-    events?: EventUncheckedCreateNestedManyWithoutUserInput
+    organizer?: OrganizerUncheckedCreateNestedOneWithoutUserInput
     transaction_details?: Transaction_DetailUncheckedCreateNestedManyWithoutUserInput
     transaction?: TransactionUncheckedCreateNestedManyWithoutUserInput
   }
@@ -22698,7 +25675,7 @@ export namespace Prisma {
     referral?: ReferralUpdateOneWithoutUserNestedInput
     referred?: ReferralUpdateOneWithoutReferred_usersNestedInput
     coupons?: CouponUpdateManyWithoutUserNestedInput
-    events?: EventUpdateManyWithoutUserNestedInput
+    organizer?: OrganizerUpdateOneWithoutUserNestedInput
     transaction_details?: Transaction_DetailUpdateManyWithoutUserNestedInput
     transaction?: TransactionUpdateManyWithoutUserNestedInput
   }
@@ -22716,7 +25693,7 @@ export namespace Prisma {
     profile?: ProfileUncheckedUpdateOneWithoutUserNestedInput
     referral?: ReferralUncheckedUpdateOneWithoutUserNestedInput
     coupons?: CouponUncheckedUpdateManyWithoutUserNestedInput
-    events?: EventUncheckedUpdateManyWithoutUserNestedInput
+    organizer?: OrganizerUncheckedUpdateOneWithoutUserNestedInput
     transaction_details?: Transaction_DetailUncheckedUpdateManyWithoutUserNestedInput
     transaction?: TransactionUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -22733,7 +25710,7 @@ export namespace Prisma {
     referred?: ReferralCreateNestedOneWithoutReferred_usersInput
     points?: PointCreateNestedManyWithoutUserInput
     coupons?: CouponCreateNestedManyWithoutUserInput
-    events?: EventCreateNestedManyWithoutUserInput
+    organizer?: OrganizerCreateNestedOneWithoutUserInput
     transaction_details?: Transaction_DetailCreateNestedManyWithoutUserInput
     transaction?: TransactionCreateNestedManyWithoutUserInput
   }
@@ -22751,7 +25728,7 @@ export namespace Prisma {
     profile?: ProfileUncheckedCreateNestedOneWithoutUserInput
     points?: PointUncheckedCreateNestedManyWithoutUserInput
     coupons?: CouponUncheckedCreateNestedManyWithoutUserInput
-    events?: EventUncheckedCreateNestedManyWithoutUserInput
+    organizer?: OrganizerUncheckedCreateNestedOneWithoutUserInput
     transaction_details?: Transaction_DetailUncheckedCreateNestedManyWithoutUserInput
     transaction?: TransactionUncheckedCreateNestedManyWithoutUserInput
   }
@@ -22773,7 +25750,7 @@ export namespace Prisma {
     referral?: ReferralCreateNestedOneWithoutUserInput
     points?: PointCreateNestedManyWithoutUserInput
     coupons?: CouponCreateNestedManyWithoutUserInput
-    events?: EventCreateNestedManyWithoutUserInput
+    organizer?: OrganizerCreateNestedOneWithoutUserInput
     transaction_details?: Transaction_DetailCreateNestedManyWithoutUserInput
     transaction?: TransactionCreateNestedManyWithoutUserInput
   }
@@ -22791,7 +25768,7 @@ export namespace Prisma {
     referral?: ReferralUncheckedCreateNestedOneWithoutUserInput
     points?: PointUncheckedCreateNestedManyWithoutUserInput
     coupons?: CouponUncheckedCreateNestedManyWithoutUserInput
-    events?: EventUncheckedCreateNestedManyWithoutUserInput
+    organizer?: OrganizerUncheckedCreateNestedOneWithoutUserInput
     transaction_details?: Transaction_DetailUncheckedCreateNestedManyWithoutUserInput
     transaction?: TransactionUncheckedCreateNestedManyWithoutUserInput
   }
@@ -22829,7 +25806,7 @@ export namespace Prisma {
     referred?: ReferralUpdateOneWithoutReferred_usersNestedInput
     points?: PointUpdateManyWithoutUserNestedInput
     coupons?: CouponUpdateManyWithoutUserNestedInput
-    events?: EventUpdateManyWithoutUserNestedInput
+    organizer?: OrganizerUpdateOneWithoutUserNestedInput
     transaction_details?: Transaction_DetailUpdateManyWithoutUserNestedInput
     transaction?: TransactionUpdateManyWithoutUserNestedInput
   }
@@ -22847,7 +25824,7 @@ export namespace Prisma {
     profile?: ProfileUncheckedUpdateOneWithoutUserNestedInput
     points?: PointUncheckedUpdateManyWithoutUserNestedInput
     coupons?: CouponUncheckedUpdateManyWithoutUserNestedInput
-    events?: EventUncheckedUpdateManyWithoutUserNestedInput
+    organizer?: OrganizerUncheckedUpdateOneWithoutUserNestedInput
     transaction_details?: Transaction_DetailUncheckedUpdateManyWithoutUserNestedInput
     transaction?: TransactionUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -22945,7 +25922,7 @@ export namespace Prisma {
     referral?: ReferralCreateNestedOneWithoutUserInput
     referred?: ReferralCreateNestedOneWithoutReferred_usersInput
     points?: PointCreateNestedManyWithoutUserInput
-    events?: EventCreateNestedManyWithoutUserInput
+    organizer?: OrganizerCreateNestedOneWithoutUserInput
     transaction_details?: Transaction_DetailCreateNestedManyWithoutUserInput
     transaction?: TransactionCreateNestedManyWithoutUserInput
   }
@@ -22963,7 +25940,7 @@ export namespace Prisma {
     profile?: ProfileUncheckedCreateNestedOneWithoutUserInput
     referral?: ReferralUncheckedCreateNestedOneWithoutUserInput
     points?: PointUncheckedCreateNestedManyWithoutUserInput
-    events?: EventUncheckedCreateNestedManyWithoutUserInput
+    organizer?: OrganizerUncheckedCreateNestedOneWithoutUserInput
     transaction_details?: Transaction_DetailUncheckedCreateNestedManyWithoutUserInput
     transaction?: TransactionUncheckedCreateNestedManyWithoutUserInput
   }
@@ -22996,7 +25973,7 @@ export namespace Prisma {
     referral?: ReferralUpdateOneWithoutUserNestedInput
     referred?: ReferralUpdateOneWithoutReferred_usersNestedInput
     points?: PointUpdateManyWithoutUserNestedInput
-    events?: EventUpdateManyWithoutUserNestedInput
+    organizer?: OrganizerUpdateOneWithoutUserNestedInput
     transaction_details?: Transaction_DetailUpdateManyWithoutUserNestedInput
     transaction?: TransactionUpdateManyWithoutUserNestedInput
   }
@@ -23014,49 +25991,39 @@ export namespace Prisma {
     profile?: ProfileUncheckedUpdateOneWithoutUserNestedInput
     referral?: ReferralUncheckedUpdateOneWithoutUserNestedInput
     points?: PointUncheckedUpdateManyWithoutUserNestedInput
-    events?: EventUncheckedUpdateManyWithoutUserNestedInput
+    organizer?: OrganizerUncheckedUpdateOneWithoutUserNestedInput
     transaction_details?: Transaction_DetailUncheckedUpdateManyWithoutUserNestedInput
     transaction?: TransactionUncheckedUpdateManyWithoutUserNestedInput
   }
 
-  export type UserCreateWithoutEventsInput = {
-    name: string
-    email: string
-    password: string
-    pfp_url?: string | null
-    created_at?: Date | string
-    isVerified?: boolean
-    role?: $Enums.Role
-    profile?: ProfileCreateNestedOneWithoutUserInput
-    referral?: ReferralCreateNestedOneWithoutUserInput
-    referred?: ReferralCreateNestedOneWithoutReferred_usersInput
-    points?: PointCreateNestedManyWithoutUserInput
-    coupons?: CouponCreateNestedManyWithoutUserInput
-    transaction_details?: Transaction_DetailCreateNestedManyWithoutUserInput
-    transaction?: TransactionCreateNestedManyWithoutUserInput
+  export type OrganizerCreateWithoutEventsInput = {
+    organizer_name: string
+    organizer_email: string
+    organizer_phone: string
+    organizer_address: string
+    organizer_logo?: string | null
+    organizer_banner?: string | null
+    organizer_bio?: string | null
+    user: UserCreateNestedOneWithoutOrganizerInput
+    bank_account?: Bank_accountCreateNestedOneWithoutOrganizerInput
   }
 
-  export type UserUncheckedCreateWithoutEventsInput = {
-    user_id?: number
-    name: string
-    email: string
-    password: string
-    pfp_url?: string | null
-    created_at?: Date | string
-    isVerified?: boolean
-    role?: $Enums.Role
-    referred_id?: number | null
-    profile?: ProfileUncheckedCreateNestedOneWithoutUserInput
-    referral?: ReferralUncheckedCreateNestedOneWithoutUserInput
-    points?: PointUncheckedCreateNestedManyWithoutUserInput
-    coupons?: CouponUncheckedCreateNestedManyWithoutUserInput
-    transaction_details?: Transaction_DetailUncheckedCreateNestedManyWithoutUserInput
-    transaction?: TransactionUncheckedCreateNestedManyWithoutUserInput
+  export type OrganizerUncheckedCreateWithoutEventsInput = {
+    organizer_id?: number
+    organizer_name: string
+    organizer_email: string
+    organizer_phone: string
+    organizer_address: string
+    organizer_logo?: string | null
+    organizer_banner?: string | null
+    organizer_bio?: string | null
+    user_id: number
+    bank_account?: Bank_accountUncheckedCreateNestedOneWithoutOrganizerInput
   }
 
-  export type UserCreateOrConnectWithoutEventsInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutEventsInput, UserUncheckedCreateWithoutEventsInput>
+  export type OrganizerCreateOrConnectWithoutEventsInput = {
+    where: OrganizerWhereUniqueInput
+    create: XOR<OrganizerCreateWithoutEventsInput, OrganizerUncheckedCreateWithoutEventsInput>
   }
 
   export type Event_categoryCreateWithoutEventInput = {
@@ -23120,50 +26087,40 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type UserUpsertWithoutEventsInput = {
-    update: XOR<UserUpdateWithoutEventsInput, UserUncheckedUpdateWithoutEventsInput>
-    create: XOR<UserCreateWithoutEventsInput, UserUncheckedCreateWithoutEventsInput>
-    where?: UserWhereInput
+  export type OrganizerUpsertWithoutEventsInput = {
+    update: XOR<OrganizerUpdateWithoutEventsInput, OrganizerUncheckedUpdateWithoutEventsInput>
+    create: XOR<OrganizerCreateWithoutEventsInput, OrganizerUncheckedCreateWithoutEventsInput>
+    where?: OrganizerWhereInput
   }
 
-  export type UserUpdateToOneWithWhereWithoutEventsInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutEventsInput, UserUncheckedUpdateWithoutEventsInput>
+  export type OrganizerUpdateToOneWithWhereWithoutEventsInput = {
+    where?: OrganizerWhereInput
+    data: XOR<OrganizerUpdateWithoutEventsInput, OrganizerUncheckedUpdateWithoutEventsInput>
   }
 
-  export type UserUpdateWithoutEventsInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    pfp_url?: NullableStringFieldUpdateOperationsInput | string | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    profile?: ProfileUpdateOneWithoutUserNestedInput
-    referral?: ReferralUpdateOneWithoutUserNestedInput
-    referred?: ReferralUpdateOneWithoutReferred_usersNestedInput
-    points?: PointUpdateManyWithoutUserNestedInput
-    coupons?: CouponUpdateManyWithoutUserNestedInput
-    transaction_details?: Transaction_DetailUpdateManyWithoutUserNestedInput
-    transaction?: TransactionUpdateManyWithoutUserNestedInput
+  export type OrganizerUpdateWithoutEventsInput = {
+    organizer_name?: StringFieldUpdateOperationsInput | string
+    organizer_email?: StringFieldUpdateOperationsInput | string
+    organizer_phone?: StringFieldUpdateOperationsInput | string
+    organizer_address?: StringFieldUpdateOperationsInput | string
+    organizer_logo?: NullableStringFieldUpdateOperationsInput | string | null
+    organizer_banner?: NullableStringFieldUpdateOperationsInput | string | null
+    organizer_bio?: NullableStringFieldUpdateOperationsInput | string | null
+    user?: UserUpdateOneRequiredWithoutOrganizerNestedInput
+    bank_account?: Bank_accountUpdateOneWithoutOrganizerNestedInput
   }
 
-  export type UserUncheckedUpdateWithoutEventsInput = {
+  export type OrganizerUncheckedUpdateWithoutEventsInput = {
+    organizer_id?: IntFieldUpdateOperationsInput | number
+    organizer_name?: StringFieldUpdateOperationsInput | string
+    organizer_email?: StringFieldUpdateOperationsInput | string
+    organizer_phone?: StringFieldUpdateOperationsInput | string
+    organizer_address?: StringFieldUpdateOperationsInput | string
+    organizer_logo?: NullableStringFieldUpdateOperationsInput | string | null
+    organizer_banner?: NullableStringFieldUpdateOperationsInput | string | null
+    organizer_bio?: NullableStringFieldUpdateOperationsInput | string | null
     user_id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    pfp_url?: NullableStringFieldUpdateOperationsInput | string | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    referred_id?: NullableIntFieldUpdateOperationsInput | number | null
-    profile?: ProfileUncheckedUpdateOneWithoutUserNestedInput
-    referral?: ReferralUncheckedUpdateOneWithoutUserNestedInput
-    points?: PointUncheckedUpdateManyWithoutUserNestedInput
-    coupons?: CouponUncheckedUpdateManyWithoutUserNestedInput
-    transaction_details?: Transaction_DetailUncheckedUpdateManyWithoutUserNestedInput
-    transaction?: TransactionUncheckedUpdateManyWithoutUserNestedInput
+    bank_account?: Bank_accountUncheckedUpdateOneWithoutOrganizerNestedInput
   }
 
   export type Event_categoryUpsertWithWhereUniqueWithoutEventInput = {
@@ -23257,14 +26214,14 @@ export namespace Prisma {
     timezone: string
     createdAt?: Date | string
     updatedAt: Date | string
-    user: UserCreateNestedOneWithoutEventsInput
+    organizer: OrganizerCreateNestedOneWithoutEventsInput
     event_location: Event_LocationCreateNestedOneWithoutEventInput
     ticket_types?: Ticket_typesCreateNestedManyWithoutEventInput
   }
 
   export type EventUncheckedCreateWithoutEvent_categoryInput = {
     event_id?: number
-    user_id: number
+    organizer_id: number
     title: string
     description: string
     imgEvent: string
@@ -23341,14 +26298,14 @@ export namespace Prisma {
     timezone: string
     createdAt?: Date | string
     updatedAt: Date | string
-    user: UserCreateNestedOneWithoutEventsInput
+    organizer: OrganizerCreateNestedOneWithoutEventsInput
     event_category?: Event_categoryCreateNestedManyWithoutEventInput
     ticket_types?: Ticket_typesCreateNestedManyWithoutEventInput
   }
 
   export type EventUncheckedCreateWithoutEvent_locationInput = {
     event_id?: number
-    user_id: number
+    organizer_id: number
     title: string
     description: string
     imgEvent: string
@@ -23432,14 +26389,14 @@ export namespace Prisma {
     timezone?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutEventsNestedInput
+    organizer?: OrganizerUpdateOneRequiredWithoutEventsNestedInput
     event_category?: Event_categoryUpdateManyWithoutEventNestedInput
     ticket_types?: Ticket_typesUpdateManyWithoutEventNestedInput
   }
 
   export type EventUncheckedUpdateWithoutEvent_locationInput = {
     event_id?: IntFieldUpdateOperationsInput | number
-    user_id?: IntFieldUpdateOperationsInput | number
+    organizer_id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     imgEvent?: StringFieldUpdateOperationsInput | string
@@ -23565,14 +26522,14 @@ export namespace Prisma {
     timezone: string
     createdAt?: Date | string
     updatedAt: Date | string
-    user: UserCreateNestedOneWithoutEventsInput
+    organizer: OrganizerCreateNestedOneWithoutEventsInput
     event_category?: Event_categoryCreateNestedManyWithoutEventInput
     event_location: Event_LocationCreateNestedOneWithoutEventInput
   }
 
   export type EventUncheckedCreateWithoutTicket_typesInput = {
     event_id?: number
-    user_id: number
+    organizer_id: number
     title: string
     description: string
     imgEvent: string
@@ -23636,14 +26593,14 @@ export namespace Prisma {
     timezone?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutEventsNestedInput
+    organizer?: OrganizerUpdateOneRequiredWithoutEventsNestedInput
     event_category?: Event_categoryUpdateManyWithoutEventNestedInput
     event_location?: Event_LocationUpdateOneRequiredWithoutEventNestedInput
   }
 
   export type EventUncheckedUpdateWithoutTicket_typesInput = {
     event_id?: IntFieldUpdateOperationsInput | number
-    user_id?: IntFieldUpdateOperationsInput | number
+    organizer_id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     imgEvent?: StringFieldUpdateOperationsInput | string
@@ -23698,7 +26655,7 @@ export namespace Prisma {
     referred?: ReferralCreateNestedOneWithoutReferred_usersInput
     points?: PointCreateNestedManyWithoutUserInput
     coupons?: CouponCreateNestedManyWithoutUserInput
-    events?: EventCreateNestedManyWithoutUserInput
+    organizer?: OrganizerCreateNestedOneWithoutUserInput
     transaction?: TransactionCreateNestedManyWithoutUserInput
   }
 
@@ -23716,7 +26673,7 @@ export namespace Prisma {
     referral?: ReferralUncheckedCreateNestedOneWithoutUserInput
     points?: PointUncheckedCreateNestedManyWithoutUserInput
     coupons?: CouponUncheckedCreateNestedManyWithoutUserInput
-    events?: EventUncheckedCreateNestedManyWithoutUserInput
+    organizer?: OrganizerUncheckedCreateNestedOneWithoutUserInput
     transaction?: TransactionUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -23793,7 +26750,7 @@ export namespace Prisma {
     referred?: ReferralUpdateOneWithoutReferred_usersNestedInput
     points?: PointUpdateManyWithoutUserNestedInput
     coupons?: CouponUpdateManyWithoutUserNestedInput
-    events?: EventUpdateManyWithoutUserNestedInput
+    organizer?: OrganizerUpdateOneWithoutUserNestedInput
     transaction?: TransactionUpdateManyWithoutUserNestedInput
   }
 
@@ -23811,7 +26768,7 @@ export namespace Prisma {
     referral?: ReferralUncheckedUpdateOneWithoutUserNestedInput
     points?: PointUncheckedUpdateManyWithoutUserNestedInput
     coupons?: CouponUncheckedUpdateManyWithoutUserNestedInput
-    events?: EventUncheckedUpdateManyWithoutUserNestedInput
+    organizer?: OrganizerUncheckedUpdateOneWithoutUserNestedInput
     transaction?: TransactionUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -23904,7 +26861,7 @@ export namespace Prisma {
     referred?: ReferralCreateNestedOneWithoutReferred_usersInput
     points?: PointCreateNestedManyWithoutUserInput
     coupons?: CouponCreateNestedManyWithoutUserInput
-    events?: EventCreateNestedManyWithoutUserInput
+    organizer?: OrganizerCreateNestedOneWithoutUserInput
     transaction_details?: Transaction_DetailCreateNestedManyWithoutUserInput
   }
 
@@ -23922,7 +26879,7 @@ export namespace Prisma {
     referral?: ReferralUncheckedCreateNestedOneWithoutUserInput
     points?: PointUncheckedCreateNestedManyWithoutUserInput
     coupons?: CouponUncheckedCreateNestedManyWithoutUserInput
-    events?: EventUncheckedCreateNestedManyWithoutUserInput
+    organizer?: OrganizerUncheckedCreateNestedOneWithoutUserInput
     transaction_details?: Transaction_DetailUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -23981,7 +26938,7 @@ export namespace Prisma {
     referred?: ReferralUpdateOneWithoutReferred_usersNestedInput
     points?: PointUpdateManyWithoutUserNestedInput
     coupons?: CouponUpdateManyWithoutUserNestedInput
-    events?: EventUpdateManyWithoutUserNestedInput
+    organizer?: OrganizerUpdateOneWithoutUserNestedInput
     transaction_details?: Transaction_DetailUpdateManyWithoutUserNestedInput
   }
 
@@ -23999,7 +26956,7 @@ export namespace Prisma {
     referral?: ReferralUncheckedUpdateOneWithoutUserNestedInput
     points?: PointUncheckedUpdateManyWithoutUserNestedInput
     coupons?: CouponUncheckedUpdateManyWithoutUserNestedInput
-    events?: EventUncheckedUpdateManyWithoutUserNestedInput
+    organizer?: OrganizerUncheckedUpdateOneWithoutUserNestedInput
     transaction_details?: Transaction_DetailUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -24018,22 +26975,6 @@ export namespace Prisma {
     max_amount?: number | null
     start_date?: Date | string
     expired_date: Date | string
-  }
-
-  export type EventCreateManyUserInput = {
-    event_id?: number
-    title: string
-    description: string
-    imgEvent: string
-    coupon_id: number
-    event_location_id: number
-    startDate: Date | string
-    endDate: Date | string
-    startTime: string
-    endTime: string
-    timezone: string
-    createdAt?: Date | string
-    updatedAt: Date | string
   }
 
   export type Transaction_DetailCreateManyUserInput = {
@@ -24100,57 +27041,6 @@ export namespace Prisma {
     max_amount?: NullableIntFieldUpdateOperationsInput | number | null
     start_date?: DateTimeFieldUpdateOperationsInput | Date | string
     expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type EventUpdateWithoutUserInput = {
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    imgEvent?: StringFieldUpdateOperationsInput | string
-    coupon_id?: IntFieldUpdateOperationsInput | number
-    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    startTime?: StringFieldUpdateOperationsInput | string
-    endTime?: StringFieldUpdateOperationsInput | string
-    timezone?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    event_category?: Event_categoryUpdateManyWithoutEventNestedInput
-    event_location?: Event_LocationUpdateOneRequiredWithoutEventNestedInput
-    ticket_types?: Ticket_typesUpdateManyWithoutEventNestedInput
-  }
-
-  export type EventUncheckedUpdateWithoutUserInput = {
-    event_id?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    imgEvent?: StringFieldUpdateOperationsInput | string
-    coupon_id?: IntFieldUpdateOperationsInput | number
-    event_location_id?: IntFieldUpdateOperationsInput | number
-    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    startTime?: StringFieldUpdateOperationsInput | string
-    endTime?: StringFieldUpdateOperationsInput | string
-    timezone?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    event_category?: Event_categoryUncheckedUpdateManyWithoutEventNestedInput
-    ticket_types?: Ticket_typesUncheckedUpdateManyWithoutEventNestedInput
-  }
-
-  export type EventUncheckedUpdateManyWithoutUserInput = {
-    event_id?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    imgEvent?: StringFieldUpdateOperationsInput | string
-    coupon_id?: IntFieldUpdateOperationsInput | number
-    event_location_id?: IntFieldUpdateOperationsInput | number
-    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    startTime?: StringFieldUpdateOperationsInput | string
-    endTime?: StringFieldUpdateOperationsInput | string
-    timezone?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type Transaction_DetailUpdateWithoutUserInput = {
@@ -24266,6 +27156,73 @@ export namespace Prisma {
     url?: StringFieldUpdateOperationsInput | string
   }
 
+  export type EventCreateManyOrganizerInput = {
+    event_id?: number
+    title: string
+    description: string
+    imgEvent: string
+    coupon_id: number
+    event_location_id: number
+    startDate: Date | string
+    endDate: Date | string
+    startTime: string
+    endTime: string
+    timezone: string
+    createdAt?: Date | string
+    updatedAt: Date | string
+  }
+
+  export type EventUpdateWithoutOrganizerInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    imgEvent?: StringFieldUpdateOperationsInput | string
+    coupon_id?: IntFieldUpdateOperationsInput | number
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    startTime?: StringFieldUpdateOperationsInput | string
+    endTime?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    event_category?: Event_categoryUpdateManyWithoutEventNestedInput
+    event_location?: Event_LocationUpdateOneRequiredWithoutEventNestedInput
+    ticket_types?: Ticket_typesUpdateManyWithoutEventNestedInput
+  }
+
+  export type EventUncheckedUpdateWithoutOrganizerInput = {
+    event_id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    imgEvent?: StringFieldUpdateOperationsInput | string
+    coupon_id?: IntFieldUpdateOperationsInput | number
+    event_location_id?: IntFieldUpdateOperationsInput | number
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    startTime?: StringFieldUpdateOperationsInput | string
+    endTime?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    event_category?: Event_categoryUncheckedUpdateManyWithoutEventNestedInput
+    ticket_types?: Ticket_typesUncheckedUpdateManyWithoutEventNestedInput
+  }
+
+  export type EventUncheckedUpdateManyWithoutOrganizerInput = {
+    event_id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    imgEvent?: StringFieldUpdateOperationsInput | string
+    coupon_id?: IntFieldUpdateOperationsInput | number
+    event_location_id?: IntFieldUpdateOperationsInput | number
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    startTime?: StringFieldUpdateOperationsInput | string
+    endTime?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type UserCreateManyReferredInput = {
     user_id?: number
     name: string
@@ -24289,7 +27246,7 @@ export namespace Prisma {
     referral?: ReferralUpdateOneWithoutUserNestedInput
     points?: PointUpdateManyWithoutUserNestedInput
     coupons?: CouponUpdateManyWithoutUserNestedInput
-    events?: EventUpdateManyWithoutUserNestedInput
+    organizer?: OrganizerUpdateOneWithoutUserNestedInput
     transaction_details?: Transaction_DetailUpdateManyWithoutUserNestedInput
     transaction?: TransactionUpdateManyWithoutUserNestedInput
   }
@@ -24307,7 +27264,7 @@ export namespace Prisma {
     referral?: ReferralUncheckedUpdateOneWithoutUserNestedInput
     points?: PointUncheckedUpdateManyWithoutUserNestedInput
     coupons?: CouponUncheckedUpdateManyWithoutUserNestedInput
-    events?: EventUncheckedUpdateManyWithoutUserNestedInput
+    organizer?: OrganizerUncheckedUpdateOneWithoutUserNestedInput
     transaction_details?: Transaction_DetailUncheckedUpdateManyWithoutUserNestedInput
     transaction?: TransactionUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -24378,14 +27335,14 @@ export namespace Prisma {
     timezone?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutEventsNestedInput
+    organizer?: OrganizerUpdateOneRequiredWithoutEventsNestedInput
     event_location?: Event_LocationUpdateOneRequiredWithoutEventNestedInput
     ticket_types?: Ticket_typesUpdateManyWithoutEventNestedInput
   }
 
   export type EventUncheckedUpdateWithoutEvent_categoryInput = {
     event_id?: IntFieldUpdateOperationsInput | number
-    user_id?: IntFieldUpdateOperationsInput | number
+    organizer_id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     imgEvent?: StringFieldUpdateOperationsInput | string
@@ -24403,7 +27360,7 @@ export namespace Prisma {
 
   export type EventUncheckedUpdateManyWithoutEvent_categoryInput = {
     event_id?: IntFieldUpdateOperationsInput | number
-    user_id?: IntFieldUpdateOperationsInput | number
+    organizer_id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     imgEvent?: StringFieldUpdateOperationsInput | string
