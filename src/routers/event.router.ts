@@ -17,17 +17,17 @@ export class EventRouter {
   private initializeRouters(): void {
     this.route.post(
       "/",
-      // verifyToken,
-      // organizerAuthorization,
-      // createEventValidator,
+      createEventValidator,
+      verifyToken,
+      organizerAuthorization,
       this.eventController.createEvent
     );
     this.route.get("/:id", this.eventController.getSpecificEvent);
     this.route.get("/", this.eventController.filterEvent);
     this.route.patch(
       "/:id",
-      // verifyToken,
-      // organizerAuthorization,
+      verifyToken,
+      organizerAuthorization,
       this.eventController.updateEvent
     );
     this.route.delete(

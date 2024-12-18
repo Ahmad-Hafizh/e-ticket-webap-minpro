@@ -26,7 +26,12 @@ class EventController {
     createEvent(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const user = { id: 17 };
+                const organizer = yield prisma_1.prisma.organizer.findUnique({
+                    where: { user_id: res.locals.dcrypt.user_id },
+                });
+                if (!organizer) {
+                    throw new Error("User unauthorized");
+                }
                 const { eventTitle, eventDescription, eventTimeDate, eventCategory, eventLocation, ticketTypes, eventImg, } = req.body;
                 const response = yield prisma_1.prisma.$transaction((tx) => __awaiter(this, void 0, void 0, function* () {
                     //Create and/or update city
@@ -50,10 +55,6 @@ class EventController {
                             location_country_id: country.location_country_id,
                             zipcode: eventLocation.zipcode,
                         },
-                    });
-                    //Load organizer
-                    const organizer = yield tx.organizer.findUnique({
-                        where: { organizer_id: 17 },
                     });
                     //Created Event
                     const event = yield tx.event.create({
@@ -117,9 +118,14 @@ class EventController {
     updateEvent(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const params = parseInt(req.params.id);
-                const userId = res.locals.dcrypt.id;
+                const organizer = yield prisma_1.prisma.organizer.findUnique({
+                    where: { user_id: res.locals.dcrypt.user_id },
+                });
+                if (!organizer) {
+                    throw new Error("User unauthorized");
+                }
                 const { eventTitle, eventDescription, eventTimeDate, eventCategory, eventLocation, ticketTypes, eventImg, } = req.body;
+                const params = parseInt(req.params.id);
                 const checkEventExist = yield prisma_1.prisma.event.findUnique({
                     where: {
                         event_id: params,
@@ -133,7 +139,10 @@ class EventController {
                 if (!checkEventExist) {
                     throw new Error("Event not found!");
                 }
-                yield prisma_1.prisma.$transaction((tx) => __awaiter(this, void 0, void 0, function* () {
+                if (checkEventExist.organizer_id !== organizer.organizer_id) {
+                    throw new Error("You are unauthorized to overwrite this event");
+                }
+                const response = yield prisma_1.prisma.$transaction((tx) => __awaiter(this, void 0, void 0, function* () {
                     //Create and/or update city
                     const city = yield tx.location_city.upsert({
                         where: { city_name: eventLocation.city },
@@ -164,10 +173,10 @@ class EventController {
                         },
                     });
                     //Update Event
-                    yield tx.event.update({
+                    const event = yield tx.event.update({
                         where: { event_id: params },
                         data: {
-                            organizer_id: userId,
+                            organizer_id: organizer === null || organizer === void 0 ? void 0 : organizer.organizer_id,
                             event_category: {
                                 connect: eventCategory.map((value) => ({
                                     category_name: value,
@@ -220,8 +229,9 @@ class EventController {
                             }
                         }
                     }
+                    return event;
                 }));
-                return responseHandler_1.default.success(res, "Event updated Successfully", 200, res);
+                return responseHandler_1.default.success(res, "Event updated Successfully", 200, response);
             }
             catch (error) {
                 return responseHandler_1.default.error(res, "Failed to update event! Internal server error!", 500, error);
@@ -250,7 +260,7 @@ class EventController {
                 if (!checkEventExist) {
                     throw new Error("Event not found!");
                 }
-                yield prisma_1.prisma.$transaction([
+                const response = yield prisma_1.prisma.$transaction([
                     prisma_1.prisma.ticket_types.deleteMany({
                         where: {
                             event_id: checkEventExist.event_id,
@@ -265,7 +275,7 @@ class EventController {
                         where: { event_location_id: checkEventExist.event_location_id },
                     }),
                 ]);
-                return responseHandler_1.default.success(res, "Event deleted successfully", 200, res);
+                return responseHandler_1.default.success(res, "Event deleted successfully", 200);
             }
             catch (error) {
                 return responseHandler_1.default.error(res, "Failed to delete event! Internal server error!", 500, error);

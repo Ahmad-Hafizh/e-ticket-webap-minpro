@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction, query } from "express";
+import { Request, Response, NextFunction, query, response } from "express";
 import { prisma } from "../config/prisma";
 import ResponseHandler from "../utils/responseHandler";
 import { transporter } from "../config/nodemailer";
@@ -19,7 +19,14 @@ export class EventController {
     next: NextFunction
   ): Promise<any> {
     try {
-      const user = { id: 17 };
+      const organizer = await prisma.organizer.findUnique({
+        where: { user_id: res.locals.dcrypt.user_id },
+      });
+
+      if (!organizer) {
+        throw new Error("User unauthorized");
+      }
+
       const {
         eventTitle,
         eventDescription,
@@ -54,11 +61,6 @@ export class EventController {
             location_country_id: country.location_country_id,
             zipcode: eventLocation.zipcode,
           },
-        });
-
-        //Load organizer
-        const organizer = await tx.organizer.findUnique({
-          where: { organizer_id: 17 },
         });
 
         //Created Event
@@ -139,8 +141,13 @@ export class EventController {
     next: NextFunction
   ): Promise<any> {
     try {
-      const params = parseInt(req.params.id);
-      const userId = res.locals.dcrypt.id;
+      const organizer = await prisma.organizer.findUnique({
+        where: { user_id: res.locals.dcrypt.user_id },
+      });
+
+      if (!organizer) {
+        throw new Error("User unauthorized");
+      }
       const {
         eventTitle,
         eventDescription,
@@ -151,6 +158,7 @@ export class EventController {
         eventImg,
       } = req.body;
 
+      const params = parseInt(req.params.id);
       const checkEventExist = await prisma.event.findUnique({
         where: {
           event_id: params,
@@ -166,7 +174,11 @@ export class EventController {
         throw new Error("Event not found!");
       }
 
-      await prisma.$transaction(async (tx) => {
+      if (checkEventExist.organizer_id !== organizer.organizer_id) {
+        throw new Error("You are unauthorized to overwrite this event");
+      }
+
+      const response = await prisma.$transaction(async (tx) => {
         //Create and/or update city
         const city = await tx.location_city.upsert({
           where: { city_name: eventLocation.city },
@@ -205,10 +217,10 @@ export class EventController {
         });
 
         //Update Event
-        await tx.event.update({
+        const event = await tx.event.update({
           where: { event_id: params },
           data: {
-            organizer_id: userId,
+            organizer_id: organizer?.organizer_id,
             event_category: {
               connect: eventCategory.map((value: string) => ({
                 category_name: value,
@@ -265,12 +277,13 @@ export class EventController {
             }
           }
         }
+        return event;
       });
       return ResponseHandler.success(
         res,
         "Event updated Successfully",
         200,
-        res
+        response
       );
     } catch (error) {
       return ResponseHandler.error(
@@ -294,7 +307,6 @@ export class EventController {
   ): Promise<any> {
     try {
       const params = parseInt(req.params.id);
-
       const checkEventExist = await prisma.event.findUnique({
         where: {
           event_id: params,
@@ -310,7 +322,7 @@ export class EventController {
         throw new Error("Event not found!");
       }
 
-      await prisma.$transaction([
+      const response = await prisma.$transaction([
         prisma.ticket_types.deleteMany({
           where: {
             event_id: checkEventExist.event_id,
@@ -325,12 +337,7 @@ export class EventController {
           where: { event_location_id: checkEventExist.event_location_id },
         }),
       ]);
-      return ResponseHandler.success(
-        res,
-        "Event deleted successfully",
-        200,
-        res
-      );
+      return ResponseHandler.success(res, "Event deleted successfully", 200);
     } catch (error) {
       return ResponseHandler.error(
         res,
