@@ -214,7 +214,8 @@ exports.Prisma.EventScalarFieldEnum = {
   endTime: 'endTime',
   timezone: 'timezone',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  customer_id: 'customer_id'
 };
 
 exports.Prisma.Event_categoryScalarFieldEnum = {
@@ -266,6 +267,15 @@ exports.Prisma.TransactionScalarFieldEnum = {
   payment_method: 'payment_method',
   createdAt: 'createdAt',
   isPaid: 'isPaid'
+};
+
+exports.Prisma.ReviewScalarFieldEnum = {
+  review_id: 'review_id',
+  event_id: 'event_id',
+  user_id: 'user_id',
+  review_text: 'review_text',
+  review_img: 'review_img',
+  score: 'score'
 };
 
 exports.Prisma.SortOrder = {
@@ -325,7 +335,8 @@ exports.Prisma.ModelName = {
   Location_country: 'Location_country',
   Ticket_types: 'Ticket_types',
   Transaction_Detail: 'Transaction_Detail',
-  Transaction: 'Transaction'
+  Transaction: 'Transaction',
+  Review: 'Review'
 };
 
 /**
