@@ -1,7 +1,7 @@
-import { Request, Response, NextFunction, query } from "express";
-import { prisma } from "../config/prisma";
-import ResponseHandler from "../utils/responseHandler";
-import { transporter } from "../config/nodemailer";
+import { Request, Response, NextFunction, query } from 'express';
+import { prisma } from '../config/prisma';
+import ResponseHandler from '../utils/responseHandler';
+import { transporter } from '../config/nodemailer';
 
 //
 export class EventController {
@@ -12,22 +12,10 @@ export class EventController {
   //So it require a complete form (event + ticket types)
   //Also need a userID which can be obtained through a res.locals property
   //Broken return.. (Success create event, but return error, not sure why)
-  async createEvent(
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<any> {
+  async createEvent(req: Request, res: Response, next: NextFunction): Promise<any> {
     try {
       const user = { id: 17 };
-      const {
-        eventTitle,
-        eventDescription,
-        eventTimeDate,
-        eventCategory,
-        eventLocation,
-        ticketTypes,
-        eventImg,
-      } = req.body;
+      const { eventTitle, eventDescription, eventTimeDate, eventCategory, eventLocation, ticketTypes, eventImg } = req.body;
 
       const response = await prisma.$transaction(async (tx) => {
         //Create and/or update city
@@ -58,7 +46,7 @@ export class EventController {
         //Created Event
         const event = await tx.event.create({
           data: {
-            user_id: user.id,
+            organizer_id: user.id,
             event_category: {
               connect: eventCategory.map((value: string) => ({
                 category_name: value,
@@ -104,19 +92,9 @@ export class EventController {
       //      </div>`,
       // });
 
-      return ResponseHandler.success(
-        res,
-        "Event created successfully!",
-        201,
-        res
-      );
+      return ResponseHandler.success(res, 'Event created successfully!', 201, res);
     } catch (error) {
-      return ResponseHandler.error(
-        res,
-        "Created Event Failed, internal server error",
-        500,
-        error
-      );
+      return ResponseHandler.error(res, 'Created Event Failed, internal server error', 500, error);
     }
   }
 
@@ -125,23 +103,11 @@ export class EventController {
   //Require a complete form (event + ticket types)
   //Also need a userID which can be obtained through a res.locals property
   //Broken return.. (Success create event, but return error, not sure why)
-  async updateEvent(
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<any> {
+  async updateEvent(req: Request, res: Response, next: NextFunction): Promise<any> {
     try {
       const params = parseInt(req.params.id);
       const userId = res.locals.dcrypt.id;
-      const {
-        eventTitle,
-        eventDescription,
-        eventTimeDate,
-        eventCategory,
-        eventLocation,
-        ticketTypes,
-        eventImg,
-      } = req.body;
+      const { eventTitle, eventDescription, eventTimeDate, eventCategory, eventLocation, ticketTypes, eventImg } = req.body;
 
       const checkEventExist = await prisma.event.findUnique({
         where: {
@@ -155,7 +121,7 @@ export class EventController {
       });
 
       if (!checkEventExist) {
-        throw new Error("Event not found!");
+        throw new Error('Event not found!');
       }
 
       await prisma.$transaction(async (tx) => {
@@ -179,20 +145,11 @@ export class EventController {
             event_location_id: checkEventExist.event_location_id,
           },
           data: {
-            address_name:
-              eventLocation.addressName ||
-              checkEventExist.event_location.address_name,
-            address:
-              eventLocation.address ||
-              checkEventExist.event_location.address_name,
-            location_city_id:
-              city.location_city_id ||
-              checkEventExist.event_location.location_city_id,
-            location_country_id:
-              country.location_country_id ||
-              checkEventExist.event_location.location_country_id,
-            zipcode:
-              eventLocation.zipcode || checkEventExist.event_location.zipcode,
+            address_name: eventLocation.addressName || checkEventExist.event_location.address_name,
+            address: eventLocation.address || checkEventExist.event_location.address_name,
+            location_city_id: city.location_city_id || checkEventExist.event_location.location_city_id,
+            location_country_id: country.location_country_id || checkEventExist.event_location.location_country_id,
+            zipcode: eventLocation.zipcode || checkEventExist.event_location.zipcode,
           },
         });
 
@@ -200,7 +157,7 @@ export class EventController {
         await tx.event.update({
           where: { event_id: params },
           data: {
-            user_id: userId,
+            organizer_id: userId,
             event_category: {
               connect: eventCategory.map((value: string) => ({
                 category_name: value,
@@ -210,16 +167,14 @@ export class EventController {
             description: eventDescription || checkEventExist.description,
             coupon_id: 1,
             imgEvent: eventImg || checkEventExist.imgEvent,
-            startDate:
-              new Date(eventTimeDate.startDate) || checkEventExist.startDate,
+            startDate: new Date(eventTimeDate.startDate) || checkEventExist.startDate,
             endDate: new Date(eventTimeDate.endDate) || checkEventExist.endDate,
             startTime: eventTimeDate.startTime || checkEventExist.startTime,
             endTime: eventTimeDate.endTime || checkEventExist.endTime,
             createdAt: checkEventExist.createdAt,
             updatedAt: new Date(),
             timezone: eventTimeDate.timezone || checkEventExist.timezone,
-            event_location_id:
-              eventLoc.event_location_id || checkEventExist.event_location_id,
+            event_location_id: eventLoc.event_location_id || checkEventExist.event_location_id,
           },
         });
 
@@ -258,19 +213,9 @@ export class EventController {
           }
         }
       });
-      return ResponseHandler.success(
-        res,
-        "Event updated Successfully",
-        200,
-        res
-      );
+      return ResponseHandler.success(res, 'Event updated Successfully', 200, res);
     } catch (error) {
-      return ResponseHandler.error(
-        res,
-        "Failed to update event! Internal server error!",
-        500,
-        error
-      );
+      return ResponseHandler.error(res, 'Failed to update event! Internal server error!', 500, error);
     }
   }
 
@@ -279,11 +224,7 @@ export class EventController {
   //Will not delete a city and country as it may be used by other event
   //Also need a userID which can be obtained through a res.locals property
   //Broken return.. (Success create event, but return error, not sure why)
-  async deleteEvent(
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<any> {
+  async deleteEvent(req: Request, res: Response, next: NextFunction): Promise<any> {
     try {
       const params = parseInt(req.params.id);
 
@@ -299,7 +240,7 @@ export class EventController {
       });
 
       if (!checkEventExist) {
-        throw new Error("Event not found!");
+        throw new Error('Event not found!');
       }
 
       await prisma.$transaction([
@@ -317,29 +258,15 @@ export class EventController {
           where: { event_location_id: checkEventExist.event_location_id },
         }),
       ]);
-      return ResponseHandler.success(
-        res,
-        "Event deleted successfully",
-        200,
-        res
-      );
+      return ResponseHandler.success(res, 'Event deleted successfully', 200, res);
     } catch (error) {
-      return ResponseHandler.error(
-        res,
-        "Failed to delete event! Internal server error!",
-        500,
-        error
-      );
+      return ResponseHandler.error(res, 'Failed to delete event! Internal server error!', 500, error);
     }
   }
 
   //getSpecificEvent bheaviour
   //This API will return a specific inquired event with all the details (including the ticket types)
-  async getSpecificEvent(
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<any> {
+  async getSpecificEvent(req: Request, res: Response, next: NextFunction): Promise<any> {
     try {
       const params = parseInt(req.params.id);
       const response = await prisma.event.findUnique({
@@ -347,14 +274,9 @@ export class EventController {
           event_id: params,
         },
       });
-      return ResponseHandler.success(res, "Get Event Success", 200, response);
+      return ResponseHandler.success(res, 'Get Event Success', 200, response);
     } catch (error) {
-      return ResponseHandler.error(
-        res,
-        "Get Event Failed! Internal server error!",
-        500,
-        error
-      );
+      return ResponseHandler.error(res, 'Get Event Failed! Internal server error!', 500, error);
     }
   }
 
@@ -392,12 +314,10 @@ export class EventController {
         where: {
           event_category: {
             some: {
-              category_name: Array.isArray(cat)
-                ? { in: cat }
-                : cat || undefined, //If cat is array (multiple queries, then use the keyword "in")
+              category_name: Array.isArray(cat) ? { in: cat } : cat || undefined, //If cat is array (multiple queries, then use the keyword "in")
             },
           },
-          user_id: (parseInt(eo as string) as number) || undefined, //query by user
+          organizer_id: (parseInt(eo as string) as number) || undefined, //query by user
           ticket_types: {
             every: {
               price: {
@@ -428,9 +348,9 @@ export class EventController {
           [sortby as string]: orderby || undefined, //Akses properti sortby (isinya nama properti).
         },
       });
-      return ResponseHandler.success(res, "Filter Success", 200, result);
+      return ResponseHandler.success(res, 'Filter Success', 200, result);
     } catch (error) {
-      return ResponseHandler.error(res, "Filter Error", 500, error);
+      return ResponseHandler.error(res, 'Filter Error', 500, error);
     }
   }
 
