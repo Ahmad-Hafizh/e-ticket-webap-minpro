@@ -28,7 +28,7 @@ class EventController {
             try {
                 const user = { id: 17 };
                 const { eventTitle, eventDescription, eventTimeDate, eventCategory, eventLocation, ticketTypes, eventImg, } = req.body;
-                yield prisma_1.prisma.$transaction((tx) => __awaiter(this, void 0, void 0, function* () {
+                const response = yield prisma_1.prisma.$transaction((tx) => __awaiter(this, void 0, void 0, function* () {
                     //Create and/or update city
                     const city = yield tx.location_city.upsert({
                         where: { city_name: eventLocation.city },
@@ -51,14 +51,18 @@ class EventController {
                             zipcode: eventLocation.zipcode,
                         },
                     });
+                    //Load organizer
+                    const organizer = yield tx.organizer.findUnique({
+                        where: { organizer_id: 17 },
+                    });
                     //Created Event
                     const event = yield tx.event.create({
                         data: {
-                            user_id: user.id,
+                            organizer_id: organizer === null || organizer === void 0 ? void 0 : organizer.organizer_id,
                             event_category: {
                                 connect: eventCategory.map((value) => ({
                                     category_name: value,
-                                })), //coba explore relasi prisma
+                                })),
                             },
                             title: eventTitle,
                             description: eventDescription,
@@ -86,6 +90,7 @@ class EventController {
                         data: ticket,
                         skipDuplicates: true,
                     });
+                    return event;
                 }));
                 // await transporter.sendMail({
                 //   from: "e-ticket",
@@ -96,9 +101,10 @@ class EventController {
                 //      <p>Invite people to attract more audience</p>
                 //      </div>`,
                 // });
-                return responseHandler_1.default.success(res, "Event created successfully!", 201, res);
+                return responseHandler_1.default.success(res, "Event created successfully!", 201, response);
             }
             catch (error) {
+                console.log(error);
                 return responseHandler_1.default.error(res, "Created Event Failed, internal server error", 500, error);
             }
         });
@@ -161,7 +167,7 @@ class EventController {
                     yield tx.event.update({
                         where: { event_id: params },
                         data: {
-                            user_id: userId,
+                            organizer_id: userId,
                             event_category: {
                                 connect: eventCategory.map((value) => ({
                                     category_name: value,
@@ -315,7 +321,7 @@ class EventController {
                                     : cat || undefined, //If cat is array (multiple queries, then use the keyword "in")
                             },
                         },
-                        user_id: parseInt(eo) || undefined, //query by user
+                        organizer_id: parseInt(eo) || undefined, //query by user
                         ticket_types: {
                             every: {
                                 price: {
