@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "main": "index.ts",
   "scripts": {
+    "test": "jest",
+    "build": "tsc && cp -rv public dist/public",
     "dev": "nodemon src/index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon src/index.ts",
+    "postinstall": "prisma generate"
   },
   "author": "",
   "license": "ISC",
