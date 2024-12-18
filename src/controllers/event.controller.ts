@@ -2,6 +2,7 @@ import { Request, Response, NextFunction, query } from "express";
 import { prisma } from "../config/prisma";
 import ResponseHandler from "../utils/responseHandler";
 import { transporter } from "../config/nodemailer";
+import { connect } from "http2";
 
 //
 export class EventController {
@@ -55,14 +56,19 @@ export class EventController {
           },
         });
 
+        //Load organizer
+        const organizer = await tx.organizer.findUnique({
+          where: { organizer_id: 17 },
+        });
+
         //Created Event
         const event = await tx.event.create({
           data: {
-            organizer_id: user.id,
+            organizer_id: organizer?.organizer_id as number,
             event_category: {
               connect: eventCategory.map((value: string) => ({
                 category_name: value,
-              })), //coba explore relasi prisma
+              })),
             },
             title: eventTitle,
             description: eventDescription,
