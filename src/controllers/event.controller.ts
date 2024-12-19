@@ -283,7 +283,9 @@ export class EventController {
         }
         return event;
       });
+
       console.log(response);
+
       return ResponseHandler.success(
         res,
         "Event updated Successfully",
@@ -453,6 +455,7 @@ export class EventController {
         },
       });
 
+
       // //Check data in redis
       // await redisClient.connect().catch(error);
       // const redisData = await redisClient.get(`${req.url}`);
@@ -471,6 +474,7 @@ export class EventController {
       // if (redisClient.isOpen) {
       //   await redisClient.disconnect();
       // }
+
       return ResponseHandler.success(res, "Filter Success", 200, result);
     } catch (error) {
       console.log(error);
