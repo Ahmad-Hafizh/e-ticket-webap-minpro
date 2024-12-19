@@ -1,9 +1,10 @@
 import { Request, Response, NextFunction } from "express";
 import { prisma } from "../config/prisma";
 import ResponseHandler from "../utils/responseHandler";
-import redisClient from "../config/redis";
+// import redisClient from "../config/redis";
 import { transporter } from "../config/nodemailer";
 import { error } from "console";
+import { Result } from "express-validator";
 
 //
 export class EventController {
@@ -282,7 +283,7 @@ export class EventController {
         }
         return event;
       });
-
+      console.log(response);
       return ResponseHandler.success(
         res,
         "Event updated Successfully",
@@ -290,6 +291,7 @@ export class EventController {
         response
       );
     } catch (error) {
+      console.log(error);
       return ResponseHandler.error(
         res,
         "Failed to update event! Internal server error!",
@@ -451,24 +453,24 @@ export class EventController {
         },
       });
 
-      //Check data in redis
-      await redisClient.connect().catch(error);
-      const redisData = await redisClient.get(`${req.url}`);
-      //if exist, use data from redis as result for response
-      if (redisData) {
-        return ResponseHandler.success(
-          res,
-          "Filter Success - Redis",
-          200,
-          JSON.parse(redisData)
-        );
-      }
-      //If not exist, get data from database and store to redis
+      // //Check data in redis
+      // await redisClient.connect().catch(error);
+      // const redisData = await redisClient.get(`${req.url}`);
+      // //if exist, use data from redis as result for response
+      // if (redisData) {
+      //   return ResponseHandler.success(
+      //     res,
+      //     "Filter Success - Redis",
+      //     200,
+      //     JSON.parse(redisData)
+      //   );
+      // }
+      // //If not exist, get data from database and store to redis
 
-      await redisClient.setEx(`${req.url}`, 5, JSON.stringify(result));
-      if (redisClient.isOpen) {
-        await redisClient.disconnect();
-      }
+      // await redisClient.setEx(`${req.url}`, 5, JSON.stringify(result));
+      // if (redisClient.isOpen) {
+      //   await redisClient.disconnect();
+      // }
       return ResponseHandler.success(res, "Filter Success", 200, result);
     } catch (error) {
       console.log(error);
