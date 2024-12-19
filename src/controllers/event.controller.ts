@@ -36,6 +36,7 @@ export class EventController {
         eventLocation,
         ticketTypes,
         eventImg,
+        score,
       } = req.body;
 
       const response = await prisma.$transaction(async (tx) => {
@@ -84,6 +85,7 @@ export class EventController {
             createdAt: new Date(),
             updatedAt: new Date(),
             timezone: eventTimeDate.timezone,
+            score: score,
             event_location_id: eventLoc.event_location_id,
           },
         });

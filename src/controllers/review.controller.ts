@@ -38,7 +38,13 @@ export class ReviewController {
 
   async getReview(req: Request, res: Response) {
     try {
-      const { event } = req.query;
-    } catch (error) {}
+      const { eventId } = req.query;
+      const response = await prisma.review.findMany({
+        where: { event_id: parseInt(eventId as string) },
+      });
+      return ResponseHandler.success(res, "Get review success", 200, response);
+    } catch (error) {
+      return ResponseHandler.error(res, "Get review error", 500, error);
+    }
   }
 }

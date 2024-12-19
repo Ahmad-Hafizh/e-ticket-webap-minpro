@@ -11931,6 +11931,7 @@ export namespace Prisma {
     coupon_id: number | null
     event_location_id: number | null
     customer_id: number | null
+    score: number | null
   }
 
   export type EventSumAggregateOutputType = {
@@ -11939,6 +11940,7 @@ export namespace Prisma {
     coupon_id: number | null
     event_location_id: number | null
     customer_id: number | null
+    score: number | null
   }
 
   export type EventMinAggregateOutputType = {
@@ -11957,6 +11959,7 @@ export namespace Prisma {
     createdAt: Date | null
     updatedAt: Date | null
     customer_id: number | null
+    score: number | null
   }
 
   export type EventMaxAggregateOutputType = {
@@ -11975,6 +11978,7 @@ export namespace Prisma {
     createdAt: Date | null
     updatedAt: Date | null
     customer_id: number | null
+    score: number | null
   }
 
   export type EventCountAggregateOutputType = {
@@ -11993,6 +11997,7 @@ export namespace Prisma {
     createdAt: number
     updatedAt: number
     customer_id: number
+    score: number
     _all: number
   }
 
@@ -12003,6 +12008,7 @@ export namespace Prisma {
     coupon_id?: true
     event_location_id?: true
     customer_id?: true
+    score?: true
   }
 
   export type EventSumAggregateInputType = {
@@ -12011,6 +12017,7 @@ export namespace Prisma {
     coupon_id?: true
     event_location_id?: true
     customer_id?: true
+    score?: true
   }
 
   export type EventMinAggregateInputType = {
@@ -12029,6 +12036,7 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     customer_id?: true
+    score?: true
   }
 
   export type EventMaxAggregateInputType = {
@@ -12047,6 +12055,7 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     customer_id?: true
+    score?: true
   }
 
   export type EventCountAggregateInputType = {
@@ -12065,6 +12074,7 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     customer_id?: true
+    score?: true
     _all?: true
   }
 
@@ -12170,6 +12180,7 @@ export namespace Prisma {
     createdAt: Date
     updatedAt: Date
     customer_id: number | null
+    score: number | null
     _count: EventCountAggregateOutputType | null
     _avg: EventAvgAggregateOutputType | null
     _sum: EventSumAggregateOutputType | null
@@ -12207,6 +12218,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     customer_id?: boolean
+    score?: boolean
     organizer?: boolean | OrganizerDefaultArgs<ExtArgs>
     event_category?: boolean | Event$event_categoryArgs<ExtArgs>
     event_location?: boolean | Event_LocationDefaultArgs<ExtArgs>
@@ -12232,6 +12244,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     customer_id?: boolean
+    score?: boolean
     organizer?: boolean | OrganizerDefaultArgs<ExtArgs>
     event_location?: boolean | Event_LocationDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["event"]>
@@ -12252,6 +12265,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     customer_id?: boolean
+    score?: boolean
   }
 
   export type EventInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -12294,6 +12308,7 @@ export namespace Prisma {
       createdAt: Date
       updatedAt: Date
       customer_id: number | null
+      score: number | null
     }, ExtArgs["result"]["event"]>
     composites: {}
   }
@@ -12708,6 +12723,7 @@ export namespace Prisma {
     readonly createdAt: FieldRef<"Event", 'DateTime'>
     readonly updatedAt: FieldRef<"Event", 'DateTime'>
     readonly customer_id: FieldRef<"Event", 'Int'>
+    readonly score: FieldRef<"Event", 'Int'>
   }
     
 
@@ -21137,7 +21153,8 @@ export namespace Prisma {
     timezone: 'timezone',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
-    customer_id: 'customer_id'
+    customer_id: 'customer_id',
+    score: 'score'
   };
 
   export type EventScalarFieldEnum = (typeof EventScalarFieldEnum)[keyof typeof EventScalarFieldEnum]
@@ -22007,6 +22024,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Event"> | Date | string
     updatedAt?: DateTimeFilter<"Event"> | Date | string
     customer_id?: IntNullableFilter<"Event"> | number | null
+    score?: IntNullableFilter<"Event"> | number | null
     organizer?: XOR<OrganizerScalarRelationFilter, OrganizerWhereInput>
     event_category?: Event_categoryListRelationFilter
     event_location?: XOR<Event_LocationScalarRelationFilter, Event_LocationWhereInput>
@@ -22031,6 +22049,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     customer_id?: SortOrderInput | SortOrder
+    score?: SortOrderInput | SortOrder
     organizer?: OrganizerOrderByWithRelationInput
     event_category?: Event_categoryOrderByRelationAggregateInput
     event_location?: Event_LocationOrderByWithRelationInput
@@ -22058,6 +22077,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Event"> | Date | string
     updatedAt?: DateTimeFilter<"Event"> | Date | string
     customer_id?: IntNullableFilter<"Event"> | number | null
+    score?: IntNullableFilter<"Event"> | number | null
     organizer?: XOR<OrganizerScalarRelationFilter, OrganizerWhereInput>
     event_category?: Event_categoryListRelationFilter
     event_location?: XOR<Event_LocationScalarRelationFilter, Event_LocationWhereInput>
@@ -22082,6 +22102,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     customer_id?: SortOrderInput | SortOrder
+    score?: SortOrderInput | SortOrder
     _count?: EventCountOrderByAggregateInput
     _avg?: EventAvgOrderByAggregateInput
     _max?: EventMaxOrderByAggregateInput
@@ -22108,6 +22129,7 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"Event"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Event"> | Date | string
     customer_id?: IntNullableWithAggregatesFilter<"Event"> | number | null
+    score?: IntNullableWithAggregatesFilter<"Event"> | number | null
   }
 
   export type Event_categoryWhereInput = {
@@ -23181,6 +23203,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt: Date | string
     customer_id?: number | null
+    score?: number | null
     organizer: OrganizerCreateNestedOneWithoutEventsInput
     event_category?: Event_categoryCreateNestedManyWithoutEventInput
     event_location: Event_LocationCreateNestedOneWithoutEventInput
@@ -23205,6 +23228,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt: Date | string
     customer_id?: number | null
+    score?: number | null
     event_category?: Event_categoryUncheckedCreateNestedManyWithoutEventInput
     ticket_types?: Ticket_typesUncheckedCreateNestedManyWithoutEventInput
     customer?: UserUncheckedCreateNestedManyWithoutEventInput
@@ -23224,6 +23248,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     customer_id?: NullableIntFieldUpdateOperationsInput | number | null
+    score?: NullableIntFieldUpdateOperationsInput | number | null
     organizer?: OrganizerUpdateOneRequiredWithoutEventsNestedInput
     event_category?: Event_categoryUpdateManyWithoutEventNestedInput
     event_location?: Event_LocationUpdateOneRequiredWithoutEventNestedInput
@@ -23248,6 +23273,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     customer_id?: NullableIntFieldUpdateOperationsInput | number | null
+    score?: NullableIntFieldUpdateOperationsInput | number | null
     event_category?: Event_categoryUncheckedUpdateManyWithoutEventNestedInput
     ticket_types?: Ticket_typesUncheckedUpdateManyWithoutEventNestedInput
     customer?: UserUncheckedUpdateManyWithoutEventNestedInput
@@ -23270,6 +23296,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt: Date | string
     customer_id?: number | null
+    score?: number | null
   }
 
   export type EventUpdateManyMutationInput = {
@@ -23285,6 +23312,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     customer_id?: NullableIntFieldUpdateOperationsInput | number | null
+    score?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type EventUncheckedUpdateManyInput = {
@@ -23303,6 +23331,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     customer_id?: NullableIntFieldUpdateOperationsInput | number | null
+    score?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type Event_categoryCreateInput = {
@@ -24441,6 +24470,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     customer_id?: SortOrder
+    score?: SortOrder
   }
 
   export type EventAvgOrderByAggregateInput = {
@@ -24449,6 +24479,7 @@ export namespace Prisma {
     coupon_id?: SortOrder
     event_location_id?: SortOrder
     customer_id?: SortOrder
+    score?: SortOrder
   }
 
   export type EventMaxOrderByAggregateInput = {
@@ -24467,6 +24498,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     customer_id?: SortOrder
+    score?: SortOrder
   }
 
   export type EventMinOrderByAggregateInput = {
@@ -24485,6 +24517,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     customer_id?: SortOrder
+    score?: SortOrder
   }
 
   export type EventSumOrderByAggregateInput = {
@@ -24493,6 +24526,7 @@ export namespace Prisma {
     coupon_id?: SortOrder
     event_location_id?: SortOrder
     customer_id?: SortOrder
+    score?: SortOrder
   }
 
   export type Event_categoryCountOrderByAggregateInput = {
@@ -26562,6 +26596,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt: Date | string
     customer_id?: number | null
+    score?: number | null
     organizer: OrganizerCreateNestedOneWithoutEventsInput
     event_category?: Event_categoryCreateNestedManyWithoutEventInput
     event_location: Event_LocationCreateNestedOneWithoutEventInput
@@ -26585,6 +26620,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt: Date | string
     customer_id?: number | null
+    score?: number | null
     event_category?: Event_categoryUncheckedCreateNestedManyWithoutEventInput
     ticket_types?: Ticket_typesUncheckedCreateNestedManyWithoutEventInput
     review?: ReviewUncheckedCreateNestedManyWithoutEventInput
@@ -26880,6 +26916,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Event"> | Date | string
     updatedAt?: DateTimeFilter<"Event"> | Date | string
     customer_id?: IntNullableFilter<"Event"> | number | null
+    score?: IntNullableFilter<"Event"> | number | null
   }
 
   export type AddressCreateWithoutProfileInput = {
@@ -27207,6 +27244,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt: Date | string
     customer_id?: number | null
+    score?: number | null
     event_category?: Event_categoryCreateNestedManyWithoutEventInput
     event_location: Event_LocationCreateNestedOneWithoutEventInput
     ticket_types?: Ticket_typesCreateNestedManyWithoutEventInput
@@ -27229,6 +27267,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt: Date | string
     customer_id?: number | null
+    score?: number | null
     event_category?: Event_categoryUncheckedCreateNestedManyWithoutEventInput
     ticket_types?: Ticket_typesUncheckedCreateNestedManyWithoutEventInput
     customer?: UserUncheckedCreateNestedManyWithoutEventInput
@@ -28133,6 +28172,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt: Date | string
     customer_id?: number | null
+    score?: number | null
     organizer: OrganizerCreateNestedOneWithoutEventsInput
     event_location: Event_LocationCreateNestedOneWithoutEventInput
     ticket_types?: Ticket_typesCreateNestedManyWithoutEventInput
@@ -28156,6 +28196,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt: Date | string
     customer_id?: number | null
+    score?: number | null
     ticket_types?: Ticket_typesUncheckedCreateNestedManyWithoutEventInput
     customer?: UserUncheckedCreateNestedManyWithoutEventInput
     review?: ReviewUncheckedCreateNestedManyWithoutEventInput
@@ -28223,6 +28264,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt: Date | string
     customer_id?: number | null
+    score?: number | null
     organizer: OrganizerCreateNestedOneWithoutEventsInput
     event_category?: Event_categoryCreateNestedManyWithoutEventInput
     ticket_types?: Ticket_typesCreateNestedManyWithoutEventInput
@@ -28245,6 +28287,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt: Date | string
     customer_id?: number | null
+    score?: number | null
     event_category?: Event_categoryUncheckedCreateNestedManyWithoutEventInput
     ticket_types?: Ticket_typesUncheckedCreateNestedManyWithoutEventInput
     customer?: UserUncheckedCreateNestedManyWithoutEventInput
@@ -28320,6 +28363,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     customer_id?: NullableIntFieldUpdateOperationsInput | number | null
+    score?: NullableIntFieldUpdateOperationsInput | number | null
     organizer?: OrganizerUpdateOneRequiredWithoutEventsNestedInput
     event_category?: Event_categoryUpdateManyWithoutEventNestedInput
     ticket_types?: Ticket_typesUpdateManyWithoutEventNestedInput
@@ -28342,6 +28386,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     customer_id?: NullableIntFieldUpdateOperationsInput | number | null
+    score?: NullableIntFieldUpdateOperationsInput | number | null
     event_category?: Event_categoryUncheckedUpdateManyWithoutEventNestedInput
     ticket_types?: Ticket_typesUncheckedUpdateManyWithoutEventNestedInput
     customer?: UserUncheckedUpdateManyWithoutEventNestedInput
@@ -28459,6 +28504,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt: Date | string
     customer_id?: number | null
+    score?: number | null
     organizer: OrganizerCreateNestedOneWithoutEventsInput
     event_category?: Event_categoryCreateNestedManyWithoutEventInput
     event_location: Event_LocationCreateNestedOneWithoutEventInput
@@ -28482,6 +28528,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt: Date | string
     customer_id?: number | null
+    score?: number | null
     event_category?: Event_categoryUncheckedCreateNestedManyWithoutEventInput
     customer?: UserUncheckedCreateNestedManyWithoutEventInput
     review?: ReviewUncheckedCreateNestedManyWithoutEventInput
@@ -28536,6 +28583,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     customer_id?: NullableIntFieldUpdateOperationsInput | number | null
+    score?: NullableIntFieldUpdateOperationsInput | number | null
     organizer?: OrganizerUpdateOneRequiredWithoutEventsNestedInput
     event_category?: Event_categoryUpdateManyWithoutEventNestedInput
     event_location?: Event_LocationUpdateOneRequiredWithoutEventNestedInput
@@ -28559,6 +28607,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     customer_id?: NullableIntFieldUpdateOperationsInput | number | null
+    score?: NullableIntFieldUpdateOperationsInput | number | null
     event_category?: Event_categoryUncheckedUpdateManyWithoutEventNestedInput
     customer?: UserUncheckedUpdateManyWithoutEventNestedInput
     review?: ReviewUncheckedUpdateManyWithoutEventNestedInput
@@ -28937,6 +28986,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt: Date | string
     customer_id?: number | null
+    score?: number | null
     organizer: OrganizerCreateNestedOneWithoutEventsInput
     event_category?: Event_categoryCreateNestedManyWithoutEventInput
     event_location: Event_LocationCreateNestedOneWithoutEventInput
@@ -28960,6 +29010,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt: Date | string
     customer_id?: number | null
+    score?: number | null
     event_category?: Event_categoryUncheckedCreateNestedManyWithoutEventInput
     ticket_types?: Ticket_typesUncheckedCreateNestedManyWithoutEventInput
     customer?: UserUncheckedCreateNestedManyWithoutEventInput
@@ -29038,6 +29089,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     customer_id?: NullableIntFieldUpdateOperationsInput | number | null
+    score?: NullableIntFieldUpdateOperationsInput | number | null
     organizer?: OrganizerUpdateOneRequiredWithoutEventsNestedInput
     event_category?: Event_categoryUpdateManyWithoutEventNestedInput
     event_location?: Event_LocationUpdateOneRequiredWithoutEventNestedInput
@@ -29061,6 +29113,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     customer_id?: NullableIntFieldUpdateOperationsInput | number | null
+    score?: NullableIntFieldUpdateOperationsInput | number | null
     event_category?: Event_categoryUncheckedUpdateManyWithoutEventNestedInput
     ticket_types?: Ticket_typesUncheckedUpdateManyWithoutEventNestedInput
     customer?: UserUncheckedUpdateManyWithoutEventNestedInput
@@ -29294,6 +29347,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     customer_id?: NullableIntFieldUpdateOperationsInput | number | null
+    score?: NullableIntFieldUpdateOperationsInput | number | null
     organizer?: OrganizerUpdateOneRequiredWithoutEventsNestedInput
     event_category?: Event_categoryUpdateManyWithoutEventNestedInput
     event_location?: Event_LocationUpdateOneRequiredWithoutEventNestedInput
@@ -29317,6 +29371,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     customer_id?: NullableIntFieldUpdateOperationsInput | number | null
+    score?: NullableIntFieldUpdateOperationsInput | number | null
     event_category?: Event_categoryUncheckedUpdateManyWithoutEventNestedInput
     ticket_types?: Ticket_typesUncheckedUpdateManyWithoutEventNestedInput
     review?: ReviewUncheckedUpdateManyWithoutEventNestedInput
@@ -29338,6 +29393,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     customer_id?: NullableIntFieldUpdateOperationsInput | number | null
+    score?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type AddressCreateManyProfileInput = {
@@ -29417,6 +29473,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt: Date | string
     customer_id?: number | null
+    score?: number | null
   }
 
   export type EventUpdateWithoutOrganizerInput = {
@@ -29432,6 +29489,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     customer_id?: NullableIntFieldUpdateOperationsInput | number | null
+    score?: NullableIntFieldUpdateOperationsInput | number | null
     event_category?: Event_categoryUpdateManyWithoutEventNestedInput
     event_location?: Event_LocationUpdateOneRequiredWithoutEventNestedInput
     ticket_types?: Ticket_typesUpdateManyWithoutEventNestedInput
@@ -29454,6 +29512,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     customer_id?: NullableIntFieldUpdateOperationsInput | number | null
+    score?: NullableIntFieldUpdateOperationsInput | number | null
     event_category?: Event_categoryUncheckedUpdateManyWithoutEventNestedInput
     ticket_types?: Ticket_typesUncheckedUpdateManyWithoutEventNestedInput
     customer?: UserUncheckedUpdateManyWithoutEventNestedInput
@@ -29475,6 +29534,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     customer_id?: NullableIntFieldUpdateOperationsInput | number | null
+    score?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type UserCreateManyReferredInput = {
@@ -29676,6 +29736,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     customer_id?: NullableIntFieldUpdateOperationsInput | number | null
+    score?: NullableIntFieldUpdateOperationsInput | number | null
     organizer?: OrganizerUpdateOneRequiredWithoutEventsNestedInput
     event_location?: Event_LocationUpdateOneRequiredWithoutEventNestedInput
     ticket_types?: Ticket_typesUpdateManyWithoutEventNestedInput
@@ -29699,6 +29760,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     customer_id?: NullableIntFieldUpdateOperationsInput | number | null
+    score?: NullableIntFieldUpdateOperationsInput | number | null
     ticket_types?: Ticket_typesUncheckedUpdateManyWithoutEventNestedInput
     customer?: UserUncheckedUpdateManyWithoutEventNestedInput
     review?: ReviewUncheckedUpdateManyWithoutEventNestedInput
@@ -29720,6 +29782,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     customer_id?: NullableIntFieldUpdateOperationsInput | number | null
+    score?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type Event_LocationCreateManyCityInput = {
