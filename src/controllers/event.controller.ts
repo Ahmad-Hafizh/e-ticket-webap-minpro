@@ -1,8 +1,9 @@
-import { Request, Response, NextFunction, query, response } from "express";
+import { Request, Response, NextFunction } from "express";
 import { prisma } from "../config/prisma";
 import ResponseHandler from "../utils/responseHandler";
+import redisClient from "../config/redis";
 import { transporter } from "../config/nodemailer";
-import { connect } from "http2";
+import { error } from "console";
 
 //
 export class EventController {
@@ -35,6 +36,7 @@ export class EventController {
         eventLocation,
         ticketTypes,
         eventImg,
+        score,
       } = req.body;
 
       const response = await prisma.$transaction(async (tx) => {
@@ -83,6 +85,7 @@ export class EventController {
             createdAt: new Date(),
             updatedAt: new Date(),
             timezone: eventTimeDate.timezone,
+            score: score,
             event_location_id: eventLoc.event_location_id,
           },
         });
@@ -279,6 +282,7 @@ export class EventController {
         }
         return event;
       });
+
       return ResponseHandler.success(
         res,
         "Event updated Successfully",
@@ -403,6 +407,8 @@ export class EventController {
         sortby,
         orderby,
       } = req.query;
+      const url = req.url;
+      console.log(url);
       const result = await prisma.event.findMany({
         where: {
           event_category: {
@@ -425,12 +431,13 @@ export class EventController {
             location_city_id: parseInt(city as string) || undefined, //query by city
             location_country_id: parseInt(country as string) || undefined, //query by country
           },
-          startDate: {
-            gte: new Date(startdate as string) || undefined,
-          },
-          endDate: {
-            lte: new Date(enddate as string) || undefined,
-          },
+
+          // startDate: {
+          //   gte: new Date(startdate as string) || undefined,
+          // },
+          // endDate: {
+          //   lte: new Date(enddate as string) || undefined,
+          // },
         },
 
         include: {
@@ -443,8 +450,28 @@ export class EventController {
           [sortby as string]: orderby || undefined, //Akses properti sortby (isinya nama properti).
         },
       });
+
+      //Check data in redis
+      await redisClient.connect().catch(error);
+      const redisData = await redisClient.get(`${req.url}`);
+      //if exist, use data from redis as result for response
+      if (redisData) {
+        return ResponseHandler.success(
+          res,
+          "Filter Success - Redis",
+          200,
+          JSON.parse(redisData)
+        );
+      }
+      //If not exist, get data from database and store to redis
+
+      await redisClient.setEx(`${req.url}`, 5, JSON.stringify(result));
+      if (redisClient.isOpen) {
+        await redisClient.disconnect();
+      }
       return ResponseHandler.success(res, "Filter Success", 200, result);
     } catch (error) {
+      console.log(error);
       return ResponseHandler.error(res, "Filter Error", 500, error);
     }
   }

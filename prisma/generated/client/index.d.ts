@@ -98,6 +98,11 @@ export type Transaction_Detail = $Result.DefaultSelection<Prisma.$Transaction_De
  * 
  */
 export type Transaction = $Result.DefaultSelection<Prisma.$TransactionPayload>
+/**
+ * Model Review
+ * 
+ */
+export type Review = $Result.DefaultSelection<Prisma.$ReviewPayload>
 
 /**
  * Enums
@@ -450,6 +455,16 @@ export class PrismaClient<
     * ```
     */
   get transaction(): Prisma.TransactionDelegate<ExtArgs>;
+
+  /**
+   * `prisma.review`: Exposes CRUD operations for the **Review** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Reviews
+    * const reviews = await prisma.review.findMany()
+    * ```
+    */
+  get review(): Prisma.ReviewDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -906,7 +921,8 @@ export namespace Prisma {
     Location_country: 'Location_country',
     Ticket_types: 'Ticket_types',
     Transaction_Detail: 'Transaction_Detail',
-    Transaction: 'Transaction'
+    Transaction: 'Transaction',
+    Review: 'Review'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -922,7 +938,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "user" | "profile" | "address" | "organizer" | "bank_account" | "point" | "referral" | "social_media" | "coupon" | "event" | "event_category" | "event_Location" | "location_city" | "location_country" | "ticket_types" | "transaction_Detail" | "transaction"
+      modelProps: "user" | "profile" | "address" | "organizer" | "bank_account" | "point" | "referral" | "social_media" | "coupon" | "event" | "event_category" | "event_Location" | "location_city" | "location_country" | "ticket_types" | "transaction_Detail" | "transaction" | "review"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2116,6 +2132,76 @@ export namespace Prisma {
           }
         }
       }
+      Review: {
+        payload: Prisma.$ReviewPayload<ExtArgs>
+        fields: Prisma.ReviewFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ReviewFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReviewPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ReviewFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReviewPayload>
+          }
+          findFirst: {
+            args: Prisma.ReviewFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReviewPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ReviewFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReviewPayload>
+          }
+          findMany: {
+            args: Prisma.ReviewFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReviewPayload>[]
+          }
+          create: {
+            args: Prisma.ReviewCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReviewPayload>
+          }
+          createMany: {
+            args: Prisma.ReviewCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ReviewCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReviewPayload>[]
+          }
+          delete: {
+            args: Prisma.ReviewDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReviewPayload>
+          }
+          update: {
+            args: Prisma.ReviewUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReviewPayload>
+          }
+          deleteMany: {
+            args: Prisma.ReviewDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ReviewUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.ReviewUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReviewPayload>
+          }
+          aggregate: {
+            args: Prisma.ReviewAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateReview>
+          }
+          groupBy: {
+            args: Prisma.ReviewGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ReviewGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ReviewCountArgs<ExtArgs>
+            result: $Utils.Optional<ReviewCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -2279,15 +2365,19 @@ export namespace Prisma {
   export type UserCountOutputType = {
     points: number
     coupons: number
+    review: number
     transaction_details: number
     transaction: number
+    event: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     points?: boolean | UserCountOutputTypeCountPointsArgs
     coupons?: boolean | UserCountOutputTypeCountCouponsArgs
+    review?: boolean | UserCountOutputTypeCountReviewArgs
     transaction_details?: boolean | UserCountOutputTypeCountTransaction_detailsArgs
     transaction?: boolean | UserCountOutputTypeCountTransactionArgs
+    event?: boolean | UserCountOutputTypeCountEventArgs
   }
 
   // Custom InputTypes
@@ -2318,6 +2408,13 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
+  export type UserCountOutputTypeCountReviewArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ReviewWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
   export type UserCountOutputTypeCountTransaction_detailsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: Transaction_DetailWhereInput
   }
@@ -2327,6 +2424,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountTransactionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: TransactionWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountEventArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: EventWhereInput
   }
 
 
@@ -2439,11 +2543,15 @@ export namespace Prisma {
   export type EventCountOutputType = {
     event_category: number
     ticket_types: number
+    customer: number
+    review: number
   }
 
   export type EventCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     event_category?: boolean | EventCountOutputTypeCountEvent_categoryArgs
     ticket_types?: boolean | EventCountOutputTypeCountTicket_typesArgs
+    customer?: boolean | EventCountOutputTypeCountCustomerArgs
+    review?: boolean | EventCountOutputTypeCountReviewArgs
   }
 
   // Custom InputTypes
@@ -2469,6 +2577,20 @@ export namespace Prisma {
    */
   export type EventCountOutputTypeCountTicket_typesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: Ticket_typesWhereInput
+  }
+
+  /**
+   * EventCountOutputType without action
+   */
+  export type EventCountOutputTypeCountCustomerArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserWhereInput
+  }
+
+  /**
+   * EventCountOutputType without action
+   */
+  export type EventCountOutputTypeCountReviewArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ReviewWhereInput
   }
 
 
@@ -2809,8 +2931,10 @@ export namespace Prisma {
     points?: boolean | User$pointsArgs<ExtArgs>
     coupons?: boolean | User$couponsArgs<ExtArgs>
     organizer?: boolean | User$organizerArgs<ExtArgs>
+    review?: boolean | User$reviewArgs<ExtArgs>
     transaction_details?: boolean | User$transaction_detailsArgs<ExtArgs>
     transaction?: boolean | User$transactionArgs<ExtArgs>
+    event?: boolean | User$eventArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -2846,8 +2970,10 @@ export namespace Prisma {
     points?: boolean | User$pointsArgs<ExtArgs>
     coupons?: boolean | User$couponsArgs<ExtArgs>
     organizer?: boolean | User$organizerArgs<ExtArgs>
+    review?: boolean | User$reviewArgs<ExtArgs>
     transaction_details?: boolean | User$transaction_detailsArgs<ExtArgs>
     transaction?: boolean | User$transactionArgs<ExtArgs>
+    event?: boolean | User$eventArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2863,8 +2989,10 @@ export namespace Prisma {
       points: Prisma.$PointPayload<ExtArgs>[]
       coupons: Prisma.$CouponPayload<ExtArgs>[]
       organizer: Prisma.$OrganizerPayload<ExtArgs> | null
+      review: Prisma.$ReviewPayload<ExtArgs>[]
       transaction_details: Prisma.$Transaction_DetailPayload<ExtArgs>[]
       transaction: Prisma.$TransactionPayload<ExtArgs>[]
+      event: Prisma.$EventPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       user_id: number
@@ -3246,8 +3374,10 @@ export namespace Prisma {
     points<T extends User$pointsArgs<ExtArgs> = {}>(args?: Subset<T, User$pointsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PointPayload<ExtArgs>, T, "findMany"> | Null>
     coupons<T extends User$couponsArgs<ExtArgs> = {}>(args?: Subset<T, User$couponsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CouponPayload<ExtArgs>, T, "findMany"> | Null>
     organizer<T extends User$organizerArgs<ExtArgs> = {}>(args?: Subset<T, User$organizerArgs<ExtArgs>>): Prisma__OrganizerClient<$Result.GetResult<Prisma.$OrganizerPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    review<T extends User$reviewArgs<ExtArgs> = {}>(args?: Subset<T, User$reviewArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany"> | Null>
     transaction_details<T extends User$transaction_detailsArgs<ExtArgs> = {}>(args?: Subset<T, User$transaction_detailsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Transaction_DetailPayload<ExtArgs>, T, "findMany"> | Null>
     transaction<T extends User$transactionArgs<ExtArgs> = {}>(args?: Subset<T, User$transactionArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findMany"> | Null>
+    event<T extends User$eventArgs<ExtArgs> = {}>(args?: Subset<T, User$eventArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3704,6 +3834,26 @@ export namespace Prisma {
   }
 
   /**
+   * User.review
+   */
+  export type User$reviewArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Review
+     */
+    select?: ReviewSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReviewInclude<ExtArgs> | null
+    where?: ReviewWhereInput
+    orderBy?: ReviewOrderByWithRelationInput | ReviewOrderByWithRelationInput[]
+    cursor?: ReviewWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ReviewScalarFieldEnum | ReviewScalarFieldEnum[]
+  }
+
+  /**
    * User.transaction_details
    */
   export type User$transaction_detailsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3741,6 +3891,26 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: TransactionScalarFieldEnum | TransactionScalarFieldEnum[]
+  }
+
+  /**
+   * User.event
+   */
+  export type User$eventArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Event
+     */
+    select?: EventSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventInclude<ExtArgs> | null
+    where?: EventWhereInput
+    orderBy?: EventOrderByWithRelationInput | EventOrderByWithRelationInput[]
+    cursor?: EventWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: EventScalarFieldEnum | EventScalarFieldEnum[]
   }
 
   /**
@@ -11760,6 +11930,8 @@ export namespace Prisma {
     organizer_id: number | null
     coupon_id: number | null
     event_location_id: number | null
+    customer_id: number | null
+    score: number | null
   }
 
   export type EventSumAggregateOutputType = {
@@ -11767,6 +11939,8 @@ export namespace Prisma {
     organizer_id: number | null
     coupon_id: number | null
     event_location_id: number | null
+    customer_id: number | null
+    score: number | null
   }
 
   export type EventMinAggregateOutputType = {
@@ -11784,6 +11958,8 @@ export namespace Prisma {
     timezone: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    customer_id: number | null
+    score: number | null
   }
 
   export type EventMaxAggregateOutputType = {
@@ -11801,6 +11977,8 @@ export namespace Prisma {
     timezone: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    customer_id: number | null
+    score: number | null
   }
 
   export type EventCountAggregateOutputType = {
@@ -11818,6 +11996,8 @@ export namespace Prisma {
     timezone: number
     createdAt: number
     updatedAt: number
+    customer_id: number
+    score: number
     _all: number
   }
 
@@ -11827,6 +12007,8 @@ export namespace Prisma {
     organizer_id?: true
     coupon_id?: true
     event_location_id?: true
+    customer_id?: true
+    score?: true
   }
 
   export type EventSumAggregateInputType = {
@@ -11834,6 +12016,8 @@ export namespace Prisma {
     organizer_id?: true
     coupon_id?: true
     event_location_id?: true
+    customer_id?: true
+    score?: true
   }
 
   export type EventMinAggregateInputType = {
@@ -11851,6 +12035,8 @@ export namespace Prisma {
     timezone?: true
     createdAt?: true
     updatedAt?: true
+    customer_id?: true
+    score?: true
   }
 
   export type EventMaxAggregateInputType = {
@@ -11868,6 +12054,8 @@ export namespace Prisma {
     timezone?: true
     createdAt?: true
     updatedAt?: true
+    customer_id?: true
+    score?: true
   }
 
   export type EventCountAggregateInputType = {
@@ -11885,6 +12073,8 @@ export namespace Prisma {
     timezone?: true
     createdAt?: true
     updatedAt?: true
+    customer_id?: true
+    score?: true
     _all?: true
   }
 
@@ -11989,6 +12179,8 @@ export namespace Prisma {
     timezone: string
     createdAt: Date
     updatedAt: Date
+    customer_id: number | null
+    score: number | null
     _count: EventCountAggregateOutputType | null
     _avg: EventAvgAggregateOutputType | null
     _sum: EventSumAggregateOutputType | null
@@ -12025,10 +12217,14 @@ export namespace Prisma {
     timezone?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    customer_id?: boolean
+    score?: boolean
     organizer?: boolean | OrganizerDefaultArgs<ExtArgs>
     event_category?: boolean | Event$event_categoryArgs<ExtArgs>
     event_location?: boolean | Event_LocationDefaultArgs<ExtArgs>
     ticket_types?: boolean | Event$ticket_typesArgs<ExtArgs>
+    customer?: boolean | Event$customerArgs<ExtArgs>
+    review?: boolean | Event$reviewArgs<ExtArgs>
     _count?: boolean | EventCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["event"]>
 
@@ -12047,6 +12243,8 @@ export namespace Prisma {
     timezone?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    customer_id?: boolean
+    score?: boolean
     organizer?: boolean | OrganizerDefaultArgs<ExtArgs>
     event_location?: boolean | Event_LocationDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["event"]>
@@ -12066,6 +12264,8 @@ export namespace Prisma {
     timezone?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    customer_id?: boolean
+    score?: boolean
   }
 
   export type EventInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -12073,6 +12273,8 @@ export namespace Prisma {
     event_category?: boolean | Event$event_categoryArgs<ExtArgs>
     event_location?: boolean | Event_LocationDefaultArgs<ExtArgs>
     ticket_types?: boolean | Event$ticket_typesArgs<ExtArgs>
+    customer?: boolean | Event$customerArgs<ExtArgs>
+    review?: boolean | Event$reviewArgs<ExtArgs>
     _count?: boolean | EventCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type EventIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -12087,6 +12289,8 @@ export namespace Prisma {
       event_category: Prisma.$Event_categoryPayload<ExtArgs>[]
       event_location: Prisma.$Event_LocationPayload<ExtArgs>
       ticket_types: Prisma.$Ticket_typesPayload<ExtArgs>[]
+      customer: Prisma.$UserPayload<ExtArgs>[]
+      review: Prisma.$ReviewPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       event_id: number
@@ -12103,6 +12307,8 @@ export namespace Prisma {
       timezone: string
       createdAt: Date
       updatedAt: Date
+      customer_id: number | null
+      score: number | null
     }, ExtArgs["result"]["event"]>
     composites: {}
   }
@@ -12471,6 +12677,8 @@ export namespace Prisma {
     event_category<T extends Event$event_categoryArgs<ExtArgs> = {}>(args?: Subset<T, Event$event_categoryArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Event_categoryPayload<ExtArgs>, T, "findMany"> | Null>
     event_location<T extends Event_LocationDefaultArgs<ExtArgs> = {}>(args?: Subset<T, Event_LocationDefaultArgs<ExtArgs>>): Prisma__Event_LocationClient<$Result.GetResult<Prisma.$Event_LocationPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
     ticket_types<T extends Event$ticket_typesArgs<ExtArgs> = {}>(args?: Subset<T, Event$ticket_typesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Ticket_typesPayload<ExtArgs>, T, "findMany"> | Null>
+    customer<T extends Event$customerArgs<ExtArgs> = {}>(args?: Subset<T, Event$customerArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany"> | Null>
+    review<T extends Event$reviewArgs<ExtArgs> = {}>(args?: Subset<T, Event$reviewArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -12514,6 +12722,8 @@ export namespace Prisma {
     readonly timezone: FieldRef<"Event", 'String'>
     readonly createdAt: FieldRef<"Event", 'DateTime'>
     readonly updatedAt: FieldRef<"Event", 'DateTime'>
+    readonly customer_id: FieldRef<"Event", 'Int'>
+    readonly score: FieldRef<"Event", 'Int'>
   }
     
 
@@ -12869,6 +13079,46 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: Ticket_typesScalarFieldEnum | Ticket_typesScalarFieldEnum[]
+  }
+
+  /**
+   * Event.customer
+   */
+  export type Event$customerArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    cursor?: UserWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
+  }
+
+  /**
+   * Event.review
+   */
+  export type Event$reviewArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Review
+     */
+    select?: ReviewSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReviewInclude<ExtArgs> | null
+    where?: ReviewWhereInput
+    orderBy?: ReviewOrderByWithRelationInput | ReviewOrderByWithRelationInput[]
+    cursor?: ReviewWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ReviewScalarFieldEnum | ReviewScalarFieldEnum[]
   }
 
   /**
@@ -19768,6 +20018,1003 @@ export namespace Prisma {
 
 
   /**
+   * Model Review
+   */
+
+  export type AggregateReview = {
+    _count: ReviewCountAggregateOutputType | null
+    _avg: ReviewAvgAggregateOutputType | null
+    _sum: ReviewSumAggregateOutputType | null
+    _min: ReviewMinAggregateOutputType | null
+    _max: ReviewMaxAggregateOutputType | null
+  }
+
+  export type ReviewAvgAggregateOutputType = {
+    review_id: number | null
+    event_id: number | null
+    user_id: number | null
+    score: number | null
+  }
+
+  export type ReviewSumAggregateOutputType = {
+    review_id: number | null
+    event_id: number | null
+    user_id: number | null
+    score: number | null
+  }
+
+  export type ReviewMinAggregateOutputType = {
+    review_id: number | null
+    event_id: number | null
+    user_id: number | null
+    review_text: string | null
+    review_img: string | null
+    score: number | null
+  }
+
+  export type ReviewMaxAggregateOutputType = {
+    review_id: number | null
+    event_id: number | null
+    user_id: number | null
+    review_text: string | null
+    review_img: string | null
+    score: number | null
+  }
+
+  export type ReviewCountAggregateOutputType = {
+    review_id: number
+    event_id: number
+    user_id: number
+    review_text: number
+    review_img: number
+    score: number
+    _all: number
+  }
+
+
+  export type ReviewAvgAggregateInputType = {
+    review_id?: true
+    event_id?: true
+    user_id?: true
+    score?: true
+  }
+
+  export type ReviewSumAggregateInputType = {
+    review_id?: true
+    event_id?: true
+    user_id?: true
+    score?: true
+  }
+
+  export type ReviewMinAggregateInputType = {
+    review_id?: true
+    event_id?: true
+    user_id?: true
+    review_text?: true
+    review_img?: true
+    score?: true
+  }
+
+  export type ReviewMaxAggregateInputType = {
+    review_id?: true
+    event_id?: true
+    user_id?: true
+    review_text?: true
+    review_img?: true
+    score?: true
+  }
+
+  export type ReviewCountAggregateInputType = {
+    review_id?: true
+    event_id?: true
+    user_id?: true
+    review_text?: true
+    review_img?: true
+    score?: true
+    _all?: true
+  }
+
+  export type ReviewAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Review to aggregate.
+     */
+    where?: ReviewWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Reviews to fetch.
+     */
+    orderBy?: ReviewOrderByWithRelationInput | ReviewOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ReviewWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Reviews from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Reviews.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Reviews
+    **/
+    _count?: true | ReviewCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ReviewAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ReviewSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ReviewMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ReviewMaxAggregateInputType
+  }
+
+  export type GetReviewAggregateType<T extends ReviewAggregateArgs> = {
+        [P in keyof T & keyof AggregateReview]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateReview[P]>
+      : GetScalarType<T[P], AggregateReview[P]>
+  }
+
+
+
+
+  export type ReviewGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ReviewWhereInput
+    orderBy?: ReviewOrderByWithAggregationInput | ReviewOrderByWithAggregationInput[]
+    by: ReviewScalarFieldEnum[] | ReviewScalarFieldEnum
+    having?: ReviewScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ReviewCountAggregateInputType | true
+    _avg?: ReviewAvgAggregateInputType
+    _sum?: ReviewSumAggregateInputType
+    _min?: ReviewMinAggregateInputType
+    _max?: ReviewMaxAggregateInputType
+  }
+
+  export type ReviewGroupByOutputType = {
+    review_id: number
+    event_id: number
+    user_id: number
+    review_text: string
+    review_img: string | null
+    score: number
+    _count: ReviewCountAggregateOutputType | null
+    _avg: ReviewAvgAggregateOutputType | null
+    _sum: ReviewSumAggregateOutputType | null
+    _min: ReviewMinAggregateOutputType | null
+    _max: ReviewMaxAggregateOutputType | null
+  }
+
+  type GetReviewGroupByPayload<T extends ReviewGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ReviewGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ReviewGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ReviewGroupByOutputType[P]>
+            : GetScalarType<T[P], ReviewGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ReviewSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    review_id?: boolean
+    event_id?: boolean
+    user_id?: boolean
+    review_text?: boolean
+    review_img?: boolean
+    score?: boolean
+    event?: boolean | EventDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["review"]>
+
+  export type ReviewSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    review_id?: boolean
+    event_id?: boolean
+    user_id?: boolean
+    review_text?: boolean
+    review_img?: boolean
+    score?: boolean
+    event?: boolean | EventDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["review"]>
+
+  export type ReviewSelectScalar = {
+    review_id?: boolean
+    event_id?: boolean
+    user_id?: boolean
+    review_text?: boolean
+    review_img?: boolean
+    score?: boolean
+  }
+
+  export type ReviewInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    event?: boolean | EventDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type ReviewIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    event?: boolean | EventDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $ReviewPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Review"
+    objects: {
+      event: Prisma.$EventPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      review_id: number
+      event_id: number
+      user_id: number
+      review_text: string
+      review_img: string | null
+      score: number
+    }, ExtArgs["result"]["review"]>
+    composites: {}
+  }
+
+  type ReviewGetPayload<S extends boolean | null | undefined | ReviewDefaultArgs> = $Result.GetResult<Prisma.$ReviewPayload, S>
+
+  type ReviewCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<ReviewFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: ReviewCountAggregateInputType | true
+    }
+
+  export interface ReviewDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Review'], meta: { name: 'Review' } }
+    /**
+     * Find zero or one Review that matches the filter.
+     * @param {ReviewFindUniqueArgs} args - Arguments to find a Review
+     * @example
+     * // Get one Review
+     * const review = await prisma.review.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ReviewFindUniqueArgs>(args: SelectSubset<T, ReviewFindUniqueArgs<ExtArgs>>): Prisma__ReviewClient<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Review that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {ReviewFindUniqueOrThrowArgs} args - Arguments to find a Review
+     * @example
+     * // Get one Review
+     * const review = await prisma.review.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ReviewFindUniqueOrThrowArgs>(args: SelectSubset<T, ReviewFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ReviewClient<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Review that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReviewFindFirstArgs} args - Arguments to find a Review
+     * @example
+     * // Get one Review
+     * const review = await prisma.review.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ReviewFindFirstArgs>(args?: SelectSubset<T, ReviewFindFirstArgs<ExtArgs>>): Prisma__ReviewClient<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Review that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReviewFindFirstOrThrowArgs} args - Arguments to find a Review
+     * @example
+     * // Get one Review
+     * const review = await prisma.review.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ReviewFindFirstOrThrowArgs>(args?: SelectSubset<T, ReviewFindFirstOrThrowArgs<ExtArgs>>): Prisma__ReviewClient<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Reviews that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReviewFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Reviews
+     * const reviews = await prisma.review.findMany()
+     * 
+     * // Get first 10 Reviews
+     * const reviews = await prisma.review.findMany({ take: 10 })
+     * 
+     * // Only select the `review_id`
+     * const reviewWithReview_idOnly = await prisma.review.findMany({ select: { review_id: true } })
+     * 
+     */
+    findMany<T extends ReviewFindManyArgs>(args?: SelectSubset<T, ReviewFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Review.
+     * @param {ReviewCreateArgs} args - Arguments to create a Review.
+     * @example
+     * // Create one Review
+     * const Review = await prisma.review.create({
+     *   data: {
+     *     // ... data to create a Review
+     *   }
+     * })
+     * 
+     */
+    create<T extends ReviewCreateArgs>(args: SelectSubset<T, ReviewCreateArgs<ExtArgs>>): Prisma__ReviewClient<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Reviews.
+     * @param {ReviewCreateManyArgs} args - Arguments to create many Reviews.
+     * @example
+     * // Create many Reviews
+     * const review = await prisma.review.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ReviewCreateManyArgs>(args?: SelectSubset<T, ReviewCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Reviews and returns the data saved in the database.
+     * @param {ReviewCreateManyAndReturnArgs} args - Arguments to create many Reviews.
+     * @example
+     * // Create many Reviews
+     * const review = await prisma.review.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Reviews and only return the `review_id`
+     * const reviewWithReview_idOnly = await prisma.review.createManyAndReturn({ 
+     *   select: { review_id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ReviewCreateManyAndReturnArgs>(args?: SelectSubset<T, ReviewCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Review.
+     * @param {ReviewDeleteArgs} args - Arguments to delete one Review.
+     * @example
+     * // Delete one Review
+     * const Review = await prisma.review.delete({
+     *   where: {
+     *     // ... filter to delete one Review
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ReviewDeleteArgs>(args: SelectSubset<T, ReviewDeleteArgs<ExtArgs>>): Prisma__ReviewClient<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Review.
+     * @param {ReviewUpdateArgs} args - Arguments to update one Review.
+     * @example
+     * // Update one Review
+     * const review = await prisma.review.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ReviewUpdateArgs>(args: SelectSubset<T, ReviewUpdateArgs<ExtArgs>>): Prisma__ReviewClient<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Reviews.
+     * @param {ReviewDeleteManyArgs} args - Arguments to filter Reviews to delete.
+     * @example
+     * // Delete a few Reviews
+     * const { count } = await prisma.review.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ReviewDeleteManyArgs>(args?: SelectSubset<T, ReviewDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Reviews.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReviewUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Reviews
+     * const review = await prisma.review.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ReviewUpdateManyArgs>(args: SelectSubset<T, ReviewUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Review.
+     * @param {ReviewUpsertArgs} args - Arguments to update or create a Review.
+     * @example
+     * // Update or create a Review
+     * const review = await prisma.review.upsert({
+     *   create: {
+     *     // ... data to create a Review
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Review we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ReviewUpsertArgs>(args: SelectSubset<T, ReviewUpsertArgs<ExtArgs>>): Prisma__ReviewClient<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Reviews.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReviewCountArgs} args - Arguments to filter Reviews to count.
+     * @example
+     * // Count the number of Reviews
+     * const count = await prisma.review.count({
+     *   where: {
+     *     // ... the filter for the Reviews we want to count
+     *   }
+     * })
+    **/
+    count<T extends ReviewCountArgs>(
+      args?: Subset<T, ReviewCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ReviewCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Review.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReviewAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ReviewAggregateArgs>(args: Subset<T, ReviewAggregateArgs>): Prisma.PrismaPromise<GetReviewAggregateType<T>>
+
+    /**
+     * Group by Review.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReviewGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ReviewGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ReviewGroupByArgs['orderBy'] }
+        : { orderBy?: ReviewGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ReviewGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetReviewGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Review model
+   */
+  readonly fields: ReviewFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Review.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ReviewClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    event<T extends EventDefaultArgs<ExtArgs> = {}>(args?: Subset<T, EventDefaultArgs<ExtArgs>>): Prisma__EventClient<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Review model
+   */ 
+  interface ReviewFieldRefs {
+    readonly review_id: FieldRef<"Review", 'Int'>
+    readonly event_id: FieldRef<"Review", 'Int'>
+    readonly user_id: FieldRef<"Review", 'Int'>
+    readonly review_text: FieldRef<"Review", 'String'>
+    readonly review_img: FieldRef<"Review", 'String'>
+    readonly score: FieldRef<"Review", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Review findUnique
+   */
+  export type ReviewFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Review
+     */
+    select?: ReviewSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReviewInclude<ExtArgs> | null
+    /**
+     * Filter, which Review to fetch.
+     */
+    where: ReviewWhereUniqueInput
+  }
+
+  /**
+   * Review findUniqueOrThrow
+   */
+  export type ReviewFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Review
+     */
+    select?: ReviewSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReviewInclude<ExtArgs> | null
+    /**
+     * Filter, which Review to fetch.
+     */
+    where: ReviewWhereUniqueInput
+  }
+
+  /**
+   * Review findFirst
+   */
+  export type ReviewFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Review
+     */
+    select?: ReviewSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReviewInclude<ExtArgs> | null
+    /**
+     * Filter, which Review to fetch.
+     */
+    where?: ReviewWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Reviews to fetch.
+     */
+    orderBy?: ReviewOrderByWithRelationInput | ReviewOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Reviews.
+     */
+    cursor?: ReviewWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Reviews from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Reviews.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Reviews.
+     */
+    distinct?: ReviewScalarFieldEnum | ReviewScalarFieldEnum[]
+  }
+
+  /**
+   * Review findFirstOrThrow
+   */
+  export type ReviewFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Review
+     */
+    select?: ReviewSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReviewInclude<ExtArgs> | null
+    /**
+     * Filter, which Review to fetch.
+     */
+    where?: ReviewWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Reviews to fetch.
+     */
+    orderBy?: ReviewOrderByWithRelationInput | ReviewOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Reviews.
+     */
+    cursor?: ReviewWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Reviews from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Reviews.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Reviews.
+     */
+    distinct?: ReviewScalarFieldEnum | ReviewScalarFieldEnum[]
+  }
+
+  /**
+   * Review findMany
+   */
+  export type ReviewFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Review
+     */
+    select?: ReviewSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReviewInclude<ExtArgs> | null
+    /**
+     * Filter, which Reviews to fetch.
+     */
+    where?: ReviewWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Reviews to fetch.
+     */
+    orderBy?: ReviewOrderByWithRelationInput | ReviewOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Reviews.
+     */
+    cursor?: ReviewWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Reviews from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Reviews.
+     */
+    skip?: number
+    distinct?: ReviewScalarFieldEnum | ReviewScalarFieldEnum[]
+  }
+
+  /**
+   * Review create
+   */
+  export type ReviewCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Review
+     */
+    select?: ReviewSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReviewInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Review.
+     */
+    data: XOR<ReviewCreateInput, ReviewUncheckedCreateInput>
+  }
+
+  /**
+   * Review createMany
+   */
+  export type ReviewCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Reviews.
+     */
+    data: ReviewCreateManyInput | ReviewCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Review createManyAndReturn
+   */
+  export type ReviewCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Review
+     */
+    select?: ReviewSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Reviews.
+     */
+    data: ReviewCreateManyInput | ReviewCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReviewIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Review update
+   */
+  export type ReviewUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Review
+     */
+    select?: ReviewSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReviewInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Review.
+     */
+    data: XOR<ReviewUpdateInput, ReviewUncheckedUpdateInput>
+    /**
+     * Choose, which Review to update.
+     */
+    where: ReviewWhereUniqueInput
+  }
+
+  /**
+   * Review updateMany
+   */
+  export type ReviewUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Reviews.
+     */
+    data: XOR<ReviewUpdateManyMutationInput, ReviewUncheckedUpdateManyInput>
+    /**
+     * Filter which Reviews to update
+     */
+    where?: ReviewWhereInput
+  }
+
+  /**
+   * Review upsert
+   */
+  export type ReviewUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Review
+     */
+    select?: ReviewSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReviewInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Review to update in case it exists.
+     */
+    where: ReviewWhereUniqueInput
+    /**
+     * In case the Review found by the `where` argument doesn't exist, create a new Review with this data.
+     */
+    create: XOR<ReviewCreateInput, ReviewUncheckedCreateInput>
+    /**
+     * In case the Review was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ReviewUpdateInput, ReviewUncheckedUpdateInput>
+  }
+
+  /**
+   * Review delete
+   */
+  export type ReviewDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Review
+     */
+    select?: ReviewSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReviewInclude<ExtArgs> | null
+    /**
+     * Filter which Review to delete.
+     */
+    where: ReviewWhereUniqueInput
+  }
+
+  /**
+   * Review deleteMany
+   */
+  export type ReviewDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Reviews to delete
+     */
+    where?: ReviewWhereInput
+  }
+
+  /**
+   * Review without action
+   */
+  export type ReviewDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Review
+     */
+    select?: ReviewSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReviewInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -19905,7 +21152,9 @@ export namespace Prisma {
     endTime: 'endTime',
     timezone: 'timezone',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    customer_id: 'customer_id',
+    score: 'score'
   };
 
   export type EventScalarFieldEnum = (typeof EventScalarFieldEnum)[keyof typeof EventScalarFieldEnum]
@@ -19981,6 +21230,18 @@ export namespace Prisma {
   };
 
   export type TransactionScalarFieldEnum = (typeof TransactionScalarFieldEnum)[keyof typeof TransactionScalarFieldEnum]
+
+
+  export const ReviewScalarFieldEnum: {
+    review_id: 'review_id',
+    event_id: 'event_id',
+    user_id: 'user_id',
+    review_text: 'review_text',
+    review_img: 'review_img',
+    score: 'score'
+  };
+
+  export type ReviewScalarFieldEnum = (typeof ReviewScalarFieldEnum)[keyof typeof ReviewScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -20153,8 +21414,10 @@ export namespace Prisma {
     points?: PointListRelationFilter
     coupons?: CouponListRelationFilter
     organizer?: XOR<OrganizerNullableScalarRelationFilter, OrganizerWhereInput> | null
+    review?: ReviewListRelationFilter
     transaction_details?: Transaction_DetailListRelationFilter
     transaction?: TransactionListRelationFilter
+    event?: EventListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -20173,8 +21436,10 @@ export namespace Prisma {
     points?: PointOrderByRelationAggregateInput
     coupons?: CouponOrderByRelationAggregateInput
     organizer?: OrganizerOrderByWithRelationInput
+    review?: ReviewOrderByRelationAggregateInput
     transaction_details?: Transaction_DetailOrderByRelationAggregateInput
     transaction?: TransactionOrderByRelationAggregateInput
+    event?: EventOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -20196,8 +21461,10 @@ export namespace Prisma {
     points?: PointListRelationFilter
     coupons?: CouponListRelationFilter
     organizer?: XOR<OrganizerNullableScalarRelationFilter, OrganizerWhereInput> | null
+    review?: ReviewListRelationFilter
     transaction_details?: Transaction_DetailListRelationFilter
     transaction?: TransactionListRelationFilter
+    event?: EventListRelationFilter
   }, "user_id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -20756,10 +22023,14 @@ export namespace Prisma {
     timezone?: StringFilter<"Event"> | string
     createdAt?: DateTimeFilter<"Event"> | Date | string
     updatedAt?: DateTimeFilter<"Event"> | Date | string
+    customer_id?: IntNullableFilter<"Event"> | number | null
+    score?: IntNullableFilter<"Event"> | number | null
     organizer?: XOR<OrganizerScalarRelationFilter, OrganizerWhereInput>
     event_category?: Event_categoryListRelationFilter
     event_location?: XOR<Event_LocationScalarRelationFilter, Event_LocationWhereInput>
     ticket_types?: Ticket_typesListRelationFilter
+    customer?: UserListRelationFilter
+    review?: ReviewListRelationFilter
   }
 
   export type EventOrderByWithRelationInput = {
@@ -20777,10 +22048,14 @@ export namespace Prisma {
     timezone?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    customer_id?: SortOrderInput | SortOrder
+    score?: SortOrderInput | SortOrder
     organizer?: OrganizerOrderByWithRelationInput
     event_category?: Event_categoryOrderByRelationAggregateInput
     event_location?: Event_LocationOrderByWithRelationInput
     ticket_types?: Ticket_typesOrderByRelationAggregateInput
+    customer?: UserOrderByRelationAggregateInput
+    review?: ReviewOrderByRelationAggregateInput
   }
 
   export type EventWhereUniqueInput = Prisma.AtLeast<{
@@ -20801,10 +22076,14 @@ export namespace Prisma {
     timezone?: StringFilter<"Event"> | string
     createdAt?: DateTimeFilter<"Event"> | Date | string
     updatedAt?: DateTimeFilter<"Event"> | Date | string
+    customer_id?: IntNullableFilter<"Event"> | number | null
+    score?: IntNullableFilter<"Event"> | number | null
     organizer?: XOR<OrganizerScalarRelationFilter, OrganizerWhereInput>
     event_category?: Event_categoryListRelationFilter
     event_location?: XOR<Event_LocationScalarRelationFilter, Event_LocationWhereInput>
     ticket_types?: Ticket_typesListRelationFilter
+    customer?: UserListRelationFilter
+    review?: ReviewListRelationFilter
   }, "event_id" | "event_location_id">
 
   export type EventOrderByWithAggregationInput = {
@@ -20822,6 +22101,8 @@ export namespace Prisma {
     timezone?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    customer_id?: SortOrderInput | SortOrder
+    score?: SortOrderInput | SortOrder
     _count?: EventCountOrderByAggregateInput
     _avg?: EventAvgOrderByAggregateInput
     _max?: EventMaxOrderByAggregateInput
@@ -20847,6 +22128,8 @@ export namespace Prisma {
     timezone?: StringWithAggregatesFilter<"Event"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Event"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Event"> | Date | string
+    customer_id?: IntNullableWithAggregatesFilter<"Event"> | number | null
+    score?: IntNullableWithAggregatesFilter<"Event"> | number | null
   }
 
   export type Event_categoryWhereInput = {
@@ -21241,6 +22524,71 @@ export namespace Prisma {
     isPaid?: BoolWithAggregatesFilter<"Transaction"> | boolean
   }
 
+  export type ReviewWhereInput = {
+    AND?: ReviewWhereInput | ReviewWhereInput[]
+    OR?: ReviewWhereInput[]
+    NOT?: ReviewWhereInput | ReviewWhereInput[]
+    review_id?: IntFilter<"Review"> | number
+    event_id?: IntFilter<"Review"> | number
+    user_id?: IntFilter<"Review"> | number
+    review_text?: StringFilter<"Review"> | string
+    review_img?: StringNullableFilter<"Review"> | string | null
+    score?: IntFilter<"Review"> | number
+    event?: XOR<EventScalarRelationFilter, EventWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type ReviewOrderByWithRelationInput = {
+    review_id?: SortOrder
+    event_id?: SortOrder
+    user_id?: SortOrder
+    review_text?: SortOrder
+    review_img?: SortOrderInput | SortOrder
+    score?: SortOrder
+    event?: EventOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type ReviewWhereUniqueInput = Prisma.AtLeast<{
+    review_id?: number
+    AND?: ReviewWhereInput | ReviewWhereInput[]
+    OR?: ReviewWhereInput[]
+    NOT?: ReviewWhereInput | ReviewWhereInput[]
+    event_id?: IntFilter<"Review"> | number
+    user_id?: IntFilter<"Review"> | number
+    review_text?: StringFilter<"Review"> | string
+    review_img?: StringNullableFilter<"Review"> | string | null
+    score?: IntFilter<"Review"> | number
+    event?: XOR<EventScalarRelationFilter, EventWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "review_id">
+
+  export type ReviewOrderByWithAggregationInput = {
+    review_id?: SortOrder
+    event_id?: SortOrder
+    user_id?: SortOrder
+    review_text?: SortOrder
+    review_img?: SortOrderInput | SortOrder
+    score?: SortOrder
+    _count?: ReviewCountOrderByAggregateInput
+    _avg?: ReviewAvgOrderByAggregateInput
+    _max?: ReviewMaxOrderByAggregateInput
+    _min?: ReviewMinOrderByAggregateInput
+    _sum?: ReviewSumOrderByAggregateInput
+  }
+
+  export type ReviewScalarWhereWithAggregatesInput = {
+    AND?: ReviewScalarWhereWithAggregatesInput | ReviewScalarWhereWithAggregatesInput[]
+    OR?: ReviewScalarWhereWithAggregatesInput[]
+    NOT?: ReviewScalarWhereWithAggregatesInput | ReviewScalarWhereWithAggregatesInput[]
+    review_id?: IntWithAggregatesFilter<"Review"> | number
+    event_id?: IntWithAggregatesFilter<"Review"> | number
+    user_id?: IntWithAggregatesFilter<"Review"> | number
+    review_text?: StringWithAggregatesFilter<"Review"> | string
+    review_img?: StringNullableWithAggregatesFilter<"Review"> | string | null
+    score?: IntWithAggregatesFilter<"Review"> | number
+  }
+
   export type UserCreateInput = {
     name: string
     email: string
@@ -21255,8 +22603,10 @@ export namespace Prisma {
     points?: PointCreateNestedManyWithoutUserInput
     coupons?: CouponCreateNestedManyWithoutUserInput
     organizer?: OrganizerCreateNestedOneWithoutUserInput
+    review?: ReviewCreateNestedManyWithoutUserInput
     transaction_details?: Transaction_DetailCreateNestedManyWithoutUserInput
     transaction?: TransactionCreateNestedManyWithoutUserInput
+    event?: EventCreateNestedManyWithoutCustomerInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -21274,8 +22624,10 @@ export namespace Prisma {
     points?: PointUncheckedCreateNestedManyWithoutUserInput
     coupons?: CouponUncheckedCreateNestedManyWithoutUserInput
     organizer?: OrganizerUncheckedCreateNestedOneWithoutUserInput
+    review?: ReviewUncheckedCreateNestedManyWithoutUserInput
     transaction_details?: Transaction_DetailUncheckedCreateNestedManyWithoutUserInput
     transaction?: TransactionUncheckedCreateNestedManyWithoutUserInput
+    event?: EventUncheckedCreateNestedManyWithoutCustomerInput
   }
 
   export type UserUpdateInput = {
@@ -21292,8 +22644,10 @@ export namespace Prisma {
     points?: PointUpdateManyWithoutUserNestedInput
     coupons?: CouponUpdateManyWithoutUserNestedInput
     organizer?: OrganizerUpdateOneWithoutUserNestedInput
+    review?: ReviewUpdateManyWithoutUserNestedInput
     transaction_details?: Transaction_DetailUpdateManyWithoutUserNestedInput
     transaction?: TransactionUpdateManyWithoutUserNestedInput
+    event?: EventUpdateManyWithoutCustomerNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -21311,8 +22665,10 @@ export namespace Prisma {
     points?: PointUncheckedUpdateManyWithoutUserNestedInput
     coupons?: CouponUncheckedUpdateManyWithoutUserNestedInput
     organizer?: OrganizerUncheckedUpdateOneWithoutUserNestedInput
+    review?: ReviewUncheckedUpdateManyWithoutUserNestedInput
     transaction_details?: Transaction_DetailUncheckedUpdateManyWithoutUserNestedInput
     transaction?: TransactionUncheckedUpdateManyWithoutUserNestedInput
+    event?: EventUncheckedUpdateManyWithoutCustomerNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -21846,10 +23202,14 @@ export namespace Prisma {
     timezone: string
     createdAt?: Date | string
     updatedAt: Date | string
+    customer_id?: number | null
+    score?: number | null
     organizer: OrganizerCreateNestedOneWithoutEventsInput
     event_category?: Event_categoryCreateNestedManyWithoutEventInput
     event_location: Event_LocationCreateNestedOneWithoutEventInput
     ticket_types?: Ticket_typesCreateNestedManyWithoutEventInput
+    customer?: UserCreateNestedManyWithoutEventInput
+    review?: ReviewCreateNestedManyWithoutEventInput
   }
 
   export type EventUncheckedCreateInput = {
@@ -21867,8 +23227,12 @@ export namespace Prisma {
     timezone: string
     createdAt?: Date | string
     updatedAt: Date | string
+    customer_id?: number | null
+    score?: number | null
     event_category?: Event_categoryUncheckedCreateNestedManyWithoutEventInput
     ticket_types?: Ticket_typesUncheckedCreateNestedManyWithoutEventInput
+    customer?: UserUncheckedCreateNestedManyWithoutEventInput
+    review?: ReviewUncheckedCreateNestedManyWithoutEventInput
   }
 
   export type EventUpdateInput = {
@@ -21883,10 +23247,14 @@ export namespace Prisma {
     timezone?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    customer_id?: NullableIntFieldUpdateOperationsInput | number | null
+    score?: NullableIntFieldUpdateOperationsInput | number | null
     organizer?: OrganizerUpdateOneRequiredWithoutEventsNestedInput
     event_category?: Event_categoryUpdateManyWithoutEventNestedInput
     event_location?: Event_LocationUpdateOneRequiredWithoutEventNestedInput
     ticket_types?: Ticket_typesUpdateManyWithoutEventNestedInput
+    customer?: UserUpdateManyWithoutEventNestedInput
+    review?: ReviewUpdateManyWithoutEventNestedInput
   }
 
   export type EventUncheckedUpdateInput = {
@@ -21904,8 +23272,12 @@ export namespace Prisma {
     timezone?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    customer_id?: NullableIntFieldUpdateOperationsInput | number | null
+    score?: NullableIntFieldUpdateOperationsInput | number | null
     event_category?: Event_categoryUncheckedUpdateManyWithoutEventNestedInput
     ticket_types?: Ticket_typesUncheckedUpdateManyWithoutEventNestedInput
+    customer?: UserUncheckedUpdateManyWithoutEventNestedInput
+    review?: ReviewUncheckedUpdateManyWithoutEventNestedInput
   }
 
   export type EventCreateManyInput = {
@@ -21923,6 +23295,8 @@ export namespace Prisma {
     timezone: string
     createdAt?: Date | string
     updatedAt: Date | string
+    customer_id?: number | null
+    score?: number | null
   }
 
   export type EventUpdateManyMutationInput = {
@@ -21937,6 +23311,8 @@ export namespace Prisma {
     timezone?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    customer_id?: NullableIntFieldUpdateOperationsInput | number | null
+    score?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type EventUncheckedUpdateManyInput = {
@@ -21954,6 +23330,8 @@ export namespace Prisma {
     timezone?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    customer_id?: NullableIntFieldUpdateOperationsInput | number | null
+    score?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type Event_categoryCreateInput = {
@@ -22309,6 +23687,64 @@ export namespace Prisma {
     isPaid?: BoolFieldUpdateOperationsInput | boolean
   }
 
+  export type ReviewCreateInput = {
+    review_text: string
+    review_img?: string | null
+    score: number
+    event: EventCreateNestedOneWithoutReviewInput
+    user: UserCreateNestedOneWithoutReviewInput
+  }
+
+  export type ReviewUncheckedCreateInput = {
+    review_id?: number
+    event_id: number
+    user_id: number
+    review_text: string
+    review_img?: string | null
+    score: number
+  }
+
+  export type ReviewUpdateInput = {
+    review_text?: StringFieldUpdateOperationsInput | string
+    review_img?: NullableStringFieldUpdateOperationsInput | string | null
+    score?: IntFieldUpdateOperationsInput | number
+    event?: EventUpdateOneRequiredWithoutReviewNestedInput
+    user?: UserUpdateOneRequiredWithoutReviewNestedInput
+  }
+
+  export type ReviewUncheckedUpdateInput = {
+    review_id?: IntFieldUpdateOperationsInput | number
+    event_id?: IntFieldUpdateOperationsInput | number
+    user_id?: IntFieldUpdateOperationsInput | number
+    review_text?: StringFieldUpdateOperationsInput | string
+    review_img?: NullableStringFieldUpdateOperationsInput | string | null
+    score?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type ReviewCreateManyInput = {
+    review_id?: number
+    event_id: number
+    user_id: number
+    review_text: string
+    review_img?: string | null
+    score: number
+  }
+
+  export type ReviewUpdateManyMutationInput = {
+    review_text?: StringFieldUpdateOperationsInput | string
+    review_img?: NullableStringFieldUpdateOperationsInput | string | null
+    score?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type ReviewUncheckedUpdateManyInput = {
+    review_id?: IntFieldUpdateOperationsInput | number
+    event_id?: IntFieldUpdateOperationsInput | number
+    user_id?: IntFieldUpdateOperationsInput | number
+    review_text?: StringFieldUpdateOperationsInput | string
+    review_img?: NullableStringFieldUpdateOperationsInput | string | null
+    score?: IntFieldUpdateOperationsInput | number
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -22411,6 +23847,12 @@ export namespace Prisma {
     isNot?: OrganizerWhereInput | null
   }
 
+  export type ReviewListRelationFilter = {
+    every?: ReviewWhereInput
+    some?: ReviewWhereInput
+    none?: ReviewWhereInput
+  }
+
   export type Transaction_DetailListRelationFilter = {
     every?: Transaction_DetailWhereInput
     some?: Transaction_DetailWhereInput
@@ -22421,6 +23863,12 @@ export namespace Prisma {
     every?: TransactionWhereInput
     some?: TransactionWhereInput
     none?: TransactionWhereInput
+  }
+
+  export type EventListRelationFilter = {
+    every?: EventWhereInput
+    some?: EventWhereInput
+    none?: EventWhereInput
   }
 
   export type SortOrderInput = {
@@ -22436,11 +23884,19 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type ReviewOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type Transaction_DetailOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
   export type TransactionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type EventOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -22714,16 +24170,6 @@ export namespace Prisma {
   export type Bank_accountNullableScalarRelationFilter = {
     is?: Bank_accountWhereInput | null
     isNot?: Bank_accountWhereInput | null
-  }
-
-  export type EventListRelationFilter = {
-    every?: EventWhereInput
-    some?: EventWhereInput
-    none?: EventWhereInput
-  }
-
-  export type EventOrderByRelationAggregateInput = {
-    _count?: SortOrder
   }
 
   export type OrganizerCountOrderByAggregateInput = {
@@ -23023,6 +24469,8 @@ export namespace Prisma {
     timezone?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    customer_id?: SortOrder
+    score?: SortOrder
   }
 
   export type EventAvgOrderByAggregateInput = {
@@ -23030,6 +24478,8 @@ export namespace Prisma {
     organizer_id?: SortOrder
     coupon_id?: SortOrder
     event_location_id?: SortOrder
+    customer_id?: SortOrder
+    score?: SortOrder
   }
 
   export type EventMaxOrderByAggregateInput = {
@@ -23047,6 +24497,8 @@ export namespace Prisma {
     timezone?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    customer_id?: SortOrder
+    score?: SortOrder
   }
 
   export type EventMinOrderByAggregateInput = {
@@ -23064,6 +24516,8 @@ export namespace Prisma {
     timezone?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    customer_id?: SortOrder
+    score?: SortOrder
   }
 
   export type EventSumOrderByAggregateInput = {
@@ -23071,6 +24525,8 @@ export namespace Prisma {
     organizer_id?: SortOrder
     coupon_id?: SortOrder
     event_location_id?: SortOrder
+    customer_id?: SortOrder
+    score?: SortOrder
   }
 
   export type Event_categoryCountOrderByAggregateInput = {
@@ -23375,6 +24831,47 @@ export namespace Prisma {
     _max?: NestedEnumPaymentMethodFilter<$PrismaModel>
   }
 
+  export type ReviewCountOrderByAggregateInput = {
+    review_id?: SortOrder
+    event_id?: SortOrder
+    user_id?: SortOrder
+    review_text?: SortOrder
+    review_img?: SortOrder
+    score?: SortOrder
+  }
+
+  export type ReviewAvgOrderByAggregateInput = {
+    review_id?: SortOrder
+    event_id?: SortOrder
+    user_id?: SortOrder
+    score?: SortOrder
+  }
+
+  export type ReviewMaxOrderByAggregateInput = {
+    review_id?: SortOrder
+    event_id?: SortOrder
+    user_id?: SortOrder
+    review_text?: SortOrder
+    review_img?: SortOrder
+    score?: SortOrder
+  }
+
+  export type ReviewMinOrderByAggregateInput = {
+    review_id?: SortOrder
+    event_id?: SortOrder
+    user_id?: SortOrder
+    review_text?: SortOrder
+    review_img?: SortOrder
+    score?: SortOrder
+  }
+
+  export type ReviewSumOrderByAggregateInput = {
+    review_id?: SortOrder
+    event_id?: SortOrder
+    user_id?: SortOrder
+    score?: SortOrder
+  }
+
   export type ProfileCreateNestedOneWithoutUserInput = {
     create?: XOR<ProfileCreateWithoutUserInput, ProfileUncheckedCreateWithoutUserInput>
     connectOrCreate?: ProfileCreateOrConnectWithoutUserInput
@@ -23413,6 +24910,13 @@ export namespace Prisma {
     connect?: OrganizerWhereUniqueInput
   }
 
+  export type ReviewCreateNestedManyWithoutUserInput = {
+    create?: XOR<ReviewCreateWithoutUserInput, ReviewUncheckedCreateWithoutUserInput> | ReviewCreateWithoutUserInput[] | ReviewUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ReviewCreateOrConnectWithoutUserInput | ReviewCreateOrConnectWithoutUserInput[]
+    createMany?: ReviewCreateManyUserInputEnvelope
+    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+  }
+
   export type Transaction_DetailCreateNestedManyWithoutUserInput = {
     create?: XOR<Transaction_DetailCreateWithoutUserInput, Transaction_DetailUncheckedCreateWithoutUserInput> | Transaction_DetailCreateWithoutUserInput[] | Transaction_DetailUncheckedCreateWithoutUserInput[]
     connectOrCreate?: Transaction_DetailCreateOrConnectWithoutUserInput | Transaction_DetailCreateOrConnectWithoutUserInput[]
@@ -23425,6 +24929,12 @@ export namespace Prisma {
     connectOrCreate?: TransactionCreateOrConnectWithoutUserInput | TransactionCreateOrConnectWithoutUserInput[]
     createMany?: TransactionCreateManyUserInputEnvelope
     connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+  }
+
+  export type EventCreateNestedManyWithoutCustomerInput = {
+    create?: XOR<EventCreateWithoutCustomerInput, EventUncheckedCreateWithoutCustomerInput> | EventCreateWithoutCustomerInput[] | EventUncheckedCreateWithoutCustomerInput[]
+    connectOrCreate?: EventCreateOrConnectWithoutCustomerInput | EventCreateOrConnectWithoutCustomerInput[]
+    connect?: EventWhereUniqueInput | EventWhereUniqueInput[]
   }
 
   export type ProfileUncheckedCreateNestedOneWithoutUserInput = {
@@ -23459,6 +24969,13 @@ export namespace Prisma {
     connect?: OrganizerWhereUniqueInput
   }
 
+  export type ReviewUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<ReviewCreateWithoutUserInput, ReviewUncheckedCreateWithoutUserInput> | ReviewCreateWithoutUserInput[] | ReviewUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ReviewCreateOrConnectWithoutUserInput | ReviewCreateOrConnectWithoutUserInput[]
+    createMany?: ReviewCreateManyUserInputEnvelope
+    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+  }
+
   export type Transaction_DetailUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<Transaction_DetailCreateWithoutUserInput, Transaction_DetailUncheckedCreateWithoutUserInput> | Transaction_DetailCreateWithoutUserInput[] | Transaction_DetailUncheckedCreateWithoutUserInput[]
     connectOrCreate?: Transaction_DetailCreateOrConnectWithoutUserInput | Transaction_DetailCreateOrConnectWithoutUserInput[]
@@ -23471,6 +24988,12 @@ export namespace Prisma {
     connectOrCreate?: TransactionCreateOrConnectWithoutUserInput | TransactionCreateOrConnectWithoutUserInput[]
     createMany?: TransactionCreateManyUserInputEnvelope
     connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+  }
+
+  export type EventUncheckedCreateNestedManyWithoutCustomerInput = {
+    create?: XOR<EventCreateWithoutCustomerInput, EventUncheckedCreateWithoutCustomerInput> | EventCreateWithoutCustomerInput[] | EventUncheckedCreateWithoutCustomerInput[]
+    connectOrCreate?: EventCreateOrConnectWithoutCustomerInput | EventCreateOrConnectWithoutCustomerInput[]
+    connect?: EventWhereUniqueInput | EventWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -23561,6 +25084,20 @@ export namespace Prisma {
     update?: XOR<XOR<OrganizerUpdateToOneWithWhereWithoutUserInput, OrganizerUpdateWithoutUserInput>, OrganizerUncheckedUpdateWithoutUserInput>
   }
 
+  export type ReviewUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ReviewCreateWithoutUserInput, ReviewUncheckedCreateWithoutUserInput> | ReviewCreateWithoutUserInput[] | ReviewUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ReviewCreateOrConnectWithoutUserInput | ReviewCreateOrConnectWithoutUserInput[]
+    upsert?: ReviewUpsertWithWhereUniqueWithoutUserInput | ReviewUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ReviewCreateManyUserInputEnvelope
+    set?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    disconnect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    delete?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    update?: ReviewUpdateWithWhereUniqueWithoutUserInput | ReviewUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ReviewUpdateManyWithWhereWithoutUserInput | ReviewUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
+  }
+
   export type Transaction_DetailUpdateManyWithoutUserNestedInput = {
     create?: XOR<Transaction_DetailCreateWithoutUserInput, Transaction_DetailUncheckedCreateWithoutUserInput> | Transaction_DetailCreateWithoutUserInput[] | Transaction_DetailUncheckedCreateWithoutUserInput[]
     connectOrCreate?: Transaction_DetailCreateOrConnectWithoutUserInput | Transaction_DetailCreateOrConnectWithoutUserInput[]
@@ -23587,6 +25124,19 @@ export namespace Prisma {
     update?: TransactionUpdateWithWhereUniqueWithoutUserInput | TransactionUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: TransactionUpdateManyWithWhereWithoutUserInput | TransactionUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: TransactionScalarWhereInput | TransactionScalarWhereInput[]
+  }
+
+  export type EventUpdateManyWithoutCustomerNestedInput = {
+    create?: XOR<EventCreateWithoutCustomerInput, EventUncheckedCreateWithoutCustomerInput> | EventCreateWithoutCustomerInput[] | EventUncheckedCreateWithoutCustomerInput[]
+    connectOrCreate?: EventCreateOrConnectWithoutCustomerInput | EventCreateOrConnectWithoutCustomerInput[]
+    upsert?: EventUpsertWithWhereUniqueWithoutCustomerInput | EventUpsertWithWhereUniqueWithoutCustomerInput[]
+    set?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    disconnect?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    delete?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    connect?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    update?: EventUpdateWithWhereUniqueWithoutCustomerInput | EventUpdateWithWhereUniqueWithoutCustomerInput[]
+    updateMany?: EventUpdateManyWithWhereWithoutCustomerInput | EventUpdateManyWithWhereWithoutCustomerInput[]
+    deleteMany?: EventScalarWhereInput | EventScalarWhereInput[]
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -23663,6 +25213,20 @@ export namespace Prisma {
     update?: XOR<XOR<OrganizerUpdateToOneWithWhereWithoutUserInput, OrganizerUpdateWithoutUserInput>, OrganizerUncheckedUpdateWithoutUserInput>
   }
 
+  export type ReviewUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ReviewCreateWithoutUserInput, ReviewUncheckedCreateWithoutUserInput> | ReviewCreateWithoutUserInput[] | ReviewUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ReviewCreateOrConnectWithoutUserInput | ReviewCreateOrConnectWithoutUserInput[]
+    upsert?: ReviewUpsertWithWhereUniqueWithoutUserInput | ReviewUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ReviewCreateManyUserInputEnvelope
+    set?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    disconnect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    delete?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    update?: ReviewUpdateWithWhereUniqueWithoutUserInput | ReviewUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ReviewUpdateManyWithWhereWithoutUserInput | ReviewUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
+  }
+
   export type Transaction_DetailUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<Transaction_DetailCreateWithoutUserInput, Transaction_DetailUncheckedCreateWithoutUserInput> | Transaction_DetailCreateWithoutUserInput[] | Transaction_DetailUncheckedCreateWithoutUserInput[]
     connectOrCreate?: Transaction_DetailCreateOrConnectWithoutUserInput | Transaction_DetailCreateOrConnectWithoutUserInput[]
@@ -23689,6 +25253,19 @@ export namespace Prisma {
     update?: TransactionUpdateWithWhereUniqueWithoutUserInput | TransactionUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: TransactionUpdateManyWithWhereWithoutUserInput | TransactionUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: TransactionScalarWhereInput | TransactionScalarWhereInput[]
+  }
+
+  export type EventUncheckedUpdateManyWithoutCustomerNestedInput = {
+    create?: XOR<EventCreateWithoutCustomerInput, EventUncheckedCreateWithoutCustomerInput> | EventCreateWithoutCustomerInput[] | EventUncheckedCreateWithoutCustomerInput[]
+    connectOrCreate?: EventCreateOrConnectWithoutCustomerInput | EventCreateOrConnectWithoutCustomerInput[]
+    upsert?: EventUpsertWithWhereUniqueWithoutCustomerInput | EventUpsertWithWhereUniqueWithoutCustomerInput[]
+    set?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    disconnect?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    delete?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    connect?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    update?: EventUpdateWithWhereUniqueWithoutCustomerInput | EventUpdateWithWhereUniqueWithoutCustomerInput[]
+    updateMany?: EventUpdateManyWithWhereWithoutCustomerInput | EventUpdateManyWithWhereWithoutCustomerInput[]
+    deleteMany?: EventScalarWhereInput | EventScalarWhereInput[]
   }
 
   export type AddressCreateNestedManyWithoutProfileInput = {
@@ -24036,6 +25613,19 @@ export namespace Prisma {
     connect?: Ticket_typesWhereUniqueInput | Ticket_typesWhereUniqueInput[]
   }
 
+  export type UserCreateNestedManyWithoutEventInput = {
+    create?: XOR<UserCreateWithoutEventInput, UserUncheckedCreateWithoutEventInput> | UserCreateWithoutEventInput[] | UserUncheckedCreateWithoutEventInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutEventInput | UserCreateOrConnectWithoutEventInput[]
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+  }
+
+  export type ReviewCreateNestedManyWithoutEventInput = {
+    create?: XOR<ReviewCreateWithoutEventInput, ReviewUncheckedCreateWithoutEventInput> | ReviewCreateWithoutEventInput[] | ReviewUncheckedCreateWithoutEventInput[]
+    connectOrCreate?: ReviewCreateOrConnectWithoutEventInput | ReviewCreateOrConnectWithoutEventInput[]
+    createMany?: ReviewCreateManyEventInputEnvelope
+    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+  }
+
   export type Event_categoryUncheckedCreateNestedManyWithoutEventInput = {
     create?: XOR<Event_categoryCreateWithoutEventInput, Event_categoryUncheckedCreateWithoutEventInput> | Event_categoryCreateWithoutEventInput[] | Event_categoryUncheckedCreateWithoutEventInput[]
     connectOrCreate?: Event_categoryCreateOrConnectWithoutEventInput | Event_categoryCreateOrConnectWithoutEventInput[]
@@ -24047,6 +25637,19 @@ export namespace Prisma {
     connectOrCreate?: Ticket_typesCreateOrConnectWithoutEventInput | Ticket_typesCreateOrConnectWithoutEventInput[]
     createMany?: Ticket_typesCreateManyEventInputEnvelope
     connect?: Ticket_typesWhereUniqueInput | Ticket_typesWhereUniqueInput[]
+  }
+
+  export type UserUncheckedCreateNestedManyWithoutEventInput = {
+    create?: XOR<UserCreateWithoutEventInput, UserUncheckedCreateWithoutEventInput> | UserCreateWithoutEventInput[] | UserUncheckedCreateWithoutEventInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutEventInput | UserCreateOrConnectWithoutEventInput[]
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+  }
+
+  export type ReviewUncheckedCreateNestedManyWithoutEventInput = {
+    create?: XOR<ReviewCreateWithoutEventInput, ReviewUncheckedCreateWithoutEventInput> | ReviewCreateWithoutEventInput[] | ReviewUncheckedCreateWithoutEventInput[]
+    connectOrCreate?: ReviewCreateOrConnectWithoutEventInput | ReviewCreateOrConnectWithoutEventInput[]
+    createMany?: ReviewCreateManyEventInputEnvelope
+    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
   }
 
   export type OrganizerUpdateOneRequiredWithoutEventsNestedInput = {
@@ -24092,6 +25695,33 @@ export namespace Prisma {
     deleteMany?: Ticket_typesScalarWhereInput | Ticket_typesScalarWhereInput[]
   }
 
+  export type UserUpdateManyWithoutEventNestedInput = {
+    create?: XOR<UserCreateWithoutEventInput, UserUncheckedCreateWithoutEventInput> | UserCreateWithoutEventInput[] | UserUncheckedCreateWithoutEventInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutEventInput | UserCreateOrConnectWithoutEventInput[]
+    upsert?: UserUpsertWithWhereUniqueWithoutEventInput | UserUpsertWithWhereUniqueWithoutEventInput[]
+    set?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    disconnect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    delete?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    update?: UserUpdateWithWhereUniqueWithoutEventInput | UserUpdateWithWhereUniqueWithoutEventInput[]
+    updateMany?: UserUpdateManyWithWhereWithoutEventInput | UserUpdateManyWithWhereWithoutEventInput[]
+    deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
+  }
+
+  export type ReviewUpdateManyWithoutEventNestedInput = {
+    create?: XOR<ReviewCreateWithoutEventInput, ReviewUncheckedCreateWithoutEventInput> | ReviewCreateWithoutEventInput[] | ReviewUncheckedCreateWithoutEventInput[]
+    connectOrCreate?: ReviewCreateOrConnectWithoutEventInput | ReviewCreateOrConnectWithoutEventInput[]
+    upsert?: ReviewUpsertWithWhereUniqueWithoutEventInput | ReviewUpsertWithWhereUniqueWithoutEventInput[]
+    createMany?: ReviewCreateManyEventInputEnvelope
+    set?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    disconnect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    delete?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    update?: ReviewUpdateWithWhereUniqueWithoutEventInput | ReviewUpdateWithWhereUniqueWithoutEventInput[]
+    updateMany?: ReviewUpdateManyWithWhereWithoutEventInput | ReviewUpdateManyWithWhereWithoutEventInput[]
+    deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
+  }
+
   export type Event_categoryUncheckedUpdateManyWithoutEventNestedInput = {
     create?: XOR<Event_categoryCreateWithoutEventInput, Event_categoryUncheckedCreateWithoutEventInput> | Event_categoryCreateWithoutEventInput[] | Event_categoryUncheckedCreateWithoutEventInput[]
     connectOrCreate?: Event_categoryCreateOrConnectWithoutEventInput | Event_categoryCreateOrConnectWithoutEventInput[]
@@ -24117,6 +25747,33 @@ export namespace Prisma {
     update?: Ticket_typesUpdateWithWhereUniqueWithoutEventInput | Ticket_typesUpdateWithWhereUniqueWithoutEventInput[]
     updateMany?: Ticket_typesUpdateManyWithWhereWithoutEventInput | Ticket_typesUpdateManyWithWhereWithoutEventInput[]
     deleteMany?: Ticket_typesScalarWhereInput | Ticket_typesScalarWhereInput[]
+  }
+
+  export type UserUncheckedUpdateManyWithoutEventNestedInput = {
+    create?: XOR<UserCreateWithoutEventInput, UserUncheckedCreateWithoutEventInput> | UserCreateWithoutEventInput[] | UserUncheckedCreateWithoutEventInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutEventInput | UserCreateOrConnectWithoutEventInput[]
+    upsert?: UserUpsertWithWhereUniqueWithoutEventInput | UserUpsertWithWhereUniqueWithoutEventInput[]
+    set?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    disconnect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    delete?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    update?: UserUpdateWithWhereUniqueWithoutEventInput | UserUpdateWithWhereUniqueWithoutEventInput[]
+    updateMany?: UserUpdateManyWithWhereWithoutEventInput | UserUpdateManyWithWhereWithoutEventInput[]
+    deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
+  }
+
+  export type ReviewUncheckedUpdateManyWithoutEventNestedInput = {
+    create?: XOR<ReviewCreateWithoutEventInput, ReviewUncheckedCreateWithoutEventInput> | ReviewCreateWithoutEventInput[] | ReviewUncheckedCreateWithoutEventInput[]
+    connectOrCreate?: ReviewCreateOrConnectWithoutEventInput | ReviewCreateOrConnectWithoutEventInput[]
+    upsert?: ReviewUpsertWithWhereUniqueWithoutEventInput | ReviewUpsertWithWhereUniqueWithoutEventInput[]
+    createMany?: ReviewCreateManyEventInputEnvelope
+    set?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    disconnect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    delete?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    update?: ReviewUpdateWithWhereUniqueWithoutEventInput | ReviewUpdateWithWhereUniqueWithoutEventInput[]
+    updateMany?: ReviewUpdateManyWithWhereWithoutEventInput | ReviewUpdateManyWithWhereWithoutEventInput[]
+    deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
   }
 
   export type EventCreateNestedManyWithoutEvent_categoryInput = {
@@ -24437,6 +26094,34 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutTransactionInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutTransactionInput, UserUpdateWithoutTransactionInput>, UserUncheckedUpdateWithoutTransactionInput>
+  }
+
+  export type EventCreateNestedOneWithoutReviewInput = {
+    create?: XOR<EventCreateWithoutReviewInput, EventUncheckedCreateWithoutReviewInput>
+    connectOrCreate?: EventCreateOrConnectWithoutReviewInput
+    connect?: EventWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutReviewInput = {
+    create?: XOR<UserCreateWithoutReviewInput, UserUncheckedCreateWithoutReviewInput>
+    connectOrCreate?: UserCreateOrConnectWithoutReviewInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type EventUpdateOneRequiredWithoutReviewNestedInput = {
+    create?: XOR<EventCreateWithoutReviewInput, EventUncheckedCreateWithoutReviewInput>
+    connectOrCreate?: EventCreateOrConnectWithoutReviewInput
+    upsert?: EventUpsertWithoutReviewInput
+    connect?: EventWhereUniqueInput
+    update?: XOR<XOR<EventUpdateToOneWithWhereWithoutReviewInput, EventUpdateWithoutReviewInput>, EventUncheckedUpdateWithoutReviewInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutReviewNestedInput = {
+    create?: XOR<UserCreateWithoutReviewInput, UserUncheckedCreateWithoutReviewInput>
+    connectOrCreate?: UserCreateOrConnectWithoutReviewInput
+    upsert?: UserUpsertWithoutReviewInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutReviewInput, UserUpdateWithoutReviewInput>, UserUncheckedUpdateWithoutReviewInput>
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -24819,6 +26504,31 @@ export namespace Prisma {
     create: XOR<OrganizerCreateWithoutUserInput, OrganizerUncheckedCreateWithoutUserInput>
   }
 
+  export type ReviewCreateWithoutUserInput = {
+    review_text: string
+    review_img?: string | null
+    score: number
+    event: EventCreateNestedOneWithoutReviewInput
+  }
+
+  export type ReviewUncheckedCreateWithoutUserInput = {
+    review_id?: number
+    event_id: number
+    review_text: string
+    review_img?: string | null
+    score: number
+  }
+
+  export type ReviewCreateOrConnectWithoutUserInput = {
+    where: ReviewWhereUniqueInput
+    create: XOR<ReviewCreateWithoutUserInput, ReviewUncheckedCreateWithoutUserInput>
+  }
+
+  export type ReviewCreateManyUserInputEnvelope = {
+    data: ReviewCreateManyUserInput | ReviewCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type Transaction_DetailCreateWithoutUserInput = {
     quantity_bought: number
     subtotal: number
@@ -24871,6 +26581,54 @@ export namespace Prisma {
   export type TransactionCreateManyUserInputEnvelope = {
     data: TransactionCreateManyUserInput | TransactionCreateManyUserInput[]
     skipDuplicates?: boolean
+  }
+
+  export type EventCreateWithoutCustomerInput = {
+    title: string
+    description: string
+    imgEvent: string
+    coupon_id: number
+    startDate: Date | string
+    endDate: Date | string
+    startTime: string
+    endTime: string
+    timezone: string
+    createdAt?: Date | string
+    updatedAt: Date | string
+    customer_id?: number | null
+    score?: number | null
+    organizer: OrganizerCreateNestedOneWithoutEventsInput
+    event_category?: Event_categoryCreateNestedManyWithoutEventInput
+    event_location: Event_LocationCreateNestedOneWithoutEventInput
+    ticket_types?: Ticket_typesCreateNestedManyWithoutEventInput
+    review?: ReviewCreateNestedManyWithoutEventInput
+  }
+
+  export type EventUncheckedCreateWithoutCustomerInput = {
+    event_id?: number
+    organizer_id: number
+    title: string
+    description: string
+    imgEvent: string
+    coupon_id: number
+    event_location_id: number
+    startDate: Date | string
+    endDate: Date | string
+    startTime: string
+    endTime: string
+    timezone: string
+    createdAt?: Date | string
+    updatedAt: Date | string
+    customer_id?: number | null
+    score?: number | null
+    event_category?: Event_categoryUncheckedCreateNestedManyWithoutEventInput
+    ticket_types?: Ticket_typesUncheckedCreateNestedManyWithoutEventInput
+    review?: ReviewUncheckedCreateNestedManyWithoutEventInput
+  }
+
+  export type EventCreateOrConnectWithoutCustomerInput = {
+    where: EventWhereUniqueInput
+    create: XOR<EventCreateWithoutCustomerInput, EventUncheckedCreateWithoutCustomerInput>
   }
 
   export type ProfileUpsertWithoutUserInput = {
@@ -25038,6 +26796,34 @@ export namespace Prisma {
     events?: EventUncheckedUpdateManyWithoutOrganizerNestedInput
   }
 
+  export type ReviewUpsertWithWhereUniqueWithoutUserInput = {
+    where: ReviewWhereUniqueInput
+    update: XOR<ReviewUpdateWithoutUserInput, ReviewUncheckedUpdateWithoutUserInput>
+    create: XOR<ReviewCreateWithoutUserInput, ReviewUncheckedCreateWithoutUserInput>
+  }
+
+  export type ReviewUpdateWithWhereUniqueWithoutUserInput = {
+    where: ReviewWhereUniqueInput
+    data: XOR<ReviewUpdateWithoutUserInput, ReviewUncheckedUpdateWithoutUserInput>
+  }
+
+  export type ReviewUpdateManyWithWhereWithoutUserInput = {
+    where: ReviewScalarWhereInput
+    data: XOR<ReviewUpdateManyMutationInput, ReviewUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type ReviewScalarWhereInput = {
+    AND?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
+    OR?: ReviewScalarWhereInput[]
+    NOT?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
+    review_id?: IntFilter<"Review"> | number
+    event_id?: IntFilter<"Review"> | number
+    user_id?: IntFilter<"Review"> | number
+    review_text?: StringFilter<"Review"> | string
+    review_img?: StringNullableFilter<"Review"> | string | null
+    score?: IntFilter<"Review"> | number
+  }
+
   export type Transaction_DetailUpsertWithWhereUniqueWithoutUserInput = {
     where: Transaction_DetailWhereUniqueInput
     update: XOR<Transaction_DetailUpdateWithoutUserInput, Transaction_DetailUncheckedUpdateWithoutUserInput>
@@ -25093,6 +26879,44 @@ export namespace Prisma {
     payment_method?: EnumPaymentMethodFilter<"Transaction"> | $Enums.PaymentMethod
     createdAt?: DateTimeFilter<"Transaction"> | Date | string
     isPaid?: BoolFilter<"Transaction"> | boolean
+  }
+
+  export type EventUpsertWithWhereUniqueWithoutCustomerInput = {
+    where: EventWhereUniqueInput
+    update: XOR<EventUpdateWithoutCustomerInput, EventUncheckedUpdateWithoutCustomerInput>
+    create: XOR<EventCreateWithoutCustomerInput, EventUncheckedCreateWithoutCustomerInput>
+  }
+
+  export type EventUpdateWithWhereUniqueWithoutCustomerInput = {
+    where: EventWhereUniqueInput
+    data: XOR<EventUpdateWithoutCustomerInput, EventUncheckedUpdateWithoutCustomerInput>
+  }
+
+  export type EventUpdateManyWithWhereWithoutCustomerInput = {
+    where: EventScalarWhereInput
+    data: XOR<EventUpdateManyMutationInput, EventUncheckedUpdateManyWithoutCustomerInput>
+  }
+
+  export type EventScalarWhereInput = {
+    AND?: EventScalarWhereInput | EventScalarWhereInput[]
+    OR?: EventScalarWhereInput[]
+    NOT?: EventScalarWhereInput | EventScalarWhereInput[]
+    event_id?: IntFilter<"Event"> | number
+    organizer_id?: IntFilter<"Event"> | number
+    title?: StringFilter<"Event"> | string
+    description?: StringFilter<"Event"> | string
+    imgEvent?: StringFilter<"Event"> | string
+    coupon_id?: IntFilter<"Event"> | number
+    event_location_id?: IntFilter<"Event"> | number
+    startDate?: DateTimeFilter<"Event"> | Date | string
+    endDate?: DateTimeFilter<"Event"> | Date | string
+    startTime?: StringFilter<"Event"> | string
+    endTime?: StringFilter<"Event"> | string
+    timezone?: StringFilter<"Event"> | string
+    createdAt?: DateTimeFilter<"Event"> | Date | string
+    updatedAt?: DateTimeFilter<"Event"> | Date | string
+    customer_id?: IntNullableFilter<"Event"> | number | null
+    score?: IntNullableFilter<"Event"> | number | null
   }
 
   export type AddressCreateWithoutProfileInput = {
@@ -25158,8 +26982,10 @@ export namespace Prisma {
     points?: PointCreateNestedManyWithoutUserInput
     coupons?: CouponCreateNestedManyWithoutUserInput
     organizer?: OrganizerCreateNestedOneWithoutUserInput
+    review?: ReviewCreateNestedManyWithoutUserInput
     transaction_details?: Transaction_DetailCreateNestedManyWithoutUserInput
     transaction?: TransactionCreateNestedManyWithoutUserInput
+    event?: EventCreateNestedManyWithoutCustomerInput
   }
 
   export type UserUncheckedCreateWithoutProfileInput = {
@@ -25176,8 +27002,10 @@ export namespace Prisma {
     points?: PointUncheckedCreateNestedManyWithoutUserInput
     coupons?: CouponUncheckedCreateNestedManyWithoutUserInput
     organizer?: OrganizerUncheckedCreateNestedOneWithoutUserInput
+    review?: ReviewUncheckedCreateNestedManyWithoutUserInput
     transaction_details?: Transaction_DetailUncheckedCreateNestedManyWithoutUserInput
     transaction?: TransactionUncheckedCreateNestedManyWithoutUserInput
+    event?: EventUncheckedCreateNestedManyWithoutCustomerInput
   }
 
   export type UserCreateOrConnectWithoutProfileInput = {
@@ -25265,8 +27093,10 @@ export namespace Prisma {
     points?: PointUpdateManyWithoutUserNestedInput
     coupons?: CouponUpdateManyWithoutUserNestedInput
     organizer?: OrganizerUpdateOneWithoutUserNestedInput
+    review?: ReviewUpdateManyWithoutUserNestedInput
     transaction_details?: Transaction_DetailUpdateManyWithoutUserNestedInput
     transaction?: TransactionUpdateManyWithoutUserNestedInput
+    event?: EventUpdateManyWithoutCustomerNestedInput
   }
 
   export type UserUncheckedUpdateWithoutProfileInput = {
@@ -25283,8 +27113,10 @@ export namespace Prisma {
     points?: PointUncheckedUpdateManyWithoutUserNestedInput
     coupons?: CouponUncheckedUpdateManyWithoutUserNestedInput
     organizer?: OrganizerUncheckedUpdateOneWithoutUserNestedInput
+    review?: ReviewUncheckedUpdateManyWithoutUserNestedInput
     transaction_details?: Transaction_DetailUncheckedUpdateManyWithoutUserNestedInput
     transaction?: TransactionUncheckedUpdateManyWithoutUserNestedInput
+    event?: EventUncheckedUpdateManyWithoutCustomerNestedInput
   }
 
   export type ProfileCreateWithoutAddressesInput = {
@@ -25350,8 +27182,10 @@ export namespace Prisma {
     referred?: ReferralCreateNestedOneWithoutReferred_usersInput
     points?: PointCreateNestedManyWithoutUserInput
     coupons?: CouponCreateNestedManyWithoutUserInput
+    review?: ReviewCreateNestedManyWithoutUserInput
     transaction_details?: Transaction_DetailCreateNestedManyWithoutUserInput
     transaction?: TransactionCreateNestedManyWithoutUserInput
+    event?: EventCreateNestedManyWithoutCustomerInput
   }
 
   export type UserUncheckedCreateWithoutOrganizerInput = {
@@ -25368,8 +27202,10 @@ export namespace Prisma {
     referral?: ReferralUncheckedCreateNestedOneWithoutUserInput
     points?: PointUncheckedCreateNestedManyWithoutUserInput
     coupons?: CouponUncheckedCreateNestedManyWithoutUserInput
+    review?: ReviewUncheckedCreateNestedManyWithoutUserInput
     transaction_details?: Transaction_DetailUncheckedCreateNestedManyWithoutUserInput
     transaction?: TransactionUncheckedCreateNestedManyWithoutUserInput
+    event?: EventUncheckedCreateNestedManyWithoutCustomerInput
   }
 
   export type UserCreateOrConnectWithoutOrganizerInput = {
@@ -25407,9 +27243,13 @@ export namespace Prisma {
     timezone: string
     createdAt?: Date | string
     updatedAt: Date | string
+    customer_id?: number | null
+    score?: number | null
     event_category?: Event_categoryCreateNestedManyWithoutEventInput
     event_location: Event_LocationCreateNestedOneWithoutEventInput
     ticket_types?: Ticket_typesCreateNestedManyWithoutEventInput
+    customer?: UserCreateNestedManyWithoutEventInput
+    review?: ReviewCreateNestedManyWithoutEventInput
   }
 
   export type EventUncheckedCreateWithoutOrganizerInput = {
@@ -25426,8 +27266,12 @@ export namespace Prisma {
     timezone: string
     createdAt?: Date | string
     updatedAt: Date | string
+    customer_id?: number | null
+    score?: number | null
     event_category?: Event_categoryUncheckedCreateNestedManyWithoutEventInput
     ticket_types?: Ticket_typesUncheckedCreateNestedManyWithoutEventInput
+    customer?: UserUncheckedCreateNestedManyWithoutEventInput
+    review?: ReviewUncheckedCreateNestedManyWithoutEventInput
   }
 
   export type EventCreateOrConnectWithoutOrganizerInput = {
@@ -25464,8 +27308,10 @@ export namespace Prisma {
     referred?: ReferralUpdateOneWithoutReferred_usersNestedInput
     points?: PointUpdateManyWithoutUserNestedInput
     coupons?: CouponUpdateManyWithoutUserNestedInput
+    review?: ReviewUpdateManyWithoutUserNestedInput
     transaction_details?: Transaction_DetailUpdateManyWithoutUserNestedInput
     transaction?: TransactionUpdateManyWithoutUserNestedInput
+    event?: EventUpdateManyWithoutCustomerNestedInput
   }
 
   export type UserUncheckedUpdateWithoutOrganizerInput = {
@@ -25482,8 +27328,10 @@ export namespace Prisma {
     referral?: ReferralUncheckedUpdateOneWithoutUserNestedInput
     points?: PointUncheckedUpdateManyWithoutUserNestedInput
     coupons?: CouponUncheckedUpdateManyWithoutUserNestedInput
+    review?: ReviewUncheckedUpdateManyWithoutUserNestedInput
     transaction_details?: Transaction_DetailUncheckedUpdateManyWithoutUserNestedInput
     transaction?: TransactionUncheckedUpdateManyWithoutUserNestedInput
+    event?: EventUncheckedUpdateManyWithoutCustomerNestedInput
   }
 
   export type Bank_accountUpsertWithoutOrganizerInput = {
@@ -25524,26 +27372,6 @@ export namespace Prisma {
   export type EventUpdateManyWithWhereWithoutOrganizerInput = {
     where: EventScalarWhereInput
     data: XOR<EventUpdateManyMutationInput, EventUncheckedUpdateManyWithoutOrganizerInput>
-  }
-
-  export type EventScalarWhereInput = {
-    AND?: EventScalarWhereInput | EventScalarWhereInput[]
-    OR?: EventScalarWhereInput[]
-    NOT?: EventScalarWhereInput | EventScalarWhereInput[]
-    event_id?: IntFilter<"Event"> | number
-    organizer_id?: IntFilter<"Event"> | number
-    title?: StringFilter<"Event"> | string
-    description?: StringFilter<"Event"> | string
-    imgEvent?: StringFilter<"Event"> | string
-    coupon_id?: IntFilter<"Event"> | number
-    event_location_id?: IntFilter<"Event"> | number
-    startDate?: DateTimeFilter<"Event"> | Date | string
-    endDate?: DateTimeFilter<"Event"> | Date | string
-    startTime?: StringFilter<"Event"> | string
-    endTime?: StringFilter<"Event"> | string
-    timezone?: StringFilter<"Event"> | string
-    createdAt?: DateTimeFilter<"Event"> | Date | string
-    updatedAt?: DateTimeFilter<"Event"> | Date | string
   }
 
   export type OrganizerCreateWithoutBank_accountInput = {
@@ -25625,8 +27453,10 @@ export namespace Prisma {
     referred?: ReferralCreateNestedOneWithoutReferred_usersInput
     coupons?: CouponCreateNestedManyWithoutUserInput
     organizer?: OrganizerCreateNestedOneWithoutUserInput
+    review?: ReviewCreateNestedManyWithoutUserInput
     transaction_details?: Transaction_DetailCreateNestedManyWithoutUserInput
     transaction?: TransactionCreateNestedManyWithoutUserInput
+    event?: EventCreateNestedManyWithoutCustomerInput
   }
 
   export type UserUncheckedCreateWithoutPointsInput = {
@@ -25643,8 +27473,10 @@ export namespace Prisma {
     referral?: ReferralUncheckedCreateNestedOneWithoutUserInput
     coupons?: CouponUncheckedCreateNestedManyWithoutUserInput
     organizer?: OrganizerUncheckedCreateNestedOneWithoutUserInput
+    review?: ReviewUncheckedCreateNestedManyWithoutUserInput
     transaction_details?: Transaction_DetailUncheckedCreateNestedManyWithoutUserInput
     transaction?: TransactionUncheckedCreateNestedManyWithoutUserInput
+    event?: EventUncheckedCreateNestedManyWithoutCustomerInput
   }
 
   export type UserCreateOrConnectWithoutPointsInput = {
@@ -25676,8 +27508,10 @@ export namespace Prisma {
     referred?: ReferralUpdateOneWithoutReferred_usersNestedInput
     coupons?: CouponUpdateManyWithoutUserNestedInput
     organizer?: OrganizerUpdateOneWithoutUserNestedInput
+    review?: ReviewUpdateManyWithoutUserNestedInput
     transaction_details?: Transaction_DetailUpdateManyWithoutUserNestedInput
     transaction?: TransactionUpdateManyWithoutUserNestedInput
+    event?: EventUpdateManyWithoutCustomerNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPointsInput = {
@@ -25694,8 +27528,10 @@ export namespace Prisma {
     referral?: ReferralUncheckedUpdateOneWithoutUserNestedInput
     coupons?: CouponUncheckedUpdateManyWithoutUserNestedInput
     organizer?: OrganizerUncheckedUpdateOneWithoutUserNestedInput
+    review?: ReviewUncheckedUpdateManyWithoutUserNestedInput
     transaction_details?: Transaction_DetailUncheckedUpdateManyWithoutUserNestedInput
     transaction?: TransactionUncheckedUpdateManyWithoutUserNestedInput
+    event?: EventUncheckedUpdateManyWithoutCustomerNestedInput
   }
 
   export type UserCreateWithoutReferralInput = {
@@ -25711,8 +27547,10 @@ export namespace Prisma {
     points?: PointCreateNestedManyWithoutUserInput
     coupons?: CouponCreateNestedManyWithoutUserInput
     organizer?: OrganizerCreateNestedOneWithoutUserInput
+    review?: ReviewCreateNestedManyWithoutUserInput
     transaction_details?: Transaction_DetailCreateNestedManyWithoutUserInput
     transaction?: TransactionCreateNestedManyWithoutUserInput
+    event?: EventCreateNestedManyWithoutCustomerInput
   }
 
   export type UserUncheckedCreateWithoutReferralInput = {
@@ -25729,8 +27567,10 @@ export namespace Prisma {
     points?: PointUncheckedCreateNestedManyWithoutUserInput
     coupons?: CouponUncheckedCreateNestedManyWithoutUserInput
     organizer?: OrganizerUncheckedCreateNestedOneWithoutUserInput
+    review?: ReviewUncheckedCreateNestedManyWithoutUserInput
     transaction_details?: Transaction_DetailUncheckedCreateNestedManyWithoutUserInput
     transaction?: TransactionUncheckedCreateNestedManyWithoutUserInput
+    event?: EventUncheckedCreateNestedManyWithoutCustomerInput
   }
 
   export type UserCreateOrConnectWithoutReferralInput = {
@@ -25751,8 +27591,10 @@ export namespace Prisma {
     points?: PointCreateNestedManyWithoutUserInput
     coupons?: CouponCreateNestedManyWithoutUserInput
     organizer?: OrganizerCreateNestedOneWithoutUserInput
+    review?: ReviewCreateNestedManyWithoutUserInput
     transaction_details?: Transaction_DetailCreateNestedManyWithoutUserInput
     transaction?: TransactionCreateNestedManyWithoutUserInput
+    event?: EventCreateNestedManyWithoutCustomerInput
   }
 
   export type UserUncheckedCreateWithoutReferredInput = {
@@ -25769,8 +27611,10 @@ export namespace Prisma {
     points?: PointUncheckedCreateNestedManyWithoutUserInput
     coupons?: CouponUncheckedCreateNestedManyWithoutUserInput
     organizer?: OrganizerUncheckedCreateNestedOneWithoutUserInput
+    review?: ReviewUncheckedCreateNestedManyWithoutUserInput
     transaction_details?: Transaction_DetailUncheckedCreateNestedManyWithoutUserInput
     transaction?: TransactionUncheckedCreateNestedManyWithoutUserInput
+    event?: EventUncheckedCreateNestedManyWithoutCustomerInput
   }
 
   export type UserCreateOrConnectWithoutReferredInput = {
@@ -25807,8 +27651,10 @@ export namespace Prisma {
     points?: PointUpdateManyWithoutUserNestedInput
     coupons?: CouponUpdateManyWithoutUserNestedInput
     organizer?: OrganizerUpdateOneWithoutUserNestedInput
+    review?: ReviewUpdateManyWithoutUserNestedInput
     transaction_details?: Transaction_DetailUpdateManyWithoutUserNestedInput
     transaction?: TransactionUpdateManyWithoutUserNestedInput
+    event?: EventUpdateManyWithoutCustomerNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReferralInput = {
@@ -25825,8 +27671,10 @@ export namespace Prisma {
     points?: PointUncheckedUpdateManyWithoutUserNestedInput
     coupons?: CouponUncheckedUpdateManyWithoutUserNestedInput
     organizer?: OrganizerUncheckedUpdateOneWithoutUserNestedInput
+    review?: ReviewUncheckedUpdateManyWithoutUserNestedInput
     transaction_details?: Transaction_DetailUncheckedUpdateManyWithoutUserNestedInput
     transaction?: TransactionUncheckedUpdateManyWithoutUserNestedInput
+    event?: EventUncheckedUpdateManyWithoutCustomerNestedInput
   }
 
   export type UserUpsertWithWhereUniqueWithoutReferredInput = {
@@ -25923,8 +27771,10 @@ export namespace Prisma {
     referred?: ReferralCreateNestedOneWithoutReferred_usersInput
     points?: PointCreateNestedManyWithoutUserInput
     organizer?: OrganizerCreateNestedOneWithoutUserInput
+    review?: ReviewCreateNestedManyWithoutUserInput
     transaction_details?: Transaction_DetailCreateNestedManyWithoutUserInput
     transaction?: TransactionCreateNestedManyWithoutUserInput
+    event?: EventCreateNestedManyWithoutCustomerInput
   }
 
   export type UserUncheckedCreateWithoutCouponsInput = {
@@ -25941,8 +27791,10 @@ export namespace Prisma {
     referral?: ReferralUncheckedCreateNestedOneWithoutUserInput
     points?: PointUncheckedCreateNestedManyWithoutUserInput
     organizer?: OrganizerUncheckedCreateNestedOneWithoutUserInput
+    review?: ReviewUncheckedCreateNestedManyWithoutUserInput
     transaction_details?: Transaction_DetailUncheckedCreateNestedManyWithoutUserInput
     transaction?: TransactionUncheckedCreateNestedManyWithoutUserInput
+    event?: EventUncheckedCreateNestedManyWithoutCustomerInput
   }
 
   export type UserCreateOrConnectWithoutCouponsInput = {
@@ -25974,8 +27826,10 @@ export namespace Prisma {
     referred?: ReferralUpdateOneWithoutReferred_usersNestedInput
     points?: PointUpdateManyWithoutUserNestedInput
     organizer?: OrganizerUpdateOneWithoutUserNestedInput
+    review?: ReviewUpdateManyWithoutUserNestedInput
     transaction_details?: Transaction_DetailUpdateManyWithoutUserNestedInput
     transaction?: TransactionUpdateManyWithoutUserNestedInput
+    event?: EventUpdateManyWithoutCustomerNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCouponsInput = {
@@ -25992,8 +27846,10 @@ export namespace Prisma {
     referral?: ReferralUncheckedUpdateOneWithoutUserNestedInput
     points?: PointUncheckedUpdateManyWithoutUserNestedInput
     organizer?: OrganizerUncheckedUpdateOneWithoutUserNestedInput
+    review?: ReviewUncheckedUpdateManyWithoutUserNestedInput
     transaction_details?: Transaction_DetailUncheckedUpdateManyWithoutUserNestedInput
     transaction?: TransactionUncheckedUpdateManyWithoutUserNestedInput
+    event?: EventUncheckedUpdateManyWithoutCustomerNestedInput
   }
 
   export type OrganizerCreateWithoutEventsInput = {
@@ -26084,6 +27940,75 @@ export namespace Prisma {
 
   export type Ticket_typesCreateManyEventInputEnvelope = {
     data: Ticket_typesCreateManyEventInput | Ticket_typesCreateManyEventInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserCreateWithoutEventInput = {
+    name: string
+    email: string
+    password: string
+    pfp_url?: string | null
+    created_at?: Date | string
+    isVerified?: boolean
+    role?: $Enums.Role
+    profile?: ProfileCreateNestedOneWithoutUserInput
+    referral?: ReferralCreateNestedOneWithoutUserInput
+    referred?: ReferralCreateNestedOneWithoutReferred_usersInput
+    points?: PointCreateNestedManyWithoutUserInput
+    coupons?: CouponCreateNestedManyWithoutUserInput
+    organizer?: OrganizerCreateNestedOneWithoutUserInput
+    review?: ReviewCreateNestedManyWithoutUserInput
+    transaction_details?: Transaction_DetailCreateNestedManyWithoutUserInput
+    transaction?: TransactionCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutEventInput = {
+    user_id?: number
+    name: string
+    email: string
+    password: string
+    pfp_url?: string | null
+    created_at?: Date | string
+    isVerified?: boolean
+    role?: $Enums.Role
+    referred_id?: number | null
+    profile?: ProfileUncheckedCreateNestedOneWithoutUserInput
+    referral?: ReferralUncheckedCreateNestedOneWithoutUserInput
+    points?: PointUncheckedCreateNestedManyWithoutUserInput
+    coupons?: CouponUncheckedCreateNestedManyWithoutUserInput
+    organizer?: OrganizerUncheckedCreateNestedOneWithoutUserInput
+    review?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    transaction_details?: Transaction_DetailUncheckedCreateNestedManyWithoutUserInput
+    transaction?: TransactionUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutEventInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutEventInput, UserUncheckedCreateWithoutEventInput>
+  }
+
+  export type ReviewCreateWithoutEventInput = {
+    review_text: string
+    review_img?: string | null
+    score: number
+    user: UserCreateNestedOneWithoutReviewInput
+  }
+
+  export type ReviewUncheckedCreateWithoutEventInput = {
+    review_id?: number
+    user_id: number
+    review_text: string
+    review_img?: string | null
+    score: number
+  }
+
+  export type ReviewCreateOrConnectWithoutEventInput = {
+    where: ReviewWhereUniqueInput
+    create: XOR<ReviewCreateWithoutEventInput, ReviewUncheckedCreateWithoutEventInput>
+  }
+
+  export type ReviewCreateManyEventInputEnvelope = {
+    data: ReviewCreateManyEventInput | ReviewCreateManyEventInput[]
     skipDuplicates?: boolean
   }
 
@@ -26202,6 +28127,38 @@ export namespace Prisma {
     quantity_available?: IntFilter<"Ticket_types"> | number
   }
 
+  export type UserUpsertWithWhereUniqueWithoutEventInput = {
+    where: UserWhereUniqueInput
+    update: XOR<UserUpdateWithoutEventInput, UserUncheckedUpdateWithoutEventInput>
+    create: XOR<UserCreateWithoutEventInput, UserUncheckedCreateWithoutEventInput>
+  }
+
+  export type UserUpdateWithWhereUniqueWithoutEventInput = {
+    where: UserWhereUniqueInput
+    data: XOR<UserUpdateWithoutEventInput, UserUncheckedUpdateWithoutEventInput>
+  }
+
+  export type UserUpdateManyWithWhereWithoutEventInput = {
+    where: UserScalarWhereInput
+    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyWithoutEventInput>
+  }
+
+  export type ReviewUpsertWithWhereUniqueWithoutEventInput = {
+    where: ReviewWhereUniqueInput
+    update: XOR<ReviewUpdateWithoutEventInput, ReviewUncheckedUpdateWithoutEventInput>
+    create: XOR<ReviewCreateWithoutEventInput, ReviewUncheckedCreateWithoutEventInput>
+  }
+
+  export type ReviewUpdateWithWhereUniqueWithoutEventInput = {
+    where: ReviewWhereUniqueInput
+    data: XOR<ReviewUpdateWithoutEventInput, ReviewUncheckedUpdateWithoutEventInput>
+  }
+
+  export type ReviewUpdateManyWithWhereWithoutEventInput = {
+    where: ReviewScalarWhereInput
+    data: XOR<ReviewUpdateManyMutationInput, ReviewUncheckedUpdateManyWithoutEventInput>
+  }
+
   export type EventCreateWithoutEvent_categoryInput = {
     title: string
     description: string
@@ -26214,9 +28171,13 @@ export namespace Prisma {
     timezone: string
     createdAt?: Date | string
     updatedAt: Date | string
+    customer_id?: number | null
+    score?: number | null
     organizer: OrganizerCreateNestedOneWithoutEventsInput
     event_location: Event_LocationCreateNestedOneWithoutEventInput
     ticket_types?: Ticket_typesCreateNestedManyWithoutEventInput
+    customer?: UserCreateNestedManyWithoutEventInput
+    review?: ReviewCreateNestedManyWithoutEventInput
   }
 
   export type EventUncheckedCreateWithoutEvent_categoryInput = {
@@ -26234,7 +28195,11 @@ export namespace Prisma {
     timezone: string
     createdAt?: Date | string
     updatedAt: Date | string
+    customer_id?: number | null
+    score?: number | null
     ticket_types?: Ticket_typesUncheckedCreateNestedManyWithoutEventInput
+    customer?: UserUncheckedCreateNestedManyWithoutEventInput
+    review?: ReviewUncheckedCreateNestedManyWithoutEventInput
   }
 
   export type EventCreateOrConnectWithoutEvent_categoryInput = {
@@ -26298,9 +28263,13 @@ export namespace Prisma {
     timezone: string
     createdAt?: Date | string
     updatedAt: Date | string
+    customer_id?: number | null
+    score?: number | null
     organizer: OrganizerCreateNestedOneWithoutEventsInput
     event_category?: Event_categoryCreateNestedManyWithoutEventInput
     ticket_types?: Ticket_typesCreateNestedManyWithoutEventInput
+    customer?: UserCreateNestedManyWithoutEventInput
+    review?: ReviewCreateNestedManyWithoutEventInput
   }
 
   export type EventUncheckedCreateWithoutEvent_locationInput = {
@@ -26317,8 +28286,12 @@ export namespace Prisma {
     timezone: string
     createdAt?: Date | string
     updatedAt: Date | string
+    customer_id?: number | null
+    score?: number | null
     event_category?: Event_categoryUncheckedCreateNestedManyWithoutEventInput
     ticket_types?: Ticket_typesUncheckedCreateNestedManyWithoutEventInput
+    customer?: UserUncheckedCreateNestedManyWithoutEventInput
+    review?: ReviewUncheckedCreateNestedManyWithoutEventInput
   }
 
   export type EventCreateOrConnectWithoutEvent_locationInput = {
@@ -26389,9 +28362,13 @@ export namespace Prisma {
     timezone?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    customer_id?: NullableIntFieldUpdateOperationsInput | number | null
+    score?: NullableIntFieldUpdateOperationsInput | number | null
     organizer?: OrganizerUpdateOneRequiredWithoutEventsNestedInput
     event_category?: Event_categoryUpdateManyWithoutEventNestedInput
     ticket_types?: Ticket_typesUpdateManyWithoutEventNestedInput
+    customer?: UserUpdateManyWithoutEventNestedInput
+    review?: ReviewUpdateManyWithoutEventNestedInput
   }
 
   export type EventUncheckedUpdateWithoutEvent_locationInput = {
@@ -26408,8 +28385,12 @@ export namespace Prisma {
     timezone?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    customer_id?: NullableIntFieldUpdateOperationsInput | number | null
+    score?: NullableIntFieldUpdateOperationsInput | number | null
     event_category?: Event_categoryUncheckedUpdateManyWithoutEventNestedInput
     ticket_types?: Ticket_typesUncheckedUpdateManyWithoutEventNestedInput
+    customer?: UserUncheckedUpdateManyWithoutEventNestedInput
+    review?: ReviewUncheckedUpdateManyWithoutEventNestedInput
   }
 
   export type Event_LocationCreateWithoutCityInput = {
@@ -26522,9 +28503,13 @@ export namespace Prisma {
     timezone: string
     createdAt?: Date | string
     updatedAt: Date | string
+    customer_id?: number | null
+    score?: number | null
     organizer: OrganizerCreateNestedOneWithoutEventsInput
     event_category?: Event_categoryCreateNestedManyWithoutEventInput
     event_location: Event_LocationCreateNestedOneWithoutEventInput
+    customer?: UserCreateNestedManyWithoutEventInput
+    review?: ReviewCreateNestedManyWithoutEventInput
   }
 
   export type EventUncheckedCreateWithoutTicket_typesInput = {
@@ -26542,7 +28527,11 @@ export namespace Prisma {
     timezone: string
     createdAt?: Date | string
     updatedAt: Date | string
+    customer_id?: number | null
+    score?: number | null
     event_category?: Event_categoryUncheckedCreateNestedManyWithoutEventInput
+    customer?: UserUncheckedCreateNestedManyWithoutEventInput
+    review?: ReviewUncheckedCreateNestedManyWithoutEventInput
   }
 
   export type EventCreateOrConnectWithoutTicket_typesInput = {
@@ -26593,9 +28582,13 @@ export namespace Prisma {
     timezone?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    customer_id?: NullableIntFieldUpdateOperationsInput | number | null
+    score?: NullableIntFieldUpdateOperationsInput | number | null
     organizer?: OrganizerUpdateOneRequiredWithoutEventsNestedInput
     event_category?: Event_categoryUpdateManyWithoutEventNestedInput
     event_location?: Event_LocationUpdateOneRequiredWithoutEventNestedInput
+    customer?: UserUpdateManyWithoutEventNestedInput
+    review?: ReviewUpdateManyWithoutEventNestedInput
   }
 
   export type EventUncheckedUpdateWithoutTicket_typesInput = {
@@ -26613,7 +28606,11 @@ export namespace Prisma {
     timezone?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    customer_id?: NullableIntFieldUpdateOperationsInput | number | null
+    score?: NullableIntFieldUpdateOperationsInput | number | null
     event_category?: Event_categoryUncheckedUpdateManyWithoutEventNestedInput
+    customer?: UserUncheckedUpdateManyWithoutEventNestedInput
+    review?: ReviewUncheckedUpdateManyWithoutEventNestedInput
   }
 
   export type Transaction_DetailUpsertWithoutTicket_typesInput = {
@@ -26656,7 +28653,9 @@ export namespace Prisma {
     points?: PointCreateNestedManyWithoutUserInput
     coupons?: CouponCreateNestedManyWithoutUserInput
     organizer?: OrganizerCreateNestedOneWithoutUserInput
+    review?: ReviewCreateNestedManyWithoutUserInput
     transaction?: TransactionCreateNestedManyWithoutUserInput
+    event?: EventCreateNestedManyWithoutCustomerInput
   }
 
   export type UserUncheckedCreateWithoutTransaction_detailsInput = {
@@ -26674,7 +28673,9 @@ export namespace Prisma {
     points?: PointUncheckedCreateNestedManyWithoutUserInput
     coupons?: CouponUncheckedCreateNestedManyWithoutUserInput
     organizer?: OrganizerUncheckedCreateNestedOneWithoutUserInput
+    review?: ReviewUncheckedCreateNestedManyWithoutUserInput
     transaction?: TransactionUncheckedCreateNestedManyWithoutUserInput
+    event?: EventUncheckedCreateNestedManyWithoutCustomerInput
   }
 
   export type UserCreateOrConnectWithoutTransaction_detailsInput = {
@@ -26751,7 +28752,9 @@ export namespace Prisma {
     points?: PointUpdateManyWithoutUserNestedInput
     coupons?: CouponUpdateManyWithoutUserNestedInput
     organizer?: OrganizerUpdateOneWithoutUserNestedInput
+    review?: ReviewUpdateManyWithoutUserNestedInput
     transaction?: TransactionUpdateManyWithoutUserNestedInput
+    event?: EventUpdateManyWithoutCustomerNestedInput
   }
 
   export type UserUncheckedUpdateWithoutTransaction_detailsInput = {
@@ -26769,7 +28772,9 @@ export namespace Prisma {
     points?: PointUncheckedUpdateManyWithoutUserNestedInput
     coupons?: CouponUncheckedUpdateManyWithoutUserNestedInput
     organizer?: OrganizerUncheckedUpdateOneWithoutUserNestedInput
+    review?: ReviewUncheckedUpdateManyWithoutUserNestedInput
     transaction?: TransactionUncheckedUpdateManyWithoutUserNestedInput
+    event?: EventUncheckedUpdateManyWithoutCustomerNestedInput
   }
 
   export type Ticket_typesUpsertWithoutTransaction_detailsInput = {
@@ -26862,7 +28867,9 @@ export namespace Prisma {
     points?: PointCreateNestedManyWithoutUserInput
     coupons?: CouponCreateNestedManyWithoutUserInput
     organizer?: OrganizerCreateNestedOneWithoutUserInput
+    review?: ReviewCreateNestedManyWithoutUserInput
     transaction_details?: Transaction_DetailCreateNestedManyWithoutUserInput
+    event?: EventCreateNestedManyWithoutCustomerInput
   }
 
   export type UserUncheckedCreateWithoutTransactionInput = {
@@ -26880,7 +28887,9 @@ export namespace Prisma {
     points?: PointUncheckedCreateNestedManyWithoutUserInput
     coupons?: CouponUncheckedCreateNestedManyWithoutUserInput
     organizer?: OrganizerUncheckedCreateNestedOneWithoutUserInput
+    review?: ReviewUncheckedCreateNestedManyWithoutUserInput
     transaction_details?: Transaction_DetailUncheckedCreateNestedManyWithoutUserInput
+    event?: EventUncheckedCreateNestedManyWithoutCustomerInput
   }
 
   export type UserCreateOrConnectWithoutTransactionInput = {
@@ -26939,7 +28948,9 @@ export namespace Prisma {
     points?: PointUpdateManyWithoutUserNestedInput
     coupons?: CouponUpdateManyWithoutUserNestedInput
     organizer?: OrganizerUpdateOneWithoutUserNestedInput
+    review?: ReviewUpdateManyWithoutUserNestedInput
     transaction_details?: Transaction_DetailUpdateManyWithoutUserNestedInput
+    event?: EventUpdateManyWithoutCustomerNestedInput
   }
 
   export type UserUncheckedUpdateWithoutTransactionInput = {
@@ -26957,7 +28968,205 @@ export namespace Prisma {
     points?: PointUncheckedUpdateManyWithoutUserNestedInput
     coupons?: CouponUncheckedUpdateManyWithoutUserNestedInput
     organizer?: OrganizerUncheckedUpdateOneWithoutUserNestedInput
+    review?: ReviewUncheckedUpdateManyWithoutUserNestedInput
     transaction_details?: Transaction_DetailUncheckedUpdateManyWithoutUserNestedInput
+    event?: EventUncheckedUpdateManyWithoutCustomerNestedInput
+  }
+
+  export type EventCreateWithoutReviewInput = {
+    title: string
+    description: string
+    imgEvent: string
+    coupon_id: number
+    startDate: Date | string
+    endDate: Date | string
+    startTime: string
+    endTime: string
+    timezone: string
+    createdAt?: Date | string
+    updatedAt: Date | string
+    customer_id?: number | null
+    score?: number | null
+    organizer: OrganizerCreateNestedOneWithoutEventsInput
+    event_category?: Event_categoryCreateNestedManyWithoutEventInput
+    event_location: Event_LocationCreateNestedOneWithoutEventInput
+    ticket_types?: Ticket_typesCreateNestedManyWithoutEventInput
+    customer?: UserCreateNestedManyWithoutEventInput
+  }
+
+  export type EventUncheckedCreateWithoutReviewInput = {
+    event_id?: number
+    organizer_id: number
+    title: string
+    description: string
+    imgEvent: string
+    coupon_id: number
+    event_location_id: number
+    startDate: Date | string
+    endDate: Date | string
+    startTime: string
+    endTime: string
+    timezone: string
+    createdAt?: Date | string
+    updatedAt: Date | string
+    customer_id?: number | null
+    score?: number | null
+    event_category?: Event_categoryUncheckedCreateNestedManyWithoutEventInput
+    ticket_types?: Ticket_typesUncheckedCreateNestedManyWithoutEventInput
+    customer?: UserUncheckedCreateNestedManyWithoutEventInput
+  }
+
+  export type EventCreateOrConnectWithoutReviewInput = {
+    where: EventWhereUniqueInput
+    create: XOR<EventCreateWithoutReviewInput, EventUncheckedCreateWithoutReviewInput>
+  }
+
+  export type UserCreateWithoutReviewInput = {
+    name: string
+    email: string
+    password: string
+    pfp_url?: string | null
+    created_at?: Date | string
+    isVerified?: boolean
+    role?: $Enums.Role
+    profile?: ProfileCreateNestedOneWithoutUserInput
+    referral?: ReferralCreateNestedOneWithoutUserInput
+    referred?: ReferralCreateNestedOneWithoutReferred_usersInput
+    points?: PointCreateNestedManyWithoutUserInput
+    coupons?: CouponCreateNestedManyWithoutUserInput
+    organizer?: OrganizerCreateNestedOneWithoutUserInput
+    transaction_details?: Transaction_DetailCreateNestedManyWithoutUserInput
+    transaction?: TransactionCreateNestedManyWithoutUserInput
+    event?: EventCreateNestedManyWithoutCustomerInput
+  }
+
+  export type UserUncheckedCreateWithoutReviewInput = {
+    user_id?: number
+    name: string
+    email: string
+    password: string
+    pfp_url?: string | null
+    created_at?: Date | string
+    isVerified?: boolean
+    role?: $Enums.Role
+    referred_id?: number | null
+    profile?: ProfileUncheckedCreateNestedOneWithoutUserInput
+    referral?: ReferralUncheckedCreateNestedOneWithoutUserInput
+    points?: PointUncheckedCreateNestedManyWithoutUserInput
+    coupons?: CouponUncheckedCreateNestedManyWithoutUserInput
+    organizer?: OrganizerUncheckedCreateNestedOneWithoutUserInput
+    transaction_details?: Transaction_DetailUncheckedCreateNestedManyWithoutUserInput
+    transaction?: TransactionUncheckedCreateNestedManyWithoutUserInput
+    event?: EventUncheckedCreateNestedManyWithoutCustomerInput
+  }
+
+  export type UserCreateOrConnectWithoutReviewInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutReviewInput, UserUncheckedCreateWithoutReviewInput>
+  }
+
+  export type EventUpsertWithoutReviewInput = {
+    update: XOR<EventUpdateWithoutReviewInput, EventUncheckedUpdateWithoutReviewInput>
+    create: XOR<EventCreateWithoutReviewInput, EventUncheckedCreateWithoutReviewInput>
+    where?: EventWhereInput
+  }
+
+  export type EventUpdateToOneWithWhereWithoutReviewInput = {
+    where?: EventWhereInput
+    data: XOR<EventUpdateWithoutReviewInput, EventUncheckedUpdateWithoutReviewInput>
+  }
+
+  export type EventUpdateWithoutReviewInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    imgEvent?: StringFieldUpdateOperationsInput | string
+    coupon_id?: IntFieldUpdateOperationsInput | number
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    startTime?: StringFieldUpdateOperationsInput | string
+    endTime?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    customer_id?: NullableIntFieldUpdateOperationsInput | number | null
+    score?: NullableIntFieldUpdateOperationsInput | number | null
+    organizer?: OrganizerUpdateOneRequiredWithoutEventsNestedInput
+    event_category?: Event_categoryUpdateManyWithoutEventNestedInput
+    event_location?: Event_LocationUpdateOneRequiredWithoutEventNestedInput
+    ticket_types?: Ticket_typesUpdateManyWithoutEventNestedInput
+    customer?: UserUpdateManyWithoutEventNestedInput
+  }
+
+  export type EventUncheckedUpdateWithoutReviewInput = {
+    event_id?: IntFieldUpdateOperationsInput | number
+    organizer_id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    imgEvent?: StringFieldUpdateOperationsInput | string
+    coupon_id?: IntFieldUpdateOperationsInput | number
+    event_location_id?: IntFieldUpdateOperationsInput | number
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    startTime?: StringFieldUpdateOperationsInput | string
+    endTime?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    customer_id?: NullableIntFieldUpdateOperationsInput | number | null
+    score?: NullableIntFieldUpdateOperationsInput | number | null
+    event_category?: Event_categoryUncheckedUpdateManyWithoutEventNestedInput
+    ticket_types?: Ticket_typesUncheckedUpdateManyWithoutEventNestedInput
+    customer?: UserUncheckedUpdateManyWithoutEventNestedInput
+  }
+
+  export type UserUpsertWithoutReviewInput = {
+    update: XOR<UserUpdateWithoutReviewInput, UserUncheckedUpdateWithoutReviewInput>
+    create: XOR<UserCreateWithoutReviewInput, UserUncheckedCreateWithoutReviewInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutReviewInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutReviewInput, UserUncheckedUpdateWithoutReviewInput>
+  }
+
+  export type UserUpdateWithoutReviewInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    pfp_url?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    profile?: ProfileUpdateOneWithoutUserNestedInput
+    referral?: ReferralUpdateOneWithoutUserNestedInput
+    referred?: ReferralUpdateOneWithoutReferred_usersNestedInput
+    points?: PointUpdateManyWithoutUserNestedInput
+    coupons?: CouponUpdateManyWithoutUserNestedInput
+    organizer?: OrganizerUpdateOneWithoutUserNestedInput
+    transaction_details?: Transaction_DetailUpdateManyWithoutUserNestedInput
+    transaction?: TransactionUpdateManyWithoutUserNestedInput
+    event?: EventUpdateManyWithoutCustomerNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutReviewInput = {
+    user_id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    pfp_url?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    referred_id?: NullableIntFieldUpdateOperationsInput | number | null
+    profile?: ProfileUncheckedUpdateOneWithoutUserNestedInput
+    referral?: ReferralUncheckedUpdateOneWithoutUserNestedInput
+    points?: PointUncheckedUpdateManyWithoutUserNestedInput
+    coupons?: CouponUncheckedUpdateManyWithoutUserNestedInput
+    organizer?: OrganizerUncheckedUpdateOneWithoutUserNestedInput
+    transaction_details?: Transaction_DetailUncheckedUpdateManyWithoutUserNestedInput
+    transaction?: TransactionUncheckedUpdateManyWithoutUserNestedInput
+    event?: EventUncheckedUpdateManyWithoutCustomerNestedInput
   }
 
   export type PointCreateManyUserInput = {
@@ -26975,6 +29184,14 @@ export namespace Prisma {
     max_amount?: number | null
     start_date?: Date | string
     expired_date: Date | string
+  }
+
+  export type ReviewCreateManyUserInput = {
+    review_id?: number
+    event_id: number
+    review_text: string
+    review_img?: string | null
+    score: number
   }
 
   export type Transaction_DetailCreateManyUserInput = {
@@ -27043,6 +29260,29 @@ export namespace Prisma {
     expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type ReviewUpdateWithoutUserInput = {
+    review_text?: StringFieldUpdateOperationsInput | string
+    review_img?: NullableStringFieldUpdateOperationsInput | string | null
+    score?: IntFieldUpdateOperationsInput | number
+    event?: EventUpdateOneRequiredWithoutReviewNestedInput
+  }
+
+  export type ReviewUncheckedUpdateWithoutUserInput = {
+    review_id?: IntFieldUpdateOperationsInput | number
+    event_id?: IntFieldUpdateOperationsInput | number
+    review_text?: StringFieldUpdateOperationsInput | string
+    review_img?: NullableStringFieldUpdateOperationsInput | string | null
+    score?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type ReviewUncheckedUpdateManyWithoutUserInput = {
+    review_id?: IntFieldUpdateOperationsInput | number
+    event_id?: IntFieldUpdateOperationsInput | number
+    review_text?: StringFieldUpdateOperationsInput | string
+    review_img?: NullableStringFieldUpdateOperationsInput | string | null
+    score?: IntFieldUpdateOperationsInput | number
+  }
+
   export type Transaction_DetailUpdateWithoutUserInput = {
     quantity_bought?: IntFieldUpdateOperationsInput | number
     subtotal?: IntFieldUpdateOperationsInput | number
@@ -27092,6 +29332,68 @@ export namespace Prisma {
     payment_method?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     isPaid?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type EventUpdateWithoutCustomerInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    imgEvent?: StringFieldUpdateOperationsInput | string
+    coupon_id?: IntFieldUpdateOperationsInput | number
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    startTime?: StringFieldUpdateOperationsInput | string
+    endTime?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    customer_id?: NullableIntFieldUpdateOperationsInput | number | null
+    score?: NullableIntFieldUpdateOperationsInput | number | null
+    organizer?: OrganizerUpdateOneRequiredWithoutEventsNestedInput
+    event_category?: Event_categoryUpdateManyWithoutEventNestedInput
+    event_location?: Event_LocationUpdateOneRequiredWithoutEventNestedInput
+    ticket_types?: Ticket_typesUpdateManyWithoutEventNestedInput
+    review?: ReviewUpdateManyWithoutEventNestedInput
+  }
+
+  export type EventUncheckedUpdateWithoutCustomerInput = {
+    event_id?: IntFieldUpdateOperationsInput | number
+    organizer_id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    imgEvent?: StringFieldUpdateOperationsInput | string
+    coupon_id?: IntFieldUpdateOperationsInput | number
+    event_location_id?: IntFieldUpdateOperationsInput | number
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    startTime?: StringFieldUpdateOperationsInput | string
+    endTime?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    customer_id?: NullableIntFieldUpdateOperationsInput | number | null
+    score?: NullableIntFieldUpdateOperationsInput | number | null
+    event_category?: Event_categoryUncheckedUpdateManyWithoutEventNestedInput
+    ticket_types?: Ticket_typesUncheckedUpdateManyWithoutEventNestedInput
+    review?: ReviewUncheckedUpdateManyWithoutEventNestedInput
+  }
+
+  export type EventUncheckedUpdateManyWithoutCustomerInput = {
+    event_id?: IntFieldUpdateOperationsInput | number
+    organizer_id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    imgEvent?: StringFieldUpdateOperationsInput | string
+    coupon_id?: IntFieldUpdateOperationsInput | number
+    event_location_id?: IntFieldUpdateOperationsInput | number
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    startTime?: StringFieldUpdateOperationsInput | string
+    endTime?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    customer_id?: NullableIntFieldUpdateOperationsInput | number | null
+    score?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type AddressCreateManyProfileInput = {
@@ -27170,6 +29472,8 @@ export namespace Prisma {
     timezone: string
     createdAt?: Date | string
     updatedAt: Date | string
+    customer_id?: number | null
+    score?: number | null
   }
 
   export type EventUpdateWithoutOrganizerInput = {
@@ -27184,9 +29488,13 @@ export namespace Prisma {
     timezone?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    customer_id?: NullableIntFieldUpdateOperationsInput | number | null
+    score?: NullableIntFieldUpdateOperationsInput | number | null
     event_category?: Event_categoryUpdateManyWithoutEventNestedInput
     event_location?: Event_LocationUpdateOneRequiredWithoutEventNestedInput
     ticket_types?: Ticket_typesUpdateManyWithoutEventNestedInput
+    customer?: UserUpdateManyWithoutEventNestedInput
+    review?: ReviewUpdateManyWithoutEventNestedInput
   }
 
   export type EventUncheckedUpdateWithoutOrganizerInput = {
@@ -27203,8 +29511,12 @@ export namespace Prisma {
     timezone?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    customer_id?: NullableIntFieldUpdateOperationsInput | number | null
+    score?: NullableIntFieldUpdateOperationsInput | number | null
     event_category?: Event_categoryUncheckedUpdateManyWithoutEventNestedInput
     ticket_types?: Ticket_typesUncheckedUpdateManyWithoutEventNestedInput
+    customer?: UserUncheckedUpdateManyWithoutEventNestedInput
+    review?: ReviewUncheckedUpdateManyWithoutEventNestedInput
   }
 
   export type EventUncheckedUpdateManyWithoutOrganizerInput = {
@@ -27221,6 +29533,8 @@ export namespace Prisma {
     timezone?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    customer_id?: NullableIntFieldUpdateOperationsInput | number | null
+    score?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type UserCreateManyReferredInput = {
@@ -27247,8 +29561,10 @@ export namespace Prisma {
     points?: PointUpdateManyWithoutUserNestedInput
     coupons?: CouponUpdateManyWithoutUserNestedInput
     organizer?: OrganizerUpdateOneWithoutUserNestedInput
+    review?: ReviewUpdateManyWithoutUserNestedInput
     transaction_details?: Transaction_DetailUpdateManyWithoutUserNestedInput
     transaction?: TransactionUpdateManyWithoutUserNestedInput
+    event?: EventUpdateManyWithoutCustomerNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReferredInput = {
@@ -27265,8 +29581,10 @@ export namespace Prisma {
     points?: PointUncheckedUpdateManyWithoutUserNestedInput
     coupons?: CouponUncheckedUpdateManyWithoutUserNestedInput
     organizer?: OrganizerUncheckedUpdateOneWithoutUserNestedInput
+    review?: ReviewUncheckedUpdateManyWithoutUserNestedInput
     transaction_details?: Transaction_DetailUncheckedUpdateManyWithoutUserNestedInput
     transaction?: TransactionUncheckedUpdateManyWithoutUserNestedInput
+    event?: EventUncheckedUpdateManyWithoutCustomerNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutReferredInput = {
@@ -27285,6 +29603,14 @@ export namespace Prisma {
     types: string
     price: number
     quantity_available: number
+  }
+
+  export type ReviewCreateManyEventInput = {
+    review_id?: number
+    user_id: number
+    review_text: string
+    review_img?: string | null
+    score: number
   }
 
   export type Event_categoryUpdateWithoutEventInput = {
@@ -27323,6 +29649,80 @@ export namespace Prisma {
     quantity_available?: IntFieldUpdateOperationsInput | number
   }
 
+  export type UserUpdateWithoutEventInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    pfp_url?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    profile?: ProfileUpdateOneWithoutUserNestedInput
+    referral?: ReferralUpdateOneWithoutUserNestedInput
+    referred?: ReferralUpdateOneWithoutReferred_usersNestedInput
+    points?: PointUpdateManyWithoutUserNestedInput
+    coupons?: CouponUpdateManyWithoutUserNestedInput
+    organizer?: OrganizerUpdateOneWithoutUserNestedInput
+    review?: ReviewUpdateManyWithoutUserNestedInput
+    transaction_details?: Transaction_DetailUpdateManyWithoutUserNestedInput
+    transaction?: TransactionUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutEventInput = {
+    user_id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    pfp_url?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    referred_id?: NullableIntFieldUpdateOperationsInput | number | null
+    profile?: ProfileUncheckedUpdateOneWithoutUserNestedInput
+    referral?: ReferralUncheckedUpdateOneWithoutUserNestedInput
+    points?: PointUncheckedUpdateManyWithoutUserNestedInput
+    coupons?: CouponUncheckedUpdateManyWithoutUserNestedInput
+    organizer?: OrganizerUncheckedUpdateOneWithoutUserNestedInput
+    review?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    transaction_details?: Transaction_DetailUncheckedUpdateManyWithoutUserNestedInput
+    transaction?: TransactionUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateManyWithoutEventInput = {
+    user_id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    pfp_url?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    referred_id?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type ReviewUpdateWithoutEventInput = {
+    review_text?: StringFieldUpdateOperationsInput | string
+    review_img?: NullableStringFieldUpdateOperationsInput | string | null
+    score?: IntFieldUpdateOperationsInput | number
+    user?: UserUpdateOneRequiredWithoutReviewNestedInput
+  }
+
+  export type ReviewUncheckedUpdateWithoutEventInput = {
+    review_id?: IntFieldUpdateOperationsInput | number
+    user_id?: IntFieldUpdateOperationsInput | number
+    review_text?: StringFieldUpdateOperationsInput | string
+    review_img?: NullableStringFieldUpdateOperationsInput | string | null
+    score?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type ReviewUncheckedUpdateManyWithoutEventInput = {
+    review_id?: IntFieldUpdateOperationsInput | number
+    user_id?: IntFieldUpdateOperationsInput | number
+    review_text?: StringFieldUpdateOperationsInput | string
+    review_img?: NullableStringFieldUpdateOperationsInput | string | null
+    score?: IntFieldUpdateOperationsInput | number
+  }
+
   export type EventUpdateWithoutEvent_categoryInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
@@ -27335,9 +29735,13 @@ export namespace Prisma {
     timezone?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    customer_id?: NullableIntFieldUpdateOperationsInput | number | null
+    score?: NullableIntFieldUpdateOperationsInput | number | null
     organizer?: OrganizerUpdateOneRequiredWithoutEventsNestedInput
     event_location?: Event_LocationUpdateOneRequiredWithoutEventNestedInput
     ticket_types?: Ticket_typesUpdateManyWithoutEventNestedInput
+    customer?: UserUpdateManyWithoutEventNestedInput
+    review?: ReviewUpdateManyWithoutEventNestedInput
   }
 
   export type EventUncheckedUpdateWithoutEvent_categoryInput = {
@@ -27355,7 +29759,11 @@ export namespace Prisma {
     timezone?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    customer_id?: NullableIntFieldUpdateOperationsInput | number | null
+    score?: NullableIntFieldUpdateOperationsInput | number | null
     ticket_types?: Ticket_typesUncheckedUpdateManyWithoutEventNestedInput
+    customer?: UserUncheckedUpdateManyWithoutEventNestedInput
+    review?: ReviewUncheckedUpdateManyWithoutEventNestedInput
   }
 
   export type EventUncheckedUpdateManyWithoutEvent_categoryInput = {
@@ -27373,6 +29781,8 @@ export namespace Prisma {
     timezone?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    customer_id?: NullableIntFieldUpdateOperationsInput | number | null
+    score?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type Event_LocationCreateManyCityInput = {
