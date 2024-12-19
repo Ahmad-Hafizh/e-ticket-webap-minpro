@@ -32,7 +32,7 @@ class EventController {
                 if (!organizer) {
                     throw new Error("User unauthorized");
                 }
-                const { eventTitle, eventDescription, eventTimeDate, eventCategory, eventLocation, ticketTypes, eventImg, } = req.body;
+                const { eventTitle, eventDescription, eventTimeDate, eventCategory, eventLocation, ticketTypes, eventImg, score, } = req.body;
                 const response = yield prisma_1.prisma.$transaction((tx) => __awaiter(this, void 0, void 0, function* () {
                     //Create and/or update city
                     const city = yield tx.location_city.upsert({
@@ -76,6 +76,7 @@ class EventController {
                             createdAt: new Date(),
                             updatedAt: new Date(),
                             timezone: eventTimeDate.timezone,
+                            score: score,
                             event_location_id: eventLoc.event_location_id,
                         },
                     });
@@ -231,6 +232,7 @@ class EventController {
                     }
                     return event;
                 }));
+                console.log(response);
                 return responseHandler_1.default.success(res, "Event updated Successfully", 200, response);
             }
             catch (error) {
@@ -322,6 +324,8 @@ class EventController {
                 startdate, enddate, city, //city id
                 country, //country id
                 pricemin, pricemax, sortby, orderby, } = req.query;
+                const url = req.url;
+                console.log(url);
                 const result = yield prisma_1.prisma.event.findMany({
                     where: {
                         event_category: {
@@ -344,12 +348,12 @@ class EventController {
                             location_city_id: parseInt(city) || undefined, //query by city
                             location_country_id: parseInt(country) || undefined, //query by country
                         },
-                        startDate: {
-                            gte: new Date(startdate) || undefined,
-                        },
-                        endDate: {
-                            lte: new Date(enddate) || undefined,
-                        },
+                        // startDate: {
+                        //   gte: new Date(startdate as string) || undefined,
+                        // },
+                        // endDate: {
+                        //   lte: new Date(enddate as string) || undefined,
+                        // },
                     },
                     include: {
                         event_category: true,
@@ -360,9 +364,27 @@ class EventController {
                         [sortby]: orderby || undefined, //Akses properti sortby (isinya nama properti).
                     },
                 });
+                // //Check data in redis
+                // await redisClient.connect().catch(error);
+                // const redisData = await redisClient.get(`${req.url}`);
+                // //if exist, use data from redis as result for response
+                // if (redisData) {
+                //   return ResponseHandler.success(
+                //     res,
+                //     "Filter Success - Redis",
+                //     200,
+                //     JSON.parse(redisData)
+                //   );
+                // }
+                // //If not exist, get data from database and store to redis
+                // await redisClient.setEx(`${req.url}`, 5, JSON.stringify(result));
+                // if (redisClient.isOpen) {
+                //   await redisClient.disconnect();
+                // }
                 return responseHandler_1.default.success(res, "Filter Success", 200, result);
             }
             catch (error) {
+                console.log(error);
                 return responseHandler_1.default.error(res, "Filter Error", 500, error);
             }
         });

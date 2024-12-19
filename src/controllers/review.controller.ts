@@ -36,9 +36,11 @@ export class ReviewController {
     }
   }
 
-  async getReview(req: Request, res: Response) {
+
+  async getReview(req: Request, res: Response): Promise<any> {
     try {
-      const { eventId } = req.query;
+      const { eventId } = req.params;
+
       const response = await prisma.review.findMany({
         where: { event_id: parseInt(eventId as string) },
       });
