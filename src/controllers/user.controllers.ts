@@ -23,14 +23,14 @@ export class UserController {
       const createUserFlow = await prisma.$transaction(async (tx) => {
         // check if refferal code is available
         // if there is no referral code available
-        const user = await prisma.user.create({
+        const user = await tx.user.create({
           data: { name: req.body.name, email: req.body.email, password: await hashPassword(req.body.password) },
         });
 
-        await prisma.profile.create({ data: { user_id: user.user_id } });
+        await tx.profile.create({ data: { user_id: user.user_id } });
         const referral_code: string = `${user.name.slice(0, 4).toUpperCase()}${Math.round(Math.random() * 10000).toString()}`;
 
-        await prisma.referral.create({
+        await tx.referral.create({
           data: { referral_code, user_id: user.user_id },
         });
 
@@ -65,12 +65,12 @@ export class UserController {
 
   async addReferral(req: Request, res: Response, next: NextFunction): Promise<any> {
     try {
-      const refferal_code = res.locals.refferal_code;
+      const referral_code = res.locals.referral_code;
       const user = res.locals.user;
 
       await prisma.$transaction(async (tx) => {
         const findReferral = await tx.referral.findUnique({
-          where: { referral_code: refferal_code.toString() },
+          where: { referral_code: referral_code.toString() },
           include: {
             user: true,
           },
