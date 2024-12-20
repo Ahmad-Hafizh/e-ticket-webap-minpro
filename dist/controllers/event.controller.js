@@ -236,6 +236,7 @@ class EventController {
                 return responseHandler_1.default.success(res, "Event updated Successfully", 200, response);
             }
             catch (error) {
+                console.log(error);
                 return responseHandler_1.default.error(res, "Failed to update event! Internal server error!", 500, error);
             }
         });
@@ -293,6 +294,10 @@ class EventController {
                 const response = yield prisma_1.prisma.event.findUnique({
                     where: {
                         event_id: params,
+                    },
+                    include: {
+                        event_location: true,
+                        ticket_types: true,
                     },
                 });
                 return responseHandler_1.default.success(res, "Get Event Success", 200, response);
@@ -364,6 +369,23 @@ class EventController {
                         [sortby]: orderby || undefined, //Akses properti sortby (isinya nama properti).
                     },
                 });
+                // //Check data in redis
+                // await redisClient.connect().catch(error);
+                // const redisData = await redisClient.get(`${req.url}`);
+                // //if exist, use data from redis as result for response
+                // if (redisData) {
+                //   return ResponseHandler.success(
+                //     res,
+                //     "Filter Success - Redis",
+                //     200,
+                //     JSON.parse(redisData)
+                //   );
+                // }
+                // //If not exist, get data from database and store to redis
+                // await redisClient.setEx(`${req.url}`, 5, JSON.stringify(result));
+                // if (redisClient.isOpen) {
+                //   await redisClient.disconnect();
+                // }
                 // //Check data in redis
                 // await redisClient.connect().catch(error);
                 // const redisData = await redisClient.get(`${req.url}`);

@@ -220,14 +220,11 @@ class UserController {
                     });
                     const organizer = yield tx.organizer.create({
                         data: {
+                            user_id: user.user_id,
                             organizer_name: req.body.organizer_name,
                             organizer_email: req.body.organizer_email,
                             organizer_phone: req.body.organizer_phone,
                             organizer_address: req.body.organizer_address,
-                            organizer_logo: req.body.organizer_logo || null,
-                            organizer_banner: req.body.organizer_banner || null,
-                            organizer_bio: req.body.organizer_bio || null,
-                            user_id: user.user_id,
                         },
                     });
                     const organizerBank = yield tx.bank_account.create({
@@ -351,6 +348,7 @@ class UserController {
                         password: yield (0, hashPassword_1.hashPassword)(req.body.password),
                     },
                 });
+                return responseHandler_1.default.error(res, 'your forgot password is success', 200);
             }
             catch (error) {
                 return responseHandler_1.default.error(res, 'Your forgot password is failed', 500, error);
