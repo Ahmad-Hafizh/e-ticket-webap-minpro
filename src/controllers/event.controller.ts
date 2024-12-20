@@ -283,7 +283,9 @@ export class EventController {
         }
         return event;
       });
+
       console.log(response);
+
       return ResponseHandler.success(
         res,
         "Event updated Successfully",
@@ -366,6 +368,10 @@ export class EventController {
       const response = await prisma.event.findUnique({
         where: {
           event_id: params,
+        },
+        include: {
+          event_location: true,
+          ticket_types: true,
         },
       });
       return ResponseHandler.success(res, "Get Event Success", 200, response);
@@ -471,6 +477,26 @@ export class EventController {
       // if (redisClient.isOpen) {
       //   await redisClient.disconnect();
       // }
+
+      // //Check data in redis
+      // await redisClient.connect().catch(error);
+      // const redisData = await redisClient.get(`${req.url}`);
+      // //if exist, use data from redis as result for response
+      // if (redisData) {
+      //   return ResponseHandler.success(
+      //     res,
+      //     "Filter Success - Redis",
+      //     200,
+      //     JSON.parse(redisData)
+      //   );
+      // }
+      // //If not exist, get data from database and store to redis
+
+      // await redisClient.setEx(`${req.url}`, 5, JSON.stringify(result));
+      // if (redisClient.isOpen) {
+      //   await redisClient.disconnect();
+      // }
+
       return ResponseHandler.success(res, "Filter Success", 200, result);
     } catch (error) {
       console.log(error);
