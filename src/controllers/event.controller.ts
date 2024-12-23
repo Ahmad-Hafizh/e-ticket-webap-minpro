@@ -369,6 +369,10 @@ export class EventController {
         where: {
           event_id: params,
         },
+        include: {
+          event_location: true,
+          ticket_types: true,
+        },
       });
       return ResponseHandler.success(res, "Get Event Success", 200, response);
     } catch (error) {
@@ -455,6 +459,24 @@ export class EventController {
         },
       });
 
+      // //Check data in redis
+      // await redisClient.connect().catch(error);
+      // const redisData = await redisClient.get(`${req.url}`);
+      // //if exist, use data from redis as result for response
+      // if (redisData) {
+      //   return ResponseHandler.success(
+      //     res,
+      //     "Filter Success - Redis",
+      //     200,
+      //     JSON.parse(redisData)
+      //   );
+      // }
+      // //If not exist, get data from database and store to redis
+
+      // await redisClient.setEx(`${req.url}`, 5, JSON.stringify(result));
+      // if (redisClient.isOpen) {
+      //   await redisClient.disconnect();
+      // }
 
       // //Check data in redis
       // await redisClient.connect().catch(error);
