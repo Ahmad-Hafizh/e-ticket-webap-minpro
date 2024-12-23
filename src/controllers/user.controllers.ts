@@ -51,13 +51,7 @@ export class UserController {
         return user;
       });
 
-      if (req.body.referral_code) {
-        res.locals.user = createUserFlow;
-        res.locals.referral_code = req.body.referral_code;
-        next();
-      } else {
-        return ResponseHandler.success(res, 'sign up is success', 201, createUserFlow);
-      }
+      return ResponseHandler.success(res, 'sign up is success', 201, createUserFlow);
     } catch (error) {
       return ResponseHandler.error(res, 'sign up is failed', 500, error);
     }
@@ -65,12 +59,9 @@ export class UserController {
 
   async addReferral(req: Request, res: Response, next: NextFunction): Promise<any> {
     try {
-      const referral_code = res.locals.referral_code;
-      const user = res.locals.user;
-
       await prisma.$transaction(async (tx) => {
         const findReferral = await tx.referral.findUnique({
-          where: { referral_code: referral_code.toString() },
+          where: { referral_code: req.body.referral_code.toString() },
           include: {
             user: true,
           },
@@ -81,13 +72,13 @@ export class UserController {
           return ResponseHandler.error(res, 'referral not found', 404);
         }
         // if user input his own referral code
-        if (findReferral?.user.email === user.email) {
+        if (findReferral?.user.email === req.body.email) {
           return ResponseHandler.error(res, 'cannot referred your self', 403);
         }
 
         // creating user data
         await tx.user.update({
-          where: { email: user.email, user_id: user.user_id },
+          where: { email: req.body.email, user_id: req.body.user_id },
           data: { referred_id: findReferral?.referral_id },
         });
 
@@ -102,7 +93,7 @@ export class UserController {
         await tx.coupon.create({
           data: {
             coupon_name: 'Referral Coupon',
-            user_id: user.user_id,
+            user_id: req.body.user_id,
             coupon_code: Math.round(Math.random() * 10000).toString(),
             discount: 10,
             expired_date,
@@ -110,7 +101,7 @@ export class UserController {
         });
       });
 
-      return ResponseHandler.success(res, 'create account & adding referral is success', 200, user);
+      return ResponseHandler.success(res, 'adding referral is success', 200);
     } catch (error) {
       return ResponseHandler.error(res, 'adding referral is failed', 500, error);
     }
