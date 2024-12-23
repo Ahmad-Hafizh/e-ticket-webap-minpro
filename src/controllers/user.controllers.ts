@@ -38,16 +38,16 @@ export class UserController {
         const authToken = sign({ email: user.email, user_id: user.user_id }, process.env.TOKEN_KEY || 'secretkey');
 
         // sending email with authtoken
-        await transporter.sendMail({
-          from: 'e-ticket',
-          to: user.email,
-          subject: 'Verify your Account',
-          html: `<div>
-             <h1>Thank you ${user.name}, for registrater your account</h1>
-             <p>klik link below to verify your account</p>
-             <a href='http://localhost:3000/users/verify-email?a_t=${authToken}'>Verify Account</a>
-             </div>`,
-        });
+        // await transporter.sendMail({
+        //   from: 'e-ticket',
+        //   to: user.email,
+        //   subject: 'Verify your Account',
+        //   html: `<div>
+        //      <h1>Thank you ${user.name}, for registrater your account</h1>
+        //      <p>klik link below to verify your account</p>
+        //      <a href='http://localhost:3000/users/verify-email?a_t=${authToken}'>Verify Account</a>
+        //      </div>`,
+        // });
         return user;
       });
 
