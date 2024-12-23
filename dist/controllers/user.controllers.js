@@ -34,37 +34,32 @@ class UserController {
                 const createUserFlow = yield prisma_1.prisma.$transaction((tx) => __awaiter(this, void 0, void 0, function* () {
                     // check if refferal code is available
                     // if there is no referral code available
-                    const user = yield prisma_1.prisma.user.create({
+                    const user = yield tx.user.create({
                         data: { name: req.body.name, email: req.body.email, password: yield (0, hashPassword_1.hashPassword)(req.body.password) },
                     });
-                    yield prisma_1.prisma.profile.create({ data: { user_id: user.user_id } });
-                    const referral_code = `${user.name.slice(0, 4).toUpperCase()}${Math.round(Math.random() * 10000).toString()}`;
-                    yield prisma_1.prisma.referral.create({
-                        data: { referral_code, user_id: user.user_id },
+                    yield tx.profile.create({ data: { user_id: user.user_id } });
+                    return user;
+                }));
+                const referral_code = `${createUserFlow.name.slice(0, 4).toUpperCase()}${Math.round(Math.random() * 10000).toString()}`;
+                const authToken = (0, jsonwebtoken_1.sign)({ email: createUserFlow.email, user_id: createUserFlow.user_id }, process.env.TOKEN_KEY || 'secretkey');
+                const createReferralEmail = yield prisma_1.prisma.$transaction((tx) => __awaiter(this, void 0, void 0, function* () {
+                    yield tx.referral.create({
+                        data: { referral_code, user_id: createUserFlow.user_id },
                     });
                     // parsing string to token
-                    const authToken = (0, jsonwebtoken_1.sign)({ email: user.email, user_id: user.user_id }, process.env.TOKEN_KEY || 'secretkey');
                     // sending email with authtoken
                     yield nodemailer_1.transporter.sendMail({
                         from: 'e-ticket',
-                        to: user.email,
+                        to: createUserFlow.email,
                         subject: 'Verify your Account',
                         html: `<div>
-             <h1>Thank you ${user.name}, for registrater your account</h1>
+             <h1>Thank you ${createUserFlow.name}, for registrater your account</h1>
              <p>klik link below to verify your account</p>
              <a href='http://localhost:3000/users/verify-email?a_t=${authToken}'>Verify Account</a>
              </div>`,
                     });
-                    return user;
                 }));
-                if (req.body.referral_code) {
-                    res.locals.user = createUserFlow;
-                    res.locals.referral_code = req.body.referral_code;
-                    next();
-                }
-                else {
-                    return responseHandler_1.default.success(res, 'sign up is success', 201, createUserFlow);
-                }
+                return responseHandler_1.default.success(res, 'sign up is success', 201, createUserFlow);
             }
             catch (error) {
                 return responseHandler_1.default.error(res, 'sign up is failed', 500, error);
@@ -74,11 +69,9 @@ class UserController {
     addReferral(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const refferal_code = res.locals.refferal_code;
-                const user = res.locals.user;
                 yield prisma_1.prisma.$transaction((tx) => __awaiter(this, void 0, void 0, function* () {
                     const findReferral = yield tx.referral.findUnique({
-                        where: { referral_code: refferal_code.toString() },
+                        where: { referral_code: req.body.referral_code.toString() },
                         include: {
                             user: true,
                         },
@@ -88,12 +81,12 @@ class UserController {
                         return responseHandler_1.default.error(res, 'referral not found', 404);
                     }
                     // if user input his own referral code
-                    if ((findReferral === null || findReferral === void 0 ? void 0 : findReferral.user.email) === user.email) {
+                    if ((findReferral === null || findReferral === void 0 ? void 0 : findReferral.user.email) === req.body.email) {
                         return responseHandler_1.default.error(res, 'cannot referred your self', 403);
                     }
                     // creating user data
                     yield tx.user.update({
-                        where: { email: user.email, user_id: user.user_id },
+                        where: { email: req.body.email, user_id: req.body.user_id },
                         data: { referred_id: findReferral === null || findReferral === void 0 ? void 0 : findReferral.referral_id },
                     });
                     // define expired date for the point
@@ -106,14 +99,14 @@ class UserController {
                     yield tx.coupon.create({
                         data: {
                             coupon_name: 'Referral Coupon',
-                            user_id: user.user_id,
+                            user_id: req.body.user_id,
                             coupon_code: Math.round(Math.random() * 10000).toString(),
                             discount: 10,
                             expired_date,
                         },
                     });
                 }));
-                return responseHandler_1.default.success(res, 'create account & adding referral is success', 200, user);
+                return responseHandler_1.default.success(res, 'adding referral is success', 200);
             }
             catch (error) {
                 return responseHandler_1.default.error(res, 'adding referral is failed', 500, error);
