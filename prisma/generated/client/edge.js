@@ -321,7 +321,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/Users/macbook/Documents/minpro/backend/prisma/generated/client",
+      "value": "C:\\Users\\ahaaa\\Desktop\\course purwadhika\\ticket-webapp-minpro\\back-end\\prisma\\generated\\client",
       "fromEnvVar": null
     },
     "config": {
@@ -330,12 +330,12 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "darwin-arm64",
+        "value": "windows",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/Users/macbook/Documents/minpro/backend/prisma/schema.prisma",
+    "sourceFilePath": "C:\\Users\\ahaaa\\Desktop\\course purwadhika\\ticket-webapp-minpro\\back-end\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {

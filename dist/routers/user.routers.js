@@ -19,20 +19,21 @@ class UserRouter {
     initializeRouters() {
         // define every routes from controllers
         // new users
-        this.route.post("/signup", userValidator_1.signUpValidator, this.userController.signUp, this.userController.addReferral);
+        this.route.post('/signup', userValidator_1.signUpValidator, this.userController.signUp);
+        this.route.patch('/add-referral', this.userController.addReferral);
         // this.route.patch('/add-referral', verifyToken, this.userController.addReferral);
-        this.route.get("/verify", verifyToken_1.verifyToken, this.userController.verifyEmail);
+        this.route.get('/verify', verifyToken_1.verifyToken, this.userController.verifyEmail);
         // sign-in user
-        this.route.post("/signin", userValidator_1.signInValidator, this.userController.signIn);
-        this.route.get("/keep-login", verifyToken_1.verifyToken, this.userController.keepLogin);
+        this.route.post('/signin', userValidator_1.signInValidator, this.userController.signIn);
+        this.route.get('/keep-login', verifyToken_1.verifyToken, this.userController.keepLogin);
         // update user & profile
-        this.route.patch("/update-pfp", verifyToken_1.verifyToken, (0, uploader_1.uploader)("/profile", "PFP").single("imgProfile"), this.userController.updatePfp);
-        this.route.patch("/update-role", verifyToken_1.verifyToken, this.userController.updateUserRole);
-        this.route.patch("/update-profile", verifyToken_1.verifyToken, this.userController.updateProfile);
-        this.route.post("/create-address", verifyToken_1.verifyToken, this.userController.createAddress);
+        this.route.patch('/update-pfp', verifyToken_1.verifyToken, (0, uploader_1.uploader)('/profile', 'PFP').single('imgProfile'), this.userController.updatePfp);
+        this.route.patch('/update-role', verifyToken_1.verifyToken, this.userController.updateUserRole);
+        this.route.patch('/update-profile', verifyToken_1.verifyToken, this.userController.updateProfile);
+        this.route.post('/create-address', verifyToken_1.verifyToken, this.userController.createAddress);
         // authentication prob
-        this.route.post("/forgot-password", this.userController.forgotPassword);
-        this.route.patch("/recover-password", verifyToken_1.verifyToken, this.userController.recoverPassword);
+        this.route.post('/forgot-password', this.userController.forgotPassword);
+        this.route.patch('/recover-password', verifyToken_1.verifyToken, this.userController.recoverPassword);
     }
     // returning the routes so it can be use in app by calling it as a method
     getRouter() {
