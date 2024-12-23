@@ -28,27 +28,30 @@ export class UserController {
         });
 
         await tx.profile.create({ data: { user_id: user.user_id } });
-        const referral_code: string = `${user.name.slice(0, 4).toUpperCase()}${Math.round(Math.random() * 10000).toString()}`;
 
+        return user;
+      });
+
+      const referral_code: string = `${createUserFlow.name.slice(0, 4).toUpperCase()}${Math.round(Math.random() * 10000).toString()}`;
+      const authToken = sign({ email: createUserFlow.email, user_id: createUserFlow.user_id }, process.env.TOKEN_KEY || 'secretkey');
+
+      const createReferralEmail = await prisma.$transaction(async (tx) => {
         await tx.referral.create({
-          data: { referral_code, user_id: user.user_id },
+          data: { referral_code, user_id: createUserFlow.user_id },
         });
 
         // parsing string to token
-        const authToken = sign({ email: user.email, user_id: user.user_id }, process.env.TOKEN_KEY || 'secretkey');
-
         // sending email with authtoken
-        // await transporter.sendMail({
-        //   from: 'e-ticket',
-        //   to: user.email,
-        //   subject: 'Verify your Account',
-        //   html: `<div>
-        //      <h1>Thank you ${user.name}, for registrater your account</h1>
-        //      <p>klik link below to verify your account</p>
-        //      <a href='http://localhost:3000/users/verify-email?a_t=${authToken}'>Verify Account</a>
-        //      </div>`,
-        // });
-        return user;
+        await transporter.sendMail({
+          from: 'e-ticket',
+          to: createUserFlow.email,
+          subject: 'Verify your Account',
+          html: `<div>
+             <h1>Thank you ${createUserFlow.name}, for registrater your account</h1>
+             <p>klik link below to verify your account</p>
+             <a href='http://localhost:3000/users/verify-email?a_t=${authToken}'>Verify Account</a>
+             </div>`,
+        });
       });
 
       return ResponseHandler.success(res, 'sign up is success', 201, createUserFlow);
