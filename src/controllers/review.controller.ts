@@ -6,30 +6,48 @@ export class ReviewController {
   async generateReview(req: Request, res: Response): Promise<any> {
     try {
       const { eventId, reviewText, reviewImg, score } = req.body;
-      const user = await prisma.user.findUnique({
-        where: { user_id: res.locals.dcrypt.user_id },
-      });
-      const checkEventUser = await prisma.event.findUnique({
-        where: { event_id: eventId },
+
+      const reviewTransaction = await prisma.$transaction(async (tx) => {
+        const user = await tx.user.findUnique({
+          where: { user_id: res.locals.dcrypt.user_id },
+        });
+        const checkEventUser = await tx.event.findUnique({
+          where: { event_id: eventId },
+        });
+
+        if (!user || !checkEventUser) {
+          throw new Error("Unauthorized");
+        }
+        const response = await tx.review.create({
+          data: {
+            event_id: checkEventUser.event_id,
+            user_id: user.user_id,
+            review_text: reviewText,
+            review_img: reviewImg || null,
+            score: score,
+          },
+        });
+
+        const allReview = await tx.review.findMany({
+          where: { event_id: eventId },
+        });
+
+        const totalScore = allReview.reduce((acc, curr) => acc + curr.score, 0);
+        const averageScore = totalScore / allReview.length;
+
+        const updateEvent = await tx.event.update({
+          where: { event_id: eventId },
+          data: { score: averageScore },
+        });
+
+        return response;
       });
 
-      if (!user || !checkEventUser) {
-        throw new Error("Unauthorized");
-      }
-      const response = await prisma.review.create({
-        data: {
-          event_id: checkEventUser.event_id,
-          user_id: user.user_id,
-          review_text: reviewText,
-          review_img: reviewImg || null,
-          score: score,
-        },
-      });
       return ResponseHandler.success(
         res,
         "Review added! Thank you",
         201,
-        response
+        reviewTransaction
       );
     } catch (error) {
       return ResponseHandler.error(res, "Error adding review", 500, error);

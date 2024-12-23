@@ -372,6 +372,11 @@ export class EventController {
         include: {
           event_location: true,
           ticket_types: true,
+          review: {
+            include: {
+              user: true,
+            },
+          },
         },
       });
       return ResponseHandler.success(res, "Get Event Success", 200, response);
@@ -452,6 +457,7 @@ export class EventController {
           event_category: true,
           event_location: true,
           ticket_types: true,
+          review: true,
         },
 
         orderBy: {
