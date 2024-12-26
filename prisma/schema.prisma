@@ -169,6 +169,7 @@ model Event {
   customer_id       Int?
   score             Int?
   customer          User[]           @relation("Customer_event")
+  transaction Transaction_Detail[]
   review            Review[]
 
   @@map("event")
@@ -221,7 +222,7 @@ model Ticket_types {
   types               String
   price               Int
   quantity_available  Int
-  transaction_details Transaction_Detail?
+  transaction_details Transaction_Detail[]
 
   @@map("ticket_types")
 }
@@ -230,7 +231,9 @@ model Transaction_Detail {
   transaction_details_id Int          @id @default(autoincrement())
   user_id                Int
   user                   User         @relation(fields: [user_id], references: [user_id])
-  ticket_types_id        Int          @unique
+  event_id Int
+  event Event @relation(fields: [event_id], references: [event_id])
+  ticket_types_id        Int          
   ticket_types           Ticket_types @relation(fields: [ticket_types_id], references: [ticket_types_id])
   quantity_bought        Int
   subtotal               Int

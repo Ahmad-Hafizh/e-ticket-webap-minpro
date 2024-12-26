@@ -148,27 +148,28 @@ model Coupon {
 
 //Event
 model Event {
-  event_id          Int              @id @default(autoincrement())
+  event_id          Int                  @id @default(autoincrement())
   organizer_id      Int
-  organizer         Organizer        @relation(fields: [organizer_id], references: [organizer_id])
-  event_category    Event_category[] @relation("Event_categories") //Expected to hold multiple categories per event
+  organizer         Organizer            @relation(fields: [organizer_id], references: [organizer_id])
+  event_category    Event_category[]     @relation("Event_categories") //Expected to hold multiple categories per event
   title             String
   description       String
   imgEvent          String
   coupon_id         Int //Decide the schema of coupon in relation to event! ***
-  event_location_id Int              @unique
-  event_location    Event_Location   @relation(fields: [event_location_id], references: [event_location_id])
+  event_location_id Int                  @unique
+  event_location    Event_Location       @relation(fields: [event_location_id], references: [event_location_id])
   ticket_types      Ticket_types[]
   startDate         DateTime
   endDate           DateTime
   startTime         String
   endTime           String
   timezone          String
-  createdAt         DateTime         @default(now())
+  createdAt         DateTime             @default(now())
   updatedAt         DateTime
   customer_id       Int?
   score             Int?
-  customer          User[]           @relation("Customer_event")
+  customer          User[]               @relation("Customer_event")
+  transaction       Transaction_Detail[]
   review            Review[]
 
   @@map("event")
@@ -215,13 +216,13 @@ model Location_country {
 
 //Transaction
 model Ticket_types {
-  ticket_types_id     Int                 @id @default(autoincrement())
+  ticket_types_id     Int                  @id @default(autoincrement())
   event_id            Int
-  event               Event               @relation(fields: [event_id], references: [event_id])
+  event               Event                @relation(fields: [event_id], references: [event_id])
   types               String
   price               Int
   quantity_available  Int
-  transaction_details Transaction_Detail?
+  transaction_details Transaction_Detail[]
 
   @@map("ticket_types")
 }
@@ -230,7 +231,9 @@ model Transaction_Detail {
   transaction_details_id Int          @id @default(autoincrement())
   user_id                Int
   user                   User         @relation(fields: [user_id], references: [user_id])
-  ticket_types_id        Int          @unique
+  event_id               Int
+  event                  Event        @relation(fields: [event_id], references: [event_id])
+  ticket_types_id        Int
   ticket_types           Ticket_types @relation(fields: [ticket_types_id], references: [ticket_types_id])
   quantity_bought        Int
   subtotal               Int

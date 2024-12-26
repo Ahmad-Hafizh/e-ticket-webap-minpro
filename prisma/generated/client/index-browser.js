@@ -254,6 +254,7 @@ exports.Prisma.Ticket_typesScalarFieldEnum = {
 exports.Prisma.Transaction_DetailScalarFieldEnum = {
   transaction_details_id: 'transaction_details_id',
   user_id: 'user_id',
+  event_id: 'event_id',
   ticket_types_id: 'ticket_types_id',
   quantity_bought: 'quantity_bought',
   subtotal: 'subtotal'
