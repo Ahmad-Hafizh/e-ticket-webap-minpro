@@ -82,7 +82,7 @@ export class OrganizerController {
   }
   async getStat(req: Request, res: Response, next: NextFunction): Promise<any> {
     try {
-      const { start, end } = req.body;
+      const { start, end, range } = req.body;
       const organizer = await prisma.organizer.findUnique({
         where: {
           user_id: res.locals.dcrypt.user_id,
@@ -107,7 +107,7 @@ export class OrganizerController {
           data: [],
         };
 
-        const query = Prisma.sql`select date_trunc('DAY', t."createdAt")::date as date, sum(t.total_amount) as total_revenue, sum(td.quantity_bought) as total_seat, count(t.transaction_id) as total_transaction from "transaction" t join transaction_detail td on t.transaction_details_id = td.transaction_details_id  join "event" e on td.event_id =e.event_id where e.organizer_id = ${organizer.organizer_id} and t."createdAt"::date between ${start}::date and ${end}::date group by date`;
+        const query = Prisma.sql`select date_trunc(${range}, t."createdAt")::date as date, sum(t.total_amount) as total_revenue, sum(td.quantity_bought) as total_seat, count(t.transaction_id) as total_transaction from "transaction" t join transaction_detail td on t.transaction_details_id = td.transaction_details_id  join "event" e on td.event_id =e.event_id where e.organizer_id = ${organizer.organizer_id} and t."createdAt"::date between ${start}::date and ${end}::date group by date`;
 
         const transactionRaw = await tx.$queryRaw<any[]>(query);
 
