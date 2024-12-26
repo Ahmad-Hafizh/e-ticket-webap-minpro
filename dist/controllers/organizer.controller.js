@@ -95,7 +95,7 @@ class OrganizerController {
     getStat(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { start, end } = req.body;
+                const { start, end, range } = req.body;
                 const organizer = yield prisma_1.prisma.organizer.findUnique({
                     where: {
                         user_id: res.locals.dcrypt.user_id,
@@ -117,7 +117,7 @@ class OrganizerController {
                         total: 0,
                         data: [],
                     };
-                    const query = client_1.Prisma.sql `select date_trunc('DAY', t."createdAt")::date as date, sum(t.total_amount) as total_revenue, sum(td.quantity_bought) as total_seat, count(t.transaction_id) as total_transaction from "transaction" t join transaction_detail td on t.transaction_details_id = td.transaction_details_id  join "event" e on td.event_id =e.event_id where e.organizer_id = ${organizer.organizer_id} and t."createdAt"::date between ${start}::date and ${end}::date group by date`;
+                    const query = client_1.Prisma.sql `select date_trunc(${range}, t."createdAt")::date as date, sum(t.total_amount) as total_revenue, sum(td.quantity_bought) as total_seat, count(t.transaction_id) as total_transaction from "transaction" t join transaction_detail td on t.transaction_details_id = td.transaction_details_id  join "event" e on td.event_id =e.event_id where e.organizer_id = ${organizer.organizer_id} and t."createdAt"::date between ${start}::date and ${end}::date group by date`;
                     const transactionRaw = yield tx.$queryRaw(query);
                     const transactionData = transactionRaw.forEach((e) => {
                         e.total_revenue = parseInt(e.total_revenue);
