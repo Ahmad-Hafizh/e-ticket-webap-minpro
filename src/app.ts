@@ -1,8 +1,9 @@
-import express, { Application, Request, Response, NextFunction } from "express";
-import cors from "cors";
-import dotenv from "dotenv";
-import { UserRouter } from "./routers/user.routers";
-import { EventRouter } from "./routers/event.router";
+import express, { Application, Request, Response, NextFunction } from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import { UserRouter } from './routers/user.routers';
+import { EventRouter } from './routers/event.router';
+import { OrganizerRouter } from './routers/organizer.router';
 dotenv.config();
 
 const PORT = process.env.PORT || 8080;
@@ -25,21 +26,24 @@ class App {
 
   private routes() {
     // define routes
-    this.app.get("/", (req: Request, res: Response): any => {
-      return res.status(200).send("E-ticket api");
+    this.app.get('/', (req: Request, res: Response): any => {
+      return res.status(200).send('E-ticket api');
     });
 
     const userRouter = new UserRouter();
-    this.app.use("/users", userRouter.getRouter());
+    this.app.use('/users', userRouter.getRouter());
 
     const eventRouter = new EventRouter();
-    this.app.use("/event", eventRouter.getRouter());
+    this.app.use('/event', eventRouter.getRouter());
+
+    const organizer = new OrganizerRouter();
+    this.app.use('/organizer', organizer.getRouter());
   }
 
   public startServer(): void {
     // run the server
     this.app.listen(PORT, () => {
-      console.log("server runs at", PORT);
+      console.log('server runs at', PORT);
     });
   }
 }
