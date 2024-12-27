@@ -5,11 +5,15 @@ import ResponseHandler from "../utils/responseHandler";
 export class ReviewController {
   async generateReview(req: Request, res: Response): Promise<any> {
     try {
-      const { eventId, reviewText, reviewImg, score } = req.body;
+      const { eventId, reviewContent, reviewImage, reviewScore, userId } =
+        req.body;
 
       const reviewTransaction = await prisma.$transaction(async (tx) => {
+        // const user = await tx.user.findUnique({
+        //   where: { user_id: res.locals.dcrypt.user_id },
+        // });
         const user = await tx.user.findUnique({
-          where: { user_id: res.locals.dcrypt.user_id },
+          where: { user_id: userId },
         });
         const checkEventUser = await tx.event.findUnique({
           where: { event_id: eventId },
@@ -22,9 +26,9 @@ export class ReviewController {
           data: {
             event_id: checkEventUser.event_id,
             user_id: user.user_id,
-            review_text: reviewText,
-            review_img: reviewImg || null,
-            score: score,
+            review_text: reviewContent,
+            review_img: reviewImage || null || "",
+            score: parseInt(reviewScore),
           },
         });
 

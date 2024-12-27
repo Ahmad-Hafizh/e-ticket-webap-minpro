@@ -12,7 +12,9 @@ class ReviewRouter {
     }
     initializeRouters() {
         this.route.get("/:id", this.reviewController.getReview);
-        this.route.post("/", verifyToken_1.verifyToken, this.reviewController.generateReview);
+        this.route.post("/", 
+        // createReviewValidator,
+        verifyToken_1.verifyToken, this.reviewController.generateReview);
     }
     getRouter() {
         return this.route;

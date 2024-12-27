@@ -19,7 +19,7 @@ export class ReviewRouter {
     this.route.post(
       "/",
       // createReviewValidator,
-      verifyToken,
+      // verifyToken,
       this.reviewController.generateReview
     );
   }

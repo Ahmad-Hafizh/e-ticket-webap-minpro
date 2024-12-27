@@ -298,6 +298,11 @@ class EventController {
                     include: {
                         event_location: true,
                         ticket_types: true,
+                        review: {
+                            include: {
+                                user: true,
+                            },
+                        },
                     },
                 });
                 return responseHandler_1.default.success(res, "Get Event Success", 200, response);
@@ -364,6 +369,7 @@ class EventController {
                         event_category: true,
                         event_location: true,
                         ticket_types: true,
+                        review: true,
                     },
                     orderBy: {
                         [sortby]: orderby || undefined, //Akses properti sortby (isinya nama properti).

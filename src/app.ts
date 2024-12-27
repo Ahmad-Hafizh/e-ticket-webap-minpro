@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { UserRouter } from "./routers/user.routers";
 import { EventRouter } from "./routers/event.router";
+import { ReviewRouter } from "./routers/review.router";
 dotenv.config();
 
 const PORT = process.env.PORT || 8080;
@@ -34,6 +35,9 @@ class App {
 
     const eventRouter = new EventRouter();
     this.app.use("/event", eventRouter.getRouter());
+
+    const reviewRouter = new ReviewRouter();
+    this.app.use("/review", reviewRouter.getRouter());
   }
 
   public startServer(): void {
