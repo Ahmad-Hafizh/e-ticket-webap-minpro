@@ -92,7 +92,7 @@ class OrganizerController {
             }
         });
     }
-    getStat(req, res, next) {
+    getStat(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { start, end, range } = req.body;
@@ -106,41 +106,30 @@ class OrganizerController {
                 if (!organizer) {
                     return responseHandler_1.default.error(res, 'Organizer not found', 404);
                 }
-                // const stat = await prisma.$transaction(async (tx) => {
-                const revenue = {
-                    total: 0,
-                    data: [],
-                };
-                const seat = {
-                    total: 0,
-                    data: [],
-                };
-                const transaction = {
-                    total: 0,
-                    data: [],
-                };
-                const query = client_1.Prisma.sql `select date_trunc(${range}, t."createdAt")::date as date, sum(t.total_amount) as total_revenue, sum(td.quantity_bought) as total_seat, count(t.transaction_id) as total_transaction from "transaction" t join transaction_detail td on t.transaction_details_id = td.transaction_details_id  join "event" e on td.event_id =e.event_id where e.organizer_id = ${organizer.organizer_id} and t."createdAt"::date between ${start}::date and ${end}::date group by date`;
+                const query = client_1.Prisma.sql `select date_trunc(${range}, t."createdAt")::date as date, sum(t.total_amount)::numeric as total_revenue, sum(td.quantity_bought)::numeric as total_seat, count(t.transaction_id)::numeric as total_transaction from "transaction" t join transaction_detail td on t.transaction_details_id = td.transaction_details_id  join "event" e on td.event_id =e.event_id where e.organizer_id = ${organizer.organizer_id} and t."createdAt"::date between ${start}::date and ${end}::date group by date`;
                 const transactionRaw = yield prisma_1.prisma.$queryRaw(query);
                 console.log(transactionRaw);
-                transactionRaw.forEach((e) => {
-                    e.total_revenue = parseInt(e.total_revenue);
-                    e.total_seat = parseInt(e.total_seat);
-                    e.total_transaction = parseInt(e.total_transaction);
-                    e.date = new Date(e.date).toLocaleString(undefined, { weekday: 'long', day: '2-digit', month: '2-digit', year: 'numeric' });
-                    // revenue destructuring
-                    revenue.total += e.total_revenue;
-                    revenue.data.push({ date: e.date, total: e.total_revenue });
-                    // seat destructuring
-                    seat.total += e.total_seat;
-                    seat.data.push({ date: e.date, total: e.total_seat });
-                    // transaction destructuring
-                    transaction.total += e.total_transaction;
-                    transaction.data.push({ date: e.date, total: e.total_transaction });
-                });
-                console.log(revenue, seat, transaction);
+                // const transactionData: any[] = transactionRaw.map((e) => {
+                //   e.total_revenue = parseInt(e.total_revenue);
+                //   e.total_seat = parseInt(e.total_seat);
+                //   e.total_transaction = parseInt(e.total_transaction);
+                //   e.date = new Date(e.date).toLocaleString(undefined, { weekday: 'long', day: '2-digit', month: '2-digit', year: 'numeric' });
+                // // revenue destructuring
+                // revenue.total += e.total_revenue;
+                // revenue.data.push({ date: e.date, total: e.total_revenue });
+                // // seat destructuring
+                // seat.total += e.total_seat;
+                // seat.data.push({ date: e.date, total: e.total_seat });
+                // // transaction destructuring
+                // transaction.total += e.total_transaction;
+                // transaction.data.push({ date: e.date, total: e.total_transaction });
+                //   return e;
+                // });
+                // console.log(revenue, seat, transaction);
                 // return { revenue, seat, transaction };
                 // });
-                return responseHandler_1.default.success(res, 'Get organizer statistic success', 200, { revenue, seat, transaction });
+                // console.log(transactionData);
+                return responseHandler_1.default.success(res, 'Get organizer statistic success', 200, transactionRaw);
             }
             catch (error) {
                 return responseHandler_1.default.error(res, 'Get organizer statistic failed', 500, error);
