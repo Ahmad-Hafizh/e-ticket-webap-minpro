@@ -322,7 +322,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\ahaaa\\Desktop\\course purwadhika\\ticket-webapp-minpro\\back-end\\prisma\\generated\\client",
+      "value": "/Users/macbook/Documents/minpro/backend/prisma/generated/client",
       "fromEnvVar": null
     },
     "config": {
@@ -331,14 +331,14 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "windows",
+        "value": "darwin-arm64",
         "native": true
       }
     ],
     "previewFeatures": [
       "typedSql"
     ],
-    "sourceFilePath": "C:\\Users\\ahaaa\\Desktop\\course purwadhika\\ticket-webapp-minpro\\back-end\\prisma\\schema.prisma",
+    "sourceFilePath": "/Users/macbook/Documents/minpro/backend/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -352,6 +352,7 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
