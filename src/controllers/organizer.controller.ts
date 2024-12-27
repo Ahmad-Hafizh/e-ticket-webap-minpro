@@ -117,9 +117,11 @@ export class OrganizerController {
       //   data: [],
       // };
 
-      const query = Prisma.sql`select date_trunc(${range}, t."createdAt")::date as date, sum(t.total_amount)::numeric as total_revenue, sum(td.quantity_bought)::numeric as total_seat, count(t.transaction_id)::numeric as total_transaction from "transaction" t join transaction_detail td on t.transaction_details_id = td.transaction_details_id  join "event" e on td.event_id =e.event_id where e.organizer_id = ${organizer.organizer_id} and t."createdAt"::date between ${start}::date and ${end}::date group by date`;
+      // const query = ;
 
-      const transactionRaw = await prisma.$queryRaw<ITransactionRaw[]>(query);
+      const transactionRaw = await prisma.$queryRaw<ITransactionRaw[]>(
+        Prisma.sql`select date_trunc(${range}, t."createdAt")::date as date, sum(t.total_amount)::numeric as total_revenue, sum(td.quantity_bought)::numeric as total_seat, count(t.transaction_id)::numeric as total_transaction from "transaction" t join transaction_detail td on t.transaction_details_id = td.transaction_details_id  join "event" e on td.event_id =e.event_id where e.organizer_id = ${organizer.organizer_id} and t."createdAt"::date between ${start}::date and ${end}::date group by date`
+      );
       console.log(transactionRaw);
 
       // const transactionData: any[] = transactionRaw.map((e) => {
