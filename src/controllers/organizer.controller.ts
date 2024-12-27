@@ -3,6 +3,13 @@ import { Request, Response, NextFunction } from 'express';
 import ResponseHandler from '../utils/responseHandler';
 import { Prisma } from '@prisma/client';
 
+interface ITransactionRaw {
+  date: string | Date;
+  total_revenue: number;
+  total_seat: number;
+  total_transaction: number;
+}
+
 export class OrganizerController {
   async getProfile(req: Request, res: Response, next: NextFunction): Promise<any> {
     try {
@@ -109,16 +116,10 @@ export class OrganizerController {
       //   total: 0,
       //   data: [],
       // };
-      interface ITransactionRaw {
-        date: string | Date;
-        total_revenue: number;
-        total_seat: number;
-        total_transaction: number;
-      }
 
       const query = Prisma.sql`select date_trunc(${range}, t."createdAt")::date as date, sum(t.total_amount)::numeric as total_revenue, sum(td.quantity_bought)::numeric as total_seat, count(t.transaction_id)::numeric as total_transaction from "transaction" t join transaction_detail td on t.transaction_details_id = td.transaction_details_id  join "event" e on td.event_id =e.event_id where e.organizer_id = ${organizer.organizer_id} and t."createdAt"::date between ${start}::date and ${end}::date group by date`;
 
-      const transactionRaw: ITransactionRaw[] = await prisma.$queryRaw(query);
+      const transactionRaw = await prisma.$queryRaw<ITransactionRaw[]>(query);
       console.log(transactionRaw);
 
       // const transactionData: any[] = transactionRaw.map((e) => {
