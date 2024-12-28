@@ -1,0 +1,7 @@
+{
+  "evenId": 26,
+  "transactionDetailsId": [6, 7, 8],
+  "totalAmount": 9001020,
+  "isPaid": false,
+  "paymentMethod": "BANK_TRANSFER"
+}

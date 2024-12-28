@@ -257,12 +257,12 @@ exports.Prisma.Transaction_DetailScalarFieldEnum = {
   event_id: 'event_id',
   ticket_types_id: 'ticket_types_id',
   quantity_bought: 'quantity_bought',
-  subtotal: 'subtotal'
+  subtotal: 'subtotal',
+  transaction_id: 'transaction_id'
 };
 
 exports.Prisma.TransactionScalarFieldEnum = {
   transaction_id: 'transaction_id',
-  transaction_details_id: 'transaction_details_id',
   user_id: 'user_id',
   coupon_id: 'coupon_id',
   total_amount: 'total_amount',

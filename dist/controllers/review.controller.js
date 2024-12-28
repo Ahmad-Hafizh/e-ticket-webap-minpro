@@ -20,25 +20,37 @@ class ReviewController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { eventId, reviewText, reviewImg, score } = req.body;
-                const user = yield prisma_1.prisma.user.findUnique({
-                    where: { user_id: res.locals.dcrypt.user_id },
-                });
-                const checkEventUser = yield prisma_1.prisma.event.findUnique({
-                    where: { event_id: eventId },
-                });
-                if (!user || !checkEventUser) {
-                    throw new Error("Unauthorized");
-                }
-                const response = yield prisma_1.prisma.review.create({
-                    data: {
-                        event_id: checkEventUser.event_id,
-                        user_id: user.user_id,
-                        review_text: reviewText,
-                        review_img: reviewImg || null,
-                        score: score,
-                    },
-                });
-                return responseHandler_1.default.success(res, "Review added! Thank you", 201, response);
+                const reviewTransaction = yield prisma_1.prisma.$transaction((tx) => __awaiter(this, void 0, void 0, function* () {
+                    const user = yield tx.user.findUnique({
+                        where: { user_id: res.locals.dcrypt.user_id },
+                    });
+                    const checkEventUser = yield tx.event.findUnique({
+                        where: { event_id: eventId },
+                    });
+                    if (!user || !checkEventUser) {
+                        throw new Error("Unauthorized");
+                    }
+                    const response = yield tx.review.create({
+                        data: {
+                            event_id: checkEventUser.event_id,
+                            user_id: user.user_id,
+                            review_text: reviewText,
+                            review_img: reviewImg || null,
+                            score: score,
+                        },
+                    });
+                    const allReview = yield tx.review.findMany({
+                        where: { event_id: eventId },
+                    });
+                    const totalScore = allReview.reduce((acc, curr) => acc + curr.score, 0);
+                    const averageScore = totalScore / allReview.length;
+                    const updateEvent = yield tx.event.update({
+                        where: { event_id: eventId },
+                        data: { score: averageScore },
+                    });
+                    return response;
+                }));
+                return responseHandler_1.default.success(res, "Review added! Thank you", 201, reviewTransaction);
             }
             catch (error) {
                 return responseHandler_1.default.error(res, "Error adding review", 500, error);
