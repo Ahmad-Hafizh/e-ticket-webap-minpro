@@ -18,7 +18,7 @@ exports.signUpValidator = [
     }),
     (req, res, next) => {
         const errorValidation = (0, express_validator_1.validationResult)(req);
-        if (!errorValidation) {
+        if (!errorValidation.isEmpty()) {
             console.log(errorValidation);
             return responseHandler_1.default.error(res, 'your data is invalid', 400, errorValidation);
         }
@@ -36,7 +36,7 @@ exports.signInValidator = [
     }),
     (req, res, next) => {
         const errorValidation = (0, express_validator_1.validationResult)(req);
-        if (!errorValidation) {
+        if (!errorValidation.isEmpty()) {
             console.log(errorValidation);
             return responseHandler_1.default.error(res, 'your data is invalid', 400, errorValidation);
         }
