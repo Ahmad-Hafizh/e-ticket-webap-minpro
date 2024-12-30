@@ -5,8 +5,8 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
-  output   = "./generated/client"
+  provider        = "prisma-client-js"
+  output          = "./generated/client"
   previewFeatures = ["typedSql"]
 }
 
@@ -149,28 +149,27 @@ model Coupon {
 
 //Event
 model Event {
-  event_id          Int              @id @default(autoincrement())
+  event_id          Int                  @id @default(autoincrement())
   organizer_id      Int
-  organizer         Organizer        @relation(fields: [organizer_id], references: [organizer_id])
-  event_category    Event_category[] @relation("Event_categories") //Expected to hold multiple categories per event
+  organizer         Organizer            @relation(fields: [organizer_id], references: [organizer_id])
+  event_category    Event_category[]     @relation("Event_categories") //Expected to hold multiple categories per event
   title             String
   description       String
   imgEvent          String
   coupon_id         Int //Decide the schema of coupon in relation to event! ***
-  event_location_id Int              @unique
-  event_location    Event_Location   @relation(fields: [event_location_id], references: [event_location_id])
+  event_location_id Int                  @unique
+  event_location    Event_Location       @relation(fields: [event_location_id], references: [event_location_id])
   ticket_types      Ticket_types[]
   startDate         DateTime
   endDate           DateTime
   startTime         String
   endTime           String
   timezone          String
-  createdAt         DateTime         @default(now())
+  createdAt         DateTime             @default(now())
   updatedAt         DateTime
-  customer_id       Int?
   score             Int?
-  customer          User[]           @relation("Customer_event")
-  transaction Transaction_Detail[]
+  customer          User[]               @relation("Customer_event")
+  transaction       Transaction_Detail[]
   review            Review[]
 
   @@map("event")
@@ -217,9 +216,9 @@ model Location_country {
 
 //Transaction
 model Ticket_types {
-  ticket_types_id     Int                 @id @default(autoincrement())
+  ticket_types_id     Int                  @id @default(autoincrement())
   event_id            Int
-  event               Event               @relation(fields: [event_id], references: [event_id])
+  event               Event                @relation(fields: [event_id], references: [event_id])
   types               String
   price               Int
   quantity_available  Int
@@ -232,28 +231,28 @@ model Transaction_Detail {
   transaction_details_id Int          @id @default(autoincrement())
   user_id                Int
   user                   User         @relation(fields: [user_id], references: [user_id])
-  event_id Int
-  event Event @relation(fields: [event_id], references: [event_id])
-  ticket_types_id        Int          
+  event_id               Int
+  event                  Event        @relation(fields: [event_id], references: [event_id])
+  ticket_types_id        Int
   ticket_types           Ticket_types @relation(fields: [ticket_types_id], references: [ticket_types_id])
   quantity_bought        Int
   subtotal               Int
-  transaction            Transaction?
+  transaction_id         Int
+  transaction            Transaction? @relation(fields: [transaction_id], references: [transaction_id])
 
   @@map("transaction_detail")
 }
 
 model Transaction {
-  transaction_id         Int                @id @default(autoincrement())
-  transaction_details_id Int                @unique
-  transaction_details    Transaction_Detail @relation(fields: [transaction_details_id], references: [transaction_details_id])
-  user_id                Int
-  user                   User               @relation(fields: [user_id], references: [user_id])
-  coupon_id              Int //Decide the schema of coupon in relation to transaction! ***
-  total_amount           Int //Price after discount
-  payment_method         PaymentMethod //Explore more about Midtrans API! ***
-  createdAt              DateTime           @default(now())
-  isPaid                 Boolean
+  transaction_id      Int                  @id @default(autoincrement())
+  transaction_details Transaction_Detail[]
+  user_id             Int
+  user                User                 @relation(fields: [user_id], references: [user_id])
+  coupon_id           Int? //Decide the schema of coupon in relation to transaction! ***
+  total_amount        Int //Price after discount
+  payment_method      PaymentMethod //Explore more about Midtrans API! ***
+  createdAt           DateTime             @default(now())
+  isPaid              Boolean
 
   @@map("transaction")
 }

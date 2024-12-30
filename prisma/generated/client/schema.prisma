@@ -167,7 +167,6 @@ model Event {
   timezone          String
   createdAt         DateTime             @default(now())
   updatedAt         DateTime
-  customer_id       Int?
   score             Int?
   customer          User[]               @relation("Customer_event")
   transaction       Transaction_Detail[]
@@ -238,22 +237,22 @@ model Transaction_Detail {
   ticket_types           Ticket_types @relation(fields: [ticket_types_id], references: [ticket_types_id])
   quantity_bought        Int
   subtotal               Int
-  transaction            Transaction?
+  transaction_id         Int?
+  transaction            Transaction? @relation(fields: [transaction_id], references: [transaction_id])
 
   @@map("transaction_detail")
 }
 
 model Transaction {
-  transaction_id         Int                @id @default(autoincrement())
-  transaction_details_id Int                @unique
-  transaction_details    Transaction_Detail @relation(fields: [transaction_details_id], references: [transaction_details_id])
-  user_id                Int
-  user                   User               @relation(fields: [user_id], references: [user_id])
-  coupon_id              Int //Decide the schema of coupon in relation to transaction! ***
-  total_amount           Int //Price after discount
-  payment_method         PaymentMethod //Explore more about Midtrans API! ***
-  createdAt              DateTime           @default(now())
-  isPaid                 Boolean
+  transaction_id      Int                  @id @default(autoincrement())
+  transaction_details Transaction_Detail[]
+  user_id             Int
+  user                User                 @relation(fields: [user_id], references: [user_id])
+  coupon_id           Int? //Decide the schema of coupon in relation to transaction! ***
+  total_amount        Int //Price after discount
+  payment_method      PaymentMethod //Explore more about Midtrans API! ***
+  createdAt           DateTime             @default(now())
+  isPaid              Boolean
 
   @@map("transaction")
 }

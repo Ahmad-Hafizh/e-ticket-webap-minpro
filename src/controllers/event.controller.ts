@@ -8,6 +8,31 @@ import { Result } from "express-validator";
 
 //
 export class EventController {
+  async getAllEvent(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<any> {
+    try {
+      const response = await prisma.event.findMany({
+        include: {
+          event_location: true,
+          ticket_types: true,
+          organizer: true,
+          event_category: true,
+        },
+      });
+      return ResponseHandler.success(
+        res,
+        "Get All Event Success",
+        200,
+        response
+      );
+    } catch (error) {
+      return ResponseHandler.error(res, "Get All Event Failed", 500, error);
+    }
+  }
+
   //BASIC CRUD (NO ADVANCED ERROR HANDLING YET)
 
   //createEvent behaviour
@@ -372,6 +397,11 @@ export class EventController {
         include: {
           event_location: true,
           ticket_types: true,
+          review: {
+            include: {
+              user: true,
+            },
+          },
         },
       });
       return ResponseHandler.success(res, "Get Event Success", 200, response);
@@ -452,6 +482,7 @@ export class EventController {
           event_category: true,
           event_location: true,
           ticket_types: true,
+          review: true,
         },
 
         orderBy: {

@@ -17,6 +17,24 @@ const prisma_1 = require("../config/prisma");
 const responseHandler_1 = __importDefault(require("../utils/responseHandler"));
 //
 class EventController {
+    getAllEvent(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const response = yield prisma_1.prisma.event.findMany({
+                    include: {
+                        event_location: true,
+                        ticket_types: true,
+                        organizer: true,
+                        event_category: true,
+                    },
+                });
+                return responseHandler_1.default.success(res, "Get All Event Success", 200, response);
+            }
+            catch (error) {
+                return responseHandler_1.default.error(res, "Get All Event Failed", 500, error);
+            }
+        });
+    }
     //BASIC CRUD (NO ADVANCED ERROR HANDLING YET)
     //createEvent behaviour
     //This API will create event immediately, with all the needed data. Payload reference: event.json
@@ -298,6 +316,11 @@ class EventController {
                     include: {
                         event_location: true,
                         ticket_types: true,
+                        review: {
+                            include: {
+                                user: true,
+                            },
+                        },
                     },
                 });
                 return responseHandler_1.default.success(res, "Get Event Success", 200, response);
@@ -364,6 +387,7 @@ class EventController {
                         event_category: true,
                         event_location: true,
                         ticket_types: true,
+                        review: true,
                     },
                     orderBy: {
                         [sortby]: orderby || undefined, //Akses properti sortby (isinya nama properti).
