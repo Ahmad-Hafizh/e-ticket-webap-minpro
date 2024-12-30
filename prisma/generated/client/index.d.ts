@@ -12015,7 +12015,6 @@ export namespace Prisma {
     organizer_id: number | null
     coupon_id: number | null
     event_location_id: number | null
-    customer_id: number | null
     score: number | null
   }
 
@@ -12024,7 +12023,6 @@ export namespace Prisma {
     organizer_id: number | null
     coupon_id: number | null
     event_location_id: number | null
-    customer_id: number | null
     score: number | null
   }
 
@@ -12043,7 +12041,6 @@ export namespace Prisma {
     timezone: string | null
     createdAt: Date | null
     updatedAt: Date | null
-    customer_id: number | null
     score: number | null
   }
 
@@ -12062,7 +12059,6 @@ export namespace Prisma {
     timezone: string | null
     createdAt: Date | null
     updatedAt: Date | null
-    customer_id: number | null
     score: number | null
   }
 
@@ -12081,7 +12077,6 @@ export namespace Prisma {
     timezone: number
     createdAt: number
     updatedAt: number
-    customer_id: number
     score: number
     _all: number
   }
@@ -12092,7 +12087,6 @@ export namespace Prisma {
     organizer_id?: true
     coupon_id?: true
     event_location_id?: true
-    customer_id?: true
     score?: true
   }
 
@@ -12101,7 +12095,6 @@ export namespace Prisma {
     organizer_id?: true
     coupon_id?: true
     event_location_id?: true
-    customer_id?: true
     score?: true
   }
 
@@ -12120,7 +12113,6 @@ export namespace Prisma {
     timezone?: true
     createdAt?: true
     updatedAt?: true
-    customer_id?: true
     score?: true
   }
 
@@ -12139,7 +12131,6 @@ export namespace Prisma {
     timezone?: true
     createdAt?: true
     updatedAt?: true
-    customer_id?: true
     score?: true
   }
 
@@ -12158,7 +12149,6 @@ export namespace Prisma {
     timezone?: true
     createdAt?: true
     updatedAt?: true
-    customer_id?: true
     score?: true
     _all?: true
   }
@@ -12264,7 +12254,6 @@ export namespace Prisma {
     timezone: string
     createdAt: Date
     updatedAt: Date
-    customer_id: number | null
     score: number | null
     _count: EventCountAggregateOutputType | null
     _avg: EventAvgAggregateOutputType | null
@@ -12302,7 +12291,6 @@ export namespace Prisma {
     timezone?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    customer_id?: boolean
     score?: boolean
     organizer?: boolean | OrganizerDefaultArgs<ExtArgs>
     event_category?: boolean | Event$event_categoryArgs<ExtArgs>
@@ -12329,7 +12317,6 @@ export namespace Prisma {
     timezone?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    customer_id?: boolean
     score?: boolean
     organizer?: boolean | OrganizerDefaultArgs<ExtArgs>
     event_location?: boolean | Event_LocationDefaultArgs<ExtArgs>
@@ -12350,7 +12337,6 @@ export namespace Prisma {
     timezone?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    customer_id?: boolean
     score?: boolean
   }
 
@@ -12395,7 +12381,6 @@ export namespace Prisma {
       timezone: string
       createdAt: Date
       updatedAt: Date
-      customer_id: number | null
       score: number | null
     }, ExtArgs["result"]["event"]>
     composites: {}
@@ -12811,7 +12796,6 @@ export namespace Prisma {
     readonly timezone: FieldRef<"Event", 'String'>
     readonly createdAt: FieldRef<"Event", 'DateTime'>
     readonly updatedAt: FieldRef<"Event", 'DateTime'>
-    readonly customer_id: FieldRef<"Event", 'Int'>
     readonly score: FieldRef<"Event", 'Int'>
   }
     
@@ -21313,7 +21297,6 @@ export namespace Prisma {
     timezone: 'timezone',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
-    customer_id: 'customer_id',
     score: 'score'
   };
 
@@ -22184,7 +22167,6 @@ export namespace Prisma {
     timezone?: StringFilter<"Event"> | string
     createdAt?: DateTimeFilter<"Event"> | Date | string
     updatedAt?: DateTimeFilter<"Event"> | Date | string
-    customer_id?: IntNullableFilter<"Event"> | number | null
     score?: IntNullableFilter<"Event"> | number | null
     organizer?: XOR<OrganizerScalarRelationFilter, OrganizerWhereInput>
     event_category?: Event_categoryListRelationFilter
@@ -22210,7 +22192,6 @@ export namespace Prisma {
     timezone?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    customer_id?: SortOrderInput | SortOrder
     score?: SortOrderInput | SortOrder
     organizer?: OrganizerOrderByWithRelationInput
     event_category?: Event_categoryOrderByRelationAggregateInput
@@ -22239,7 +22220,6 @@ export namespace Prisma {
     timezone?: StringFilter<"Event"> | string
     createdAt?: DateTimeFilter<"Event"> | Date | string
     updatedAt?: DateTimeFilter<"Event"> | Date | string
-    customer_id?: IntNullableFilter<"Event"> | number | null
     score?: IntNullableFilter<"Event"> | number | null
     organizer?: XOR<OrganizerScalarRelationFilter, OrganizerWhereInput>
     event_category?: Event_categoryListRelationFilter
@@ -22265,7 +22245,6 @@ export namespace Prisma {
     timezone?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    customer_id?: SortOrderInput | SortOrder
     score?: SortOrderInput | SortOrder
     _count?: EventCountOrderByAggregateInput
     _avg?: EventAvgOrderByAggregateInput
@@ -22292,7 +22271,6 @@ export namespace Prisma {
     timezone?: StringWithAggregatesFilter<"Event"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Event"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Event"> | Date | string
-    customer_id?: IntNullableWithAggregatesFilter<"Event"> | number | null
     score?: IntNullableWithAggregatesFilter<"Event"> | number | null
   }
 
@@ -23374,7 +23352,6 @@ export namespace Prisma {
     timezone: string
     createdAt?: Date | string
     updatedAt: Date | string
-    customer_id?: number | null
     score?: number | null
     organizer: OrganizerCreateNestedOneWithoutEventsInput
     event_category?: Event_categoryCreateNestedManyWithoutEventInput
@@ -23400,7 +23377,6 @@ export namespace Prisma {
     timezone: string
     createdAt?: Date | string
     updatedAt: Date | string
-    customer_id?: number | null
     score?: number | null
     event_category?: Event_categoryUncheckedCreateNestedManyWithoutEventInput
     ticket_types?: Ticket_typesUncheckedCreateNestedManyWithoutEventInput
@@ -23421,7 +23397,6 @@ export namespace Prisma {
     timezone?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    customer_id?: NullableIntFieldUpdateOperationsInput | number | null
     score?: NullableIntFieldUpdateOperationsInput | number | null
     organizer?: OrganizerUpdateOneRequiredWithoutEventsNestedInput
     event_category?: Event_categoryUpdateManyWithoutEventNestedInput
@@ -23447,7 +23422,6 @@ export namespace Prisma {
     timezone?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    customer_id?: NullableIntFieldUpdateOperationsInput | number | null
     score?: NullableIntFieldUpdateOperationsInput | number | null
     event_category?: Event_categoryUncheckedUpdateManyWithoutEventNestedInput
     ticket_types?: Ticket_typesUncheckedUpdateManyWithoutEventNestedInput
@@ -23471,7 +23445,6 @@ export namespace Prisma {
     timezone: string
     createdAt?: Date | string
     updatedAt: Date | string
-    customer_id?: number | null
     score?: number | null
   }
 
@@ -23487,7 +23460,6 @@ export namespace Prisma {
     timezone?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    customer_id?: NullableIntFieldUpdateOperationsInput | number | null
     score?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
@@ -23506,7 +23478,6 @@ export namespace Prisma {
     timezone?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    customer_id?: NullableIntFieldUpdateOperationsInput | number | null
     score?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
@@ -24651,7 +24622,6 @@ export namespace Prisma {
     timezone?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    customer_id?: SortOrder
     score?: SortOrder
   }
 
@@ -24660,7 +24630,6 @@ export namespace Prisma {
     organizer_id?: SortOrder
     coupon_id?: SortOrder
     event_location_id?: SortOrder
-    customer_id?: SortOrder
     score?: SortOrder
   }
 
@@ -24679,7 +24648,6 @@ export namespace Prisma {
     timezone?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    customer_id?: SortOrder
     score?: SortOrder
   }
 
@@ -24698,7 +24666,6 @@ export namespace Prisma {
     timezone?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    customer_id?: SortOrder
     score?: SortOrder
   }
 
@@ -24707,7 +24674,6 @@ export namespace Prisma {
     organizer_id?: SortOrder
     coupon_id?: SortOrder
     event_location_id?: SortOrder
-    customer_id?: SortOrder
     score?: SortOrder
   }
 
@@ -26852,7 +26818,6 @@ export namespace Prisma {
     timezone: string
     createdAt?: Date | string
     updatedAt: Date | string
-    customer_id?: number | null
     score?: number | null
     organizer: OrganizerCreateNestedOneWithoutEventsInput
     event_category?: Event_categoryCreateNestedManyWithoutEventInput
@@ -26877,7 +26842,6 @@ export namespace Prisma {
     timezone: string
     createdAt?: Date | string
     updatedAt: Date | string
-    customer_id?: number | null
     score?: number | null
     event_category?: Event_categoryUncheckedCreateNestedManyWithoutEventInput
     ticket_types?: Ticket_typesUncheckedCreateNestedManyWithoutEventInput
@@ -27175,7 +27139,6 @@ export namespace Prisma {
     timezone?: StringFilter<"Event"> | string
     createdAt?: DateTimeFilter<"Event"> | Date | string
     updatedAt?: DateTimeFilter<"Event"> | Date | string
-    customer_id?: IntNullableFilter<"Event"> | number | null
     score?: IntNullableFilter<"Event"> | number | null
   }
 
@@ -27503,7 +27466,6 @@ export namespace Prisma {
     timezone: string
     createdAt?: Date | string
     updatedAt: Date | string
-    customer_id?: number | null
     score?: number | null
     event_category?: Event_categoryCreateNestedManyWithoutEventInput
     event_location: Event_LocationCreateNestedOneWithoutEventInput
@@ -27527,7 +27489,6 @@ export namespace Prisma {
     timezone: string
     createdAt?: Date | string
     updatedAt: Date | string
-    customer_id?: number | null
     score?: number | null
     event_category?: Event_categoryUncheckedCreateNestedManyWithoutEventInput
     ticket_types?: Ticket_typesUncheckedCreateNestedManyWithoutEventInput
@@ -28476,7 +28437,6 @@ export namespace Prisma {
     timezone: string
     createdAt?: Date | string
     updatedAt: Date | string
-    customer_id?: number | null
     score?: number | null
     organizer: OrganizerCreateNestedOneWithoutEventsInput
     event_location: Event_LocationCreateNestedOneWithoutEventInput
@@ -28501,7 +28461,6 @@ export namespace Prisma {
     timezone: string
     createdAt?: Date | string
     updatedAt: Date | string
-    customer_id?: number | null
     score?: number | null
     ticket_types?: Ticket_typesUncheckedCreateNestedManyWithoutEventInput
     customer?: UserUncheckedCreateNestedManyWithoutEventInput
@@ -28570,7 +28529,6 @@ export namespace Prisma {
     timezone: string
     createdAt?: Date | string
     updatedAt: Date | string
-    customer_id?: number | null
     score?: number | null
     organizer: OrganizerCreateNestedOneWithoutEventsInput
     event_category?: Event_categoryCreateNestedManyWithoutEventInput
@@ -28594,7 +28552,6 @@ export namespace Prisma {
     timezone: string
     createdAt?: Date | string
     updatedAt: Date | string
-    customer_id?: number | null
     score?: number | null
     event_category?: Event_categoryUncheckedCreateNestedManyWithoutEventInput
     ticket_types?: Ticket_typesUncheckedCreateNestedManyWithoutEventInput
@@ -28671,7 +28628,6 @@ export namespace Prisma {
     timezone?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    customer_id?: NullableIntFieldUpdateOperationsInput | number | null
     score?: NullableIntFieldUpdateOperationsInput | number | null
     organizer?: OrganizerUpdateOneRequiredWithoutEventsNestedInput
     event_category?: Event_categoryUpdateManyWithoutEventNestedInput
@@ -28695,7 +28651,6 @@ export namespace Prisma {
     timezone?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    customer_id?: NullableIntFieldUpdateOperationsInput | number | null
     score?: NullableIntFieldUpdateOperationsInput | number | null
     event_category?: Event_categoryUncheckedUpdateManyWithoutEventNestedInput
     ticket_types?: Ticket_typesUncheckedUpdateManyWithoutEventNestedInput
@@ -28814,7 +28769,6 @@ export namespace Prisma {
     timezone: string
     createdAt?: Date | string
     updatedAt: Date | string
-    customer_id?: number | null
     score?: number | null
     organizer: OrganizerCreateNestedOneWithoutEventsInput
     event_category?: Event_categoryCreateNestedManyWithoutEventInput
@@ -28839,7 +28793,6 @@ export namespace Prisma {
     timezone: string
     createdAt?: Date | string
     updatedAt: Date | string
-    customer_id?: number | null
     score?: number | null
     event_category?: Event_categoryUncheckedCreateNestedManyWithoutEventInput
     customer?: UserUncheckedCreateNestedManyWithoutEventInput
@@ -28902,7 +28855,6 @@ export namespace Prisma {
     timezone?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    customer_id?: NullableIntFieldUpdateOperationsInput | number | null
     score?: NullableIntFieldUpdateOperationsInput | number | null
     organizer?: OrganizerUpdateOneRequiredWithoutEventsNestedInput
     event_category?: Event_categoryUpdateManyWithoutEventNestedInput
@@ -28927,7 +28879,6 @@ export namespace Prisma {
     timezone?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    customer_id?: NullableIntFieldUpdateOperationsInput | number | null
     score?: NullableIntFieldUpdateOperationsInput | number | null
     event_category?: Event_categoryUncheckedUpdateManyWithoutEventNestedInput
     customer?: UserUncheckedUpdateManyWithoutEventNestedInput
@@ -29007,7 +28958,6 @@ export namespace Prisma {
     timezone: string
     createdAt?: Date | string
     updatedAt: Date | string
-    customer_id?: number | null
     score?: number | null
     organizer: OrganizerCreateNestedOneWithoutEventsInput
     event_category?: Event_categoryCreateNestedManyWithoutEventInput
@@ -29032,7 +28982,6 @@ export namespace Prisma {
     timezone: string
     createdAt?: Date | string
     updatedAt: Date | string
-    customer_id?: number | null
     score?: number | null
     event_category?: Event_categoryUncheckedCreateNestedManyWithoutEventInput
     ticket_types?: Ticket_typesUncheckedCreateNestedManyWithoutEventInput
@@ -29162,7 +29111,6 @@ export namespace Prisma {
     timezone?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    customer_id?: NullableIntFieldUpdateOperationsInput | number | null
     score?: NullableIntFieldUpdateOperationsInput | number | null
     organizer?: OrganizerUpdateOneRequiredWithoutEventsNestedInput
     event_category?: Event_categoryUpdateManyWithoutEventNestedInput
@@ -29187,7 +29135,6 @@ export namespace Prisma {
     timezone?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    customer_id?: NullableIntFieldUpdateOperationsInput | number | null
     score?: NullableIntFieldUpdateOperationsInput | number | null
     event_category?: Event_categoryUncheckedUpdateManyWithoutEventNestedInput
     ticket_types?: Ticket_typesUncheckedUpdateManyWithoutEventNestedInput
@@ -29400,7 +29347,6 @@ export namespace Prisma {
     timezone: string
     createdAt?: Date | string
     updatedAt: Date | string
-    customer_id?: number | null
     score?: number | null
     organizer: OrganizerCreateNestedOneWithoutEventsInput
     event_category?: Event_categoryCreateNestedManyWithoutEventInput
@@ -29425,7 +29371,6 @@ export namespace Prisma {
     timezone: string
     createdAt?: Date | string
     updatedAt: Date | string
-    customer_id?: number | null
     score?: number | null
     event_category?: Event_categoryUncheckedCreateNestedManyWithoutEventInput
     ticket_types?: Ticket_typesUncheckedCreateNestedManyWithoutEventInput
@@ -29505,7 +29450,6 @@ export namespace Prisma {
     timezone?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    customer_id?: NullableIntFieldUpdateOperationsInput | number | null
     score?: NullableIntFieldUpdateOperationsInput | number | null
     organizer?: OrganizerUpdateOneRequiredWithoutEventsNestedInput
     event_category?: Event_categoryUpdateManyWithoutEventNestedInput
@@ -29530,7 +29474,6 @@ export namespace Prisma {
     timezone?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    customer_id?: NullableIntFieldUpdateOperationsInput | number | null
     score?: NullableIntFieldUpdateOperationsInput | number | null
     event_category?: Event_categoryUncheckedUpdateManyWithoutEventNestedInput
     ticket_types?: Ticket_typesUncheckedUpdateManyWithoutEventNestedInput
@@ -29769,7 +29712,6 @@ export namespace Prisma {
     timezone?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    customer_id?: NullableIntFieldUpdateOperationsInput | number | null
     score?: NullableIntFieldUpdateOperationsInput | number | null
     organizer?: OrganizerUpdateOneRequiredWithoutEventsNestedInput
     event_category?: Event_categoryUpdateManyWithoutEventNestedInput
@@ -29794,7 +29736,6 @@ export namespace Prisma {
     timezone?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    customer_id?: NullableIntFieldUpdateOperationsInput | number | null
     score?: NullableIntFieldUpdateOperationsInput | number | null
     event_category?: Event_categoryUncheckedUpdateManyWithoutEventNestedInput
     ticket_types?: Ticket_typesUncheckedUpdateManyWithoutEventNestedInput
@@ -29817,7 +29758,6 @@ export namespace Prisma {
     timezone?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    customer_id?: NullableIntFieldUpdateOperationsInput | number | null
     score?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
@@ -29897,7 +29837,6 @@ export namespace Prisma {
     timezone: string
     createdAt?: Date | string
     updatedAt: Date | string
-    customer_id?: number | null
     score?: number | null
   }
 
@@ -29913,7 +29852,6 @@ export namespace Prisma {
     timezone?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    customer_id?: NullableIntFieldUpdateOperationsInput | number | null
     score?: NullableIntFieldUpdateOperationsInput | number | null
     event_category?: Event_categoryUpdateManyWithoutEventNestedInput
     event_location?: Event_LocationUpdateOneRequiredWithoutEventNestedInput
@@ -29937,7 +29875,6 @@ export namespace Prisma {
     timezone?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    customer_id?: NullableIntFieldUpdateOperationsInput | number | null
     score?: NullableIntFieldUpdateOperationsInput | number | null
     event_category?: Event_categoryUncheckedUpdateManyWithoutEventNestedInput
     ticket_types?: Ticket_typesUncheckedUpdateManyWithoutEventNestedInput
@@ -29960,7 +29897,6 @@ export namespace Prisma {
     timezone?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    customer_id?: NullableIntFieldUpdateOperationsInput | number | null
     score?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
@@ -30197,7 +30133,6 @@ export namespace Prisma {
     timezone?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    customer_id?: NullableIntFieldUpdateOperationsInput | number | null
     score?: NullableIntFieldUpdateOperationsInput | number | null
     organizer?: OrganizerUpdateOneRequiredWithoutEventsNestedInput
     event_location?: Event_LocationUpdateOneRequiredWithoutEventNestedInput
@@ -30222,7 +30157,6 @@ export namespace Prisma {
     timezone?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    customer_id?: NullableIntFieldUpdateOperationsInput | number | null
     score?: NullableIntFieldUpdateOperationsInput | number | null
     ticket_types?: Ticket_typesUncheckedUpdateManyWithoutEventNestedInput
     customer?: UserUncheckedUpdateManyWithoutEventNestedInput
@@ -30245,7 +30179,6 @@ export namespace Prisma {
     timezone?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    customer_id?: NullableIntFieldUpdateOperationsInput | number | null
     score?: NullableIntFieldUpdateOperationsInput | number | null
   }
 

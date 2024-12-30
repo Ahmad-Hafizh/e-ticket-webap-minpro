@@ -167,7 +167,6 @@ model Event {
   timezone          String
   createdAt         DateTime             @default(now())
   updatedAt         DateTime
-  customer_id       Int?
   score             Int?
   customer          User[]               @relation("Customer_event")
   transaction       Transaction_Detail[]

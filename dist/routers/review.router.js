@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ReviewRouter = void 0;
 const express_1 = require("express");
 const review_controller_1 = require("../controllers/review.controller");
-const verifyToken_1 = require("../middlewares/verifyToken");
 class ReviewRouter {
     constructor() {
         this.route = (0, express_1.Router)();
@@ -14,7 +13,8 @@ class ReviewRouter {
         this.route.get("/:id", this.reviewController.getReview);
         this.route.post("/", 
         // createReviewValidator,
-        verifyToken_1.verifyToken, this.reviewController.generateReview);
+        // verifyToken,
+        this.reviewController.generateReview);
     }
     getRouter() {
         return this.route;

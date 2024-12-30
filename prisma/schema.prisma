@@ -237,7 +237,7 @@ model Transaction_Detail {
   ticket_types           Ticket_types @relation(fields: [ticket_types_id], references: [ticket_types_id])
   quantity_bought        Int
   subtotal               Int
-  transaction_id         Int?
+  transaction_id         Int
   transaction            Transaction? @relation(fields: [transaction_id], references: [transaction_id])
 
   @@map("transaction_detail")

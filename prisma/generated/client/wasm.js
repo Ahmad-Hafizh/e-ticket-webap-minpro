@@ -215,7 +215,6 @@ exports.Prisma.EventScalarFieldEnum = {
   timezone: 'timezone',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  customer_id: 'customer_id',
   score: 'score'
 };
 
