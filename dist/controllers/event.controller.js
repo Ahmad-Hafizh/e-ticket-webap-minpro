@@ -17,6 +17,24 @@ const prisma_1 = require("../config/prisma");
 const responseHandler_1 = __importDefault(require("../utils/responseHandler"));
 //
 class EventController {
+    getAllEvent(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const response = yield prisma_1.prisma.event.findMany({
+                    include: {
+                        event_location: true,
+                        ticket_types: true,
+                        organizer: true,
+                        event_category: true,
+                    },
+                });
+                return responseHandler_1.default.success(res, "Get All Event Success", 200, response);
+            }
+            catch (error) {
+                return responseHandler_1.default.error(res, "Get All Event Failed", 500, error);
+            }
+        });
+    }
     //BASIC CRUD (NO ADVANCED ERROR HANDLING YET)
     //createEvent behaviour
     //This API will create event immediately, with all the needed data. Payload reference: event.json
@@ -26,9 +44,14 @@ class EventController {
     createEvent(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const user = { id: 17 };
-                const { eventTitle, eventDescription, eventTimeDate, eventCategory, eventLocation, ticketTypes, eventImg, } = req.body;
-                yield prisma_1.prisma.$transaction((tx) => __awaiter(this, void 0, void 0, function* () {
+                const organizer = yield prisma_1.prisma.organizer.findUnique({
+                    where: { user_id: res.locals.dcrypt.user_id },
+                });
+                if (!organizer) {
+                    throw new Error("User unauthorized");
+                }
+                const { eventTitle, eventDescription, eventTimeDate, eventCategory, eventLocation, ticketTypes, eventImg, score, } = req.body;
+                const response = yield prisma_1.prisma.$transaction((tx) => __awaiter(this, void 0, void 0, function* () {
                     //Create and/or update city
                     const city = yield tx.location_city.upsert({
                         where: { city_name: eventLocation.city },
@@ -54,11 +77,11 @@ class EventController {
                     //Created Event
                     const event = yield tx.event.create({
                         data: {
-                            user_id: user.id,
+                            organizer_id: organizer === null || organizer === void 0 ? void 0 : organizer.organizer_id,
                             event_category: {
                                 connect: eventCategory.map((value) => ({
                                     category_name: value,
-                                })), //coba explore relasi prisma
+                                })),
                             },
                             title: eventTitle,
                             description: eventDescription,
@@ -71,6 +94,7 @@ class EventController {
                             createdAt: new Date(),
                             updatedAt: new Date(),
                             timezone: eventTimeDate.timezone,
+                            score: score,
                             event_location_id: eventLoc.event_location_id,
                         },
                     });
@@ -86,6 +110,7 @@ class EventController {
                         data: ticket,
                         skipDuplicates: true,
                     });
+                    return event;
                 }));
                 // await transporter.sendMail({
                 //   from: "e-ticket",
@@ -96,9 +121,10 @@ class EventController {
                 //      <p>Invite people to attract more audience</p>
                 //      </div>`,
                 // });
-                return responseHandler_1.default.success(res, "Event created successfully!", 201, res);
+                return responseHandler_1.default.success(res, "Event created successfully!", 201, response);
             }
             catch (error) {
+                console.log(error);
                 return responseHandler_1.default.error(res, "Created Event Failed, internal server error", 500, error);
             }
         });
@@ -111,9 +137,14 @@ class EventController {
     updateEvent(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const params = parseInt(req.params.id);
-                const userId = res.locals.dcrypt.id;
+                const organizer = yield prisma_1.prisma.organizer.findUnique({
+                    where: { user_id: res.locals.dcrypt.user_id },
+                });
+                if (!organizer) {
+                    throw new Error("User unauthorized");
+                }
                 const { eventTitle, eventDescription, eventTimeDate, eventCategory, eventLocation, ticketTypes, eventImg, } = req.body;
+                const params = parseInt(req.params.id);
                 const checkEventExist = yield prisma_1.prisma.event.findUnique({
                     where: {
                         event_id: params,
@@ -127,7 +158,10 @@ class EventController {
                 if (!checkEventExist) {
                     throw new Error("Event not found!");
                 }
-                yield prisma_1.prisma.$transaction((tx) => __awaiter(this, void 0, void 0, function* () {
+                if (checkEventExist.organizer_id !== organizer.organizer_id) {
+                    throw new Error("You are unauthorized to overwrite this event");
+                }
+                const response = yield prisma_1.prisma.$transaction((tx) => __awaiter(this, void 0, void 0, function* () {
                     //Create and/or update city
                     const city = yield tx.location_city.upsert({
                         where: { city_name: eventLocation.city },
@@ -158,10 +192,10 @@ class EventController {
                         },
                     });
                     //Update Event
-                    yield tx.event.update({
+                    const event = yield tx.event.update({
                         where: { event_id: params },
                         data: {
-                            user_id: userId,
+                            organizer_id: organizer === null || organizer === void 0 ? void 0 : organizer.organizer_id,
                             event_category: {
                                 connect: eventCategory.map((value) => ({
                                     category_name: value,
@@ -214,10 +248,13 @@ class EventController {
                             }
                         }
                     }
+                    return event;
                 }));
-                return responseHandler_1.default.success(res, "Event updated Successfully", 200, res);
+                console.log(response);
+                return responseHandler_1.default.success(res, "Event updated Successfully", 200, response);
             }
             catch (error) {
+                console.log(error);
                 return responseHandler_1.default.error(res, "Failed to update event! Internal server error!", 500, error);
             }
         });
@@ -244,7 +281,7 @@ class EventController {
                 if (!checkEventExist) {
                     throw new Error("Event not found!");
                 }
-                yield prisma_1.prisma.$transaction([
+                const response = yield prisma_1.prisma.$transaction([
                     prisma_1.prisma.ticket_types.deleteMany({
                         where: {
                             event_id: checkEventExist.event_id,
@@ -259,7 +296,7 @@ class EventController {
                         where: { event_location_id: checkEventExist.event_location_id },
                     }),
                 ]);
-                return responseHandler_1.default.success(res, "Event deleted successfully", 200, res);
+                return responseHandler_1.default.success(res, "Event deleted successfully", 200);
             }
             catch (error) {
                 return responseHandler_1.default.error(res, "Failed to delete event! Internal server error!", 500, error);
@@ -271,10 +308,19 @@ class EventController {
     getSpecificEvent(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const params = parseInt(req.params.id);
+                const { title } = req.params;
                 const response = yield prisma_1.prisma.event.findUnique({
                     where: {
-                        event_id: params,
+                        title: title,
+                    },
+                    include: {
+                        event_location: true,
+                        ticket_types: true,
+                        review: {
+                            include: {
+                                user: true,
+                            },
+                        },
                     },
                 });
                 return responseHandler_1.default.success(res, "Get Event Success", 200, response);
@@ -306,6 +352,8 @@ class EventController {
                 startdate, enddate, city, //city id
                 country, //country id
                 pricemin, pricemax, sortby, orderby, } = req.query;
+                const url = req.url;
+                console.log(url);
                 const result = yield prisma_1.prisma.event.findMany({
                     where: {
                         event_category: {
@@ -315,7 +363,7 @@ class EventController {
                                     : cat || undefined, //If cat is array (multiple queries, then use the keyword "in")
                             },
                         },
-                        user_id: parseInt(eo) || undefined, //query by user
+                        organizer_id: parseInt(eo) || undefined, //query by user
                         ticket_types: {
                             every: {
                                 price: {
@@ -328,25 +376,61 @@ class EventController {
                             location_city_id: parseInt(city) || undefined, //query by city
                             location_country_id: parseInt(country) || undefined, //query by country
                         },
-                        startDate: {
-                            gte: new Date(startdate) || undefined,
-                        },
-                        endDate: {
-                            lte: new Date(enddate) || undefined,
-                        },
+                        // startDate: {
+                        //   gte: new Date(startdate as string) || undefined,
+                        // },
+                        // endDate: {
+                        //   lte: new Date(enddate as string) || undefined,
+                        // },
                     },
                     include: {
                         event_category: true,
                         event_location: true,
                         ticket_types: true,
+                        review: true,
                     },
                     orderBy: {
                         [sortby]: orderby || undefined, //Akses properti sortby (isinya nama properti).
                     },
                 });
+                // //Check data in redis
+                // await redisClient.connect().catch(error);
+                // const redisData = await redisClient.get(`${req.url}`);
+                // //if exist, use data from redis as result for response
+                // if (redisData) {
+                //   return ResponseHandler.success(
+                //     res,
+                //     "Filter Success - Redis",
+                //     200,
+                //     JSON.parse(redisData)
+                //   );
+                // }
+                // //If not exist, get data from database and store to redis
+                // await redisClient.setEx(`${req.url}`, 5, JSON.stringify(result));
+                // if (redisClient.isOpen) {
+                //   await redisClient.disconnect();
+                // }
+                // //Check data in redis
+                // await redisClient.connect().catch(error);
+                // const redisData = await redisClient.get(`${req.url}`);
+                // //if exist, use data from redis as result for response
+                // if (redisData) {
+                //   return ResponseHandler.success(
+                //     res,
+                //     "Filter Success - Redis",
+                //     200,
+                //     JSON.parse(redisData)
+                //   );
+                // }
+                // //If not exist, get data from database and store to redis
+                // await redisClient.setEx(`${req.url}`, 5, JSON.stringify(result));
+                // if (redisClient.isOpen) {
+                //   await redisClient.disconnect();
+                // }
                 return responseHandler_1.default.success(res, "Filter Success", 200, result);
             }
             catch (error) {
+                console.log(error);
                 return responseHandler_1.default.error(res, "Filter Error", 500, error);
             }
         });

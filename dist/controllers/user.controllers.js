@@ -29,81 +29,93 @@ class UserController {
                 });
                 // if user already exist return response error rc 404
                 if (isUserExist) {
-                    return responseHandler_1.default.error(res, 'email is already used', 404);
+                    return responseHandler_1.default.error(res, "email is already used", 404);
                 }
-                // check if refferal code is available
-                // if there is no referral code available
-                const user = yield prisma_1.prisma.user.create({
-                    data: Object.assign(Object.assign({}, req.body), { password: yield (0, hashPassword_1.hashPassword)(req.body.password) }),
-                });
-                yield prisma_1.prisma.profile.create({ data: { user_id: user.user_id } });
-                const referral_code = `${user.name.slice(0, 4).toUpperCase()}${Math.round(Math.random() * 10000).toString()}`;
-                yield prisma_1.prisma.referral.create({
-                    data: { referral_code, user_id: user.user_id },
-                });
-                // parsing string to token
-                const authToken = (0, jsonwebtoken_1.sign)({ email: user.email, user_id: user.user_id }, process.env.TOKEN_KEY || 'secretkey');
-                // sending email with authtoken
-                yield nodemailer_1.transporter.sendMail({
-                    from: 'e-ticket',
-                    to: user.email,
-                    subject: 'Verify your Account',
-                    html: `<div>
-           <h1>Thank you ${user.name}, for registrater your account</h1>
-           <p>klik link below to verify your account</p>
-           <a href='http://localhost:3000/users/verify-email?a_t=${authToken}'>Verify Account</a>
-           </div>`,
-                });
-                return responseHandler_1.default.success(res, 'sign up is success', 201, Object.assign(Object.assign({}, user), { authToken }));
+                const createUserFlow = yield prisma_1.prisma.$transaction((tx) => __awaiter(this, void 0, void 0, function* () {
+                    // check if refferal code is available
+                    // if there is no referral code available
+                    const user = yield tx.user.create({
+                        data: {
+                            name: req.body.name,
+                            email: req.body.email,
+                            password: yield (0, hashPassword_1.hashPassword)(req.body.password),
+                        },
+                    });
+                    yield tx.profile.create({ data: { user_id: user.user_id } });
+                    return user;
+                }));
+                const referral_code = `${createUserFlow.name
+                    .slice(0, 4)
+                    .toUpperCase()}${Math.round(Math.random() * 10000).toString()}`;
+                const authToken = (0, jsonwebtoken_1.sign)({ email: createUserFlow.email, user_id: createUserFlow.user_id }, process.env.TOKEN_KEY || "secretkey");
+                const createReferralEmail = yield prisma_1.prisma.$transaction((tx) => __awaiter(this, void 0, void 0, function* () {
+                    yield tx.referral.create({
+                        data: { referral_code, user_id: createUserFlow.user_id },
+                    });
+                    // parsing string to token
+                    // sending email with authtoken
+                    yield nodemailer_1.transporter.sendMail({
+                        from: "e-ticket",
+                        to: createUserFlow.email,
+                        subject: "Verify your Account",
+                        html: `<div>
+             <h1>Thank you ${createUserFlow.name}, for registrater your account</h1>
+             <p>klik link below to verify your account</p>
+             <a href='http://localhost:3000/users/verify-email?a_t=${authToken}'>Verify Account</a>
+             </div>`,
+                    });
+                }));
+                return responseHandler_1.default.success(res, "sign up is success", 201, createUserFlow);
             }
             catch (error) {
-                return responseHandler_1.default.error(res, 'sign up is failed', 500, error);
+                return responseHandler_1.default.error(res, "sign up is failed", 500, error);
             }
         });
     }
     addReferral(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const userToken = res.locals.dcrypt;
-                const findReferral = yield prisma_1.prisma.referral.findUnique({
-                    where: { referral_code: req.body.referral_code.toString() },
-                    include: {
-                        user: true,
-                    },
-                });
-                // check if referral data is available
-                if (!findReferral) {
-                    return responseHandler_1.default.error(res, 'referral not found', 404);
-                }
-                // if user input his own referral code
-                if ((findReferral === null || findReferral === void 0 ? void 0 : findReferral.user.email) === userToken.email) {
-                    return responseHandler_1.default.error(res, 'cannot referred your self', 403);
-                }
-                // creating user data
-                const user = yield prisma_1.prisma.user.update({
-                    where: { email: userToken.email, user_id: userToken.user_id },
-                    data: { referred_id: findReferral === null || findReferral === void 0 ? void 0 : findReferral.referral_id },
-                });
-                // define expired date for the point
-                const expired_date = new Date();
-                expired_date.setMonth(expired_date.getMonth() + 3);
-                //adding 10,000 point to the referrer point wallet
-                yield prisma_1.prisma.point.create({
-                    data: { user_id: findReferral.user_id, amount: 10000, expired_date },
-                });
-                yield prisma_1.prisma.coupon.create({
-                    data: {
-                        coupon_name: 'Referral Coupon',
-                        user_id: user.user_id,
-                        coupon_code: Math.round(Math.random() * 10000).toString(),
-                        discount: 10,
-                        expired_date,
-                    },
-                });
-                return responseHandler_1.default.success(res, 'adding referral is success', 200);
+                yield prisma_1.prisma.$transaction((tx) => __awaiter(this, void 0, void 0, function* () {
+                    const findReferral = yield tx.referral.findUnique({
+                        where: { referral_code: req.body.referral_code.toString() },
+                        include: {
+                            user: true,
+                        },
+                    });
+                    // check if referral data is available
+                    if (!findReferral) {
+                        return responseHandler_1.default.error(res, "referral not found", 404);
+                    }
+                    // if user input his own referral code
+                    if ((findReferral === null || findReferral === void 0 ? void 0 : findReferral.user.email) === req.body.email) {
+                        return responseHandler_1.default.error(res, "cannot referred your self", 403);
+                    }
+                    // creating user data
+                    yield tx.user.update({
+                        where: { email: req.body.email, user_id: req.body.user_id },
+                        data: { referred_id: findReferral === null || findReferral === void 0 ? void 0 : findReferral.referral_id },
+                    });
+                    // define expired date for the point
+                    const expired_date = new Date();
+                    expired_date.setMonth(expired_date.getMonth() + 3);
+                    //adding 10,000 point to the referrer point wallet
+                    yield tx.point.create({
+                        data: { user_id: findReferral.user_id, amount: 10000, expired_date },
+                    });
+                    yield tx.coupon.create({
+                        data: {
+                            coupon_name: "Referral Coupon",
+                            user_id: req.body.user_id,
+                            coupon_code: Math.round(Math.random() * 10000).toString(),
+                            discount: 10,
+                            expired_date,
+                        },
+                    });
+                }));
+                return responseHandler_1.default.success(res, "adding referral is success", 200);
             }
             catch (error) {
-                return responseHandler_1.default.error(res, 'adding referral is failed', 500, error);
+                return responseHandler_1.default.error(res, "adding referral is failed", 500, error);
             }
         });
     }
@@ -117,17 +129,17 @@ class UserController {
                     where: { email: userToken.email },
                 });
                 if (!isUserExist) {
-                    return responseHandler_1.default.error(res, 'account is not found', 404);
+                    return responseHandler_1.default.error(res, "account is not found", 404);
                 }
                 // updating the isverified to true
                 const user = yield prisma_1.prisma.user.update({
                     where: { email: isUserExist.email },
                     data: { isVerified: true },
                 });
-                return responseHandler_1.default.success(res, 'verfication is success', 200, user);
+                return responseHandler_1.default.success(res, "verfication is success", 200, user);
             }
             catch (error) {
-                return responseHandler_1.default.error(res, 'verification is failed', 500, error);
+                return responseHandler_1.default.error(res, "verification is failed", 500, error);
             }
         });
     }
@@ -140,17 +152,22 @@ class UserController {
                 });
                 // if not exist response error
                 if (!isUserExist) {
-                    return responseHandler_1.default.error(res, 'account is not found', 404);
+                    return responseHandler_1.default.error(res, "account is not found", 404);
                 }
                 // comapring the input password with the hash password
                 const comparePassword = (0, bcrypt_1.compareSync)(req.body.password, isUserExist.password);
                 // if not same send response error
                 if (!comparePassword) {
-                    return responseHandler_1.default.error(res, 'Password is incorrect', 404);
+                    return responseHandler_1.default.error(res, "Password is incorrect", 404);
                 }
                 // send token
-                const token = (0, jsonwebtoken_1.sign)({ user_id: isUserExist.user_id, email: isUserExist.email, role: isUserExist.role, isVerified: isUserExist.isVerified }, process.env.TOKEN_KEY || 'secretkey');
-                return responseHandler_1.default.success(res, 'verfication is success', 200, {
+                const token = (0, jsonwebtoken_1.sign)({
+                    user_id: isUserExist.user_id,
+                    email: isUserExist.email,
+                    role: isUserExist.role,
+                    isVerified: isUserExist.isVerified,
+                }, process.env.TOKEN_KEY || "secretkey");
+                return responseHandler_1.default.success(res, "verfication is success", 200, {
                     name: isUserExist.name,
                     email: isUserExist.email,
                     pfp_url: isUserExist.pfp_url,
@@ -159,7 +176,7 @@ class UserController {
                 });
             }
             catch (error) {
-                return responseHandler_1.default.error(res, 'verification is failed', 500, error);
+                return responseHandler_1.default.error(res, "verification is failed", 500, error);
             }
         });
     }
@@ -171,10 +188,15 @@ class UserController {
                     where: { user_id: userToken.user_id, email: userToken.email },
                 });
                 if (!isUserExist) {
-                    return responseHandler_1.default.error(res, 'account not exist', 404);
+                    return responseHandler_1.default.error(res, "account not exist", 404);
                 }
-                const newToken = (0, jsonwebtoken_1.sign)({ user_id: isUserExist.user_id, email: isUserExist.email, role: isUserExist.role, isVerified: isUserExist.isVerified }, process.env.TOKEN_KEY || 'secretkey');
-                return responseHandler_1.default.success(res, 'keep login is success', 200, {
+                const newToken = (0, jsonwebtoken_1.sign)({
+                    user_id: isUserExist.user_id,
+                    email: isUserExist.email,
+                    role: isUserExist.role,
+                    isVerified: isUserExist.isVerified,
+                }, process.env.TOKEN_KEY || "secretkey");
+                return responseHandler_1.default.success(res, "keep login is success", 200, {
                     name: isUserExist.name,
                     email: isUserExist.email,
                     pfp_url: isUserExist.pfp_url,
@@ -183,7 +205,7 @@ class UserController {
                 });
             }
             catch (error) {
-                return responseHandler_1.default.error(res, 'keep login is failed', 500, error);
+                return responseHandler_1.default.error(res, "keep login is failed", 500, error);
             }
         });
     }
@@ -195,18 +217,38 @@ class UserController {
                     where: { user_id: userToken.user_id, email: userToken.email },
                 });
                 if (!isUserExist) {
-                    return responseHandler_1.default.error(res, 'account not exist', 404);
+                    return responseHandler_1.default.error(res, "account not exist", 404);
                 }
-                const user = yield prisma_1.prisma.user.update({
-                    where: { email: isUserExist.email, user_id: isUserExist.user_id },
-                    data: {
-                        role: 'organizer',
-                    },
-                });
-                return responseHandler_1.default.success(res, 'update user role is success', 200, user);
+                // const isUserExist: any = userRepo.checkIsUserExist(userToken, res, 'account not exist');
+                yield prisma_1.prisma.$transaction((tx) => __awaiter(this, void 0, void 0, function* () {
+                    const user = yield tx.user.update({
+                        where: { email: isUserExist.email, user_id: isUserExist.user_id },
+                        data: {
+                            role: "organizer",
+                        },
+                    });
+                    const organizer = yield tx.organizer.create({
+                        data: {
+                            user_id: user.user_id,
+                            organizer_name: req.body.organizer_name,
+                            organizer_email: req.body.organizer_email,
+                            organizer_phone: req.body.organizer_phone,
+                            organizer_address: req.body.organizer_address,
+                        },
+                    });
+                    const organizerBank = yield tx.bank_account.create({
+                        data: {
+                            bank_account_name: req.body.bank_account_name,
+                            bank_account_number: req.body.bank_account_number,
+                            bank_name: req.body.bank_name,
+                            organizer_id: organizer.organizer_id,
+                        },
+                    });
+                }));
+                return responseHandler_1.default.success(res, "update user role is success", 200);
             }
             catch (error) {
-                return responseHandler_1.default.error(res, 'update user role is failed', 500, error);
+                return responseHandler_1.default.error(res, "update user role is failed", 500, error);
             }
         });
     }
@@ -219,16 +261,16 @@ class UserController {
                     where: { user_id: userToken.user_id, email: userToken.email },
                 });
                 if (!isUserExist) {
-                    return responseHandler_1.default.error(res, 'account not exist', 404);
+                    return responseHandler_1.default.error(res, "account not exist", 404);
                 }
                 const user = yield prisma_1.prisma.user.update({
                     where: { user_id: isUserExist.user_id },
                     data: { pfp_url: `/profile/${(_a = req.file) === null || _a === void 0 ? void 0 : _a.filename}` },
                 });
-                return responseHandler_1.default.success(res, 'update profile picture is success', 201, user);
+                return responseHandler_1.default.success(res, "update profile picture is success", 201, user);
             }
             catch (error) {
-                return responseHandler_1.default.error(res, 'update profile picture is failed', 500, error);
+                return responseHandler_1.default.error(res, "update profile picture is failed", 500, error);
             }
         });
     }
@@ -240,16 +282,16 @@ class UserController {
                     where: { user_id: userToken.user_id, email: userToken.email },
                 });
                 if (!isUserExist) {
-                    return responseHandler_1.default.error(res, 'account not exist', 404);
+                    return responseHandler_1.default.error(res, "account not exist", 404);
                 }
                 const profile = yield prisma_1.prisma.profile.update({
                     where: { user_id: isUserExist.user_id },
                     data: Object.assign({}, req.body),
                 });
-                return responseHandler_1.default.success(res, 'update profile is success', 201, profile);
+                return responseHandler_1.default.success(res, "update profile is success", 201, profile);
             }
             catch (error) {
-                return responseHandler_1.default.error(res, 'update profile is failed', 500, error);
+                return responseHandler_1.default.error(res, "update profile is failed", 500, error);
             }
         });
     }
@@ -262,40 +304,42 @@ class UserController {
                     where: { user_id: userToken.user_id },
                 });
                 if (!isProfileExist) {
-                    return responseHandler_1.default.error(res, 'account not exist', 404);
+                    return responseHandler_1.default.error(res, "account not exist", 404);
                 }
                 const address = yield prisma_1.prisma.address.create({
                     data: Object.assign(Object.assign({}, req.body), { profile_id: isProfileExist.profile_id }),
                 });
-                return responseHandler_1.default.success(res, 'update profile is success', 201, address);
+                return responseHandler_1.default.success(res, "update profile is success", 201, address);
             }
             catch (error) {
-                return responseHandler_1.default.error(res, 'create address is failed', 500, error);
+                return responseHandler_1.default.error(res, "create address is failed", 500, error);
             }
         });
     }
     forgotPassword(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const findUser = yield prisma_1.prisma.user.findUnique({ where: { email: req.body.email } });
+                const findUser = yield prisma_1.prisma.user.findUnique({
+                    where: { email: req.body.email },
+                });
                 if (!findUser) {
-                    return responseHandler_1.default.error(res, 'Account is not found', 404);
+                    return responseHandler_1.default.error(res, "Account is not found", 404);
                 }
-                const authToken = (0, jsonwebtoken_1.sign)({ email: findUser.email, user_id: findUser.user_id }, process.env.TOKEN_KEY || 'secretkey');
+                const authToken = (0, jsonwebtoken_1.sign)({ email: findUser.email, user_id: findUser.user_id }, process.env.TOKEN_KEY || "secretkey");
                 yield nodemailer_1.transporter.sendMail({
-                    from: 'e-ticket',
+                    from: "e-ticket",
                     to: findUser.email,
-                    subject: 'Password Recovery',
+                    subject: "Password Recovery",
                     html: `<div>
         <h1>Hi ${findUser.name}, Seems like you forgot your password</h1>
         <p>klik link below to recover your password, if its not you try call police</p>
         <a href='http://localhost:3000/users/recover-password?a_t=${authToken}'>recover password</a>
         </div>`,
                 });
-                return responseHandler_1.default.success(res, 'An Email sended to your mail', 200);
+                return responseHandler_1.default.success(res, "An Email sended to your mail", 200);
             }
             catch (error) {
-                return responseHandler_1.default.error(res, 'Your forgot password is failed', 500, error);
+                return responseHandler_1.default.error(res, "Your forgot password is failed", 500, error);
             }
         });
     }
@@ -307,7 +351,7 @@ class UserController {
                     where: { user_id: token.user_id, email: token.email },
                 });
                 if (!findUser) {
-                    return responseHandler_1.default.error(res, 'Account is not found', 404);
+                    return responseHandler_1.default.error(res, "Account is not found", 404);
                 }
                 yield prisma_1.prisma.user.update({
                     where: { user_id: findUser.user_id, email: findUser.email },
@@ -315,9 +359,10 @@ class UserController {
                         password: yield (0, hashPassword_1.hashPassword)(req.body.password),
                     },
                 });
+                return responseHandler_1.default.error(res, "your forgot password is success", 200);
             }
             catch (error) {
-                return responseHandler_1.default.error(res, 'Your forgot password is failed', 500, error);
+                return responseHandler_1.default.error(res, "Your forgot password is failed", 500, error);
             }
         });
     }

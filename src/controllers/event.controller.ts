@@ -1,11 +1,38 @@
-import { Request, Response, NextFunction, query } from "express";
+import { Request, Response, NextFunction } from "express";
 import { prisma } from "../config/prisma";
 import ResponseHandler from "../utils/responseHandler";
+// import redisClient from "../config/redis";
 import { transporter } from "../config/nodemailer";
-import { connect } from "http2";
+import { error } from "console";
+import { Result } from "express-validator";
 
 //
 export class EventController {
+  async getAllEvent(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<any> {
+    try {
+      const response = await prisma.event.findMany({
+        include: {
+          event_location: true,
+          ticket_types: true,
+          organizer: true,
+          event_category: true,
+        },
+      });
+      return ResponseHandler.success(
+        res,
+        "Get All Event Success",
+        200,
+        response
+      );
+    } catch (error) {
+      return ResponseHandler.error(res, "Get All Event Failed", 500, error);
+    }
+  }
+
   //BASIC CRUD (NO ADVANCED ERROR HANDLING YET)
 
   //createEvent behaviour
@@ -19,7 +46,14 @@ export class EventController {
     next: NextFunction
   ): Promise<any> {
     try {
-      const user = { id: 17 };
+      const organizer = await prisma.organizer.findUnique({
+        where: { user_id: res.locals.dcrypt.user_id },
+      });
+
+      if (!organizer) {
+        throw new Error("User unauthorized");
+      }
+
       const {
         eventTitle,
         eventDescription,
@@ -28,6 +62,7 @@ export class EventController {
         eventLocation,
         ticketTypes,
         eventImg,
+        score,
       } = req.body;
 
       const response = await prisma.$transaction(async (tx) => {
@@ -56,11 +91,6 @@ export class EventController {
           },
         });
 
-        //Load organizer
-        const organizer = await tx.organizer.findUnique({
-          where: { organizer_id: 17 },
-        });
-
         //Created Event
         const event = await tx.event.create({
           data: {
@@ -81,6 +111,7 @@ export class EventController {
             createdAt: new Date(),
             updatedAt: new Date(),
             timezone: eventTimeDate.timezone,
+            score: score,
             event_location_id: eventLoc.event_location_id,
           },
         });
@@ -139,8 +170,13 @@ export class EventController {
     next: NextFunction
   ): Promise<any> {
     try {
-      const params = parseInt(req.params.id);
-      const userId = res.locals.dcrypt.id;
+      const organizer = await prisma.organizer.findUnique({
+        where: { user_id: res.locals.dcrypt.user_id },
+      });
+
+      if (!organizer) {
+        throw new Error("User unauthorized");
+      }
       const {
         eventTitle,
         eventDescription,
@@ -151,6 +187,7 @@ export class EventController {
         eventImg,
       } = req.body;
 
+      const params = parseInt(req.params.id);
       const checkEventExist = await prisma.event.findUnique({
         where: {
           event_id: params,
@@ -166,7 +203,11 @@ export class EventController {
         throw new Error("Event not found!");
       }
 
-      await prisma.$transaction(async (tx) => {
+      if (checkEventExist.organizer_id !== organizer.organizer_id) {
+        throw new Error("You are unauthorized to overwrite this event");
+      }
+
+      const response = await prisma.$transaction(async (tx) => {
         //Create and/or update city
         const city = await tx.location_city.upsert({
           where: { city_name: eventLocation.city },
@@ -205,10 +246,10 @@ export class EventController {
         });
 
         //Update Event
-        await tx.event.update({
+        const event = await tx.event.update({
           where: { event_id: params },
           data: {
-            organizer_id: userId,
+            organizer_id: organizer?.organizer_id,
             event_category: {
               connect: eventCategory.map((value: string) => ({
                 category_name: value,
@@ -265,14 +306,19 @@ export class EventController {
             }
           }
         }
+        return event;
       });
+
+      console.log(response);
+
       return ResponseHandler.success(
         res,
         "Event updated Successfully",
         200,
-        res
+        response
       );
     } catch (error) {
+      console.log(error);
       return ResponseHandler.error(
         res,
         "Failed to update event! Internal server error!",
@@ -294,7 +340,6 @@ export class EventController {
   ): Promise<any> {
     try {
       const params = parseInt(req.params.id);
-
       const checkEventExist = await prisma.event.findUnique({
         where: {
           event_id: params,
@@ -310,7 +355,7 @@ export class EventController {
         throw new Error("Event not found!");
       }
 
-      await prisma.$transaction([
+      const response = await prisma.$transaction([
         prisma.ticket_types.deleteMany({
           where: {
             event_id: checkEventExist.event_id,
@@ -325,12 +370,7 @@ export class EventController {
           where: { event_location_id: checkEventExist.event_location_id },
         }),
       ]);
-      return ResponseHandler.success(
-        res,
-        "Event deleted successfully",
-        200,
-        res
-      );
+      return ResponseHandler.success(res, "Event deleted successfully", 200);
     } catch (error) {
       return ResponseHandler.error(
         res,
@@ -349,10 +389,20 @@ export class EventController {
     next: NextFunction
   ): Promise<any> {
     try {
-      const params = parseInt(req.params.id);
+      const { title } = req.params;
+
       const response = await prisma.event.findUnique({
         where: {
-          event_id: params,
+          title: title,
+        },
+        include: {
+          event_location: true,
+          ticket_types: true,
+          review: {
+            include: {
+              user: true,
+            },
+          },
         },
       });
       return ResponseHandler.success(res, "Get Event Success", 200, response);
@@ -396,6 +446,8 @@ export class EventController {
         sortby,
         orderby,
       } = req.query;
+      const url = req.url;
+      console.log(url);
       const result = await prisma.event.findMany({
         where: {
           event_category: {
@@ -418,26 +470,68 @@ export class EventController {
             location_city_id: parseInt(city as string) || undefined, //query by city
             location_country_id: parseInt(country as string) || undefined, //query by country
           },
-          startDate: {
-            gte: new Date(startdate as string) || undefined,
-          },
-          endDate: {
-            lte: new Date(enddate as string) || undefined,
-          },
+
+          // startDate: {
+          //   gte: new Date(startdate as string) || undefined,
+          // },
+          // endDate: {
+          //   lte: new Date(enddate as string) || undefined,
+          // },
         },
 
         include: {
           event_category: true,
           event_location: true,
           ticket_types: true,
+          review: true,
         },
 
         orderBy: {
           [sortby as string]: orderby || undefined, //Akses properti sortby (isinya nama properti).
         },
       });
+
+      // //Check data in redis
+      // await redisClient.connect().catch(error);
+      // const redisData = await redisClient.get(`${req.url}`);
+      // //if exist, use data from redis as result for response
+      // if (redisData) {
+      //   return ResponseHandler.success(
+      //     res,
+      //     "Filter Success - Redis",
+      //     200,
+      //     JSON.parse(redisData)
+      //   );
+      // }
+      // //If not exist, get data from database and store to redis
+
+      // await redisClient.setEx(`${req.url}`, 5, JSON.stringify(result));
+      // if (redisClient.isOpen) {
+      //   await redisClient.disconnect();
+      // }
+
+      // //Check data in redis
+      // await redisClient.connect().catch(error);
+      // const redisData = await redisClient.get(`${req.url}`);
+      // //if exist, use data from redis as result for response
+      // if (redisData) {
+      //   return ResponseHandler.success(
+      //     res,
+      //     "Filter Success - Redis",
+      //     200,
+      //     JSON.parse(redisData)
+      //   );
+      // }
+      // //If not exist, get data from database and store to redis
+
+      // await redisClient.setEx(`${req.url}`, 5, JSON.stringify(result));
+      // if (redisClient.isOpen) {
+      //   await redisClient.disconnect();
+      // }
+
       return ResponseHandler.success(res, "Filter Success", 200, result);
     } catch (error) {
+      console.log(error);
       return ResponseHandler.error(res, "Filter Error", 500, error);
     }
   }

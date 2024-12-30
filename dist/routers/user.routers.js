@@ -19,8 +19,8 @@ class UserRouter {
     initializeRouters() {
         // define every routes from controllers
         // new users
-        this.route.post("/signup", userValidator_1.signUpValidator, this.userController.signUp);
-        this.route.patch("/add-referral", verifyToken_1.verifyToken, this.userController.addReferral);
+        this.route.post("/signup", userValidator_1.signUpValidator, this.userController.signUp, this.userController.addReferral);
+        // this.route.patch('/add-referral', verifyToken, this.userController.addReferral);
         this.route.get("/verify", verifyToken_1.verifyToken, this.userController.verifyEmail);
         // sign-in user
         this.route.post("/signin", userValidator_1.signInValidator, this.userController.signIn);

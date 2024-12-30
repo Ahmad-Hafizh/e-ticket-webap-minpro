@@ -1,0 +1,22 @@
+{
+  "data": [
+    {
+      "eventId": 26,
+      "ticketTypesId": 55,
+      "quantityBought": 5,
+      "subtotal": 1233
+    },
+    {
+      "eventId": 26,
+      "ticketTypesId": 56,
+      "quantityBought": 3,
+      "subtotal": 1233
+    },
+    {
+      "eventId": 26,
+      "ticketTypesId": 57,
+      "quantityBought": 2,
+      "subtotal": 1233
+    }
+  ]
+}

@@ -8,6 +8,9 @@ const cors_1 = __importDefault(require("cors"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const user_routers_1 = require("./routers/user.routers");
 const event_router_1 = require("./routers/event.router");
+const organizer_router_1 = require("./routers/organizer.router");
+const review_router_1 = require("./routers/review.router");
+const transaction_router_1 = require("./routers/transaction.router");
 dotenv_1.default.config();
 const PORT = process.env.PORT || 8080;
 class App {
@@ -31,6 +34,12 @@ class App {
         this.app.use("/users", userRouter.getRouter());
         const eventRouter = new event_router_1.EventRouter();
         this.app.use("/event", eventRouter.getRouter());
+        const organizer = new organizer_router_1.OrganizerRouter();
+        this.app.use("/organizer", organizer.getRouter());
+        const reviewRouter = new review_router_1.ReviewRouter();
+        this.app.use("/review", reviewRouter.getRouter());
+        const transactionRouter = new transaction_router_1.TransactionRouter();
+        this.app.use("/transaction", transactionRouter.getRouter());
     }
     startServer() {
         // run the server

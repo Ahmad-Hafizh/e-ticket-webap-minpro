@@ -17,12 +17,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 6.0.1
- * Query Engine version: 5dbef10bdbfb579e07d35cc85fb1518d357cb99e
+ * Prisma Client JS version: 6.1.0
+ * Query Engine version: 11f085a2012c0f4778414c8db2651556ee0ef959
  */
 Prisma.prismaVersion = {
-  client: "6.0.1",
-  engine: "5dbef10bdbfb579e07d35cc85fb1518d357cb99e"
+  client: "6.1.0",
+  engine: "11f085a2012c0f4778414c8db2651556ee0ef959"
 }
 
 Prisma.PrismaClientKnownRequestError = () => {
@@ -214,7 +214,8 @@ exports.Prisma.EventScalarFieldEnum = {
   endTime: 'endTime',
   timezone: 'timezone',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  score: 'score'
 };
 
 exports.Prisma.Event_categoryScalarFieldEnum = {
@@ -252,20 +253,30 @@ exports.Prisma.Ticket_typesScalarFieldEnum = {
 exports.Prisma.Transaction_DetailScalarFieldEnum = {
   transaction_details_id: 'transaction_details_id',
   user_id: 'user_id',
+  event_id: 'event_id',
   ticket_types_id: 'ticket_types_id',
   quantity_bought: 'quantity_bought',
-  subtotal: 'subtotal'
+  subtotal: 'subtotal',
+  transaction_id: 'transaction_id'
 };
 
 exports.Prisma.TransactionScalarFieldEnum = {
   transaction_id: 'transaction_id',
-  transaction_details_id: 'transaction_details_id',
   user_id: 'user_id',
   coupon_id: 'coupon_id',
   total_amount: 'total_amount',
   payment_method: 'payment_method',
   createdAt: 'createdAt',
   isPaid: 'isPaid'
+};
+
+exports.Prisma.ReviewScalarFieldEnum = {
+  review_id: 'review_id',
+  event_id: 'event_id',
+  user_id: 'user_id',
+  review_text: 'review_text',
+  review_img: 'review_img',
+  score: 'score'
 };
 
 exports.Prisma.SortOrder = {
@@ -325,7 +336,8 @@ exports.Prisma.ModelName = {
   Location_country: 'Location_country',
   Ticket_types: 'Ticket_types',
   Transaction_Detail: 'Transaction_Detail',
-  Transaction: 'Transaction'
+  Transaction: 'Transaction',
+  Review: 'Review'
 };
 
 /**

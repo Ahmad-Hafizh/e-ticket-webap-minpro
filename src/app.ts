@@ -3,6 +3,9 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { UserRouter } from "./routers/user.routers";
 import { EventRouter } from "./routers/event.router";
+import { OrganizerRouter } from "./routers/organizer.router";
+import { ReviewRouter } from "./routers/review.router";
+import { TransactionRouter } from "./routers/transaction.router";
 dotenv.config();
 
 const PORT = process.env.PORT || 8080;
@@ -34,6 +37,15 @@ class App {
 
     const eventRouter = new EventRouter();
     this.app.use("/event", eventRouter.getRouter());
+
+    const organizer = new OrganizerRouter();
+    this.app.use("/organizer", organizer.getRouter());
+
+    const reviewRouter = new ReviewRouter();
+    this.app.use("/review", reviewRouter.getRouter());
+
+    const transactionRouter = new TransactionRouter();
+    this.app.use("/transaction", transactionRouter.getRouter());
   }
 
   public startServer(): void {

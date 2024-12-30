@@ -17,11 +17,11 @@ exports.organizerAuthorization = void 0;
 const responseHandler_1 = __importDefault(require("../utils/responseHandler"));
 const organizerAuthorization = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const token = res.locals.bcrypt;
-        if (token.role != 'organizer') {
-            return responseHandler_1.default.error(res, 'Access is not granted', 403);
+        const token = res.locals.dcrypt;
+        if (token.role != "organizer") {
+            return responseHandler_1.default.error(res, "Access is not granted", 403);
         }
-        else if (token.role === 'organizer') {
+        else if (token.role === "organizer") {
             next();
         }
         // const findUser = await prisma.user.findUnique({
@@ -40,7 +40,7 @@ const organizerAuthorization = (req, res, next) => __awaiter(void 0, void 0, voi
         // }
     }
     catch (error) {
-        return responseHandler_1.default.error(res, 'Authorization Error', 500, error);
+        return responseHandler_1.default.error(res, "Authorization Error", 500, error);
     }
 });
 exports.organizerAuthorization = organizerAuthorization;
