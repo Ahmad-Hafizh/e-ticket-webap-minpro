@@ -102,12 +102,10 @@ class OrganizerController {
                         user_id: res.locals.dcrypt.user_id,
                     },
                 });
-                console.log(organizer);
                 if (!organizer) {
                     return responseHandler_1.default.error(res, 'Organizer not found', 404);
                 }
                 const organizerStat = yield prisma_1.prisma.$queryRawTyped((0, sql_1.getOrganizerStat)(range, organizer.organizer_id, start, end));
-                console.log(organizerStat);
                 return responseHandler_1.default.success(res, 'Get organizer statistic success', 200, organizerStat);
             }
             catch (error) {
