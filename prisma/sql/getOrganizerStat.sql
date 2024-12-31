@@ -1,10 +1,13 @@
-SELECT DATE_TRUNC($1, t."createdAt")::DATE AS date, 
-  SUM(t.total_amount)::NUMERIC AS total_revenue, 
-  SUM(td.quantity_bought)::NUMERIC AS total_seat, 
-  COUNT(t.transaction_id)::NUMERIC AS total_transaction 
+SELECT date_trunc($1, t."createdAt")::date AS date, 
+  SUM(t.total_amount) AS total_revenue, 
+  COUNT(t.transaction_id) AS total_transaction, 
+  SUM(td.sum_seat) AS total_seat 
 FROM "transaction" t 
-JOIN transaction_detail td ON t.transaction_id = td.transaction_id  
-JOIN "event" e ON td.event_id = e.event_id 
-WHERE e.organizer_id = $2
-AND t."createdAt"::DATE BETWEEN $3::DATE AND $4::DATE 
-GROUP BY date
+JOIN (
+  SELECT td.transaction_id, SUM(td.quantity_bought) AS sum_seat 
+  FROM transaction_detail td 
+  JOIN "event" e ON td.event_id = e.event_id 
+  WHERE e.organizer_id = $2 
+  GROUP BY td.transaction_id
+) td ON t.transaction_id = td.transaction_id where t."createdAt" between $3::date and $4::date
+GROUP BY date;
