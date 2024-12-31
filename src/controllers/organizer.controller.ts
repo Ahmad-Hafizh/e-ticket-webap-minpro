@@ -104,6 +104,7 @@ export class OrganizerController {
       }
 
       const organizerStat = await prisma.$queryRawTyped(getOrganizerStat(range, organizer.organizer_id, start, end));
+      console.log(organizerStat);
 
       return ResponseHandler.success(res, 'Get organizer statistic success', 200, organizerStat);
     } catch (error) {
