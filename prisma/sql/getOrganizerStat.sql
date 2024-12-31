@@ -1,7 +1,7 @@
 SELECT date_trunc($1, t."createdAt")::date AS date, 
-  SUM(t.total_amount) AS total_revenue, 
-  COUNT(t.transaction_id) AS total_transaction, 
-  SUM(td.sum_seat) AS total_seat 
+  SUM(t.total_amount)::numeric AS total_revenue, 
+  COUNT(t.transaction_id)::numeric AS total_transaction, 
+  SUM(td.sum_seat)::numeric AS total_seat 
 FROM "transaction" t 
 JOIN (
   SELECT td.transaction_id, SUM(td.quantity_bought) AS sum_seat 

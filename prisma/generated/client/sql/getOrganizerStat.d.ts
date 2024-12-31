@@ -12,8 +12,8 @@ export namespace getOrganizerStat {
   export type Parameters = [text: string, int4: number, date: Date, date: Date]
   export type Result = {
     date: Date | null
-    total_revenue: bigint | null
-    total_transaction: bigint | null
+    total_revenue: $runtime.Decimal | null
+    total_transaction: $runtime.Decimal | null
     total_seat: $runtime.Decimal | null
   }
 }
