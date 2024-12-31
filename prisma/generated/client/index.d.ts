@@ -18292,7 +18292,7 @@ export namespace Prisma {
     ticket_types_id: number
     quantity_bought: number
     subtotal: number
-    transaction_id: number | null
+    transaction_id: number
     _count: Transaction_DetailCountAggregateOutputType | null
     _avg: Transaction_DetailAvgAggregateOutputType | null
     _sum: Transaction_DetailSumAggregateOutputType | null
@@ -18380,7 +18380,7 @@ export namespace Prisma {
       ticket_types_id: number
       quantity_bought: number
       subtotal: number
-      transaction_id: number | null
+      transaction_id: number
     }, ExtArgs["result"]["transaction_Detail"]>
     composites: {}
   }
@@ -22538,7 +22538,7 @@ export namespace Prisma {
     ticket_types_id?: IntFilter<"Transaction_Detail"> | number
     quantity_bought?: IntFilter<"Transaction_Detail"> | number
     subtotal?: IntFilter<"Transaction_Detail"> | number
-    transaction_id?: IntNullableFilter<"Transaction_Detail"> | number | null
+    transaction_id?: IntFilter<"Transaction_Detail"> | number
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     event?: XOR<EventScalarRelationFilter, EventWhereInput>
     ticket_types?: XOR<Ticket_typesScalarRelationFilter, Ticket_typesWhereInput>
@@ -22552,7 +22552,7 @@ export namespace Prisma {
     ticket_types_id?: SortOrder
     quantity_bought?: SortOrder
     subtotal?: SortOrder
-    transaction_id?: SortOrderInput | SortOrder
+    transaction_id?: SortOrder
     user?: UserOrderByWithRelationInput
     event?: EventOrderByWithRelationInput
     ticket_types?: Ticket_typesOrderByWithRelationInput
@@ -22569,7 +22569,7 @@ export namespace Prisma {
     ticket_types_id?: IntFilter<"Transaction_Detail"> | number
     quantity_bought?: IntFilter<"Transaction_Detail"> | number
     subtotal?: IntFilter<"Transaction_Detail"> | number
-    transaction_id?: IntNullableFilter<"Transaction_Detail"> | number | null
+    transaction_id?: IntFilter<"Transaction_Detail"> | number
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     event?: XOR<EventScalarRelationFilter, EventWhereInput>
     ticket_types?: XOR<Ticket_typesScalarRelationFilter, Ticket_typesWhereInput>
@@ -22583,7 +22583,7 @@ export namespace Prisma {
     ticket_types_id?: SortOrder
     quantity_bought?: SortOrder
     subtotal?: SortOrder
-    transaction_id?: SortOrderInput | SortOrder
+    transaction_id?: SortOrder
     _count?: Transaction_DetailCountOrderByAggregateInput
     _avg?: Transaction_DetailAvgOrderByAggregateInput
     _max?: Transaction_DetailMaxOrderByAggregateInput
@@ -22601,7 +22601,7 @@ export namespace Prisma {
     ticket_types_id?: IntWithAggregatesFilter<"Transaction_Detail"> | number
     quantity_bought?: IntWithAggregatesFilter<"Transaction_Detail"> | number
     subtotal?: IntWithAggregatesFilter<"Transaction_Detail"> | number
-    transaction_id?: IntNullableWithAggregatesFilter<"Transaction_Detail"> | number | null
+    transaction_id?: IntWithAggregatesFilter<"Transaction_Detail"> | number
   }
 
   export type TransactionWhereInput = {
@@ -23723,7 +23723,7 @@ export namespace Prisma {
     ticket_types_id: number
     quantity_bought: number
     subtotal: number
-    transaction_id?: number | null
+    transaction_id: number
   }
 
   export type Transaction_DetailUpdateInput = {
@@ -23742,7 +23742,7 @@ export namespace Prisma {
     ticket_types_id?: IntFieldUpdateOperationsInput | number
     quantity_bought?: IntFieldUpdateOperationsInput | number
     subtotal?: IntFieldUpdateOperationsInput | number
-    transaction_id?: NullableIntFieldUpdateOperationsInput | number | null
+    transaction_id?: IntFieldUpdateOperationsInput | number
   }
 
   export type Transaction_DetailCreateManyInput = {
@@ -23752,7 +23752,7 @@ export namespace Prisma {
     ticket_types_id: number
     quantity_bought: number
     subtotal: number
-    transaction_id?: number | null
+    transaction_id: number
   }
 
   export type Transaction_DetailUpdateManyMutationInput = {
@@ -23767,7 +23767,7 @@ export namespace Prisma {
     ticket_types_id?: IntFieldUpdateOperationsInput | number
     quantity_bought?: IntFieldUpdateOperationsInput | number
     subtotal?: IntFieldUpdateOperationsInput | number
-    transaction_id?: NullableIntFieldUpdateOperationsInput | number | null
+    transaction_id?: IntFieldUpdateOperationsInput | number
   }
 
   export type TransactionCreateInput = {
@@ -26764,7 +26764,7 @@ export namespace Prisma {
     ticket_types_id: number
     quantity_bought: number
     subtotal: number
-    transaction_id?: number | null
+    transaction_id: number
   }
 
   export type Transaction_DetailCreateOrConnectWithoutUserInput = {
@@ -27073,7 +27073,7 @@ export namespace Prisma {
     ticket_types_id?: IntFilter<"Transaction_Detail"> | number
     quantity_bought?: IntFilter<"Transaction_Detail"> | number
     subtotal?: IntFilter<"Transaction_Detail"> | number
-    transaction_id?: IntNullableFilter<"Transaction_Detail"> | number | null
+    transaction_id?: IntFilter<"Transaction_Detail"> | number
   }
 
   export type TransactionUpsertWithWhereUniqueWithoutUserInput = {
@@ -28224,7 +28224,7 @@ export namespace Prisma {
     ticket_types_id: number
     quantity_bought: number
     subtotal: number
-    transaction_id?: number | null
+    transaction_id: number
   }
 
   export type Transaction_DetailCreateOrConnectWithoutEventInput = {
@@ -28819,7 +28819,7 @@ export namespace Prisma {
     event_id: number
     quantity_bought: number
     subtotal: number
-    transaction_id?: number | null
+    transaction_id: number
   }
 
   export type Transaction_DetailCreateOrConnectWithoutTicket_typesInput = {
@@ -29562,7 +29562,7 @@ export namespace Prisma {
     ticket_types_id: number
     quantity_bought: number
     subtotal: number
-    transaction_id?: number | null
+    transaction_id: number
   }
 
   export type TransactionCreateManyUserInput = {
@@ -29660,7 +29660,7 @@ export namespace Prisma {
     ticket_types_id?: IntFieldUpdateOperationsInput | number
     quantity_bought?: IntFieldUpdateOperationsInput | number
     subtotal?: IntFieldUpdateOperationsInput | number
-    transaction_id?: NullableIntFieldUpdateOperationsInput | number | null
+    transaction_id?: IntFieldUpdateOperationsInput | number
   }
 
   export type Transaction_DetailUncheckedUpdateManyWithoutUserInput = {
@@ -29669,7 +29669,7 @@ export namespace Prisma {
     ticket_types_id?: IntFieldUpdateOperationsInput | number
     quantity_bought?: IntFieldUpdateOperationsInput | number
     subtotal?: IntFieldUpdateOperationsInput | number
-    transaction_id?: NullableIntFieldUpdateOperationsInput | number | null
+    transaction_id?: IntFieldUpdateOperationsInput | number
   }
 
   export type TransactionUpdateWithoutUserInput = {
@@ -29974,7 +29974,7 @@ export namespace Prisma {
     ticket_types_id: number
     quantity_bought: number
     subtotal: number
-    transaction_id?: number | null
+    transaction_id: number
   }
 
   export type ReviewCreateManyEventInput = {
@@ -30086,7 +30086,7 @@ export namespace Prisma {
     ticket_types_id?: IntFieldUpdateOperationsInput | number
     quantity_bought?: IntFieldUpdateOperationsInput | number
     subtotal?: IntFieldUpdateOperationsInput | number
-    transaction_id?: NullableIntFieldUpdateOperationsInput | number | null
+    transaction_id?: IntFieldUpdateOperationsInput | number
   }
 
   export type Transaction_DetailUncheckedUpdateManyWithoutEventInput = {
@@ -30095,7 +30095,7 @@ export namespace Prisma {
     ticket_types_id?: IntFieldUpdateOperationsInput | number
     quantity_bought?: IntFieldUpdateOperationsInput | number
     subtotal?: IntFieldUpdateOperationsInput | number
-    transaction_id?: NullableIntFieldUpdateOperationsInput | number | null
+    transaction_id?: IntFieldUpdateOperationsInput | number
   }
 
   export type ReviewUpdateWithoutEventInput = {
@@ -30254,7 +30254,7 @@ export namespace Prisma {
     event_id: number
     quantity_bought: number
     subtotal: number
-    transaction_id?: number | null
+    transaction_id: number
   }
 
   export type Transaction_DetailUpdateWithoutTicket_typesInput = {
@@ -30271,7 +30271,7 @@ export namespace Prisma {
     event_id?: IntFieldUpdateOperationsInput | number
     quantity_bought?: IntFieldUpdateOperationsInput | number
     subtotal?: IntFieldUpdateOperationsInput | number
-    transaction_id?: NullableIntFieldUpdateOperationsInput | number | null
+    transaction_id?: IntFieldUpdateOperationsInput | number
   }
 
   export type Transaction_DetailUncheckedUpdateManyWithoutTicket_typesInput = {
@@ -30280,7 +30280,7 @@ export namespace Prisma {
     event_id?: IntFieldUpdateOperationsInput | number
     quantity_bought?: IntFieldUpdateOperationsInput | number
     subtotal?: IntFieldUpdateOperationsInput | number
-    transaction_id?: NullableIntFieldUpdateOperationsInput | number | null
+    transaction_id?: IntFieldUpdateOperationsInput | number
   }
 
   export type Transaction_DetailCreateManyTransactionInput = {
