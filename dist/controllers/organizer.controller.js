@@ -102,7 +102,6 @@ class OrganizerController {
                         user_id: res.locals.dcrypt.user_id,
                     },
                 });
-                console.log(organizer);
                 if (!organizer) {
                     return responseHandler_1.default.error(res, 'Organizer not found', 404);
                 }
