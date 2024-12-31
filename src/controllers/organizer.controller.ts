@@ -90,8 +90,6 @@ export class OrganizerController {
   async getStat(req: Request, res: Response): Promise<any> {
     try {
       const { start, end, range } = req.body;
-      console.log(start, end, range);
-
       const organizer = await prisma.organizer.findUnique({
         where: {
           user_id: res.locals.dcrypt.user_id,

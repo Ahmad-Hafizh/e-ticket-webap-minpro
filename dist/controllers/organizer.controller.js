@@ -96,7 +96,6 @@ class OrganizerController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { start, end, range } = req.body;
-                console.log(start, end, range);
                 const organizer = yield prisma_1.prisma.organizer.findUnique({
                     where: {
                         user_id: res.locals.dcrypt.user_id,
