@@ -96,7 +96,6 @@ class OrganizerController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { start, end, range } = req.body;
-                console.log(start, end, range);
                 const organizer = yield prisma_1.prisma.organizer.findUnique({
                     where: {
                         user_id: res.locals.dcrypt.user_id,
@@ -106,7 +105,6 @@ class OrganizerController {
                     return responseHandler_1.default.error(res, 'Organizer not found', 404);
                 }
                 const organizerStat = yield prisma_1.prisma.$queryRawTyped((0, sql_1.getOrganizerStat)(range, organizer.organizer_id, start, end));
-                console.log(organizerStat);
                 return responseHandler_1.default.success(res, 'Get organizer statistic success', 200, organizerStat);
             }
             catch (error) {

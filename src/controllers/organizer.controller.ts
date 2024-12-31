@@ -90,8 +90,6 @@ export class OrganizerController {
   async getStat(req: Request, res: Response): Promise<any> {
     try {
       const { start, end, range } = req.body;
-      console.log(start, end, range);
-
       const organizer = await prisma.organizer.findUnique({
         where: {
           user_id: res.locals.dcrypt.user_id,
@@ -103,7 +101,6 @@ export class OrganizerController {
       }
 
       const organizerStat = await prisma.$queryRawTyped(getOrganizerStat(range, organizer.organizer_id, start, end));
-      console.log(organizerStat);
 
       return ResponseHandler.success(res, 'Get organizer statistic success', 200, organizerStat);
     } catch (error) {
