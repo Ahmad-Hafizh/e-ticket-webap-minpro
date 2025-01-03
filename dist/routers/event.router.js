@@ -15,8 +15,8 @@ class EventRouter {
     initializeRouters() {
         this.route.get("/all", this.eventController.getAllEvent);
         this.route.post("/", eventValidator_1.createEventValidator, verifyToken_1.verifyToken, orgAuthor_1.organizerAuthorization, this.eventController.createEvent);
+        this.route.get("/location", this.eventController.getEventLocation);
         this.route.get("/:title", this.eventController.getSpecificEvent);
-        this.route.get("/", this.eventController.filterEvent);
         this.route.patch("/:id", verifyToken_1.verifyToken, orgAuthor_1.organizerAuthorization, this.eventController.updateEvent);
         this.route.delete("/:id", 
         // verifyToken,

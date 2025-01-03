@@ -23,8 +23,9 @@ export class EventRouter {
       organizerAuthorization,
       this.eventController.createEvent
     );
+    this.route.get("/location", this.eventController.getEventLocation);
     this.route.get("/:title", this.eventController.getSpecificEvent);
-    this.route.get("/", this.eventController.filterEvent);
+
     this.route.patch(
       "/:id",
       verifyToken,

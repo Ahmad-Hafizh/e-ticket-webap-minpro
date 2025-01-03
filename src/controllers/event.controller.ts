@@ -391,7 +391,7 @@ export class EventController {
     try {
       const { title } = req.params;
 
-      const response = await prisma.event.findUnique({
+      const response = await prisma.event.findFirst({
         where: {
           title: title,
         },
@@ -430,115 +430,24 @@ export class EventController {
   //sortby = sorting by
   //orderby = order by
 
-  //Behvaiour = API can be called following the above query. Can be mixed and matched.
-  //Category query can be called with multiple value, e.g. localhost/event?cat=music,theatre => to filter event in the music and theatre category
-  async filterEvent(req: Request, res: Response): Promise<any> {
-    try {
-      const {
-        cat, //cat name
-        eo, //userid
-        startdate,
-        enddate,
-        city, //city id
-        country, //country id
-        pricemin,
-        pricemax,
-        sortby,
-        orderby,
-      } = req.query;
-      const url = req.url;
-      console.log(url);
-      const result = await prisma.event.findMany({
-        where: {
-          event_category: {
-            some: {
-              category_name: Array.isArray(cat)
-                ? { in: cat }
-                : cat || undefined, //If cat is array (multiple queries, then use the keyword "in")
-            },
-          },
-          organizer_id: (parseInt(eo as string) as number) || undefined, //query by user
-          ticket_types: {
-            every: {
-              price: {
-                gte: parseInt(pricemin as string) || undefined, //query by price min
-                lte: parseInt(pricemax as string) || undefined, //query by price max
-              },
-            },
-          },
-          event_location: {
-            location_city_id: parseInt(city as string) || undefined, //query by city
-            location_country_id: parseInt(country as string) || undefined, //query by country
-          },
-
-          // startDate: {
-          //   gte: new Date(startdate as string) || undefined,
-          // },
-          // endDate: {
-          //   lte: new Date(enddate as string) || undefined,
-          // },
-        },
-
-        include: {
-          event_category: true,
-          event_location: true,
-          ticket_types: true,
-          review: true,
-        },
-
-        orderBy: {
-          [sortby as string]: orderby || undefined, //Akses properti sortby (isinya nama properti).
-        },
-      });
-
-      // //Check data in redis
-      // await redisClient.connect().catch(error);
-      // const redisData = await redisClient.get(`${req.url}`);
-      // //if exist, use data from redis as result for response
-      // if (redisData) {
-      //   return ResponseHandler.success(
-      //     res,
-      //     "Filter Success - Redis",
-      //     200,
-      //     JSON.parse(redisData)
-      //   );
-      // }
-      // //If not exist, get data from database and store to redis
-
-      // await redisClient.setEx(`${req.url}`, 5, JSON.stringify(result));
-      // if (redisClient.isOpen) {
-      //   await redisClient.disconnect();
-      // }
-
-      // //Check data in redis
-      // await redisClient.connect().catch(error);
-      // const redisData = await redisClient.get(`${req.url}`);
-      // //if exist, use data from redis as result for response
-      // if (redisData) {
-      //   return ResponseHandler.success(
-      //     res,
-      //     "Filter Success - Redis",
-      //     200,
-      //     JSON.parse(redisData)
-      //   );
-      // }
-      // //If not exist, get data from database and store to redis
-
-      // await redisClient.setEx(`${req.url}`, 5, JSON.stringify(result));
-      // if (redisClient.isOpen) {
-      //   await redisClient.disconnect();
-      // }
-
-      return ResponseHandler.success(res, "Filter Success", 200, result);
-    } catch (error) {
-      console.log(error);
-      return ResponseHandler.error(res, "Filter Error", 500, error);
-    }
-  }
-
   //getEventByMostPurchased (HOT EVENT) => REDIS
   async hotEvent(req: Request, res: Response): Promise<any> {
     try {
     } catch (error) {}
+  }
+
+  async getEventLocation(req: Request, res: Response): Promise<any> {
+    try {
+      const location = await prisma.location_city.findMany();
+      console.log("Ini location", location);
+      return ResponseHandler.success(
+        res,
+        "Get all location success",
+        200,
+        location
+      );
+    } catch (error) {
+      return ResponseHandler.error(res, "Get location error", 500);
+    }
   }
 }

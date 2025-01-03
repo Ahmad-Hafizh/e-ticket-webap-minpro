@@ -13,7 +13,7 @@ export namespace getOrganizerStat {
   export type Result = {
     date: Date | null
     total_revenue: $runtime.Decimal | null
-    total_seat: $runtime.Decimal | null
     total_transaction: $runtime.Decimal | null
+    total_seat: $runtime.Decimal | null
   }
 }
