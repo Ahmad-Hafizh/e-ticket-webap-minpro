@@ -11,6 +11,7 @@ const event_router_1 = require("./routers/event.router");
 const organizer_router_1 = require("./routers/organizer.router");
 const review_router_1 = require("./routers/review.router");
 const transaction_router_1 = require("./routers/transaction.router");
+const search_router_1 = require("./routers/search.router");
 dotenv_1.default.config();
 const PORT = process.env.PORT || 8080;
 class App {
@@ -40,6 +41,8 @@ class App {
         this.app.use("/review", reviewRouter.getRouter());
         const transactionRouter = new transaction_router_1.TransactionRouter();
         this.app.use("/transaction", transactionRouter.getRouter());
+        const searchRouter = new search_router_1.SearchRouter();
+        this.app.use("/search", searchRouter.getRouter());
     }
     startServer() {
         // run the server

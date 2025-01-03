@@ -333,7 +333,7 @@ class UserController {
                     html: `<div>
         <h1>Hi ${findUser.name}, Seems like you forgot your password</h1>
         <p>klik link below to recover your password, if its not you try call police</p>
-        <a href='http://localhost:3000/users/recover-password?a_t=${authToken}'>recover password</a>
+        <a href='http://localhost:3000/recover-password?a_t=${authToken}'>recover password</a>
         </div>`,
                 });
                 return responseHandler_1.default.success(res, "An Email sended to your mail", 200);

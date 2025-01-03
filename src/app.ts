@@ -6,6 +6,7 @@ import { EventRouter } from "./routers/event.router";
 import { OrganizerRouter } from "./routers/organizer.router";
 import { ReviewRouter } from "./routers/review.router";
 import { TransactionRouter } from "./routers/transaction.router";
+import { SearchRouter } from "./routers/search.router";
 dotenv.config();
 
 const PORT = process.env.PORT || 8080;
@@ -46,6 +47,9 @@ class App {
 
     const transactionRouter = new TransactionRouter();
     this.app.use("/transaction", transactionRouter.getRouter());
+
+    const searchRouter = new SearchRouter();
+    this.app.use("/search", searchRouter.getRouter());
   }
 
   public startServer(): void {

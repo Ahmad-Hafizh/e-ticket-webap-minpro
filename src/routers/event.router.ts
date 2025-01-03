@@ -15,6 +15,7 @@ export class EventRouter {
   }
 
   private initializeRouters(): void {
+    this.route.get("/all", this.eventController.getAllEvent);
     this.route.post(
       "/",
       createEventValidator,
@@ -22,8 +23,9 @@ export class EventRouter {
       organizerAuthorization,
       this.eventController.createEvent
     );
-    this.route.get("/:id", this.eventController.getSpecificEvent);
-    this.route.get("/", this.eventController.filterEvent);
+    this.route.get("/location", this.eventController.getEventLocation);
+    this.route.get("/:title", this.eventController.getSpecificEvent);
+
     this.route.patch(
       "/:id",
       verifyToken,

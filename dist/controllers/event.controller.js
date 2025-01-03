@@ -308,10 +308,10 @@ class EventController {
     getSpecificEvent(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const params = parseInt(req.params.id);
-                const response = yield prisma_1.prisma.event.findUnique({
+                const { title } = req.params;
+                const response = yield prisma_1.prisma.event.findFirst({
                     where: {
-                        event_id: params,
+                        title: title,
                     },
                     include: {
                         event_location: true,
@@ -342,105 +342,24 @@ class EventController {
     //pricemax = maximum price
     //sortby = sorting by
     //orderby = order by
-    //Behvaiour = API can be called following the above query. Can be mixed and matched.
-    //Category query can be called with multiple value, e.g. localhost/event?cat=music,theatre => to filter event in the music and theatre category
-    filterEvent(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const { cat, //cat name
-                eo, //userid
-                startdate, enddate, city, //city id
-                country, //country id
-                pricemin, pricemax, sortby, orderby, } = req.query;
-                const url = req.url;
-                console.log(url);
-                const result = yield prisma_1.prisma.event.findMany({
-                    where: {
-                        event_category: {
-                            some: {
-                                category_name: Array.isArray(cat)
-                                    ? { in: cat }
-                                    : cat || undefined, //If cat is array (multiple queries, then use the keyword "in")
-                            },
-                        },
-                        organizer_id: parseInt(eo) || undefined, //query by user
-                        ticket_types: {
-                            every: {
-                                price: {
-                                    gte: parseInt(pricemin) || undefined, //query by price min
-                                    lte: parseInt(pricemax) || undefined, //query by price max
-                                },
-                            },
-                        },
-                        event_location: {
-                            location_city_id: parseInt(city) || undefined, //query by city
-                            location_country_id: parseInt(country) || undefined, //query by country
-                        },
-                        // startDate: {
-                        //   gte: new Date(startdate as string) || undefined,
-                        // },
-                        // endDate: {
-                        //   lte: new Date(enddate as string) || undefined,
-                        // },
-                    },
-                    include: {
-                        event_category: true,
-                        event_location: true,
-                        ticket_types: true,
-                        review: true,
-                    },
-                    orderBy: {
-                        [sortby]: orderby || undefined, //Akses properti sortby (isinya nama properti).
-                    },
-                });
-                // //Check data in redis
-                // await redisClient.connect().catch(error);
-                // const redisData = await redisClient.get(`${req.url}`);
-                // //if exist, use data from redis as result for response
-                // if (redisData) {
-                //   return ResponseHandler.success(
-                //     res,
-                //     "Filter Success - Redis",
-                //     200,
-                //     JSON.parse(redisData)
-                //   );
-                // }
-                // //If not exist, get data from database and store to redis
-                // await redisClient.setEx(`${req.url}`, 5, JSON.stringify(result));
-                // if (redisClient.isOpen) {
-                //   await redisClient.disconnect();
-                // }
-                // //Check data in redis
-                // await redisClient.connect().catch(error);
-                // const redisData = await redisClient.get(`${req.url}`);
-                // //if exist, use data from redis as result for response
-                // if (redisData) {
-                //   return ResponseHandler.success(
-                //     res,
-                //     "Filter Success - Redis",
-                //     200,
-                //     JSON.parse(redisData)
-                //   );
-                // }
-                // //If not exist, get data from database and store to redis
-                // await redisClient.setEx(`${req.url}`, 5, JSON.stringify(result));
-                // if (redisClient.isOpen) {
-                //   await redisClient.disconnect();
-                // }
-                return responseHandler_1.default.success(res, "Filter Success", 200, result);
-            }
-            catch (error) {
-                console.log(error);
-                return responseHandler_1.default.error(res, "Filter Error", 500, error);
-            }
-        });
-    }
     //getEventByMostPurchased (HOT EVENT) => REDIS
     hotEvent(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
             }
             catch (error) { }
+        });
+    }
+    getEventLocation(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const location = yield prisma_1.prisma.location_city.findMany();
+                console.log("Ini location", location);
+                return responseHandler_1.default.success(res, "Get all location success", 200, location);
+            }
+            catch (error) {
+                return responseHandler_1.default.error(res, "Get location error", 500);
+            }
         });
     }
 }

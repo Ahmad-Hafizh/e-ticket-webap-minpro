@@ -15,11 +15,12 @@ export class TransactionRouter {
   }
 
   private initializeRoute() {
-    this.route.post(
-      "/details",
-      //   verifyToken,
-      this.transactionController.generateTransactionDetails
-    );
+    // this.route.post(
+    //   "/details",
+    //   //   verifyToken,
+    //   this.transactionController.generateTransactionDetails
+    // );
+
     this.route.get(
       "/details",
       //   verifyToken,
@@ -27,8 +28,8 @@ export class TransactionRouter {
     );
     this.route.post(
       "/",
-      //   verifyToken,
-      this.transactionController.generateTransaction
+      // verifyToken,
+      this.transactionController.generateTransactionAndDetails
     );
 
     this.route.patch(
