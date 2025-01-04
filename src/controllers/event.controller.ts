@@ -451,6 +451,7 @@ export class EventController {
     }
   }
 
+
   async getEventMainPage(req: Request, res: Response): Promise<any> {
     try {
       const topEvents = await prisma.event.findMany({
@@ -517,4 +518,5 @@ export class EventController {
       return ResponseHandler.error(res, "Get all event error", 500);
     }
   }
+
 }
