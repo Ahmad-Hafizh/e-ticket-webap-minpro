@@ -362,5 +362,63 @@ class EventController {
             }
         });
     }
+    getEventMainPage(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const topEvents = yield prisma_1.prisma.event.findMany({
+                    where: {
+                        score: {
+                            gte: 2,
+                        },
+                    },
+                    include: {
+                        ticket_types: true,
+                        organizer: true,
+                    },
+                    take: 3,
+                });
+                const categories = yield prisma_1.prisma.event.findMany({
+                    where: {
+                        event_category: {
+                            some: {
+                                category_name: "Music",
+                            },
+                        },
+                    },
+                    include: {
+                        event_category: true,
+                        ticket_types: true,
+                        organizer: true,
+                    },
+                    take: 8,
+                });
+                const location = yield prisma_1.prisma.event.findMany({
+                    where: {
+                        event_location: {
+                            location_city_id: 15,
+                        },
+                    },
+                    include: {
+                        ticket_types: true,
+                        organizer: true,
+                    },
+                    take: 8,
+                });
+                const organizer = yield prisma_1.prisma.organizer.findMany({
+                    take: 8,
+                });
+                const response = {
+                    topEvents,
+                    categories,
+                    location,
+                    organizer,
+                };
+                return responseHandler_1.default.success(res, "Get all event success", 200, response);
+            }
+            catch (error) {
+                return responseHandler_1.default.error(res, "Get all event error", 500);
+            }
+        });
+    }
 }
 exports.EventController = EventController;

@@ -13,6 +13,7 @@ class EventRouter {
         this.initializeRouters();
     }
     initializeRouters() {
+        this.route.get("/", this.eventController.getEventMainPage);
         this.route.get("/all", this.eventController.getAllEvent);
         this.route.post("/", eventValidator_1.createEventValidator, verifyToken_1.verifyToken, orgAuthor_1.organizerAuthorization, this.eventController.createEvent);
         this.route.get("/location", this.eventController.getEventLocation);

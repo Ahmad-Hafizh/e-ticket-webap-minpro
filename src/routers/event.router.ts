@@ -15,6 +15,7 @@ export class EventRouter {
   }
 
   private initializeRouters(): void {
+    this.route.get("/", this.eventController.getEventMainPage);
     this.route.get("/all", this.eventController.getAllEvent);
     this.route.post(
       "/",
