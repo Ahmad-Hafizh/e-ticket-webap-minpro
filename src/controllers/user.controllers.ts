@@ -275,15 +275,14 @@ export class UserController {
         return ResponseHandler.error(res, 'account not exist', 404);
       }
 
-      const { secure_url } = await cloudinaryUpload(req.file);
-      console.log('secure url', secure_url);
+      const { secure_url } = await cloudinaryUpload(req.file, 'profile');
 
-      // const user = await prisma.user.update({
-      //   where: { user_id: isUserExist.user_id },
-      //   data: { pfp_url: `/profile/${req.file?.filename}` },
-      // });
+      const user = await prisma.user.update({
+        where: { user_id: isUserExist.user_id },
+        data: { pfp_url: secure_url },
+      });
 
-      return ResponseHandler.success(res, 'update profile picture is success', 201);
+      return ResponseHandler.success(res, 'update profile picture is success', 201, secure_url);
     } catch (error) {
       return ResponseHandler.error(res, 'update profile picture is failed', 500, error);
     }

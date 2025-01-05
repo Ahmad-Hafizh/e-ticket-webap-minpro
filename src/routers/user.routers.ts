@@ -3,7 +3,7 @@ import { UserController } from '../controllers/user.controllers';
 // import { createUser } from '../middlewares/createUser';
 import { signInValidator, signUpValidator } from '../middlewares/userValidator';
 import { verifyToken } from '../middlewares/verifyToken';
-import { uploader, uploaderMemory } from '../middlewares/uploader';
+import { uploaderMemory } from '../middlewares/uploader';
 import { organizerAuthorization } from '../middlewares/orgAuthor';
 
 export class UserRouter {
@@ -33,7 +33,7 @@ export class UserRouter {
     this.route.get('/keep-login', verifyToken, this.userController.keepLogin);
 
     // update user & profile
-    this.route.patch('/update-pfp', verifyToken, uploader('/profile', 'PFP').single('imgProfile'), this.userController.updatePfp);
+    this.route.patch('/update-pfp', verifyToken, uploaderMemory().single('imgProfile'), this.userController.updatePfp);
     this.route.patch('/update-role', verifyToken, this.userController.updateUserRole);
     this.route.patch('/update-profile', verifyToken, this.userController.updateProfile);
     this.route.post('/create-address', verifyToken, this.userController.createAddress);
