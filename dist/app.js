@@ -28,26 +28,26 @@ class App {
     }
     routes() {
         // define routes
-        this.app.get("/", (req, res) => {
-            return res.status(200).send("E-ticket api");
+        this.app.get('/', (req, res) => {
+            return res.status(200).send('E-ticket api');
         });
         const userRouter = new user_routers_1.UserRouter();
-        this.app.use("/users", userRouter.getRouter());
+        this.app.use('/users', userRouter.getRouter());
         const eventRouter = new event_router_1.EventRouter();
-        this.app.use("/event", eventRouter.getRouter());
+        this.app.use('/event', eventRouter.getRouter());
         const organizer = new organizer_router_1.OrganizerRouter();
-        this.app.use("/organizer", organizer.getRouter());
+        this.app.use('/organizer', organizer.getRouter());
         const reviewRouter = new review_router_1.ReviewRouter();
-        this.app.use("/review", reviewRouter.getRouter());
+        this.app.use('/review', reviewRouter.getRouter());
         const transactionRouter = new transaction_router_1.TransactionRouter();
-        this.app.use("/transaction", transactionRouter.getRouter());
+        this.app.use('/transaction', transactionRouter.getRouter());
         const searchRouter = new search_router_1.SearchRouter();
-        this.app.use("/search", searchRouter.getRouter());
+        this.app.use('/search', searchRouter.getRouter());
     }
     startServer() {
         // run the server
         this.app.listen(PORT, () => {
-            console.log("server runs at", PORT);
+            console.log(`server runs at http://localhost:${PORT}`);
         });
     }
 }

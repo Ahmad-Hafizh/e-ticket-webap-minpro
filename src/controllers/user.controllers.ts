@@ -5,7 +5,6 @@ import { transporter } from '../config/nodemailer';
 import { sign } from 'jsonwebtoken';
 import { compareSync } from 'bcrypt';
 import { hashPassword } from '../utils/hashPassword';
-import userRepo from '../repo/user.repo';
 import { cloudinaryUpload } from '../config/cloudinary';
 
 export class UserController {
@@ -40,7 +39,7 @@ export class UserController {
       const referral_code: string = `${createUserFlow.name.slice(0, 4).toUpperCase()}${Math.round(Math.random() * 10000).toString()}`;
       const authToken = sign({ email: createUserFlow.email, user_id: createUserFlow.user_id }, process.env.TOKEN_KEY || 'secretkey');
 
-      const createReferralEmail = await prisma.$transaction(async (tx) => {
+      await prisma.$transaction(async (tx) => {
         await tx.referral.create({
           data: { referral_code, user_id: createUserFlow.user_id },
         });
@@ -54,7 +53,7 @@ export class UserController {
           html: `<div>
              <h1>Thank you ${createUserFlow.name}, for registrater your account</h1>
              <p>klik link below to verify your account</p>
-             <a href='http://localhost:3000/users/verify-email?a_t=${authToken}'>Verify Account</a>
+             <a href='${process.env.FE_URL}/verify-email?a_t=${authToken}'>Verify Account</a>
              </div>`,
         });
       });
@@ -81,7 +80,7 @@ export class UserController {
         }
         // if user input his own referral code
         if (findReferral?.user.email === req.body.email) {
-          return ResponseHandler.error(res, 'cannot referred your self', 403);
+          return ResponseHandler.error(res, 'cant refer your self', 403);
         }
 
         // creating user data
@@ -350,7 +349,7 @@ export class UserController {
         html: `<div>
         <h1>Hi ${findUser.name}, Seems like you forgot your password</h1>
         <p>klik link below to recover your password, if its not you try call police</p>
-        <a href='http://localhost:3000/recover-password?a_t=${authToken}'>recover password</a>
+        <a href='${process.env.FE_URL}/recover-password?a_t=${authToken}'>recover password</a>
         </div>`,
       });
       return ResponseHandler.success(res, 'An Email sended to your mail', 200);
@@ -374,9 +373,9 @@ export class UserController {
           password: await hashPassword(req.body.password),
         },
       });
-      return ResponseHandler.error(res, 'your forgot password is success', 200);
+      return ResponseHandler.error(res, 'your reset password is success', 200);
     } catch (error) {
-      return ResponseHandler.error(res, 'Your forgot password is failed', 500, error);
+      return ResponseHandler.error(res, 'Your reset password is failed', 500, error);
     }
   }
 }
