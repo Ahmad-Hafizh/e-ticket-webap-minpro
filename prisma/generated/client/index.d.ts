@@ -22204,12 +22204,12 @@ export namespace Prisma {
 
   export type EventWhereUniqueInput = Prisma.AtLeast<{
     event_id?: number
+    title?: string
     event_location_id?: number
     AND?: EventWhereInput | EventWhereInput[]
     OR?: EventWhereInput[]
     NOT?: EventWhereInput | EventWhereInput[]
     organizer_id?: IntFilter<"Event"> | number
-    title?: StringFilter<"Event"> | string
     description?: StringFilter<"Event"> | string
     imgEvent?: StringFilter<"Event"> | string
     coupon_id?: IntFilter<"Event"> | number
@@ -22228,7 +22228,7 @@ export namespace Prisma {
     customer?: UserListRelationFilter
     transaction?: Transaction_DetailListRelationFilter
     review?: ReviewListRelationFilter
-  }, "event_id" | "event_location_id">
+  }, "event_id" | "title" | "event_location_id">
 
   export type EventOrderByWithAggregationInput = {
     event_id?: SortOrder

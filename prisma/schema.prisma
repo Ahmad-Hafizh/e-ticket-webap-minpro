@@ -153,7 +153,7 @@ model Event {
   organizer_id      Int
   organizer         Organizer            @relation(fields: [organizer_id], references: [organizer_id])
   event_category    Event_category[]     @relation("Event_categories") //Expected to hold multiple categories per event
-  title             String
+  title             String               @unique
   description       String
   imgEvent          String
   coupon_id         Int //Decide the schema of coupon in relation to event! ***

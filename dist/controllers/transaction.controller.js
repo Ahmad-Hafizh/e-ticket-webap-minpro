@@ -16,25 +16,20 @@ exports.TransactionController = void 0;
 const prisma_1 = require("../config/prisma");
 const responseHandler_1 = __importDefault(require("../utils/responseHandler"));
 class TransactionController {
-    generateTransactionDetails(req, res) {
+    generateTransactionAndDetails(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                //   const userId = res.locals.dcrypt.user_id;
                 const userId = 18;
-                const { data } = req.body;
-                const transactionDetails = yield prisma_1.prisma.$transaction((tx) => __awaiter(this, void 0, void 0, function* () {
-                    console.log(data);
+                console.log("this is user id", userId);
+                const { event, ticket, transactions } = req.body;
+                const transaction = yield prisma_1.prisma.$transaction((tx) => __awaiter(this, void 0, void 0, function* () {
                     const user = yield tx.user.findUnique({
                         where: { user_id: userId },
                     });
-                    const checkEventUser = yield tx.event.findUnique({
-                        where: { event_id: data[0].eventId },
-                    });
-                    if (!user || !checkEventUser) {
-                        throw new Error("Unauthorized");
-                    }
-                    const ticketTypesIdMany = data.map((data) => {
-                        return data.ticketTypesId;
+                    if (!user)
+                        throw new Error("User not found");
+                    const ticketTypesIdMany = ticket.data.map((value) => {
+                        return value.ticketTypesId;
                     });
                     const checkTicketTypes = yield tx.ticket_types.findMany({
                         where: {
@@ -43,30 +38,113 @@ class TransactionController {
                             },
                         },
                     });
+                    console.log("ini ticket types id many :", ticketTypesIdMany);
+                    console.log("ini checktickettypes", checkTicketTypes);
                     if (checkTicketTypes.length !== ticketTypesIdMany.length) {
                         throw new Error("One or more ticket types not found");
                     }
-                    const response = yield tx.transaction_Detail.createMany({
-                        data: data.map((data) => {
-                            return {
-                                user_id: user.user_id,
-                                event_id: checkEventUser.event_id,
-                                ticket_types_id: data.ticketTypesId,
-                                quantity_bought: data.quantityBought,
-                                subtotal: data.subtotal,
-                            };
-                        }),
+                    const createdTransactionDetails = yield tx.transaction_Detail.findMany({
+                        where: {
+                            user_id: user.user_id,
+                            event_id: event.event_id,
+                        },
                     });
-                    return response;
+                    console.log("ini created transaction", createdTransactionDetails);
+                    const transaction = yield tx.transaction.create({
+                        data: {
+                            user_id: userId,
+                            coupon_id: transactions.coupon || null,
+                            total_amount: transactions.totalAmount,
+                            payment_method: transactions.paymentMethod,
+                            isPaid: false,
+                        },
+                    });
+                    const transactionDetails = yield tx.transaction_Detail.createMany({
+                        data: ticket.data.map((value) => ({
+                            user_id: user.user_id,
+                            event_id: event.event_id,
+                            ticket_types_id: value.ticketTypesId,
+                            quantity_bought: value.quantityBought,
+                            subtotal: value.subtotal,
+                            transaction_id: transaction.transaction_id,
+                        })),
+                    });
+                    yield tx.transaction_Detail.updateMany({
+                        where: {
+                            transaction_details_id: {
+                                in: createdTransactionDetails.map((value) => value.transaction_details_id),
+                            },
+                        },
+                        data: { transaction_id: transaction.transaction_id },
+                    });
+                    return transaction;
                 }));
-                return responseHandler_1.default.success(res, "Transaction details added! Thank you", 201, transactionDetails);
+                return responseHandler_1.default.success(res, "Transaction success", 201, transaction);
             }
             catch (error) {
                 console.log(error);
-                return responseHandler_1.default.error(res, "Error adding transaction details", 500, error);
+                return responseHandler_1.default.error(res, "Internal server error", 500, error);
             }
         });
     }
+    // async generateTransactionDetails(req: Request, res: Response): Promise<any> {
+    //   try {
+    //     //   const userId = res.locals.dcrypt.user_id;
+    //     const userId = 18;
+    //     const { data } = req.body;
+    //     const transactionDetails = await prisma.$transaction(async (tx) => {
+    //       console.log(data);
+    //       const user = await tx.user.findUnique({
+    //         where: { user_id: userId },
+    //       });
+    //       const checkEventUser = await tx.event.findUnique({
+    //         where: { event_id: data[0].eventId },
+    //       });
+    //       if (!user || !checkEventUser) {
+    //         throw new Error("Unauthorized");
+    //       }
+    //       const ticketTypesIdMany = data.map((data: any) => {
+    //         return data.ticketTypesId;
+    //       });
+    //       const checkTicketTypes = await tx.ticket_types.findMany({
+    //         where: {
+    //           ticket_types_id: {
+    //             in: ticketTypesIdMany,
+    //           },
+    //         },
+    //       });
+    //       if (checkTicketTypes.length !== ticketTypesIdMany.length) {
+    //         throw new Error("One or more ticket types not found");
+    //       }
+    //       const response = await tx.transaction_Detail.createMany({
+    //         data: data.map((data: any) => {
+    //           return {
+    //             user_id: user.user_id,
+    //             event_id: checkEventUser.event_id,
+    //             ticket_types_id: data.ticketTypesId,
+    //             quantity_bought: data.quantityBought,
+    //             subtotal: data.subtotal,
+    //           };
+    //         }),
+    //       });
+    //       return response;
+    //     });
+    //     return ResponseHandler.success(
+    //       res,
+    //       "Transaction details added! Thank you",
+    //       201,
+    //       transactionDetails
+    //     );
+    //   } catch (error) {
+    //     console.log(error);
+    //     return ResponseHandler.error(
+    //       res,
+    //       "Error adding transaction details",
+    //       500,
+    //       error
+    //     );
+    //   }
+    // }
     getTransactionDetails(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {

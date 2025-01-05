@@ -10,15 +10,17 @@ class TransactionRouter {
         this.initializeRoute();
     }
     initializeRoute() {
-        this.route.post("/details", 
-        //   verifyToken,
-        this.transactionController.generateTransactionDetails);
+        // this.route.post(
+        //   "/details",
+        //   //   verifyToken,
+        //   this.transactionController.generateTransactionDetails
+        // );
         this.route.get("/details", 
         //   verifyToken,
         this.transactionController.getTransactionDetails);
         this.route.post("/", 
-        //   verifyToken,
-        this.transactionController.generateTransaction);
+        // verifyToken,
+        this.transactionController.generateTransactionAndDetails);
         this.route.patch("/:id", 
         //   verifyToken,
         this.transactionController.paidTransaction);
