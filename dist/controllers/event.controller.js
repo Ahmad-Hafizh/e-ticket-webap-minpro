@@ -417,7 +417,6 @@ class EventController {
             }
             catch (error) {
                 return responseHandler_1.default.error(res, "Get all event error", 500);
-
             }
         });
     }
