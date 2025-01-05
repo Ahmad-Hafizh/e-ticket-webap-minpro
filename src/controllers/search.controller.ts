@@ -19,10 +19,11 @@ export class SearchController {
         sortby,
         orderby,
         keyword,
+        page,
       } = req.query;
       const url = req.url;
       console.log(url);
-      console.log("Ini city", city);
+      console.log("Ini page", page);
       //PR CEK QUERY
 
       let cityIds: number[] | undefined;
@@ -58,7 +59,12 @@ export class SearchController {
 
       //Category query
 
+      const pageNumber = parseInt(page as string);
+      const pageSize = 6;
+
       const result = await prisma.event.findMany({
+        skip: (pageNumber - 1) * pageSize,
+        take: pageSize,
         where: {
           event_category: {
             some: {
@@ -69,6 +75,7 @@ export class SearchController {
           },
           title: {
             contains: (keyword as string) || undefined,
+            mode: "insensitive",
           },
           organizer_id: (parseInt(eo as string) as number) || undefined, //query by user
           ticket_types: {
@@ -135,12 +142,60 @@ export class SearchController {
         return true;
       });
 
-      return ResponseHandler.success(
-        res,
-        "Filter Success",
-        200,
-        filteredEventFinal
-      );
+      //Count how many items sesuai filter di db
+      const totalEvents = await prisma.event.count({
+        where: {
+          event_category: {
+            some: {
+              category_name: categoriesList
+                ? { in: categoriesList }
+                : undefined,
+            },
+          },
+          title: {
+            contains: (keyword as string) || undefined,
+          },
+          organizer_id: (parseInt(eo as string) as number) || undefined, // query by user
+          ticket_types: {
+            every: {
+              price: {
+                gte: parseInt(pricemin as string) || undefined, // query by price min
+                lte: parseInt(pricemax as string) || undefined, // query by price max
+              },
+            },
+          },
+          event_location: {
+            location_city_id: cityIds ? { in: cityIds } : undefined, // query by city
+            location_country_id: countryIds ? { in: countryIds } : undefined, // query by country
+          },
+          AND: [
+            startdate
+              ? {
+                  startDate: {
+                    gte: new Date(startdate as string) || undefined,
+                  },
+                }
+              : {},
+            enddate
+              ? {
+                  endDate: {
+                    lte: new Date(enddate as string) || undefined,
+                  },
+                }
+              : {},
+          ],
+        },
+      });
+
+      const totalPages = Math.ceil(totalEvents / pageSize);
+
+      const payload = {
+        events: filteredEventFinal,
+        currentPage: pageNumber,
+        totalPages: totalPages,
+      };
+
+      return ResponseHandler.success(res, "Filter Success", 200, payload);
     } catch (error) {
       console.log(error);
       return ResponseHandler.error(res, "Filter Error", 500, error);

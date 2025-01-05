@@ -7,16 +7,16 @@ import { SearchController } from "../controllers/search.controller";
 
 export class SearchRouter {
   private route: Router;
-  private serachController: SearchController;
+  private searchController: SearchController;
 
   constructor() {
     this.route = Router();
-    this.serachController = new SearchController();
+    this.searchController = new SearchController();
     this.initializeRouters();
   }
 
   private initializeRouters(): void {
-    this.route.get("/", this.serachController.filterEvent);
+    this.route.get("/", this.searchController.filterEvent);
   }
 
   public getRouter(): Router {
