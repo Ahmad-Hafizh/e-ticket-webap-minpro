@@ -19,16 +19,18 @@ class TransactionController {
     generateTransactionAndDetails(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const userId = 18;
+                const userId = res.locals.decrypt.id;
                 console.log("this is user id", userId);
                 const { event, ticket, transactions } = req.body;
+                console.log("ini req", req.body);
                 const transaction = yield prisma_1.prisma.$transaction((tx) => __awaiter(this, void 0, void 0, function* () {
+                    var _a;
                     const user = yield tx.user.findUnique({
                         where: { user_id: userId },
                     });
                     if (!user)
                         throw new Error("User not found");
-                    const ticketTypesIdMany = ticket.data.map((value) => {
+                    const ticketTypesIdMany = (_a = ticket.data) === null || _a === void 0 ? void 0 : _a.map((value) => {
                         return value.ticketTypesId;
                     });
                     const checkTicketTypes = yield tx.ticket_types.findMany({
@@ -268,47 +270,6 @@ class TransactionController {
             }
             catch (error) {
                 return responseHandler_1.default.error(res, "Get transaction by user error", 500, error);
-            }
-        });
-    }
-    getTransactionbyOrganizer(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                // const organizerId = res.locals.dcrypt.user_id;
-                const organizerId = parseInt(req.params.id);
-                const response = yield prisma_1.prisma.$transaction((tx) => __awaiter(this, void 0, void 0, function* () {
-                    const organizer = yield prisma_1.prisma.organizer.findUnique({
-                        where: {
-                            user_id: organizerId,
-                        },
-                    });
-                    const transactionsByOrganizer = yield prisma_1.prisma.transaction.findMany({
-                        where: {
-                            transaction_details: {
-                                some: {
-                                    event: {
-                                        organizer: {
-                                            organizer_id: organizerId,
-                                        },
-                                    },
-                                },
-                            },
-                        },
-                        //   include: {
-                        //     transaction_details: {
-                        //       include: {
-                        //         event: true,
-                        //         user: true,
-                        //       },
-                        //     },
-                        //   },
-                    });
-                    return transactionsByOrganizer;
-                }));
-                return responseHandler_1.default.success(res, "Get transaction by organizer success!", 201, response);
-            }
-            catch (error) {
-                return responseHandler_1.default.error(res, "Get transaction by organizer error!", 500, error);
             }
         });
     }

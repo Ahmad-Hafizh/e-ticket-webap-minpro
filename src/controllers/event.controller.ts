@@ -398,6 +398,8 @@ export class EventController {
         include: {
           event_location: true,
           ticket_types: true,
+          organizer: true,
+          customer: true,
           review: {
             include: {
               user: true,
@@ -450,7 +452,6 @@ export class EventController {
       return ResponseHandler.error(res, "Get location error", 500);
     }
   }
-
 
   async getEventMainPage(req: Request, res: Response): Promise<any> {
     try {
@@ -518,5 +519,4 @@ export class EventController {
       return ResponseHandler.error(res, "Get all event error", 500);
     }
   }
-
 }

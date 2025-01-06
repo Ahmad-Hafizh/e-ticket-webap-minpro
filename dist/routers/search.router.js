@@ -6,11 +6,11 @@ const search_controller_1 = require("../controllers/search.controller");
 class SearchRouter {
     constructor() {
         this.route = (0, express_1.Router)();
-        this.serachController = new search_controller_1.SearchController();
+        this.searchController = new search_controller_1.SearchController();
         this.initializeRouters();
     }
     initializeRouters() {
-        this.route.get("/", this.serachController.filterEvent);
+        this.route.get("/", this.searchController.filterEvent);
     }
     getRouter() {
         return this.route;

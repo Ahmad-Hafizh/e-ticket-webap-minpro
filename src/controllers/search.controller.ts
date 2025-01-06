@@ -57,7 +57,8 @@ export class SearchController {
         countryIds = countryData.map((country) => country.location_country_id);
       }
 
-      //Category query
+      const pageNumber = parseInt(page as string);
+      const pageSize = 6;
 
       const pageNumber = parseInt(page as string);
       const pageSize = 6;
@@ -77,7 +78,7 @@ export class SearchController {
             contains: (keyword as string) || undefined,
             mode: "insensitive",
           },
-          organizer_id: (parseInt(eo as string) as number) || undefined, //query by user
+          organizer_id: (parseInt(eo as string) as number) || undefined,
           ticket_types: {
             every: {
               price: {
@@ -129,7 +130,7 @@ export class SearchController {
 
         return {
           ...value,
-          min_price: minPrice as any, // Add computed min_price
+          min_price: minPrice as any,
         };
       });
 
