@@ -60,6 +60,9 @@ export class SearchController {
       const pageNumber = parseInt(page as string);
       const pageSize = 6;
 
+      const pageNumber = parseInt(page as string);
+      const pageSize = 6;
+
       const result = await prisma.event.findMany({
         skip: (pageNumber - 1) * pageSize,
         take: pageSize,
