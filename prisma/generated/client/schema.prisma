@@ -21,6 +21,7 @@ model User {
   user_id    Int      @id @default(autoincrement())
   name       String
   email      String   @unique
+  phone      String?
   password   String
   pfp_url    String?
   created_at DateTime @default(now())
@@ -46,28 +47,17 @@ model User {
 
 model Profile {
   profile_id    Int            @id @default(autoincrement())
-  phone         String?
-  job_title     String?
-  company       String?
-  addresses     Address[]
   social_medias Social_media[]
+  address       String?
+  city          String?
+  country       String?
+  zipcode       String?
+  birth_date    String?
+  gender        Gender?
   user_id       Int            @unique
   user          User           @relation(fields: [user_id], references: [user_id])
 
   @@map("profile")
-}
-
-model Address {
-  address_id   Int         @id @default(autoincrement())
-  profile      Profile     @relation(fields: [profile_id], references: [profile_id])
-  profile_id   Int
-  address_name AddressName
-  address      String
-  city         String
-  country      String
-  zipcode      String?
-
-  @@map("address")
 }
 
 model Organizer {
@@ -292,4 +282,9 @@ enum Platform {
   whatsapp
   line
   behance
+}
+
+enum Gender {
+  male
+  female
 }

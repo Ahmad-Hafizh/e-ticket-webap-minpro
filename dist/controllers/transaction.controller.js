@@ -19,18 +19,18 @@ class TransactionController {
     generateTransactionAndDetails(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const userId = res.locals.decrypt.id;
-                console.log("this is user id", userId);
-                const { event, ticket, transactions } = req.body;
+                const userId = res.locals.dcrypt.user_id;
+                console.log("INI RES LCOALS", res.locals.dcrypt);
+                // console.log("this is user id", userId);
+                const { event, ticket, transactions } = req.body.payloadUltimate;
                 console.log("ini req", req.body);
                 const transaction = yield prisma_1.prisma.$transaction((tx) => __awaiter(this, void 0, void 0, function* () {
-                    var _a;
                     const user = yield tx.user.findUnique({
                         where: { user_id: userId },
                     });
                     if (!user)
                         throw new Error("User not found");
-                    const ticketTypesIdMany = (_a = ticket.data) === null || _a === void 0 ? void 0 : _a.map((value) => {
+                    const ticketTypesIdMany = ticket.data.map((value) => {
                         return value.ticketTypesId;
                     });
                     const checkTicketTypes = yield tx.ticket_types.findMany({
@@ -81,6 +81,7 @@ class TransactionController {
                     });
                     return transaction;
                 }));
+                console.log("ini transcation", transaction);
                 return responseHandler_1.default.success(res, "Transaction success", 201, transaction);
             }
             catch (error) {
@@ -234,7 +235,9 @@ class TransactionController {
             try {
                 const transactionId = req.params.id;
                 const { eventId } = req.body;
-                const userId = 18;
+                const userId = res.locals.dcrypt.user_id;
+                console.log("Ini req.body");
+                const ticket = req.body.session.ticket.data;
                 const updateTransaction = yield prisma_1.prisma.$transaction((tx) => __awaiter(this, void 0, void 0, function* () {
                     const response = yield prisma_1.prisma.transaction.update({
                         where: { transaction_id: parseInt(transactionId) },
@@ -249,8 +252,35 @@ class TransactionController {
                             },
                         },
                     });
+                    console.log("Ini updating user: ", updatingUser);
+                    ticket.map((value, index) => __awaiter(this, void 0, void 0, function* () {
+                        console.log("Ini value:", value);
+                        const updateTicket = yield prisma_1.prisma.$transaction((tx) => __awaiter(this, void 0, void 0, function* () {
+                            const checkTicketTypes = yield tx.ticket_types.findUnique({
+                                where: {
+                                    ticket_types_id: value.ticketTypesId,
+                                },
+                            });
+                            console.log("Ini value quantity bought: ", value.quantityBought);
+                            console.log("Ini value quantity available: ", checkTicketTypes === null || checkTicketTypes === void 0 ? void 0 : checkTicketTypes.quantity_available);
+                            const quantityLeft = (checkTicketTypes === null || checkTicketTypes === void 0 ? void 0 : checkTicketTypes.quantity_available) -
+                                parseInt(value.quantityBought);
+                            console.log("Ini quantity left: ", quantityLeft);
+                            //Update ticket quantities
+                            const updateQuantity = yield tx.ticket_types.update({
+                                data: {
+                                    quantity_available: quantityLeft,
+                                },
+                                where: {
+                                    ticket_types_id: value.ticketTypesId,
+                                },
+                            });
+                            return updateQuantity;
+                        }));
+                    }));
                     return response;
                 }));
+                console.log("ini response dari paid: ", updateTransaction);
                 return responseHandler_1.default.success(res, "Transaction paid. Thank you!", 201, updateTransaction);
             }
             catch (error) {

@@ -28,13 +28,11 @@ class SearchController {
                 pricemin, pricemax, sortby, orderby, keyword, page, } = req.query;
                 const url = req.url;
                 console.log(url);
-                console.log("Ini page", page);
+                console.log('Ini page', page);
                 //PR CEK QUERY
                 let cityIds;
                 if (city) {
-                    const cityNames = city
-                        .split(",")
-                        .map((name) => name.trim());
+                    const cityNames = city.split(',').map((name) => name.trim());
                     const cityData = yield prisma_1.prisma.location_city.findMany({
                         where: {
                             city_name: { in: cityNames },
@@ -42,15 +40,11 @@ class SearchController {
                     });
                     cityIds = cityData.map((city) => city.location_city_id);
                 }
-                const categoriesList = cat
-                    ? cat.split(",").map((name) => name.trim())
-                    : undefined;
-                console.log("Ini categoriesList", categoriesList);
+                const categoriesList = cat ? cat.split(',').map((name) => name.trim()) : undefined;
+                console.log('Ini categoriesList', categoriesList);
                 let countryIds;
                 if (countryIds) {
-                    const countryNames = country
-                        .split(",")
-                        .map((name) => name.trim());
+                    const countryNames = country.split(',').map((name) => name.trim());
                     const countryData = yield prisma_1.prisma.location_country.findMany({
                         where: {
                             country_name: { in: countryNames },
@@ -66,14 +60,12 @@ class SearchController {
                     where: {
                         event_category: {
                             some: {
-                                category_name: categoriesList
-                                    ? { in: categoriesList }
-                                    : undefined,
+                                category_name: categoriesList ? { in: categoriesList } : undefined,
                             },
                         },
                         title: {
                             contains: keyword || undefined,
-                            mode: "insensitive",
+                            mode: 'insensitive',
                         },
                         organizer_id: parseInt(eo) || undefined,
                         ticket_types: {
@@ -118,9 +110,7 @@ class SearchController {
                 });
                 //Filter price range
                 const priceRange = result.map((value) => {
-                    const minPrice = value.ticket_types.length
-                        ? Math.min(...value.ticket_types.map((value) => value.price))
-                        : null;
+                    const minPrice = value.ticket_types.length ? Math.min(...value.ticket_types.map((value) => value.price)) : null;
                     return Object.assign(Object.assign({}, value), { min_price: minPrice });
                 });
                 const filteredEventFinal = priceRange.filter((value) => {
@@ -137,9 +127,7 @@ class SearchController {
                     where: {
                         event_category: {
                             some: {
-                                category_name: categoriesList
-                                    ? { in: categoriesList }
-                                    : undefined,
+                                category_name: categoriesList ? { in: categoriesList } : undefined,
                             },
                         },
                         title: {
@@ -182,11 +170,11 @@ class SearchController {
                     currentPage: pageNumber,
                     totalPages: totalPages,
                 };
-                return responseHandler_1.default.success(res, "Filter Success", 200, payload);
+                return responseHandler_1.default.success(res, 'Filter Success', 200, payload);
             }
             catch (error) {
                 console.log(error);
-                return responseHandler_1.default.error(res, "Filter Error", 500, error);
+                return responseHandler_1.default.error(res, 'Filter Error', 500, error);
             }
         });
     }

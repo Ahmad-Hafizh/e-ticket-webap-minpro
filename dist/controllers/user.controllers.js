@@ -19,7 +19,6 @@ const nodemailer_1 = require("../config/nodemailer");
 const jsonwebtoken_1 = require("jsonwebtoken");
 const bcrypt_1 = require("bcrypt");
 const hashPassword_1 = require("../utils/hashPassword");
-const cloudinary_1 = require("../config/cloudinary");
 class UserController {
     signUp(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -122,20 +121,13 @@ class UserController {
     verifyEmail(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const userToken = res.locals.dcrypt;
-                // checking if user exist
-                const isUserExist = yield prisma_1.prisma.user.findUnique({
-                    where: { email: userToken.email },
-                });
-                if (!isUserExist) {
-                    return responseHandler_1.default.error(res, 'account is not found', 404);
-                }
+                const user = res.locals.user;
                 // updating the isverified to true
-                const user = yield prisma_1.prisma.user.update({
-                    where: { email: isUserExist.email },
+                const userVerified = yield prisma_1.prisma.user.update({
+                    where: { email: user.email },
                     data: { isVerified: true },
                 });
-                return responseHandler_1.default.success(res, 'verfication is success', 200, user);
+                return responseHandler_1.default.success(res, 'verfication is success', 200);
             }
             catch (error) {
                 return responseHandler_1.default.error(res, 'verification is failed', 500, error);
@@ -182,24 +174,18 @@ class UserController {
     keepLogin(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const userToken = res.locals.dcrypt;
-                const isUserExist = yield prisma_1.prisma.user.findUnique({
-                    where: { user_id: userToken.user_id, email: userToken.email },
-                });
-                if (!isUserExist) {
-                    return responseHandler_1.default.error(res, 'account not exist', 404);
-                }
+                const user = res.locals.user;
                 const newToken = (0, jsonwebtoken_1.sign)({
-                    user_id: isUserExist.user_id,
-                    email: isUserExist.email,
-                    role: isUserExist.role,
-                    isVerified: isUserExist.isVerified,
+                    user_id: user.user_id,
+                    email: user.email,
+                    role: user.role,
+                    isVerified: user.isVerified,
                 }, process.env.TOKEN_KEY || 'secretkey');
                 return responseHandler_1.default.success(res, 'keep login is success', 200, {
-                    name: isUserExist.name,
-                    email: isUserExist.email,
-                    pfp_url: isUserExist.pfp_url,
-                    isVerified: isUserExist.isVerified,
+                    name: user.name,
+                    email: user.email,
+                    pfp_url: user.pfp_url,
+                    isVerified: user.isVerified,
                     newToken,
                 });
             }
@@ -211,17 +197,10 @@ class UserController {
     updateUserRole(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const userToken = res.locals.dcrypt;
-                const isUserExist = yield prisma_1.prisma.user.findUnique({
-                    where: { user_id: userToken.user_id, email: userToken.email },
-                });
-                if (!isUserExist) {
-                    return responseHandler_1.default.error(res, 'account not exist', 404);
-                }
-                // const isUserExist: any = userRepo.checkIsUserExist(userToken, res, 'account not exist');
+                const user = res.locals.user;
                 yield prisma_1.prisma.$transaction((tx) => __awaiter(this, void 0, void 0, function* () {
-                    const user = yield tx.user.update({
-                        where: { email: isUserExist.email, user_id: isUserExist.user_id },
+                    yield tx.user.update({
+                        where: { email: user.email, user_id: user.user_id },
                         data: {
                             role: 'organizer',
                         },
@@ -235,7 +214,7 @@ class UserController {
                             organizer_address: req.body.organizer_address,
                         },
                     });
-                    const organizerBank = yield tx.bank_account.create({
+                    yield tx.bank_account.create({
                         data: {
                             bank_account_name: req.body.bank_account_name,
                             bank_account_number: req.body.bank_account_number,
@@ -248,73 +227,6 @@ class UserController {
             }
             catch (error) {
                 return responseHandler_1.default.error(res, 'update user role is failed', 500, error);
-            }
-        });
-    }
-    updatePfp(req, res, next) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                if (!req.file) {
-                    return responseHandler_1.default.error(res, 'Image not available', 404);
-                }
-                const userToken = res.locals.dcrypt;
-                const isUserExist = yield prisma_1.prisma.user.findUnique({
-                    where: { user_id: userToken.user_id, email: userToken.email },
-                });
-                if (!isUserExist) {
-                    return responseHandler_1.default.error(res, 'account not exist', 404);
-                }
-                const { secure_url } = yield (0, cloudinary_1.cloudinaryUpload)(req.file, 'profile');
-                const user = yield prisma_1.prisma.user.update({
-                    where: { user_id: isUserExist.user_id },
-                    data: { pfp_url: secure_url },
-                });
-                return responseHandler_1.default.success(res, 'update profile picture is success', 201, secure_url);
-            }
-            catch (error) {
-                return responseHandler_1.default.error(res, 'update profile picture is failed', 500, error);
-            }
-        });
-    }
-    updateProfile(req, res, next) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const userToken = res.locals.dcrypt;
-                const isUserExist = yield prisma_1.prisma.user.findUnique({
-                    where: { user_id: userToken.user_id, email: userToken.email },
-                });
-                if (!isUserExist) {
-                    return responseHandler_1.default.error(res, 'account not exist', 404);
-                }
-                const profile = yield prisma_1.prisma.profile.update({
-                    where: { user_id: isUserExist.user_id },
-                    data: Object.assign({}, req.body),
-                });
-                return responseHandler_1.default.success(res, 'update profile is success', 201, profile);
-            }
-            catch (error) {
-                return responseHandler_1.default.error(res, 'update profile is failed', 500, error);
-            }
-        });
-    }
-    createAddress(req, res, next) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const userToken = res.locals.dcrypt;
-                console.log(userToken);
-                const isProfileExist = yield prisma_1.prisma.profile.findUnique({
-                    where: { user_id: userToken.user_id },
-                });
-                if (!isProfileExist) {
-                    return responseHandler_1.default.error(res, 'account not exist', 404);
-                }
-                const address = yield prisma_1.prisma.address.create({
-                    data: Object.assign(Object.assign({}, req.body), { profile_id: isProfileExist.profile_id }),
-                });
-                return responseHandler_1.default.success(res, 'update profile is success', 201, address);
-            }
-            catch (error) {
-                return responseHandler_1.default.error(res, 'create address is failed', 500, error);
             }
         });
     }
@@ -348,15 +260,9 @@ class UserController {
     recoverPassword(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const token = res.locals.dcrypt;
-                const findUser = yield prisma_1.prisma.user.findUnique({
-                    where: { user_id: token.user_id, email: token.email },
-                });
-                if (!findUser) {
-                    return responseHandler_1.default.error(res, 'Account is not found', 404);
-                }
+                const user = res.locals.user;
                 yield prisma_1.prisma.user.update({
-                    where: { user_id: findUser.user_id, email: findUser.email },
+                    where: { user_id: user.user_id, email: user.email },
                     data: {
                         password: yield (0, hashPassword_1.hashPassword)(req.body.password),
                     },

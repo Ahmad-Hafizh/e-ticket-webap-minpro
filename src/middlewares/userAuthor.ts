@@ -5,7 +5,7 @@ export const userAuthorization = async (req: Request, res: Response, next: NextF
   try {
     const token = res.locals.dcrypt;
 
-    if (token) {
+    if (!token) {
       return ResponseHandler.error(res, 'Token is not found', 404);
     }
 

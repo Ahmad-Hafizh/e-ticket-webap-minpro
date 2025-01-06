@@ -17,7 +17,7 @@ const responseHandler_1 = __importDefault(require("../utils/responseHandler"));
 const userAuthorization = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const token = res.locals.dcrypt;
-        if (token) {
+        if (!token) {
             return responseHandler_1.default.error(res, 'Token is not found', 404);
         }
         if (!token.isVerified) {

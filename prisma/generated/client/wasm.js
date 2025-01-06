@@ -121,6 +121,7 @@ exports.Prisma.UserScalarFieldEnum = {
   user_id: 'user_id',
   name: 'name',
   email: 'email',
+  phone: 'phone',
   password: 'password',
   pfp_url: 'pfp_url',
   created_at: 'created_at',
@@ -131,20 +132,13 @@ exports.Prisma.UserScalarFieldEnum = {
 
 exports.Prisma.ProfileScalarFieldEnum = {
   profile_id: 'profile_id',
-  phone: 'phone',
-  job_title: 'job_title',
-  company: 'company',
-  user_id: 'user_id'
-};
-
-exports.Prisma.AddressScalarFieldEnum = {
-  address_id: 'address_id',
-  profile_id: 'profile_id',
-  address_name: 'address_name',
   address: 'address',
   city: 'city',
   country: 'country',
-  zipcode: 'zipcode'
+  zipcode: 'zipcode',
+  birth_date: 'birth_date',
+  gender: 'gender',
+  user_id: 'user_id'
 };
 
 exports.Prisma.OrganizerScalarFieldEnum = {
@@ -298,10 +292,9 @@ exports.Role = exports.$Enums.Role = {
   organizer: 'organizer'
 };
 
-exports.AddressName = exports.$Enums.AddressName = {
-  home: 'home',
-  shipping: 'shipping',
-  work: 'work'
+exports.Gender = exports.$Enums.Gender = {
+  male: 'male',
+  female: 'female'
 };
 
 exports.Platform = exports.$Enums.Platform = {
@@ -322,7 +315,6 @@ exports.PaymentMethod = exports.$Enums.PaymentMethod = {
 exports.Prisma.ModelName = {
   User: 'User',
   Profile: 'Profile',
-  Address: 'Address',
   Organizer: 'Organizer',
   Bank_account: 'Bank_account',
   Point: 'Point',

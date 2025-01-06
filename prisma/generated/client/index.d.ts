@@ -24,11 +24,6 @@ export type User = $Result.DefaultSelection<Prisma.$UserPayload>
  */
 export type Profile = $Result.DefaultSelection<Prisma.$ProfilePayload>
 /**
- * Model Address
- * 
- */
-export type Address = $Result.DefaultSelection<Prisma.$AddressPayload>
-/**
  * Model Organizer
  * 
  */
@@ -145,6 +140,14 @@ export const Platform: {
 
 export type Platform = (typeof Platform)[keyof typeof Platform]
 
+
+export const Gender: {
+  male: 'male',
+  female: 'female'
+};
+
+export type Gender = (typeof Gender)[keyof typeof Gender]
+
 }
 
 export type PaymentMethod = $Enums.PaymentMethod
@@ -162,6 +165,10 @@ export const AddressName: typeof $Enums.AddressName
 export type Platform = $Enums.Platform
 
 export const Platform: typeof $Enums.Platform
+
+export type Gender = $Enums.Gender
+
+export const Gender: typeof $Enums.Gender
 
 /**
  * ##  Prisma Client ʲˢ
@@ -315,16 +322,6 @@ export class PrismaClient<
     * ```
     */
   get profile(): Prisma.ProfileDelegate<ExtArgs>;
-
-  /**
-   * `prisma.address`: Exposes CRUD operations for the **Address** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Addresses
-    * const addresses = await prisma.address.findMany()
-    * ```
-    */
-  get address(): Prisma.AddressDelegate<ExtArgs>;
 
   /**
    * `prisma.organizer`: Exposes CRUD operations for the **Organizer** model.
@@ -917,7 +914,6 @@ export namespace Prisma {
   export const ModelName: {
     User: 'User',
     Profile: 'Profile',
-    Address: 'Address',
     Organizer: 'Organizer',
     Bank_account: 'Bank_account',
     Point: 'Point',
@@ -948,7 +944,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "user" | "profile" | "address" | "organizer" | "bank_account" | "point" | "referral" | "social_media" | "coupon" | "event" | "event_category" | "event_Location" | "location_city" | "location_country" | "ticket_types" | "transaction_Detail" | "transaction" | "review"
+      modelProps: "user" | "profile" | "organizer" | "bank_account" | "point" | "referral" | "social_media" | "coupon" | "event" | "event_category" | "event_Location" | "location_city" | "location_country" | "ticket_types" | "transaction_Detail" | "transaction" | "review"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1089,76 +1085,6 @@ export namespace Prisma {
           count: {
             args: Prisma.ProfileCountArgs<ExtArgs>
             result: $Utils.Optional<ProfileCountAggregateOutputType> | number
-          }
-        }
-      }
-      Address: {
-        payload: Prisma.$AddressPayload<ExtArgs>
-        fields: Prisma.AddressFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.AddressFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AddressPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.AddressFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AddressPayload>
-          }
-          findFirst: {
-            args: Prisma.AddressFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AddressPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.AddressFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AddressPayload>
-          }
-          findMany: {
-            args: Prisma.AddressFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AddressPayload>[]
-          }
-          create: {
-            args: Prisma.AddressCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AddressPayload>
-          }
-          createMany: {
-            args: Prisma.AddressCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.AddressCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AddressPayload>[]
-          }
-          delete: {
-            args: Prisma.AddressDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AddressPayload>
-          }
-          update: {
-            args: Prisma.AddressUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AddressPayload>
-          }
-          deleteMany: {
-            args: Prisma.AddressDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.AddressUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          upsert: {
-            args: Prisma.AddressUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AddressPayload>
-          }
-          aggregate: {
-            args: Prisma.AddressAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateAddress>
-          }
-          groupBy: {
-            args: Prisma.AddressGroupByArgs<ExtArgs>
-            result: $Utils.Optional<AddressGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.AddressCountArgs<ExtArgs>
-            result: $Utils.Optional<AddressCountAggregateOutputType> | number
           }
         }
       }
@@ -2453,12 +2379,10 @@ export namespace Prisma {
    */
 
   export type ProfileCountOutputType = {
-    addresses: number
     social_medias: number
   }
 
   export type ProfileCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    addresses?: boolean | ProfileCountOutputTypeCountAddressesArgs
     social_medias?: boolean | ProfileCountOutputTypeCountSocial_mediasArgs
   }
 
@@ -2471,13 +2395,6 @@ export namespace Prisma {
      * Select specific fields to fetch from the ProfileCountOutputType
      */
     select?: ProfileCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * ProfileCountOutputType without action
-   */
-  export type ProfileCountOutputTypeCountAddressesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: AddressWhereInput
   }
 
   /**
@@ -2802,6 +2719,7 @@ export namespace Prisma {
     user_id: number | null
     name: string | null
     email: string | null
+    phone: string | null
     password: string | null
     pfp_url: string | null
     created_at: Date | null
@@ -2814,6 +2732,7 @@ export namespace Prisma {
     user_id: number | null
     name: string | null
     email: string | null
+    phone: string | null
     password: string | null
     pfp_url: string | null
     created_at: Date | null
@@ -2826,6 +2745,7 @@ export namespace Prisma {
     user_id: number
     name: number
     email: number
+    phone: number
     password: number
     pfp_url: number
     created_at: number
@@ -2850,6 +2770,7 @@ export namespace Prisma {
     user_id?: true
     name?: true
     email?: true
+    phone?: true
     password?: true
     pfp_url?: true
     created_at?: true
@@ -2862,6 +2783,7 @@ export namespace Prisma {
     user_id?: true
     name?: true
     email?: true
+    phone?: true
     password?: true
     pfp_url?: true
     created_at?: true
@@ -2874,6 +2796,7 @@ export namespace Prisma {
     user_id?: true
     name?: true
     email?: true
+    phone?: true
     password?: true
     pfp_url?: true
     created_at?: true
@@ -2973,6 +2896,7 @@ export namespace Prisma {
     user_id: number
     name: string
     email: string
+    phone: string | null
     password: string
     pfp_url: string | null
     created_at: Date
@@ -3004,6 +2928,7 @@ export namespace Prisma {
     user_id?: boolean
     name?: boolean
     email?: boolean
+    phone?: boolean
     password?: boolean
     pfp_url?: boolean
     created_at?: boolean
@@ -3027,6 +2952,7 @@ export namespace Prisma {
     user_id?: boolean
     name?: boolean
     email?: boolean
+    phone?: boolean
     password?: boolean
     pfp_url?: boolean
     created_at?: boolean
@@ -3040,6 +2966,7 @@ export namespace Prisma {
     user_id?: boolean
     name?: boolean
     email?: boolean
+    phone?: boolean
     password?: boolean
     pfp_url?: boolean
     created_at?: boolean
@@ -3083,6 +3010,7 @@ export namespace Prisma {
       user_id: number
       name: string
       email: string
+      phone: string | null
       password: string
       pfp_url: string | null
       created_at: Date
@@ -3495,6 +3423,7 @@ export namespace Prisma {
     readonly user_id: FieldRef<"User", 'Int'>
     readonly name: FieldRef<"User", 'String'>
     readonly email: FieldRef<"User", 'String'>
+    readonly phone: FieldRef<"User", 'String'>
     readonly password: FieldRef<"User", 'String'>
     readonly pfp_url: FieldRef<"User", 'String'>
     readonly created_at: FieldRef<"User", 'DateTime'>
@@ -4037,25 +3966,34 @@ export namespace Prisma {
 
   export type ProfileMinAggregateOutputType = {
     profile_id: number | null
-    phone: string | null
-    job_title: string | null
-    company: string | null
+    address: string | null
+    city: string | null
+    country: string | null
+    zipcode: string | null
+    birth_date: string | null
+    gender: $Enums.Gender | null
     user_id: number | null
   }
 
   export type ProfileMaxAggregateOutputType = {
     profile_id: number | null
-    phone: string | null
-    job_title: string | null
-    company: string | null
+    address: string | null
+    city: string | null
+    country: string | null
+    zipcode: string | null
+    birth_date: string | null
+    gender: $Enums.Gender | null
     user_id: number | null
   }
 
   export type ProfileCountAggregateOutputType = {
     profile_id: number
-    phone: number
-    job_title: number
-    company: number
+    address: number
+    city: number
+    country: number
+    zipcode: number
+    birth_date: number
+    gender: number
     user_id: number
     _all: number
   }
@@ -4073,25 +4011,34 @@ export namespace Prisma {
 
   export type ProfileMinAggregateInputType = {
     profile_id?: true
-    phone?: true
-    job_title?: true
-    company?: true
+    address?: true
+    city?: true
+    country?: true
+    zipcode?: true
+    birth_date?: true
+    gender?: true
     user_id?: true
   }
 
   export type ProfileMaxAggregateInputType = {
     profile_id?: true
-    phone?: true
-    job_title?: true
-    company?: true
+    address?: true
+    city?: true
+    country?: true
+    zipcode?: true
+    birth_date?: true
+    gender?: true
     user_id?: true
   }
 
   export type ProfileCountAggregateInputType = {
     profile_id?: true
-    phone?: true
-    job_title?: true
-    company?: true
+    address?: true
+    city?: true
+    country?: true
+    zipcode?: true
+    birth_date?: true
+    gender?: true
     user_id?: true
     _all?: true
   }
@@ -4184,9 +4131,12 @@ export namespace Prisma {
 
   export type ProfileGroupByOutputType = {
     profile_id: number
-    phone: string | null
-    job_title: string | null
-    company: string | null
+    address: string | null
+    city: string | null
+    country: string | null
+    zipcode: string | null
+    birth_date: string | null
+    gender: $Enums.Gender | null
     user_id: number
     _count: ProfileCountAggregateOutputType | null
     _avg: ProfileAvgAggregateOutputType | null
@@ -4211,11 +4161,13 @@ export namespace Prisma {
 
   export type ProfileSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     profile_id?: boolean
-    phone?: boolean
-    job_title?: boolean
-    company?: boolean
+    address?: boolean
+    city?: boolean
+    country?: boolean
+    zipcode?: boolean
+    birth_date?: boolean
+    gender?: boolean
     user_id?: boolean
-    addresses?: boolean | Profile$addressesArgs<ExtArgs>
     social_medias?: boolean | Profile$social_mediasArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
     _count?: boolean | ProfileCountOutputTypeDefaultArgs<ExtArgs>
@@ -4223,23 +4175,28 @@ export namespace Prisma {
 
   export type ProfileSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     profile_id?: boolean
-    phone?: boolean
-    job_title?: boolean
-    company?: boolean
+    address?: boolean
+    city?: boolean
+    country?: boolean
+    zipcode?: boolean
+    birth_date?: boolean
+    gender?: boolean
     user_id?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["profile"]>
 
   export type ProfileSelectScalar = {
     profile_id?: boolean
-    phone?: boolean
-    job_title?: boolean
-    company?: boolean
+    address?: boolean
+    city?: boolean
+    country?: boolean
+    zipcode?: boolean
+    birth_date?: boolean
+    gender?: boolean
     user_id?: boolean
   }
 
   export type ProfileInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    addresses?: boolean | Profile$addressesArgs<ExtArgs>
     social_medias?: boolean | Profile$social_mediasArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
     _count?: boolean | ProfileCountOutputTypeDefaultArgs<ExtArgs>
@@ -4251,15 +4208,17 @@ export namespace Prisma {
   export type $ProfilePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Profile"
     objects: {
-      addresses: Prisma.$AddressPayload<ExtArgs>[]
       social_medias: Prisma.$Social_mediaPayload<ExtArgs>[]
       user: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       profile_id: number
-      phone: string | null
-      job_title: string | null
-      company: string | null
+      address: string | null
+      city: string | null
+      country: string | null
+      zipcode: string | null
+      birth_date: string | null
+      gender: $Enums.Gender | null
       user_id: number
     }, ExtArgs["result"]["profile"]>
     composites: {}
@@ -4625,7 +4584,6 @@ export namespace Prisma {
    */
   export interface Prisma__ProfileClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    addresses<T extends Profile$addressesArgs<ExtArgs> = {}>(args?: Subset<T, Profile$addressesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AddressPayload<ExtArgs>, T, "findMany"> | Null>
     social_medias<T extends Profile$social_mediasArgs<ExtArgs> = {}>(args?: Subset<T, Profile$social_mediasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Social_mediaPayload<ExtArgs>, T, "findMany"> | Null>
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
     /**
@@ -4658,9 +4616,12 @@ export namespace Prisma {
    */ 
   interface ProfileFieldRefs {
     readonly profile_id: FieldRef<"Profile", 'Int'>
-    readonly phone: FieldRef<"Profile", 'String'>
-    readonly job_title: FieldRef<"Profile", 'String'>
-    readonly company: FieldRef<"Profile", 'String'>
+    readonly address: FieldRef<"Profile", 'String'>
+    readonly city: FieldRef<"Profile", 'String'>
+    readonly country: FieldRef<"Profile", 'String'>
+    readonly zipcode: FieldRef<"Profile", 'String'>
+    readonly birth_date: FieldRef<"Profile", 'String'>
+    readonly gender: FieldRef<"Profile", 'Gender'>
     readonly user_id: FieldRef<"Profile", 'Int'>
   }
     
@@ -4980,26 +4941,6 @@ export namespace Prisma {
   }
 
   /**
-   * Profile.addresses
-   */
-  export type Profile$addressesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Address
-     */
-    select?: AddressSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AddressInclude<ExtArgs> | null
-    where?: AddressWhereInput
-    orderBy?: AddressOrderByWithRelationInput | AddressOrderByWithRelationInput[]
-    cursor?: AddressWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: AddressScalarFieldEnum | AddressScalarFieldEnum[]
-  }
-
-  /**
    * Profile.social_medias
    */
   export type Profile$social_mediasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5031,1001 +4972,6 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: ProfileInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model Address
-   */
-
-  export type AggregateAddress = {
-    _count: AddressCountAggregateOutputType | null
-    _avg: AddressAvgAggregateOutputType | null
-    _sum: AddressSumAggregateOutputType | null
-    _min: AddressMinAggregateOutputType | null
-    _max: AddressMaxAggregateOutputType | null
-  }
-
-  export type AddressAvgAggregateOutputType = {
-    address_id: number | null
-    profile_id: number | null
-  }
-
-  export type AddressSumAggregateOutputType = {
-    address_id: number | null
-    profile_id: number | null
-  }
-
-  export type AddressMinAggregateOutputType = {
-    address_id: number | null
-    profile_id: number | null
-    address_name: $Enums.AddressName | null
-    address: string | null
-    city: string | null
-    country: string | null
-    zipcode: string | null
-  }
-
-  export type AddressMaxAggregateOutputType = {
-    address_id: number | null
-    profile_id: number | null
-    address_name: $Enums.AddressName | null
-    address: string | null
-    city: string | null
-    country: string | null
-    zipcode: string | null
-  }
-
-  export type AddressCountAggregateOutputType = {
-    address_id: number
-    profile_id: number
-    address_name: number
-    address: number
-    city: number
-    country: number
-    zipcode: number
-    _all: number
-  }
-
-
-  export type AddressAvgAggregateInputType = {
-    address_id?: true
-    profile_id?: true
-  }
-
-  export type AddressSumAggregateInputType = {
-    address_id?: true
-    profile_id?: true
-  }
-
-  export type AddressMinAggregateInputType = {
-    address_id?: true
-    profile_id?: true
-    address_name?: true
-    address?: true
-    city?: true
-    country?: true
-    zipcode?: true
-  }
-
-  export type AddressMaxAggregateInputType = {
-    address_id?: true
-    profile_id?: true
-    address_name?: true
-    address?: true
-    city?: true
-    country?: true
-    zipcode?: true
-  }
-
-  export type AddressCountAggregateInputType = {
-    address_id?: true
-    profile_id?: true
-    address_name?: true
-    address?: true
-    city?: true
-    country?: true
-    zipcode?: true
-    _all?: true
-  }
-
-  export type AddressAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Address to aggregate.
-     */
-    where?: AddressWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Addresses to fetch.
-     */
-    orderBy?: AddressOrderByWithRelationInput | AddressOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: AddressWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Addresses from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Addresses.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned Addresses
-    **/
-    _count?: true | AddressCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: AddressAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: AddressSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: AddressMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: AddressMaxAggregateInputType
-  }
-
-  export type GetAddressAggregateType<T extends AddressAggregateArgs> = {
-        [P in keyof T & keyof AggregateAddress]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateAddress[P]>
-      : GetScalarType<T[P], AggregateAddress[P]>
-  }
-
-
-
-
-  export type AddressGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: AddressWhereInput
-    orderBy?: AddressOrderByWithAggregationInput | AddressOrderByWithAggregationInput[]
-    by: AddressScalarFieldEnum[] | AddressScalarFieldEnum
-    having?: AddressScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: AddressCountAggregateInputType | true
-    _avg?: AddressAvgAggregateInputType
-    _sum?: AddressSumAggregateInputType
-    _min?: AddressMinAggregateInputType
-    _max?: AddressMaxAggregateInputType
-  }
-
-  export type AddressGroupByOutputType = {
-    address_id: number
-    profile_id: number
-    address_name: $Enums.AddressName
-    address: string
-    city: string
-    country: string
-    zipcode: string | null
-    _count: AddressCountAggregateOutputType | null
-    _avg: AddressAvgAggregateOutputType | null
-    _sum: AddressSumAggregateOutputType | null
-    _min: AddressMinAggregateOutputType | null
-    _max: AddressMaxAggregateOutputType | null
-  }
-
-  type GetAddressGroupByPayload<T extends AddressGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<AddressGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof AddressGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], AddressGroupByOutputType[P]>
-            : GetScalarType<T[P], AddressGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type AddressSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    address_id?: boolean
-    profile_id?: boolean
-    address_name?: boolean
-    address?: boolean
-    city?: boolean
-    country?: boolean
-    zipcode?: boolean
-    profile?: boolean | ProfileDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["address"]>
-
-  export type AddressSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    address_id?: boolean
-    profile_id?: boolean
-    address_name?: boolean
-    address?: boolean
-    city?: boolean
-    country?: boolean
-    zipcode?: boolean
-    profile?: boolean | ProfileDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["address"]>
-
-  export type AddressSelectScalar = {
-    address_id?: boolean
-    profile_id?: boolean
-    address_name?: boolean
-    address?: boolean
-    city?: boolean
-    country?: boolean
-    zipcode?: boolean
-  }
-
-  export type AddressInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    profile?: boolean | ProfileDefaultArgs<ExtArgs>
-  }
-  export type AddressIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    profile?: boolean | ProfileDefaultArgs<ExtArgs>
-  }
-
-  export type $AddressPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Address"
-    objects: {
-      profile: Prisma.$ProfilePayload<ExtArgs>
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      address_id: number
-      profile_id: number
-      address_name: $Enums.AddressName
-      address: string
-      city: string
-      country: string
-      zipcode: string | null
-    }, ExtArgs["result"]["address"]>
-    composites: {}
-  }
-
-  type AddressGetPayload<S extends boolean | null | undefined | AddressDefaultArgs> = $Result.GetResult<Prisma.$AddressPayload, S>
-
-  type AddressCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<AddressFindManyArgs, 'select' | 'include' | 'distinct'> & {
-      select?: AddressCountAggregateInputType | true
-    }
-
-  export interface AddressDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Address'], meta: { name: 'Address' } }
-    /**
-     * Find zero or one Address that matches the filter.
-     * @param {AddressFindUniqueArgs} args - Arguments to find a Address
-     * @example
-     * // Get one Address
-     * const address = await prisma.address.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends AddressFindUniqueArgs>(args: SelectSubset<T, AddressFindUniqueArgs<ExtArgs>>): Prisma__AddressClient<$Result.GetResult<Prisma.$AddressPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
-
-    /**
-     * Find one Address that matches the filter or throw an error with `error.code='P2025'` 
-     * if no matches were found.
-     * @param {AddressFindUniqueOrThrowArgs} args - Arguments to find a Address
-     * @example
-     * // Get one Address
-     * const address = await prisma.address.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends AddressFindUniqueOrThrowArgs>(args: SelectSubset<T, AddressFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AddressClient<$Result.GetResult<Prisma.$AddressPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
-
-    /**
-     * Find the first Address that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AddressFindFirstArgs} args - Arguments to find a Address
-     * @example
-     * // Get one Address
-     * const address = await prisma.address.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends AddressFindFirstArgs>(args?: SelectSubset<T, AddressFindFirstArgs<ExtArgs>>): Prisma__AddressClient<$Result.GetResult<Prisma.$AddressPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
-
-    /**
-     * Find the first Address that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AddressFindFirstOrThrowArgs} args - Arguments to find a Address
-     * @example
-     * // Get one Address
-     * const address = await prisma.address.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends AddressFindFirstOrThrowArgs>(args?: SelectSubset<T, AddressFindFirstOrThrowArgs<ExtArgs>>): Prisma__AddressClient<$Result.GetResult<Prisma.$AddressPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
-
-    /**
-     * Find zero or more Addresses that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AddressFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Addresses
-     * const addresses = await prisma.address.findMany()
-     * 
-     * // Get first 10 Addresses
-     * const addresses = await prisma.address.findMany({ take: 10 })
-     * 
-     * // Only select the `address_id`
-     * const addressWithAddress_idOnly = await prisma.address.findMany({ select: { address_id: true } })
-     * 
-     */
-    findMany<T extends AddressFindManyArgs>(args?: SelectSubset<T, AddressFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AddressPayload<ExtArgs>, T, "findMany">>
-
-    /**
-     * Create a Address.
-     * @param {AddressCreateArgs} args - Arguments to create a Address.
-     * @example
-     * // Create one Address
-     * const Address = await prisma.address.create({
-     *   data: {
-     *     // ... data to create a Address
-     *   }
-     * })
-     * 
-     */
-    create<T extends AddressCreateArgs>(args: SelectSubset<T, AddressCreateArgs<ExtArgs>>): Prisma__AddressClient<$Result.GetResult<Prisma.$AddressPayload<ExtArgs>, T, "create">, never, ExtArgs>
-
-    /**
-     * Create many Addresses.
-     * @param {AddressCreateManyArgs} args - Arguments to create many Addresses.
-     * @example
-     * // Create many Addresses
-     * const address = await prisma.address.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends AddressCreateManyArgs>(args?: SelectSubset<T, AddressCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many Addresses and returns the data saved in the database.
-     * @param {AddressCreateManyAndReturnArgs} args - Arguments to create many Addresses.
-     * @example
-     * // Create many Addresses
-     * const address = await prisma.address.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many Addresses and only return the `address_id`
-     * const addressWithAddress_idOnly = await prisma.address.createManyAndReturn({ 
-     *   select: { address_id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends AddressCreateManyAndReturnArgs>(args?: SelectSubset<T, AddressCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AddressPayload<ExtArgs>, T, "createManyAndReturn">>
-
-    /**
-     * Delete a Address.
-     * @param {AddressDeleteArgs} args - Arguments to delete one Address.
-     * @example
-     * // Delete one Address
-     * const Address = await prisma.address.delete({
-     *   where: {
-     *     // ... filter to delete one Address
-     *   }
-     * })
-     * 
-     */
-    delete<T extends AddressDeleteArgs>(args: SelectSubset<T, AddressDeleteArgs<ExtArgs>>): Prisma__AddressClient<$Result.GetResult<Prisma.$AddressPayload<ExtArgs>, T, "delete">, never, ExtArgs>
-
-    /**
-     * Update one Address.
-     * @param {AddressUpdateArgs} args - Arguments to update one Address.
-     * @example
-     * // Update one Address
-     * const address = await prisma.address.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends AddressUpdateArgs>(args: SelectSubset<T, AddressUpdateArgs<ExtArgs>>): Prisma__AddressClient<$Result.GetResult<Prisma.$AddressPayload<ExtArgs>, T, "update">, never, ExtArgs>
-
-    /**
-     * Delete zero or more Addresses.
-     * @param {AddressDeleteManyArgs} args - Arguments to filter Addresses to delete.
-     * @example
-     * // Delete a few Addresses
-     * const { count } = await prisma.address.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends AddressDeleteManyArgs>(args?: SelectSubset<T, AddressDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Addresses.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AddressUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Addresses
-     * const address = await prisma.address.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends AddressUpdateManyArgs>(args: SelectSubset<T, AddressUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create or update one Address.
-     * @param {AddressUpsertArgs} args - Arguments to update or create a Address.
-     * @example
-     * // Update or create a Address
-     * const address = await prisma.address.upsert({
-     *   create: {
-     *     // ... data to create a Address
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Address we want to update
-     *   }
-     * })
-     */
-    upsert<T extends AddressUpsertArgs>(args: SelectSubset<T, AddressUpsertArgs<ExtArgs>>): Prisma__AddressClient<$Result.GetResult<Prisma.$AddressPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
-
-
-    /**
-     * Count the number of Addresses.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AddressCountArgs} args - Arguments to filter Addresses to count.
-     * @example
-     * // Count the number of Addresses
-     * const count = await prisma.address.count({
-     *   where: {
-     *     // ... the filter for the Addresses we want to count
-     *   }
-     * })
-    **/
-    count<T extends AddressCountArgs>(
-      args?: Subset<T, AddressCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], AddressCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Address.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AddressAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends AddressAggregateArgs>(args: Subset<T, AddressAggregateArgs>): Prisma.PrismaPromise<GetAddressAggregateType<T>>
-
-    /**
-     * Group by Address.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AddressGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends AddressGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: AddressGroupByArgs['orderBy'] }
-        : { orderBy?: AddressGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, AddressGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAddressGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the Address model
-   */
-  readonly fields: AddressFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for Address.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__AddressClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    profile<T extends ProfileDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProfileDefaultArgs<ExtArgs>>): Prisma__ProfileClient<$Result.GetResult<Prisma.$ProfilePayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the Address model
-   */ 
-  interface AddressFieldRefs {
-    readonly address_id: FieldRef<"Address", 'Int'>
-    readonly profile_id: FieldRef<"Address", 'Int'>
-    readonly address_name: FieldRef<"Address", 'AddressName'>
-    readonly address: FieldRef<"Address", 'String'>
-    readonly city: FieldRef<"Address", 'String'>
-    readonly country: FieldRef<"Address", 'String'>
-    readonly zipcode: FieldRef<"Address", 'String'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * Address findUnique
-   */
-  export type AddressFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Address
-     */
-    select?: AddressSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AddressInclude<ExtArgs> | null
-    /**
-     * Filter, which Address to fetch.
-     */
-    where: AddressWhereUniqueInput
-  }
-
-  /**
-   * Address findUniqueOrThrow
-   */
-  export type AddressFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Address
-     */
-    select?: AddressSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AddressInclude<ExtArgs> | null
-    /**
-     * Filter, which Address to fetch.
-     */
-    where: AddressWhereUniqueInput
-  }
-
-  /**
-   * Address findFirst
-   */
-  export type AddressFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Address
-     */
-    select?: AddressSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AddressInclude<ExtArgs> | null
-    /**
-     * Filter, which Address to fetch.
-     */
-    where?: AddressWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Addresses to fetch.
-     */
-    orderBy?: AddressOrderByWithRelationInput | AddressOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Addresses.
-     */
-    cursor?: AddressWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Addresses from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Addresses.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Addresses.
-     */
-    distinct?: AddressScalarFieldEnum | AddressScalarFieldEnum[]
-  }
-
-  /**
-   * Address findFirstOrThrow
-   */
-  export type AddressFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Address
-     */
-    select?: AddressSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AddressInclude<ExtArgs> | null
-    /**
-     * Filter, which Address to fetch.
-     */
-    where?: AddressWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Addresses to fetch.
-     */
-    orderBy?: AddressOrderByWithRelationInput | AddressOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Addresses.
-     */
-    cursor?: AddressWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Addresses from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Addresses.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Addresses.
-     */
-    distinct?: AddressScalarFieldEnum | AddressScalarFieldEnum[]
-  }
-
-  /**
-   * Address findMany
-   */
-  export type AddressFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Address
-     */
-    select?: AddressSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AddressInclude<ExtArgs> | null
-    /**
-     * Filter, which Addresses to fetch.
-     */
-    where?: AddressWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Addresses to fetch.
-     */
-    orderBy?: AddressOrderByWithRelationInput | AddressOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing Addresses.
-     */
-    cursor?: AddressWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Addresses from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Addresses.
-     */
-    skip?: number
-    distinct?: AddressScalarFieldEnum | AddressScalarFieldEnum[]
-  }
-
-  /**
-   * Address create
-   */
-  export type AddressCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Address
-     */
-    select?: AddressSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AddressInclude<ExtArgs> | null
-    /**
-     * The data needed to create a Address.
-     */
-    data: XOR<AddressCreateInput, AddressUncheckedCreateInput>
-  }
-
-  /**
-   * Address createMany
-   */
-  export type AddressCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many Addresses.
-     */
-    data: AddressCreateManyInput | AddressCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * Address createManyAndReturn
-   */
-  export type AddressCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Address
-     */
-    select?: AddressSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * The data used to create many Addresses.
-     */
-    data: AddressCreateManyInput | AddressCreateManyInput[]
-    skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AddressIncludeCreateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * Address update
-   */
-  export type AddressUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Address
-     */
-    select?: AddressSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AddressInclude<ExtArgs> | null
-    /**
-     * The data needed to update a Address.
-     */
-    data: XOR<AddressUpdateInput, AddressUncheckedUpdateInput>
-    /**
-     * Choose, which Address to update.
-     */
-    where: AddressWhereUniqueInput
-  }
-
-  /**
-   * Address updateMany
-   */
-  export type AddressUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update Addresses.
-     */
-    data: XOR<AddressUpdateManyMutationInput, AddressUncheckedUpdateManyInput>
-    /**
-     * Filter which Addresses to update
-     */
-    where?: AddressWhereInput
-  }
-
-  /**
-   * Address upsert
-   */
-  export type AddressUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Address
-     */
-    select?: AddressSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AddressInclude<ExtArgs> | null
-    /**
-     * The filter to search for the Address to update in case it exists.
-     */
-    where: AddressWhereUniqueInput
-    /**
-     * In case the Address found by the `where` argument doesn't exist, create a new Address with this data.
-     */
-    create: XOR<AddressCreateInput, AddressUncheckedCreateInput>
-    /**
-     * In case the Address was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<AddressUpdateInput, AddressUncheckedUpdateInput>
-  }
-
-  /**
-   * Address delete
-   */
-  export type AddressDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Address
-     */
-    select?: AddressSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AddressInclude<ExtArgs> | null
-    /**
-     * Filter which Address to delete.
-     */
-    where: AddressWhereUniqueInput
-  }
-
-  /**
-   * Address deleteMany
-   */
-  export type AddressDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Addresses to delete
-     */
-    where?: AddressWhereInput
-  }
-
-  /**
-   * Address without action
-   */
-  export type AddressDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Address
-     */
-    select?: AddressSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AddressInclude<ExtArgs> | null
   }
 
 
@@ -21176,6 +20122,7 @@ export namespace Prisma {
     user_id: 'user_id',
     name: 'name',
     email: 'email',
+    phone: 'phone',
     password: 'password',
     pfp_url: 'pfp_url',
     created_at: 'created_at',
@@ -21189,26 +20136,16 @@ export namespace Prisma {
 
   export const ProfileScalarFieldEnum: {
     profile_id: 'profile_id',
-    phone: 'phone',
-    job_title: 'job_title',
-    company: 'company',
+    address: 'address',
+    city: 'city',
+    country: 'country',
+    zipcode: 'zipcode',
+    birth_date: 'birth_date',
+    gender: 'gender',
     user_id: 'user_id'
   };
 
   export type ProfileScalarFieldEnum = (typeof ProfileScalarFieldEnum)[keyof typeof ProfileScalarFieldEnum]
-
-
-  export const AddressScalarFieldEnum: {
-    address_id: 'address_id',
-    profile_id: 'profile_id',
-    address_name: 'address_name',
-    address: 'address',
-    city: 'city',
-    country: 'country',
-    zipcode: 'zipcode'
-  };
-
-  export type AddressScalarFieldEnum = (typeof AddressScalarFieldEnum)[keyof typeof AddressScalarFieldEnum]
 
 
   export const OrganizerScalarFieldEnum: {
@@ -21481,16 +20418,16 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'AddressName'
+   * Reference to a field of type 'Gender'
    */
-  export type EnumAddressNameFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AddressName'>
+  export type EnumGenderFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Gender'>
     
 
 
   /**
-   * Reference to a field of type 'AddressName[]'
+   * Reference to a field of type 'Gender[]'
    */
-  export type ListEnumAddressNameFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AddressName[]'>
+  export type ListEnumGenderFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Gender[]'>
     
 
 
@@ -21546,6 +20483,7 @@ export namespace Prisma {
     user_id?: IntFilter<"User"> | number
     name?: StringFilter<"User"> | string
     email?: StringFilter<"User"> | string
+    phone?: StringNullableFilter<"User"> | string | null
     password?: StringFilter<"User"> | string
     pfp_url?: StringNullableFilter<"User"> | string | null
     created_at?: DateTimeFilter<"User"> | Date | string
@@ -21568,6 +20506,7 @@ export namespace Prisma {
     user_id?: SortOrder
     name?: SortOrder
     email?: SortOrder
+    phone?: SortOrderInput | SortOrder
     password?: SortOrder
     pfp_url?: SortOrderInput | SortOrder
     created_at?: SortOrder
@@ -21593,6 +20532,7 @@ export namespace Prisma {
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
     name?: StringFilter<"User"> | string
+    phone?: StringNullableFilter<"User"> | string | null
     password?: StringFilter<"User"> | string
     pfp_url?: StringNullableFilter<"User"> | string | null
     created_at?: DateTimeFilter<"User"> | Date | string
@@ -21615,6 +20555,7 @@ export namespace Prisma {
     user_id?: SortOrder
     name?: SortOrder
     email?: SortOrder
+    phone?: SortOrderInput | SortOrder
     password?: SortOrder
     pfp_url?: SortOrderInput | SortOrder
     created_at?: SortOrder
@@ -21635,6 +20576,7 @@ export namespace Prisma {
     user_id?: IntWithAggregatesFilter<"User"> | number
     name?: StringWithAggregatesFilter<"User"> | string
     email?: StringWithAggregatesFilter<"User"> | string
+    phone?: StringNullableWithAggregatesFilter<"User"> | string | null
     password?: StringWithAggregatesFilter<"User"> | string
     pfp_url?: StringNullableWithAggregatesFilter<"User"> | string | null
     created_at?: DateTimeWithAggregatesFilter<"User"> | Date | string
@@ -21648,22 +20590,26 @@ export namespace Prisma {
     OR?: ProfileWhereInput[]
     NOT?: ProfileWhereInput | ProfileWhereInput[]
     profile_id?: IntFilter<"Profile"> | number
-    phone?: StringNullableFilter<"Profile"> | string | null
-    job_title?: StringNullableFilter<"Profile"> | string | null
-    company?: StringNullableFilter<"Profile"> | string | null
+    address?: StringNullableFilter<"Profile"> | string | null
+    city?: StringNullableFilter<"Profile"> | string | null
+    country?: StringNullableFilter<"Profile"> | string | null
+    zipcode?: StringNullableFilter<"Profile"> | string | null
+    birth_date?: StringNullableFilter<"Profile"> | string | null
+    gender?: EnumGenderNullableFilter<"Profile"> | $Enums.Gender | null
     user_id?: IntFilter<"Profile"> | number
-    addresses?: AddressListRelationFilter
     social_medias?: Social_mediaListRelationFilter
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
   export type ProfileOrderByWithRelationInput = {
     profile_id?: SortOrder
-    phone?: SortOrderInput | SortOrder
-    job_title?: SortOrderInput | SortOrder
-    company?: SortOrderInput | SortOrder
+    address?: SortOrderInput | SortOrder
+    city?: SortOrderInput | SortOrder
+    country?: SortOrderInput | SortOrder
+    zipcode?: SortOrderInput | SortOrder
+    birth_date?: SortOrderInput | SortOrder
+    gender?: SortOrderInput | SortOrder
     user_id?: SortOrder
-    addresses?: AddressOrderByRelationAggregateInput
     social_medias?: Social_mediaOrderByRelationAggregateInput
     user?: UserOrderByWithRelationInput
   }
@@ -21674,19 +20620,24 @@ export namespace Prisma {
     AND?: ProfileWhereInput | ProfileWhereInput[]
     OR?: ProfileWhereInput[]
     NOT?: ProfileWhereInput | ProfileWhereInput[]
-    phone?: StringNullableFilter<"Profile"> | string | null
-    job_title?: StringNullableFilter<"Profile"> | string | null
-    company?: StringNullableFilter<"Profile"> | string | null
-    addresses?: AddressListRelationFilter
+    address?: StringNullableFilter<"Profile"> | string | null
+    city?: StringNullableFilter<"Profile"> | string | null
+    country?: StringNullableFilter<"Profile"> | string | null
+    zipcode?: StringNullableFilter<"Profile"> | string | null
+    birth_date?: StringNullableFilter<"Profile"> | string | null
+    gender?: EnumGenderNullableFilter<"Profile"> | $Enums.Gender | null
     social_medias?: Social_mediaListRelationFilter
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "profile_id" | "user_id">
 
   export type ProfileOrderByWithAggregationInput = {
     profile_id?: SortOrder
-    phone?: SortOrderInput | SortOrder
-    job_title?: SortOrderInput | SortOrder
-    company?: SortOrderInput | SortOrder
+    address?: SortOrderInput | SortOrder
+    city?: SortOrderInput | SortOrder
+    country?: SortOrderInput | SortOrder
+    zipcode?: SortOrderInput | SortOrder
+    birth_date?: SortOrderInput | SortOrder
+    gender?: SortOrderInput | SortOrder
     user_id?: SortOrder
     _count?: ProfileCountOrderByAggregateInput
     _avg?: ProfileAvgOrderByAggregateInput
@@ -21700,77 +20651,13 @@ export namespace Prisma {
     OR?: ProfileScalarWhereWithAggregatesInput[]
     NOT?: ProfileScalarWhereWithAggregatesInput | ProfileScalarWhereWithAggregatesInput[]
     profile_id?: IntWithAggregatesFilter<"Profile"> | number
-    phone?: StringNullableWithAggregatesFilter<"Profile"> | string | null
-    job_title?: StringNullableWithAggregatesFilter<"Profile"> | string | null
-    company?: StringNullableWithAggregatesFilter<"Profile"> | string | null
+    address?: StringNullableWithAggregatesFilter<"Profile"> | string | null
+    city?: StringNullableWithAggregatesFilter<"Profile"> | string | null
+    country?: StringNullableWithAggregatesFilter<"Profile"> | string | null
+    zipcode?: StringNullableWithAggregatesFilter<"Profile"> | string | null
+    birth_date?: StringNullableWithAggregatesFilter<"Profile"> | string | null
+    gender?: EnumGenderNullableWithAggregatesFilter<"Profile"> | $Enums.Gender | null
     user_id?: IntWithAggregatesFilter<"Profile"> | number
-  }
-
-  export type AddressWhereInput = {
-    AND?: AddressWhereInput | AddressWhereInput[]
-    OR?: AddressWhereInput[]
-    NOT?: AddressWhereInput | AddressWhereInput[]
-    address_id?: IntFilter<"Address"> | number
-    profile_id?: IntFilter<"Address"> | number
-    address_name?: EnumAddressNameFilter<"Address"> | $Enums.AddressName
-    address?: StringFilter<"Address"> | string
-    city?: StringFilter<"Address"> | string
-    country?: StringFilter<"Address"> | string
-    zipcode?: StringNullableFilter<"Address"> | string | null
-    profile?: XOR<ProfileScalarRelationFilter, ProfileWhereInput>
-  }
-
-  export type AddressOrderByWithRelationInput = {
-    address_id?: SortOrder
-    profile_id?: SortOrder
-    address_name?: SortOrder
-    address?: SortOrder
-    city?: SortOrder
-    country?: SortOrder
-    zipcode?: SortOrderInput | SortOrder
-    profile?: ProfileOrderByWithRelationInput
-  }
-
-  export type AddressWhereUniqueInput = Prisma.AtLeast<{
-    address_id?: number
-    AND?: AddressWhereInput | AddressWhereInput[]
-    OR?: AddressWhereInput[]
-    NOT?: AddressWhereInput | AddressWhereInput[]
-    profile_id?: IntFilter<"Address"> | number
-    address_name?: EnumAddressNameFilter<"Address"> | $Enums.AddressName
-    address?: StringFilter<"Address"> | string
-    city?: StringFilter<"Address"> | string
-    country?: StringFilter<"Address"> | string
-    zipcode?: StringNullableFilter<"Address"> | string | null
-    profile?: XOR<ProfileScalarRelationFilter, ProfileWhereInput>
-  }, "address_id">
-
-  export type AddressOrderByWithAggregationInput = {
-    address_id?: SortOrder
-    profile_id?: SortOrder
-    address_name?: SortOrder
-    address?: SortOrder
-    city?: SortOrder
-    country?: SortOrder
-    zipcode?: SortOrderInput | SortOrder
-    _count?: AddressCountOrderByAggregateInput
-    _avg?: AddressAvgOrderByAggregateInput
-    _max?: AddressMaxOrderByAggregateInput
-    _min?: AddressMinOrderByAggregateInput
-    _sum?: AddressSumOrderByAggregateInput
-  }
-
-  export type AddressScalarWhereWithAggregatesInput = {
-    AND?: AddressScalarWhereWithAggregatesInput | AddressScalarWhereWithAggregatesInput[]
-    OR?: AddressScalarWhereWithAggregatesInput[]
-    NOT?: AddressScalarWhereWithAggregatesInput | AddressScalarWhereWithAggregatesInput[]
-    address_id?: IntWithAggregatesFilter<"Address"> | number
-    profile_id?: IntWithAggregatesFilter<"Address"> | number
-    address_name?: EnumAddressNameWithAggregatesFilter<"Address"> | $Enums.AddressName
-    address?: StringWithAggregatesFilter<"Address"> | string
-    city?: StringWithAggregatesFilter<"Address"> | string
-    country?: StringWithAggregatesFilter<"Address"> | string
-    zipcode?: StringNullableWithAggregatesFilter<"Address"> | string | null
   }
 
   export type OrganizerWhereInput = {
@@ -22742,6 +21629,7 @@ export namespace Prisma {
   export type UserCreateInput = {
     name: string
     email: string
+    phone?: string | null
     password: string
     pfp_url?: string | null
     created_at?: Date | string
@@ -22763,6 +21651,7 @@ export namespace Prisma {
     user_id?: number
     name: string
     email: string
+    phone?: string | null
     password: string
     pfp_url?: string | null
     created_at?: Date | string
@@ -22783,6 +21672,7 @@ export namespace Prisma {
   export type UserUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
     pfp_url?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22804,6 +21694,7 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
     pfp_url?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22825,6 +21716,7 @@ export namespace Prisma {
     user_id?: number
     name: string
     email: string
+    phone?: string | null
     password: string
     pfp_url?: string | null
     created_at?: Date | string
@@ -22836,6 +21728,7 @@ export namespace Prisma {
   export type UserUpdateManyMutationInput = {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
     pfp_url?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22847,6 +21740,7 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
     pfp_url?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22856,129 +21750,80 @@ export namespace Prisma {
   }
 
   export type ProfileCreateInput = {
-    phone?: string | null
-    job_title?: string | null
-    company?: string | null
-    addresses?: AddressCreateNestedManyWithoutProfileInput
+    address?: string | null
+    city?: string | null
+    country?: string | null
+    zipcode?: string | null
+    birth_date?: string | null
+    gender?: $Enums.Gender | null
     social_medias?: Social_mediaCreateNestedManyWithoutProfileInput
     user: UserCreateNestedOneWithoutProfileInput
   }
 
   export type ProfileUncheckedCreateInput = {
     profile_id?: number
-    phone?: string | null
-    job_title?: string | null
-    company?: string | null
+    address?: string | null
+    city?: string | null
+    country?: string | null
+    zipcode?: string | null
+    birth_date?: string | null
+    gender?: $Enums.Gender | null
     user_id: number
-    addresses?: AddressUncheckedCreateNestedManyWithoutProfileInput
     social_medias?: Social_mediaUncheckedCreateNestedManyWithoutProfileInput
   }
 
   export type ProfileUpdateInput = {
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    job_title?: NullableStringFieldUpdateOperationsInput | string | null
-    company?: NullableStringFieldUpdateOperationsInput | string | null
-    addresses?: AddressUpdateManyWithoutProfileNestedInput
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    zipcode?: NullableStringFieldUpdateOperationsInput | string | null
+    birth_date?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     social_medias?: Social_mediaUpdateManyWithoutProfileNestedInput
     user?: UserUpdateOneRequiredWithoutProfileNestedInput
   }
 
   export type ProfileUncheckedUpdateInput = {
     profile_id?: IntFieldUpdateOperationsInput | number
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    job_title?: NullableStringFieldUpdateOperationsInput | string | null
-    company?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    zipcode?: NullableStringFieldUpdateOperationsInput | string | null
+    birth_date?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     user_id?: IntFieldUpdateOperationsInput | number
-    addresses?: AddressUncheckedUpdateManyWithoutProfileNestedInput
     social_medias?: Social_mediaUncheckedUpdateManyWithoutProfileNestedInput
   }
 
   export type ProfileCreateManyInput = {
     profile_id?: number
-    phone?: string | null
-    job_title?: string | null
-    company?: string | null
+    address?: string | null
+    city?: string | null
+    country?: string | null
+    zipcode?: string | null
+    birth_date?: string | null
+    gender?: $Enums.Gender | null
     user_id: number
   }
 
   export type ProfileUpdateManyMutationInput = {
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    job_title?: NullableStringFieldUpdateOperationsInput | string | null
-    company?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    zipcode?: NullableStringFieldUpdateOperationsInput | string | null
+    birth_date?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
   }
 
   export type ProfileUncheckedUpdateManyInput = {
     profile_id?: IntFieldUpdateOperationsInput | number
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    job_title?: NullableStringFieldUpdateOperationsInput | string | null
-    company?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    zipcode?: NullableStringFieldUpdateOperationsInput | string | null
+    birth_date?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     user_id?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type AddressCreateInput = {
-    address_name: $Enums.AddressName
-    address: string
-    city: string
-    country: string
-    zipcode?: string | null
-    profile: ProfileCreateNestedOneWithoutAddressesInput
-  }
-
-  export type AddressUncheckedCreateInput = {
-    address_id?: number
-    profile_id: number
-    address_name: $Enums.AddressName
-    address: string
-    city: string
-    country: string
-    zipcode?: string | null
-  }
-
-  export type AddressUpdateInput = {
-    address_name?: EnumAddressNameFieldUpdateOperationsInput | $Enums.AddressName
-    address?: StringFieldUpdateOperationsInput | string
-    city?: StringFieldUpdateOperationsInput | string
-    country?: StringFieldUpdateOperationsInput | string
-    zipcode?: NullableStringFieldUpdateOperationsInput | string | null
-    profile?: ProfileUpdateOneRequiredWithoutAddressesNestedInput
-  }
-
-  export type AddressUncheckedUpdateInput = {
-    address_id?: IntFieldUpdateOperationsInput | number
-    profile_id?: IntFieldUpdateOperationsInput | number
-    address_name?: EnumAddressNameFieldUpdateOperationsInput | $Enums.AddressName
-    address?: StringFieldUpdateOperationsInput | string
-    city?: StringFieldUpdateOperationsInput | string
-    country?: StringFieldUpdateOperationsInput | string
-    zipcode?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type AddressCreateManyInput = {
-    address_id?: number
-    profile_id: number
-    address_name: $Enums.AddressName
-    address: string
-    city: string
-    country: string
-    zipcode?: string | null
-  }
-
-  export type AddressUpdateManyMutationInput = {
-    address_name?: EnumAddressNameFieldUpdateOperationsInput | $Enums.AddressName
-    address?: StringFieldUpdateOperationsInput | string
-    city?: StringFieldUpdateOperationsInput | string
-    country?: StringFieldUpdateOperationsInput | string
-    zipcode?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type AddressUncheckedUpdateManyInput = {
-    address_id?: IntFieldUpdateOperationsInput | number
-    profile_id?: IntFieldUpdateOperationsInput | number
-    address_name?: EnumAddressNameFieldUpdateOperationsInput | $Enums.AddressName
-    address?: StringFieldUpdateOperationsInput | string
-    city?: StringFieldUpdateOperationsInput | string
-    country?: StringFieldUpdateOperationsInput | string
-    zipcode?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type OrganizerCreateInput = {
@@ -24057,6 +22902,7 @@ export namespace Prisma {
     user_id?: SortOrder
     name?: SortOrder
     email?: SortOrder
+    phone?: SortOrder
     password?: SortOrder
     pfp_url?: SortOrder
     created_at?: SortOrder
@@ -24074,6 +22920,7 @@ export namespace Prisma {
     user_id?: SortOrder
     name?: SortOrder
     email?: SortOrder
+    phone?: SortOrder
     password?: SortOrder
     pfp_url?: SortOrder
     created_at?: SortOrder
@@ -24086,6 +22933,7 @@ export namespace Prisma {
     user_id?: SortOrder
     name?: SortOrder
     email?: SortOrder
+    phone?: SortOrder
     password?: SortOrder
     pfp_url?: SortOrder
     created_at?: SortOrder
@@ -24199,10 +23047,11 @@ export namespace Prisma {
     _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
-  export type AddressListRelationFilter = {
-    every?: AddressWhereInput
-    some?: AddressWhereInput
-    none?: AddressWhereInput
+  export type EnumGenderNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.Gender | EnumGenderFieldRefInput<$PrismaModel> | null
+    in?: $Enums.Gender[] | ListEnumGenderFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.Gender[] | ListEnumGenderFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumGenderNullableFilter<$PrismaModel> | $Enums.Gender | null
   }
 
   export type Social_mediaListRelationFilter = {
@@ -24216,19 +23065,18 @@ export namespace Prisma {
     isNot?: UserWhereInput
   }
 
-  export type AddressOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
   export type Social_mediaOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
   export type ProfileCountOrderByAggregateInput = {
     profile_id?: SortOrder
-    phone?: SortOrder
-    job_title?: SortOrder
-    company?: SortOrder
+    address?: SortOrder
+    city?: SortOrder
+    country?: SortOrder
+    zipcode?: SortOrder
+    birth_date?: SortOrder
+    gender?: SortOrder
     user_id?: SortOrder
   }
 
@@ -24239,17 +23087,23 @@ export namespace Prisma {
 
   export type ProfileMaxOrderByAggregateInput = {
     profile_id?: SortOrder
-    phone?: SortOrder
-    job_title?: SortOrder
-    company?: SortOrder
+    address?: SortOrder
+    city?: SortOrder
+    country?: SortOrder
+    zipcode?: SortOrder
+    birth_date?: SortOrder
+    gender?: SortOrder
     user_id?: SortOrder
   }
 
   export type ProfileMinOrderByAggregateInput = {
     profile_id?: SortOrder
-    phone?: SortOrder
-    job_title?: SortOrder
-    company?: SortOrder
+    address?: SortOrder
+    city?: SortOrder
+    country?: SortOrder
+    zipcode?: SortOrder
+    birth_date?: SortOrder
+    gender?: SortOrder
     user_id?: SortOrder
   }
 
@@ -24258,66 +23112,14 @@ export namespace Prisma {
     user_id?: SortOrder
   }
 
-  export type EnumAddressNameFilter<$PrismaModel = never> = {
-    equals?: $Enums.AddressName | EnumAddressNameFieldRefInput<$PrismaModel>
-    in?: $Enums.AddressName[] | ListEnumAddressNameFieldRefInput<$PrismaModel>
-    notIn?: $Enums.AddressName[] | ListEnumAddressNameFieldRefInput<$PrismaModel>
-    not?: NestedEnumAddressNameFilter<$PrismaModel> | $Enums.AddressName
-  }
-
-  export type ProfileScalarRelationFilter = {
-    is?: ProfileWhereInput
-    isNot?: ProfileWhereInput
-  }
-
-  export type AddressCountOrderByAggregateInput = {
-    address_id?: SortOrder
-    profile_id?: SortOrder
-    address_name?: SortOrder
-    address?: SortOrder
-    city?: SortOrder
-    country?: SortOrder
-    zipcode?: SortOrder
-  }
-
-  export type AddressAvgOrderByAggregateInput = {
-    address_id?: SortOrder
-    profile_id?: SortOrder
-  }
-
-  export type AddressMaxOrderByAggregateInput = {
-    address_id?: SortOrder
-    profile_id?: SortOrder
-    address_name?: SortOrder
-    address?: SortOrder
-    city?: SortOrder
-    country?: SortOrder
-    zipcode?: SortOrder
-  }
-
-  export type AddressMinOrderByAggregateInput = {
-    address_id?: SortOrder
-    profile_id?: SortOrder
-    address_name?: SortOrder
-    address?: SortOrder
-    city?: SortOrder
-    country?: SortOrder
-    zipcode?: SortOrder
-  }
-
-  export type AddressSumOrderByAggregateInput = {
-    address_id?: SortOrder
-    profile_id?: SortOrder
-  }
-
-  export type EnumAddressNameWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.AddressName | EnumAddressNameFieldRefInput<$PrismaModel>
-    in?: $Enums.AddressName[] | ListEnumAddressNameFieldRefInput<$PrismaModel>
-    notIn?: $Enums.AddressName[] | ListEnumAddressNameFieldRefInput<$PrismaModel>
-    not?: NestedEnumAddressNameWithAggregatesFilter<$PrismaModel> | $Enums.AddressName
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumAddressNameFilter<$PrismaModel>
-    _max?: NestedEnumAddressNameFilter<$PrismaModel>
+  export type EnumGenderNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Gender | EnumGenderFieldRefInput<$PrismaModel> | null
+    in?: $Enums.Gender[] | ListEnumGenderFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.Gender[] | ListEnumGenderFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumGenderNullableWithAggregatesFilter<$PrismaModel> | $Enums.Gender | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumGenderNullableFilter<$PrismaModel>
+    _max?: NestedEnumGenderNullableFilter<$PrismaModel>
   }
 
   export type Bank_accountNullableScalarRelationFilter = {
@@ -24489,6 +23291,11 @@ export namespace Prisma {
     in?: $Enums.Platform[] | ListEnumPlatformFieldRefInput<$PrismaModel>
     notIn?: $Enums.Platform[] | ListEnumPlatformFieldRefInput<$PrismaModel>
     not?: NestedEnumPlatformFilter<$PrismaModel> | $Enums.Platform
+  }
+
+  export type ProfileScalarRelationFilter = {
+    is?: ProfileWhereInput
+    isNot?: ProfileWhereInput
   }
 
   export type Social_mediaCountOrderByAggregateInput = {
@@ -25411,13 +24218,6 @@ export namespace Prisma {
     deleteMany?: EventScalarWhereInput | EventScalarWhereInput[]
   }
 
-  export type AddressCreateNestedManyWithoutProfileInput = {
-    create?: XOR<AddressCreateWithoutProfileInput, AddressUncheckedCreateWithoutProfileInput> | AddressCreateWithoutProfileInput[] | AddressUncheckedCreateWithoutProfileInput[]
-    connectOrCreate?: AddressCreateOrConnectWithoutProfileInput | AddressCreateOrConnectWithoutProfileInput[]
-    createMany?: AddressCreateManyProfileInputEnvelope
-    connect?: AddressWhereUniqueInput | AddressWhereUniqueInput[]
-  }
-
   export type Social_mediaCreateNestedManyWithoutProfileInput = {
     create?: XOR<Social_mediaCreateWithoutProfileInput, Social_mediaUncheckedCreateWithoutProfileInput> | Social_mediaCreateWithoutProfileInput[] | Social_mediaUncheckedCreateWithoutProfileInput[]
     connectOrCreate?: Social_mediaCreateOrConnectWithoutProfileInput | Social_mediaCreateOrConnectWithoutProfileInput[]
@@ -25431,13 +24231,6 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
-  export type AddressUncheckedCreateNestedManyWithoutProfileInput = {
-    create?: XOR<AddressCreateWithoutProfileInput, AddressUncheckedCreateWithoutProfileInput> | AddressCreateWithoutProfileInput[] | AddressUncheckedCreateWithoutProfileInput[]
-    connectOrCreate?: AddressCreateOrConnectWithoutProfileInput | AddressCreateOrConnectWithoutProfileInput[]
-    createMany?: AddressCreateManyProfileInputEnvelope
-    connect?: AddressWhereUniqueInput | AddressWhereUniqueInput[]
-  }
-
   export type Social_mediaUncheckedCreateNestedManyWithoutProfileInput = {
     create?: XOR<Social_mediaCreateWithoutProfileInput, Social_mediaUncheckedCreateWithoutProfileInput> | Social_mediaCreateWithoutProfileInput[] | Social_mediaUncheckedCreateWithoutProfileInput[]
     connectOrCreate?: Social_mediaCreateOrConnectWithoutProfileInput | Social_mediaCreateOrConnectWithoutProfileInput[]
@@ -25445,18 +24238,8 @@ export namespace Prisma {
     connect?: Social_mediaWhereUniqueInput | Social_mediaWhereUniqueInput[]
   }
 
-  export type AddressUpdateManyWithoutProfileNestedInput = {
-    create?: XOR<AddressCreateWithoutProfileInput, AddressUncheckedCreateWithoutProfileInput> | AddressCreateWithoutProfileInput[] | AddressUncheckedCreateWithoutProfileInput[]
-    connectOrCreate?: AddressCreateOrConnectWithoutProfileInput | AddressCreateOrConnectWithoutProfileInput[]
-    upsert?: AddressUpsertWithWhereUniqueWithoutProfileInput | AddressUpsertWithWhereUniqueWithoutProfileInput[]
-    createMany?: AddressCreateManyProfileInputEnvelope
-    set?: AddressWhereUniqueInput | AddressWhereUniqueInput[]
-    disconnect?: AddressWhereUniqueInput | AddressWhereUniqueInput[]
-    delete?: AddressWhereUniqueInput | AddressWhereUniqueInput[]
-    connect?: AddressWhereUniqueInput | AddressWhereUniqueInput[]
-    update?: AddressUpdateWithWhereUniqueWithoutProfileInput | AddressUpdateWithWhereUniqueWithoutProfileInput[]
-    updateMany?: AddressUpdateManyWithWhereWithoutProfileInput | AddressUpdateManyWithWhereWithoutProfileInput[]
-    deleteMany?: AddressScalarWhereInput | AddressScalarWhereInput[]
+  export type NullableEnumGenderFieldUpdateOperationsInput = {
+    set?: $Enums.Gender | null
   }
 
   export type Social_mediaUpdateManyWithoutProfileNestedInput = {
@@ -25481,20 +24264,6 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutProfileInput, UserUpdateWithoutProfileInput>, UserUncheckedUpdateWithoutProfileInput>
   }
 
-  export type AddressUncheckedUpdateManyWithoutProfileNestedInput = {
-    create?: XOR<AddressCreateWithoutProfileInput, AddressUncheckedCreateWithoutProfileInput> | AddressCreateWithoutProfileInput[] | AddressUncheckedCreateWithoutProfileInput[]
-    connectOrCreate?: AddressCreateOrConnectWithoutProfileInput | AddressCreateOrConnectWithoutProfileInput[]
-    upsert?: AddressUpsertWithWhereUniqueWithoutProfileInput | AddressUpsertWithWhereUniqueWithoutProfileInput[]
-    createMany?: AddressCreateManyProfileInputEnvelope
-    set?: AddressWhereUniqueInput | AddressWhereUniqueInput[]
-    disconnect?: AddressWhereUniqueInput | AddressWhereUniqueInput[]
-    delete?: AddressWhereUniqueInput | AddressWhereUniqueInput[]
-    connect?: AddressWhereUniqueInput | AddressWhereUniqueInput[]
-    update?: AddressUpdateWithWhereUniqueWithoutProfileInput | AddressUpdateWithWhereUniqueWithoutProfileInput[]
-    updateMany?: AddressUpdateManyWithWhereWithoutProfileInput | AddressUpdateManyWithWhereWithoutProfileInput[]
-    deleteMany?: AddressScalarWhereInput | AddressScalarWhereInput[]
-  }
-
   export type Social_mediaUncheckedUpdateManyWithoutProfileNestedInput = {
     create?: XOR<Social_mediaCreateWithoutProfileInput, Social_mediaUncheckedCreateWithoutProfileInput> | Social_mediaCreateWithoutProfileInput[] | Social_mediaUncheckedCreateWithoutProfileInput[]
     connectOrCreate?: Social_mediaCreateOrConnectWithoutProfileInput | Social_mediaCreateOrConnectWithoutProfileInput[]
@@ -25507,24 +24276,6 @@ export namespace Prisma {
     update?: Social_mediaUpdateWithWhereUniqueWithoutProfileInput | Social_mediaUpdateWithWhereUniqueWithoutProfileInput[]
     updateMany?: Social_mediaUpdateManyWithWhereWithoutProfileInput | Social_mediaUpdateManyWithWhereWithoutProfileInput[]
     deleteMany?: Social_mediaScalarWhereInput | Social_mediaScalarWhereInput[]
-  }
-
-  export type ProfileCreateNestedOneWithoutAddressesInput = {
-    create?: XOR<ProfileCreateWithoutAddressesInput, ProfileUncheckedCreateWithoutAddressesInput>
-    connectOrCreate?: ProfileCreateOrConnectWithoutAddressesInput
-    connect?: ProfileWhereUniqueInput
-  }
-
-  export type EnumAddressNameFieldUpdateOperationsInput = {
-    set?: $Enums.AddressName
-  }
-
-  export type ProfileUpdateOneRequiredWithoutAddressesNestedInput = {
-    create?: XOR<ProfileCreateWithoutAddressesInput, ProfileUncheckedCreateWithoutAddressesInput>
-    connectOrCreate?: ProfileCreateOrConnectWithoutAddressesInput
-    upsert?: ProfileUpsertWithoutAddressesInput
-    connect?: ProfileWhereUniqueInput
-    update?: XOR<XOR<ProfileUpdateToOneWithWhereWithoutAddressesInput, ProfileUpdateWithoutAddressesInput>, ProfileUncheckedUpdateWithoutAddressesInput>
   }
 
   export type UserCreateNestedOneWithoutOrganizerInput = {
@@ -26538,21 +25289,21 @@ export namespace Prisma {
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
-  export type NestedEnumAddressNameFilter<$PrismaModel = never> = {
-    equals?: $Enums.AddressName | EnumAddressNameFieldRefInput<$PrismaModel>
-    in?: $Enums.AddressName[] | ListEnumAddressNameFieldRefInput<$PrismaModel>
-    notIn?: $Enums.AddressName[] | ListEnumAddressNameFieldRefInput<$PrismaModel>
-    not?: NestedEnumAddressNameFilter<$PrismaModel> | $Enums.AddressName
+  export type NestedEnumGenderNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.Gender | EnumGenderFieldRefInput<$PrismaModel> | null
+    in?: $Enums.Gender[] | ListEnumGenderFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.Gender[] | ListEnumGenderFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumGenderNullableFilter<$PrismaModel> | $Enums.Gender | null
   }
 
-  export type NestedEnumAddressNameWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.AddressName | EnumAddressNameFieldRefInput<$PrismaModel>
-    in?: $Enums.AddressName[] | ListEnumAddressNameFieldRefInput<$PrismaModel>
-    notIn?: $Enums.AddressName[] | ListEnumAddressNameFieldRefInput<$PrismaModel>
-    not?: NestedEnumAddressNameWithAggregatesFilter<$PrismaModel> | $Enums.AddressName
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumAddressNameFilter<$PrismaModel>
-    _max?: NestedEnumAddressNameFilter<$PrismaModel>
+  export type NestedEnumGenderNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Gender | EnumGenderFieldRefInput<$PrismaModel> | null
+    in?: $Enums.Gender[] | ListEnumGenderFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.Gender[] | ListEnumGenderFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumGenderNullableWithAggregatesFilter<$PrismaModel> | $Enums.Gender | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumGenderNullableFilter<$PrismaModel>
+    _max?: NestedEnumGenderNullableFilter<$PrismaModel>
   }
 
   export type NestedEnumPlatformFilter<$PrismaModel = never> = {
@@ -26590,19 +25341,23 @@ export namespace Prisma {
   }
 
   export type ProfileCreateWithoutUserInput = {
-    phone?: string | null
-    job_title?: string | null
-    company?: string | null
-    addresses?: AddressCreateNestedManyWithoutProfileInput
+    address?: string | null
+    city?: string | null
+    country?: string | null
+    zipcode?: string | null
+    birth_date?: string | null
+    gender?: $Enums.Gender | null
     social_medias?: Social_mediaCreateNestedManyWithoutProfileInput
   }
 
   export type ProfileUncheckedCreateWithoutUserInput = {
     profile_id?: number
-    phone?: string | null
-    job_title?: string | null
-    company?: string | null
-    addresses?: AddressUncheckedCreateNestedManyWithoutProfileInput
+    address?: string | null
+    city?: string | null
+    country?: string | null
+    zipcode?: string | null
+    birth_date?: string | null
+    gender?: $Enums.Gender | null
     social_medias?: Social_mediaUncheckedCreateNestedManyWithoutProfileInput
   }
 
@@ -26866,19 +25621,23 @@ export namespace Prisma {
   }
 
   export type ProfileUpdateWithoutUserInput = {
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    job_title?: NullableStringFieldUpdateOperationsInput | string | null
-    company?: NullableStringFieldUpdateOperationsInput | string | null
-    addresses?: AddressUpdateManyWithoutProfileNestedInput
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    zipcode?: NullableStringFieldUpdateOperationsInput | string | null
+    birth_date?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     social_medias?: Social_mediaUpdateManyWithoutProfileNestedInput
   }
 
   export type ProfileUncheckedUpdateWithoutUserInput = {
     profile_id?: IntFieldUpdateOperationsInput | number
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    job_title?: NullableStringFieldUpdateOperationsInput | string | null
-    company?: NullableStringFieldUpdateOperationsInput | string | null
-    addresses?: AddressUncheckedUpdateManyWithoutProfileNestedInput
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    zipcode?: NullableStringFieldUpdateOperationsInput | string | null
+    birth_date?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     social_medias?: Social_mediaUncheckedUpdateManyWithoutProfileNestedInput
   }
 
@@ -27142,33 +25901,6 @@ export namespace Prisma {
     score?: IntNullableFilter<"Event"> | number | null
   }
 
-  export type AddressCreateWithoutProfileInput = {
-    address_name: $Enums.AddressName
-    address: string
-    city: string
-    country: string
-    zipcode?: string | null
-  }
-
-  export type AddressUncheckedCreateWithoutProfileInput = {
-    address_id?: number
-    address_name: $Enums.AddressName
-    address: string
-    city: string
-    country: string
-    zipcode?: string | null
-  }
-
-  export type AddressCreateOrConnectWithoutProfileInput = {
-    where: AddressWhereUniqueInput
-    create: XOR<AddressCreateWithoutProfileInput, AddressUncheckedCreateWithoutProfileInput>
-  }
-
-  export type AddressCreateManyProfileInputEnvelope = {
-    data: AddressCreateManyProfileInput | AddressCreateManyProfileInput[]
-    skipDuplicates?: boolean
-  }
-
   export type Social_mediaCreateWithoutProfileInput = {
     platform: $Enums.Platform
     account_name: string
@@ -27195,6 +25927,7 @@ export namespace Prisma {
   export type UserCreateWithoutProfileInput = {
     name: string
     email: string
+    phone?: string | null
     password: string
     pfp_url?: string | null
     created_at?: Date | string
@@ -27215,6 +25948,7 @@ export namespace Prisma {
     user_id?: number
     name: string
     email: string
+    phone?: string | null
     password: string
     pfp_url?: string | null
     created_at?: Date | string
@@ -27234,35 +25968,6 @@ export namespace Prisma {
   export type UserCreateOrConnectWithoutProfileInput = {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutProfileInput, UserUncheckedCreateWithoutProfileInput>
-  }
-
-  export type AddressUpsertWithWhereUniqueWithoutProfileInput = {
-    where: AddressWhereUniqueInput
-    update: XOR<AddressUpdateWithoutProfileInput, AddressUncheckedUpdateWithoutProfileInput>
-    create: XOR<AddressCreateWithoutProfileInput, AddressUncheckedCreateWithoutProfileInput>
-  }
-
-  export type AddressUpdateWithWhereUniqueWithoutProfileInput = {
-    where: AddressWhereUniqueInput
-    data: XOR<AddressUpdateWithoutProfileInput, AddressUncheckedUpdateWithoutProfileInput>
-  }
-
-  export type AddressUpdateManyWithWhereWithoutProfileInput = {
-    where: AddressScalarWhereInput
-    data: XOR<AddressUpdateManyMutationInput, AddressUncheckedUpdateManyWithoutProfileInput>
-  }
-
-  export type AddressScalarWhereInput = {
-    AND?: AddressScalarWhereInput | AddressScalarWhereInput[]
-    OR?: AddressScalarWhereInput[]
-    NOT?: AddressScalarWhereInput | AddressScalarWhereInput[]
-    address_id?: IntFilter<"Address"> | number
-    profile_id?: IntFilter<"Address"> | number
-    address_name?: EnumAddressNameFilter<"Address"> | $Enums.AddressName
-    address?: StringFilter<"Address"> | string
-    city?: StringFilter<"Address"> | string
-    country?: StringFilter<"Address"> | string
-    zipcode?: StringNullableFilter<"Address"> | string | null
   }
 
   export type Social_mediaUpsertWithWhereUniqueWithoutProfileInput = {
@@ -27306,6 +26011,7 @@ export namespace Prisma {
   export type UserUpdateWithoutProfileInput = {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
     pfp_url?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -27326,6 +26032,7 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
     pfp_url?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -27342,59 +26049,10 @@ export namespace Prisma {
     event?: EventUncheckedUpdateManyWithoutCustomerNestedInput
   }
 
-  export type ProfileCreateWithoutAddressesInput = {
-    phone?: string | null
-    job_title?: string | null
-    company?: string | null
-    social_medias?: Social_mediaCreateNestedManyWithoutProfileInput
-    user: UserCreateNestedOneWithoutProfileInput
-  }
-
-  export type ProfileUncheckedCreateWithoutAddressesInput = {
-    profile_id?: number
-    phone?: string | null
-    job_title?: string | null
-    company?: string | null
-    user_id: number
-    social_medias?: Social_mediaUncheckedCreateNestedManyWithoutProfileInput
-  }
-
-  export type ProfileCreateOrConnectWithoutAddressesInput = {
-    where: ProfileWhereUniqueInput
-    create: XOR<ProfileCreateWithoutAddressesInput, ProfileUncheckedCreateWithoutAddressesInput>
-  }
-
-  export type ProfileUpsertWithoutAddressesInput = {
-    update: XOR<ProfileUpdateWithoutAddressesInput, ProfileUncheckedUpdateWithoutAddressesInput>
-    create: XOR<ProfileCreateWithoutAddressesInput, ProfileUncheckedCreateWithoutAddressesInput>
-    where?: ProfileWhereInput
-  }
-
-  export type ProfileUpdateToOneWithWhereWithoutAddressesInput = {
-    where?: ProfileWhereInput
-    data: XOR<ProfileUpdateWithoutAddressesInput, ProfileUncheckedUpdateWithoutAddressesInput>
-  }
-
-  export type ProfileUpdateWithoutAddressesInput = {
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    job_title?: NullableStringFieldUpdateOperationsInput | string | null
-    company?: NullableStringFieldUpdateOperationsInput | string | null
-    social_medias?: Social_mediaUpdateManyWithoutProfileNestedInput
-    user?: UserUpdateOneRequiredWithoutProfileNestedInput
-  }
-
-  export type ProfileUncheckedUpdateWithoutAddressesInput = {
-    profile_id?: IntFieldUpdateOperationsInput | number
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    job_title?: NullableStringFieldUpdateOperationsInput | string | null
-    company?: NullableStringFieldUpdateOperationsInput | string | null
-    user_id?: IntFieldUpdateOperationsInput | number
-    social_medias?: Social_mediaUncheckedUpdateManyWithoutProfileNestedInput
-  }
-
   export type UserCreateWithoutOrganizerInput = {
     name: string
     email: string
+    phone?: string | null
     password: string
     pfp_url?: string | null
     created_at?: Date | string
@@ -27415,6 +26073,7 @@ export namespace Prisma {
     user_id?: number
     name: string
     email: string
+    phone?: string | null
     password: string
     pfp_url?: string | null
     created_at?: Date | string
@@ -27521,6 +26180,7 @@ export namespace Prisma {
   export type UserUpdateWithoutOrganizerInput = {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
     pfp_url?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -27541,6 +26201,7 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
     pfp_url?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -27666,6 +26327,7 @@ export namespace Prisma {
   export type UserCreateWithoutPointsInput = {
     name: string
     email: string
+    phone?: string | null
     password: string
     pfp_url?: string | null
     created_at?: Date | string
@@ -27686,6 +26348,7 @@ export namespace Prisma {
     user_id?: number
     name: string
     email: string
+    phone?: string | null
     password: string
     pfp_url?: string | null
     created_at?: Date | string
@@ -27721,6 +26384,7 @@ export namespace Prisma {
   export type UserUpdateWithoutPointsInput = {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
     pfp_url?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -27741,6 +26405,7 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
     pfp_url?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -27760,6 +26425,7 @@ export namespace Prisma {
   export type UserCreateWithoutReferralInput = {
     name: string
     email: string
+    phone?: string | null
     password: string
     pfp_url?: string | null
     created_at?: Date | string
@@ -27780,6 +26446,7 @@ export namespace Prisma {
     user_id?: number
     name: string
     email: string
+    phone?: string | null
     password: string
     pfp_url?: string | null
     created_at?: Date | string
@@ -27804,6 +26471,7 @@ export namespace Prisma {
   export type UserCreateWithoutReferredInput = {
     name: string
     email: string
+    phone?: string | null
     password: string
     pfp_url?: string | null
     created_at?: Date | string
@@ -27824,6 +26492,7 @@ export namespace Prisma {
     user_id?: number
     name: string
     email: string
+    phone?: string | null
     password: string
     pfp_url?: string | null
     created_at?: Date | string
@@ -27864,6 +26533,7 @@ export namespace Prisma {
   export type UserUpdateWithoutReferralInput = {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
     pfp_url?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -27884,6 +26554,7 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
     pfp_url?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -27923,6 +26594,7 @@ export namespace Prisma {
     user_id?: IntFilter<"User"> | number
     name?: StringFilter<"User"> | string
     email?: StringFilter<"User"> | string
+    phone?: StringNullableFilter<"User"> | string | null
     password?: StringFilter<"User"> | string
     pfp_url?: StringNullableFilter<"User"> | string | null
     created_at?: DateTimeFilter<"User"> | Date | string
@@ -27932,20 +26604,24 @@ export namespace Prisma {
   }
 
   export type ProfileCreateWithoutSocial_mediasInput = {
-    phone?: string | null
-    job_title?: string | null
-    company?: string | null
-    addresses?: AddressCreateNestedManyWithoutProfileInput
+    address?: string | null
+    city?: string | null
+    country?: string | null
+    zipcode?: string | null
+    birth_date?: string | null
+    gender?: $Enums.Gender | null
     user: UserCreateNestedOneWithoutProfileInput
   }
 
   export type ProfileUncheckedCreateWithoutSocial_mediasInput = {
     profile_id?: number
-    phone?: string | null
-    job_title?: string | null
-    company?: string | null
+    address?: string | null
+    city?: string | null
+    country?: string | null
+    zipcode?: string | null
+    birth_date?: string | null
+    gender?: $Enums.Gender | null
     user_id: number
-    addresses?: AddressUncheckedCreateNestedManyWithoutProfileInput
   }
 
   export type ProfileCreateOrConnectWithoutSocial_mediasInput = {
@@ -27965,25 +26641,30 @@ export namespace Prisma {
   }
 
   export type ProfileUpdateWithoutSocial_mediasInput = {
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    job_title?: NullableStringFieldUpdateOperationsInput | string | null
-    company?: NullableStringFieldUpdateOperationsInput | string | null
-    addresses?: AddressUpdateManyWithoutProfileNestedInput
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    zipcode?: NullableStringFieldUpdateOperationsInput | string | null
+    birth_date?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     user?: UserUpdateOneRequiredWithoutProfileNestedInput
   }
 
   export type ProfileUncheckedUpdateWithoutSocial_mediasInput = {
     profile_id?: IntFieldUpdateOperationsInput | number
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    job_title?: NullableStringFieldUpdateOperationsInput | string | null
-    company?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    zipcode?: NullableStringFieldUpdateOperationsInput | string | null
+    birth_date?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     user_id?: IntFieldUpdateOperationsInput | number
-    addresses?: AddressUncheckedUpdateManyWithoutProfileNestedInput
   }
 
   export type UserCreateWithoutCouponsInput = {
     name: string
     email: string
+    phone?: string | null
     password: string
     pfp_url?: string | null
     created_at?: Date | string
@@ -28004,6 +26685,7 @@ export namespace Prisma {
     user_id?: number
     name: string
     email: string
+    phone?: string | null
     password: string
     pfp_url?: string | null
     created_at?: Date | string
@@ -28039,6 +26721,7 @@ export namespace Prisma {
   export type UserUpdateWithoutCouponsInput = {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
     pfp_url?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -28059,6 +26742,7 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
     pfp_url?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -28169,6 +26853,7 @@ export namespace Prisma {
   export type UserCreateWithoutEventInput = {
     name: string
     email: string
+    phone?: string | null
     password: string
     pfp_url?: string | null
     created_at?: Date | string
@@ -28189,6 +26874,7 @@ export namespace Prisma {
     user_id?: number
     name: string
     email: string
+    phone?: string | null
     password: string
     pfp_url?: string | null
     created_at?: Date | string
@@ -28905,6 +27591,7 @@ export namespace Prisma {
   export type UserCreateWithoutTransaction_detailsInput = {
     name: string
     email: string
+    phone?: string | null
     password: string
     pfp_url?: string | null
     created_at?: Date | string
@@ -28925,6 +27612,7 @@ export namespace Prisma {
     user_id?: number
     name: string
     email: string
+    phone?: string | null
     password: string
     pfp_url?: string | null
     created_at?: Date | string
@@ -29052,6 +27740,7 @@ export namespace Prisma {
   export type UserUpdateWithoutTransaction_detailsInput = {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
     pfp_url?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -29072,6 +27761,7 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
     pfp_url?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -29228,6 +27918,7 @@ export namespace Prisma {
   export type UserCreateWithoutTransactionInput = {
     name: string
     email: string
+    phone?: string | null
     password: string
     pfp_url?: string | null
     created_at?: Date | string
@@ -29248,6 +27939,7 @@ export namespace Prisma {
     user_id?: number
     name: string
     email: string
+    phone?: string | null
     password: string
     pfp_url?: string | null
     created_at?: Date | string
@@ -29299,6 +27991,7 @@ export namespace Prisma {
   export type UserUpdateWithoutTransactionInput = {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
     pfp_url?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -29319,6 +28012,7 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
     pfp_url?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -29386,6 +28080,7 @@ export namespace Prisma {
   export type UserCreateWithoutReviewInput = {
     name: string
     email: string
+    phone?: string | null
     password: string
     pfp_url?: string | null
     created_at?: Date | string
@@ -29406,6 +28101,7 @@ export namespace Prisma {
     user_id?: number
     name: string
     email: string
+    phone?: string | null
     password: string
     pfp_url?: string | null
     created_at?: Date | string
@@ -29495,6 +28191,7 @@ export namespace Prisma {
   export type UserUpdateWithoutReviewInput = {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
     pfp_url?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -29515,6 +28212,7 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
     pfp_url?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -29761,46 +28459,11 @@ export namespace Prisma {
     score?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
-  export type AddressCreateManyProfileInput = {
-    address_id?: number
-    address_name: $Enums.AddressName
-    address: string
-    city: string
-    country: string
-    zipcode?: string | null
-  }
-
   export type Social_mediaCreateManyProfileInput = {
     social_id?: number
     platform: $Enums.Platform
     account_name: string
     url: string
-  }
-
-  export type AddressUpdateWithoutProfileInput = {
-    address_name?: EnumAddressNameFieldUpdateOperationsInput | $Enums.AddressName
-    address?: StringFieldUpdateOperationsInput | string
-    city?: StringFieldUpdateOperationsInput | string
-    country?: StringFieldUpdateOperationsInput | string
-    zipcode?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type AddressUncheckedUpdateWithoutProfileInput = {
-    address_id?: IntFieldUpdateOperationsInput | number
-    address_name?: EnumAddressNameFieldUpdateOperationsInput | $Enums.AddressName
-    address?: StringFieldUpdateOperationsInput | string
-    city?: StringFieldUpdateOperationsInput | string
-    country?: StringFieldUpdateOperationsInput | string
-    zipcode?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type AddressUncheckedUpdateManyWithoutProfileInput = {
-    address_id?: IntFieldUpdateOperationsInput | number
-    address_name?: EnumAddressNameFieldUpdateOperationsInput | $Enums.AddressName
-    address?: StringFieldUpdateOperationsInput | string
-    city?: StringFieldUpdateOperationsInput | string
-    country?: StringFieldUpdateOperationsInput | string
-    zipcode?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type Social_mediaUpdateWithoutProfileInput = {
@@ -29904,6 +28567,7 @@ export namespace Prisma {
     user_id?: number
     name: string
     email: string
+    phone?: string | null
     password: string
     pfp_url?: string | null
     created_at?: Date | string
@@ -29914,6 +28578,7 @@ export namespace Prisma {
   export type UserUpdateWithoutReferredInput = {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
     pfp_url?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -29934,6 +28599,7 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
     pfp_url?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -29954,6 +28620,7 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
     pfp_url?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -30024,6 +28691,7 @@ export namespace Prisma {
   export type UserUpdateWithoutEventInput = {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
     pfp_url?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -30044,6 +28712,7 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
     pfp_url?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -30064,6 +28733,7 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
     pfp_url?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
