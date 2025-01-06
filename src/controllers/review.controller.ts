@@ -5,9 +5,8 @@ import ResponseHandler from "../utils/responseHandler";
 export class ReviewController {
   async generateReview(req: Request, res: Response): Promise<any> {
     try {
-      const { eventId, reviewContent, reviewImage, reviewScore, userId } =
-        req.body;
-
+      const { eventId, reviewContent, reviewImage, reviewScore } = req.body;
+      const userId = res.locals.dcrypt.user_id;
       const reviewTransaction = await prisma.$transaction(async (tx) => {
         // const user = await tx.user.findUnique({
         //   where: { user_id: res.locals.dcrypt.user_id },
@@ -15,6 +14,7 @@ export class ReviewController {
         const user = await tx.user.findUnique({
           where: { user_id: userId },
         });
+
         const checkEventUser = await tx.event.findUnique({
           where: { event_id: eventId },
         });

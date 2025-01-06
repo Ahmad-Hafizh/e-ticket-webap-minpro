@@ -3,7 +3,8 @@ import { body, validationResult } from "express-validator";
 import ResponseHandler from "../utils/responseHandler";
 
 export const createReviewValidator: any = [
-  body("reviewTitle").notEmpty().withMessage("Event title cannot be empty!"),
+  body("reviewTitle").notEmpty().withMessage("Review cannot be empty!"),
+  body("reviewScore").notEmpty().withMessage("Score cannot be empty!"),
 
   (req: Request, res: Response, next: NextFunction) => {
     const errorValidation = validationResult(req);

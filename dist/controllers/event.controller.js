@@ -316,6 +316,7 @@ class EventController {
                     include: {
                         event_location: true,
                         ticket_types: true,
+                        organizer: true,
                         review: {
                             include: {
                                 user: true,

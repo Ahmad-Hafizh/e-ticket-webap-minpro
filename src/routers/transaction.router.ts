@@ -21,35 +21,36 @@ export class TransactionRouter {
     //   this.transactionController.generateTransactionDetails
     // );
 
+    this.route.post(
+      "/:id",
+      verifyToken,
+      this.transactionController.generateTransactionAndDetails
+    );
+
     this.route.get(
       "/details",
-      //   verifyToken,
+      verifyToken,
       this.transactionController.getTransactionDetails
-    );
-    this.route.post(
-      "/",
-      // verifyToken,
-      this.transactionController.generateTransactionAndDetails
     );
 
     this.route.patch(
       "/:id",
-      //   verifyToken,
+      verifyToken,
       this.transactionController.paidTransaction
     );
 
-    this.route.get(
-      "/:id",
-      //   verifyToken,
-      this.transactionController.getTransactionbyUser
-    );
+    // this.route.get(
+    //   "/:id",
+    //   //   verifyToken,
+    //   this.transactionController.getTransactionbyUser
+    // );
 
-    this.route.post(
-      "/:id",
-      //   verifyToken,
-      //   organizerAuthorization,
-      this.transactionController.getTransactionbyOrganizer
-    );
+    // this.route.post(
+    //   "/:id",
+    //   //   verifyToken,
+    //   //   organizerAuthorization,
+    //   this.transactionController.getTransactionbyOrganizer
+    // );
   }
 
   public getRouter(): Router {
