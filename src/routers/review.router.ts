@@ -18,8 +18,8 @@ export class ReviewRouter {
     this.route.get("/:id", this.reviewController.getReview);
     this.route.post(
       "/",
-      // createReviewValidator,
-      // verifyToken,
+      createReviewValidator,
+      verifyToken,
       this.reviewController.generateReview
     );
   }

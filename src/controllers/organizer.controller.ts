@@ -1,7 +1,7 @@
-import { prisma } from '../config/prisma';
-import { Request, Response, NextFunction } from 'express';
-import ResponseHandler from '../utils/responseHandler';
-import { getOrganizerStat } from '../../prisma/generated/client/sql';
+import { prisma } from "../config/prisma";
+import { Request, Response, NextFunction } from "express";
+import ResponseHandler from "../utils/responseHandler";
+import { getOrganizerStat } from "../../prisma/generated/client/sql";
 
 interface ITransactionRaw {
   date: string | Date;
@@ -11,7 +11,11 @@ interface ITransactionRaw {
 }
 
 export class OrganizerController {
-  async getProfile(req: Request, res: Response, next: NextFunction): Promise<any> {
+  async getProfile(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<any> {
     try {
       const profile = await prisma.organizer.findUnique({
         where: {
@@ -29,22 +33,36 @@ export class OrganizerController {
       });
 
       if (!profile) {
-        return ResponseHandler.error(res, 'Organizer not found', 404);
+        return ResponseHandler.error(res, "Organizer not found", 404);
       }
 
-      return ResponseHandler.success(res, 'Get organizer profile success', 200, profile);
+      return ResponseHandler.success(
+        res,
+        "Get organizer profile success",
+        200,
+        profile
+      );
     } catch (error) {
-      return ResponseHandler.error(res, 'Get organizer profile failed', 500, error);
+      return ResponseHandler.error(
+        res,
+        "Get organizer profile failed",
+        500,
+        error
+      );
     }
   }
-  async updateProfile(req: Request, res: Response, next: NextFunction): Promise<any> {
+  async updateProfile(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<any> {
     try {
       const profile = await prisma.organizer.findUnique({
         where: { user_id: res.locals.dcrypt.user_id },
       });
 
       if (!profile) {
-        return ResponseHandler.error(res, 'Organizer not found', 404);
+        return ResponseHandler.error(res, "Organizer not found", 404);
       }
 
       await prisma.organizer.update({
@@ -55,12 +73,25 @@ export class OrganizerController {
           ...req.body,
         },
       });
-      return ResponseHandler.success(res, 'Update organizer profile success', 201);
+      return ResponseHandler.success(
+        res,
+        "Update organizer profile success",
+        201
+      );
     } catch (error) {
-      return ResponseHandler.error(res, 'Update organizer profile failed', 500, error);
+      return ResponseHandler.error(
+        res,
+        "Update organizer profile failed",
+        500,
+        error
+      );
     }
   }
-  async updateBank(req: Request, res: Response, next: NextFunction): Promise<any> {
+  async updateBank(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<any> {
     try {
       const bank_account = await prisma.organizer.findUnique({
         where: { user_id: res.locals.dcrypt.user_id },
@@ -70,7 +101,7 @@ export class OrganizerController {
       });
 
       if (!bank_account) {
-        return ResponseHandler.error(res, 'Bank account not found', 404);
+        return ResponseHandler.error(res, "Bank account not found", 404);
       }
 
       await prisma.bank_account.update({
@@ -82,9 +113,14 @@ export class OrganizerController {
         },
       });
 
-      return ResponseHandler.error(res, 'Update Bank account success', 201);
+      return ResponseHandler.error(res, "Update Bank account success", 201);
     } catch (error) {
-      return ResponseHandler.error(res, 'Update Bank account failed', 500, error);
+      return ResponseHandler.error(
+        res,
+        "Update Bank account failed",
+        500,
+        error
+      );
     }
   }
   async getStat(req: Request, res: Response): Promise<any> {
@@ -97,14 +133,26 @@ export class OrganizerController {
       });
 
       if (!organizer) {
-        return ResponseHandler.error(res, 'Organizer not found', 404);
+        return ResponseHandler.error(res, "Organizer not found", 404);
       }
 
-      const organizerStat = await prisma.$queryRawTyped(getOrganizerStat(range, organizer.organizer_id, start, end));
+      const organizerStat = await prisma.$queryRawTyped(
+        getOrganizerStat(range, organizer.organizer_id, start, end)
+      );
 
-      return ResponseHandler.success(res, 'Get organizer statistic success', 200, organizerStat);
+      return ResponseHandler.success(
+        res,
+        "Get organizer statistic success",
+        200,
+        organizerStat
+      );
     } catch (error) {
-      return ResponseHandler.error(res, 'Get organizer statistic failed', 500, error);
+      return ResponseHandler.error(
+        res,
+        "Get organizer statistic failed",
+        500,
+        error
+      );
     }
   }
 }

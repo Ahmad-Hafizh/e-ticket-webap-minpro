@@ -9,9 +9,11 @@ export class TransactionController {
     res: Response
   ): Promise<any> {
     try {
-      const userId = 18;
-      console.log("this is user id", userId);
-      const { event, ticket, transactions } = req.body;
+      const userId = res.locals.dcrypt.user_id;
+      console.log("INI RES LCOALS", res.locals.dcrypt);
+      // console.log("this is user id", userId);
+      const { event, ticket, transactions } = req.body.payloadUltimate;
+      console.log("ini req", req.body);
       const transaction = await prisma.$transaction(async (tx) => {
         const user = await tx.user.findUnique({
           where: { user_id: userId },
@@ -77,6 +79,7 @@ export class TransactionController {
         });
         return transaction;
       });
+      console.log("ini transcation", transaction);
       return ResponseHandler.success(
         res,
         "Transaction success",
@@ -272,7 +275,11 @@ export class TransactionController {
     try {
       const transactionId = req.params.id;
       const { eventId } = req.body;
-      const userId = 18;
+      const userId = res.locals.dcrypt.user_id;
+
+      console.log("Ini req.body");
+      const ticket = req.body.session.ticket.data;
+
       const updateTransaction = await prisma.$transaction(async (tx) => {
         const response = await prisma.transaction.update({
           where: { transaction_id: parseInt(transactionId) },
@@ -287,9 +294,45 @@ export class TransactionController {
             },
           },
         });
+
+        console.log("Ini updating user: ", updatingUser);
+
+        ticket.map(async (value: any, index: number) => {
+          console.log("Ini value:", value);
+          const updateTicket = await prisma.$transaction(async (tx) => {
+            const checkTicketTypes = await tx.ticket_types.findUnique({
+              where: {
+                ticket_types_id: value.ticketTypesId,
+              },
+            });
+
+            console.log("Ini value quantity bought: ", value.quantityBought);
+            console.log(
+              "Ini value quantity available: ",
+              checkTicketTypes?.quantity_available
+            );
+            const quantityLeft =
+              (checkTicketTypes?.quantity_available as number) -
+              parseInt(value.quantityBought);
+
+            console.log("Ini quantity left: ", quantityLeft);
+
+            //Update ticket quantities
+            const updateQuantity = await tx.ticket_types.update({
+              data: {
+                quantity_available: quantityLeft,
+              },
+              where: {
+                ticket_types_id: value.ticketTypesId,
+              },
+            });
+            return updateQuantity;
+          });
+        });
+
         return response;
       });
-
+      console.log("ini response dari paid: ", updateTransaction);
       return ResponseHandler.success(
         res,
         "Transaction paid. Thank you!",
@@ -330,55 +373,55 @@ export class TransactionController {
     }
   }
 
-  async getTransactionbyOrganizer(req: Request, res: Response): Promise<any> {
-    try {
-      // const organizerId = res.locals.dcrypt.user_id;
-      const organizerId = parseInt(req.params.id);
-      const response = await prisma.$transaction(async (tx) => {
-        const organizer = await prisma.organizer.findUnique({
-          where: {
-            user_id: organizerId,
-          },
-        });
+  // async getTransactionbyOrganizer(req: Request, res: Response): Promise<any> {
+  //   try {
+  //     // const organizerId = res.locals.dcrypt.user_id;
+  //     const organizerId = parseInt(req.params.id);
+  //     const response = await prisma.$transaction(async (tx) => {
+  //       const organizer = await prisma.organizer.findUnique({
+  //         where: {
+  //           user_id: organizerId,
+  //         },
+  //       });
 
-        const transactionsByOrganizer = await prisma.transaction.findMany({
-          where: {
-            transaction_details: {
-              some: {
-                event: {
-                  organizer: {
-                    organizer_id: organizerId,
-                  },
-                },
-              },
-            },
-          },
-          //   include: {
-          //     transaction_details: {
-          //       include: {
-          //         event: true,
-          //         user: true,
-          //       },
-          //     },
-          //   },
-        });
+  //       const transactionsByOrganizer = await prisma.transaction.findMany({
+  //         where: {
+  //           transaction_details: {
+  //             some: {
+  //               event: {
+  //                 organizer: {
+  //                   organizer_id: organizerId,
+  //                 },
+  //               },
+  //             },
+  //           },
+  //         },
+  //         //   include: {
+  //         //     transaction_details: {
+  //         //       include: {
+  //         //         event: true,
+  //         //         user: true,
+  //         //       },
+  //         //     },
+  //         //   },
+  //       });
 
-        return transactionsByOrganizer;
-      });
+  //       return transactionsByOrganizer;
+  //     });
 
-      return ResponseHandler.success(
-        res,
-        "Get transaction by organizer success!",
-        201,
-        response
-      );
-    } catch (error) {
-      return ResponseHandler.error(
-        res,
-        "Get transaction by organizer error!",
-        500,
-        error
-      );
-    }
-  }
+  //     return ResponseHandler.success(
+  //       res,
+  //       "Get transaction by organizer success!",
+  //       201,
+  //       response
+  //     );
+  //   } catch (error) {
+  //     return ResponseHandler.error(
+  //       res,
+  //       "Get transaction by organizer error!",
+  //       500,
+  //       error
+  //     );
+  //   }
+  // }
 }

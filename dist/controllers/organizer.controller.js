@@ -35,12 +35,12 @@ class OrganizerController {
                     },
                 });
                 if (!profile) {
-                    return responseHandler_1.default.error(res, 'Organizer not found', 404);
+                    return responseHandler_1.default.error(res, "Organizer not found", 404);
                 }
-                return responseHandler_1.default.success(res, 'Get organizer profile success', 200, profile);
+                return responseHandler_1.default.success(res, "Get organizer profile success", 200, profile);
             }
             catch (error) {
-                return responseHandler_1.default.error(res, 'Get organizer profile failed', 500, error);
+                return responseHandler_1.default.error(res, "Get organizer profile failed", 500, error);
             }
         });
     }
@@ -51,7 +51,7 @@ class OrganizerController {
                     where: { user_id: res.locals.dcrypt.user_id },
                 });
                 if (!profile) {
-                    return responseHandler_1.default.error(res, 'Organizer not found', 404);
+                    return responseHandler_1.default.error(res, "Organizer not found", 404);
                 }
                 yield prisma_1.prisma.organizer.update({
                     where: {
@@ -59,10 +59,10 @@ class OrganizerController {
                     },
                     data: Object.assign({}, req.body),
                 });
-                return responseHandler_1.default.success(res, 'Update organizer profile success', 201);
+                return responseHandler_1.default.success(res, "Update organizer profile success", 201);
             }
             catch (error) {
-                return responseHandler_1.default.error(res, 'Update organizer profile failed', 500, error);
+                return responseHandler_1.default.error(res, "Update organizer profile failed", 500, error);
             }
         });
     }
@@ -77,7 +77,7 @@ class OrganizerController {
                     },
                 });
                 if (!bank_account) {
-                    return responseHandler_1.default.error(res, 'Bank account not found', 404);
+                    return responseHandler_1.default.error(res, "Bank account not found", 404);
                 }
                 yield prisma_1.prisma.bank_account.update({
                     where: {
@@ -85,10 +85,10 @@ class OrganizerController {
                     },
                     data: Object.assign({}, req.body),
                 });
-                return responseHandler_1.default.error(res, 'Update Bank account success', 201);
+                return responseHandler_1.default.error(res, "Update Bank account success", 201);
             }
             catch (error) {
-                return responseHandler_1.default.error(res, 'Update Bank account failed', 500, error);
+                return responseHandler_1.default.error(res, "Update Bank account failed", 500, error);
             }
         });
     }
@@ -102,13 +102,13 @@ class OrganizerController {
                     },
                 });
                 if (!organizer) {
-                    return responseHandler_1.default.error(res, 'Organizer not found', 404);
+                    return responseHandler_1.default.error(res, "Organizer not found", 404);
                 }
                 const organizerStat = yield prisma_1.prisma.$queryRawTyped((0, sql_1.getOrganizerStat)(range, organizer.organizer_id, start, end));
-                return responseHandler_1.default.success(res, 'Get organizer statistic success', 200, organizerStat);
+                return responseHandler_1.default.success(res, "Get organizer statistic success", 200, organizerStat);
             }
             catch (error) {
-                return responseHandler_1.default.error(res, 'Get organizer statistic failed', 500, error);
+                return responseHandler_1.default.error(res, "Get organizer statistic failed", 500, error);
             }
         });
     }

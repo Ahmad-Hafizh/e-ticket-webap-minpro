@@ -1,6 +1,6 @@
-import e, { Request, Response, NextFunction } from "express";
-import { prisma } from "../config/prisma";
-import ResponseHandler from "../utils/responseHandler";
+import e, { Request, Response, NextFunction } from 'express';
+import { prisma } from '../config/prisma';
+import ResponseHandler from '../utils/responseHandler';
 
 export class SearchController {
   //Behvaiour = API can be called following the above query. Can be mixed and matched.
@@ -23,14 +23,12 @@ export class SearchController {
       } = req.query;
       const url = req.url;
       console.log(url);
-      console.log("Ini page", page);
+      console.log('Ini page', page);
       //PR CEK QUERY
 
       let cityIds: number[] | undefined;
       if (city) {
-        const cityNames = (city as string)
-          .split(",")
-          .map((name) => name.trim());
+        const cityNames = (city as string).split(',').map((name) => name.trim());
         const cityData = await prisma.location_city.findMany({
           where: {
             city_name: { in: cityNames },
@@ -39,16 +37,12 @@ export class SearchController {
         cityIds = cityData.map((city) => city.location_city_id);
       }
 
-      const categoriesList = cat
-        ? (cat as string).split(",").map((name) => name.trim())
-        : undefined;
-      console.log("Ini categoriesList", categoriesList);
+      const categoriesList = cat ? (cat as string).split(',').map((name) => name.trim()) : undefined;
+      console.log('Ini categoriesList', categoriesList);
 
       let countryIds: number[] | undefined;
       if (countryIds) {
-        const countryNames = (country as string)
-          .split(",")
-          .map((name) => name.trim());
+        const countryNames = (country as string).split(',').map((name) => name.trim());
         const countryData = await prisma.location_country.findMany({
           where: {
             country_name: { in: countryNames },
@@ -56,8 +50,6 @@ export class SearchController {
         });
         countryIds = countryData.map((country) => country.location_country_id);
       }
-
-      //Category query
 
       const pageNumber = parseInt(page as string);
       const pageSize = 6;
@@ -68,16 +60,14 @@ export class SearchController {
         where: {
           event_category: {
             some: {
-              category_name: categoriesList
-                ? { in: categoriesList }
-                : undefined,
+              category_name: categoriesList ? { in: categoriesList } : undefined,
             },
           },
           title: {
             contains: (keyword as string) || undefined,
-            mode: "insensitive",
+            mode: 'insensitive',
           },
-          organizer_id: (parseInt(eo as string) as number) || undefined, //query by user
+          organizer_id: (parseInt(eo as string) as number) || undefined,
           ticket_types: {
             every: {
               price: {
@@ -123,13 +113,11 @@ export class SearchController {
 
       //Filter price range
       const priceRange = result.map((value: any) => {
-        const minPrice = value.ticket_types.length
-          ? Math.min(...value.ticket_types.map((value: any) => value.price))
-          : null;
+        const minPrice = value.ticket_types.length ? Math.min(...value.ticket_types.map((value: any) => value.price)) : null;
 
         return {
           ...value,
-          min_price: minPrice as any, // Add computed min_price
+          min_price: minPrice as any,
         };
       });
 
@@ -147,9 +135,7 @@ export class SearchController {
         where: {
           event_category: {
             some: {
-              category_name: categoriesList
-                ? { in: categoriesList }
-                : undefined,
+              category_name: categoriesList ? { in: categoriesList } : undefined,
             },
           },
           title: {
@@ -195,10 +181,10 @@ export class SearchController {
         totalPages: totalPages,
       };
 
-      return ResponseHandler.success(res, "Filter Success", 200, payload);
+      return ResponseHandler.success(res, 'Filter Success', 200, payload);
     } catch (error) {
       console.log(error);
-      return ResponseHandler.error(res, "Filter Error", 500, error);
+      return ResponseHandler.error(res, 'Filter Error', 500, error);
     }
   }
 }

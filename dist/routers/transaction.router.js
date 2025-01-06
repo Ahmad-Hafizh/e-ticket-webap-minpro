@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TransactionRouter = void 0;
 const express_1 = require("express");
+const verifyToken_1 = require("../middlewares/verifyToken");
 const transaction_controller_1 = require("../controllers/transaction.controller");
 class TransactionRouter {
     constructor() {
@@ -15,22 +16,20 @@ class TransactionRouter {
         //   //   verifyToken,
         //   this.transactionController.generateTransactionDetails
         // );
-        this.route.get("/details", 
-        //   verifyToken,
-        this.transactionController.getTransactionDetails);
-        this.route.post("/", 
-        // verifyToken,
-        this.transactionController.generateTransactionAndDetails);
-        this.route.patch("/:id", 
-        //   verifyToken,
-        this.transactionController.paidTransaction);
-        this.route.get("/:id", 
-        //   verifyToken,
-        this.transactionController.getTransactionbyUser);
-        this.route.post("/:id", 
-        //   verifyToken,
-        //   organizerAuthorization,
-        this.transactionController.getTransactionbyOrganizer);
+        this.route.post("/:id", verifyToken_1.verifyToken, this.transactionController.generateTransactionAndDetails);
+        this.route.get("/details", verifyToken_1.verifyToken, this.transactionController.getTransactionDetails);
+        this.route.patch("/:id", verifyToken_1.verifyToken, this.transactionController.paidTransaction);
+        // this.route.get(
+        //   "/:id",
+        //   //   verifyToken,
+        //   this.transactionController.getTransactionbyUser
+        // );
+        // this.route.post(
+        //   "/:id",
+        //   //   verifyToken,
+        //   //   organizerAuthorization,
+        //   this.transactionController.getTransactionbyOrganizer
+        // );
     }
     getRouter() {
         return this.route;

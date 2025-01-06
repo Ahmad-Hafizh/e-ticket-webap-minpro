@@ -19,7 +19,8 @@ class ReviewController {
     generateReview(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { eventId, reviewContent, reviewImage, reviewScore, userId } = req.body;
+                const { eventId, reviewContent, reviewImage, reviewScore } = req.body;
+                const userId = res.locals.dcrypt.user_id;
                 const reviewTransaction = yield prisma_1.prisma.$transaction((tx) => __awaiter(this, void 0, void 0, function* () {
                     // const user = await tx.user.findUnique({
                     //   where: { user_id: res.locals.dcrypt.user_id },
