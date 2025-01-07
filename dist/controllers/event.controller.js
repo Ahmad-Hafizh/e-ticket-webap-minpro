@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.EventController = void 0;
 const prisma_1 = require("../config/prisma");
 const responseHandler_1 = __importDefault(require("../utils/responseHandler"));
+const cloudinary_1 = require("../config/cloudinary");
 //
 class EventController {
     getAllEvent(req, res, next) {
@@ -51,6 +52,10 @@ class EventController {
                     throw new Error("User unauthorized");
                 }
                 const { eventTitle, eventDescription, eventTimeDate, eventCategory, eventLocation, ticketTypes, eventImg, score, } = req.body;
+                if (!req.file) {
+                    throw new Error("No file uploaded");
+                }
+                const { secure_url } = yield (0, cloudinary_1.cloudinaryUpload)(req.file, "eventBanner");
                 const response = yield prisma_1.prisma.$transaction((tx) => __awaiter(this, void 0, void 0, function* () {
                     //Create and/or update city
                     const city = yield tx.location_city.upsert({
@@ -86,7 +91,7 @@ class EventController {
                             title: eventTitle,
                             description: eventDescription,
                             coupon_id: 1,
-                            imgEvent: eventImg,
+                            imgEvent: secure_url,
                             startDate: new Date(eventTimeDate.startDate),
                             endDate: new Date(eventTimeDate.endDate),
                             startTime: eventTimeDate.startTime,

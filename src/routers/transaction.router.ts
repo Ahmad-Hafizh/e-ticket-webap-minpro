@@ -3,6 +3,7 @@ import { OrganizerController } from "../controllers/organizer.controller";
 import { verifyToken } from "../middlewares/verifyToken";
 import { organizerAuthorization } from "../middlewares/orgAuthor";
 import { TransactionController } from "../controllers/transaction.controller";
+import { uploaderMemory } from "../middlewares/uploader";
 
 export class TransactionRouter {
   private route: Router;
@@ -27,16 +28,23 @@ export class TransactionRouter {
       this.transactionController.generateTransactionAndDetails
     );
 
-    this.route.get(
-      "/details",
-      verifyToken,
-      this.transactionController.getTransactionDetails
-    );
-
     this.route.patch(
       "/:id",
       verifyToken,
       this.transactionController.paidTransaction
+    );
+
+    // this.route.get(
+    //   "/details",
+    //   verifyToken,
+    //   this.transactionController.getTransactionDetails
+    // );
+
+    this.route.post(
+      "/proof",
+      uploaderMemory().single("proofOfPayment"),
+      // verifyToken,
+      this.transactionController.generateProofPayment
     );
 
     // this.route.get(
