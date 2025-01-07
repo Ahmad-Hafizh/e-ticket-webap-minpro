@@ -5,6 +5,7 @@ import ResponseHandler from "../utils/responseHandler";
 import { transporter } from "../config/nodemailer";
 import { error } from "console";
 import { Result } from "express-validator";
+import { cloudinaryUpload } from "../config/cloudinary";
 
 //
 export class EventController {
@@ -46,9 +47,13 @@ export class EventController {
     next: NextFunction
   ): Promise<any> {
     try {
+      const userId = 17;
       const organizer = await prisma.organizer.findUnique({
-        where: { user_id: res.locals.dcrypt.user_id },
+        where: { user_id: userId },
       });
+      // const organizer = await prisma.organizer.findUnique({
+      //   where: { user_id: res.locals.dcrypt.user_id },
+      // });
 
       if (!organizer) {
         throw new Error("User unauthorized");
@@ -62,8 +67,17 @@ export class EventController {
         eventLocation,
         ticketTypes,
         eventImg,
+        organizerCouponInput,
         score,
       } = req.body;
+
+      // if (!req.file) {
+      //   throw new Error("No file uploaded");
+      // }
+
+      // console.log("Ini req.file:", req.file);
+
+      // const { secure_url } = await cloudinaryUpload(req.file, "eventBanner");
 
       const response = await prisma.$transaction(async (tx) => {
         //Create and/or update city
@@ -91,6 +105,17 @@ export class EventController {
           },
         });
 
+        const organizerCoupon = await tx.organizerCoupon.create({
+          data: {
+            organizer_coupon_code: organizerCouponInput.organizer_coupon_code,
+            organizer_id: organizer?.organizer_id as number,
+            start_date: new Date(organizerCouponInput.startDate),
+            expired_date: new Date(organizerCouponInput.endDate),
+            discount: organizerCouponInput.discount,
+            quantity: organizerCouponInput.quantity,
+          },
+        });
+
         //Created Event
         const event = await tx.event.create({
           data: {
@@ -102,7 +127,7 @@ export class EventController {
             },
             title: eventTitle,
             description: eventDescription,
-            coupon_id: 1,
+            organizer_coupon_id: organizerCoupon.organizer_coupon_id,
             imgEvent: eventImg,
             startDate: new Date(eventTimeDate.startDate),
             endDate: new Date(eventTimeDate.endDate),
@@ -185,6 +210,7 @@ export class EventController {
         eventLocation,
         ticketTypes,
         eventImg,
+        organizerCouponInput,
       } = req.body;
 
       const params = parseInt(req.params.id);
@@ -257,7 +283,7 @@ export class EventController {
             },
             title: eventTitle || checkEventExist.title,
             description: eventDescription || checkEventExist.description,
-            coupon_id: 1,
+            organizer_coupon_id: 1,
             imgEvent: eventImg || checkEventExist.imgEvent,
             startDate:
               new Date(eventTimeDate.startDate) || checkEventExist.startDate,
@@ -400,6 +426,7 @@ export class EventController {
           ticket_types: true,
           organizer: true,
           customer: true,
+          organizer_coupon: true,
           review: {
             include: {
               user: true,

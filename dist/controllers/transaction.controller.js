@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.TransactionController = void 0;
 const prisma_1 = require("../config/prisma");
 const responseHandler_1 = __importDefault(require("../utils/responseHandler"));
+const cloudinary_1 = require("../config/cloudinary");
 class TransactionController {
     generateTransactionAndDetails(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -300,6 +301,33 @@ class TransactionController {
             }
             catch (error) {
                 return responseHandler_1.default.error(res, "Get transaction by user error", 500, error);
+            }
+        });
+    }
+    generateProofPayment(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const userId = res.locals.dcrypt.user_id;
+                const { transactionId } = req.body;
+                if (!req.file) {
+                    throw new Error("No file uploaded");
+                }
+                console.log("Ini transactionId:", transactionId);
+                console.log("Ini req.file", req.file);
+                const { secure_url } = yield (0, cloudinary_1.cloudinaryUpload)(req.file, "proofOfPayment");
+                const updateProofOfPayment = yield prisma_1.prisma.transaction.update({
+                    where: {
+                        transaction_id: transactionId,
+                    },
+                    data: {
+                        payment_proof: secure_url,
+                    },
+                });
+                return responseHandler_1.default.success(res, "Upload Success", 200, updateProofOfPayment);
+            }
+            catch (error) {
+                console.log(error);
+                return responseHandler_1.default.error(res, "Upload failed", 500);
             }
         });
     }

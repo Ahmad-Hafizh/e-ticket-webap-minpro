@@ -16,6 +16,13 @@
     "country": "Indonesia",
     "zipcode": "10001"
   },
+  "organizerCoupon": {
+    "organizer_coupon_code": "aelanfa",
+    "discount": 10,
+    "quantity": 1000,
+    "startDate": "2024-12-12",
+    "endDate": "2024-12-15"
+  },
   "ticketTypes": [
     {
       "types": "Presale",
