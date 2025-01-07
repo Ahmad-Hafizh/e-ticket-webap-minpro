@@ -4,6 +4,7 @@ exports.TransactionRouter = void 0;
 const express_1 = require("express");
 const verifyToken_1 = require("../middlewares/verifyToken");
 const transaction_controller_1 = require("../controllers/transaction.controller");
+const uploader_1 = require("../middlewares/uploader");
 class TransactionRouter {
     constructor() {
         this.route = (0, express_1.Router)();
@@ -17,8 +18,15 @@ class TransactionRouter {
         //   this.transactionController.generateTransactionDetails
         // );
         this.route.post("/:id", verifyToken_1.verifyToken, this.transactionController.generateTransactionAndDetails);
-        this.route.get("/details", verifyToken_1.verifyToken, this.transactionController.getTransactionDetails);
         this.route.patch("/:id", verifyToken_1.verifyToken, this.transactionController.paidTransaction);
+        this.route.get("/details", verifyToken_1.verifyToken, this.transactionController.getTransactionDetails);
+<<<<<<< HEAD
+        this.route.patch("/:id", verifyToken_1.verifyToken, this.transactionController.paidTransaction);
+=======
+        this.route.post("/proof", (0, uploader_1.uploaderMemory)().single("proofOfPayment"), 
+        // verifyToken,
+        this.transactionController.generateProofPayment);
+>>>>>>> main
         // this.route.get(
         //   "/:id",
         //   //   verifyToken,

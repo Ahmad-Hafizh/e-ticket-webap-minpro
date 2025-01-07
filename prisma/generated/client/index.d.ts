@@ -54,6 +54,11 @@ export type Social_media = $Result.DefaultSelection<Prisma.$Social_mediaPayload>
  */
 export type Coupon = $Result.DefaultSelection<Prisma.$CouponPayload>
 /**
+ * Model OrganizerCoupon
+ * 
+ */
+export type OrganizerCoupon = $Result.DefaultSelection<Prisma.$OrganizerCouponPayload>
+/**
  * Model Event
  * 
  */
@@ -382,6 +387,16 @@ export class PrismaClient<
     * ```
     */
   get coupon(): Prisma.CouponDelegate<ExtArgs>;
+
+  /**
+   * `prisma.organizerCoupon`: Exposes CRUD operations for the **OrganizerCoupon** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more OrganizerCoupons
+    * const organizerCoupons = await prisma.organizerCoupon.findMany()
+    * ```
+    */
+  get organizerCoupon(): Prisma.OrganizerCouponDelegate<ExtArgs>;
 
   /**
    * `prisma.event`: Exposes CRUD operations for the **Event** model.
@@ -920,6 +935,7 @@ export namespace Prisma {
     Referral: 'Referral',
     Social_media: 'Social_media',
     Coupon: 'Coupon',
+    OrganizerCoupon: 'OrganizerCoupon',
     Event: 'Event',
     Event_category: 'Event_category',
     Event_Location: 'Event_Location',
@@ -944,7 +960,11 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
+<<<<<<< HEAD
       modelProps: "user" | "profile" | "organizer" | "bank_account" | "point" | "referral" | "social_media" | "coupon" | "event" | "event_category" | "event_Location" | "location_city" | "location_country" | "ticket_types" | "transaction_Detail" | "transaction" | "review"
+=======
+      modelProps: "user" | "profile" | "organizer" | "bank_account" | "point" | "referral" | "social_media" | "coupon" | "organizerCoupon" | "event" | "event_category" | "event_Location" | "location_city" | "location_country" | "ticket_types" | "transaction_Detail" | "transaction" | "review"
+>>>>>>> main
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1505,6 +1525,76 @@ export namespace Prisma {
           count: {
             args: Prisma.CouponCountArgs<ExtArgs>
             result: $Utils.Optional<CouponCountAggregateOutputType> | number
+          }
+        }
+      }
+      OrganizerCoupon: {
+        payload: Prisma.$OrganizerCouponPayload<ExtArgs>
+        fields: Prisma.OrganizerCouponFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.OrganizerCouponFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrganizerCouponPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.OrganizerCouponFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrganizerCouponPayload>
+          }
+          findFirst: {
+            args: Prisma.OrganizerCouponFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrganizerCouponPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.OrganizerCouponFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrganizerCouponPayload>
+          }
+          findMany: {
+            args: Prisma.OrganizerCouponFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrganizerCouponPayload>[]
+          }
+          create: {
+            args: Prisma.OrganizerCouponCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrganizerCouponPayload>
+          }
+          createMany: {
+            args: Prisma.OrganizerCouponCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.OrganizerCouponCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrganizerCouponPayload>[]
+          }
+          delete: {
+            args: Prisma.OrganizerCouponDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrganizerCouponPayload>
+          }
+          update: {
+            args: Prisma.OrganizerCouponUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrganizerCouponPayload>
+          }
+          deleteMany: {
+            args: Prisma.OrganizerCouponDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.OrganizerCouponUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.OrganizerCouponUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrganizerCouponPayload>
+          }
+          aggregate: {
+            args: Prisma.OrganizerCouponAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateOrganizerCoupon>
+          }
+          groupBy: {
+            args: Prisma.OrganizerCouponGroupByArgs<ExtArgs>
+            result: $Utils.Optional<OrganizerCouponGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.OrganizerCouponCountArgs<ExtArgs>
+            result: $Utils.Optional<OrganizerCouponCountAggregateOutputType> | number
           }
         }
       }
@@ -2411,10 +2501,12 @@ export namespace Prisma {
 
   export type OrganizerCountOutputType = {
     events: number
+    OrganizerCoupon: number
   }
 
   export type OrganizerCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     events?: boolean | OrganizerCountOutputTypeCountEventsArgs
+    OrganizerCoupon?: boolean | OrganizerCountOutputTypeCountOrganizerCouponArgs
   }
 
   // Custom InputTypes
@@ -2433,6 +2525,13 @@ export namespace Prisma {
    */
   export type OrganizerCountOutputTypeCountEventsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: EventWhereInput
+  }
+
+  /**
+   * OrganizerCountOutputType without action
+   */
+  export type OrganizerCountOutputTypeCountOrganizerCouponArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OrganizerCouponWhereInput
   }
 
 
@@ -5212,6 +5311,7 @@ export namespace Prisma {
     user?: boolean | UserDefaultArgs<ExtArgs>
     bank_account?: boolean | Organizer$bank_accountArgs<ExtArgs>
     events?: boolean | Organizer$eventsArgs<ExtArgs>
+    OrganizerCoupon?: boolean | Organizer$OrganizerCouponArgs<ExtArgs>
     _count?: boolean | OrganizerCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["organizer"]>
 
@@ -5244,6 +5344,7 @@ export namespace Prisma {
     user?: boolean | UserDefaultArgs<ExtArgs>
     bank_account?: boolean | Organizer$bank_accountArgs<ExtArgs>
     events?: boolean | Organizer$eventsArgs<ExtArgs>
+    OrganizerCoupon?: boolean | Organizer$OrganizerCouponArgs<ExtArgs>
     _count?: boolean | OrganizerCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type OrganizerIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5256,6 +5357,7 @@ export namespace Prisma {
       user: Prisma.$UserPayload<ExtArgs>
       bank_account: Prisma.$Bank_accountPayload<ExtArgs> | null
       events: Prisma.$EventPayload<ExtArgs>[]
+      OrganizerCoupon: Prisma.$OrganizerCouponPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       organizer_id: number
@@ -5634,6 +5736,7 @@ export namespace Prisma {
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
     bank_account<T extends Organizer$bank_accountArgs<ExtArgs> = {}>(args?: Subset<T, Organizer$bank_accountArgs<ExtArgs>>): Prisma__Bank_accountClient<$Result.GetResult<Prisma.$Bank_accountPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
     events<T extends Organizer$eventsArgs<ExtArgs> = {}>(args?: Subset<T, Organizer$eventsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findMany"> | Null>
+    OrganizerCoupon<T extends Organizer$OrganizerCouponArgs<ExtArgs> = {}>(args?: Subset<T, Organizer$OrganizerCouponArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrganizerCouponPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6022,6 +6125,26 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: EventScalarFieldEnum | EventScalarFieldEnum[]
+  }
+
+  /**
+   * Organizer.OrganizerCoupon
+   */
+  export type Organizer$OrganizerCouponArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrganizerCoupon
+     */
+    select?: OrganizerCouponSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrganizerCouponInclude<ExtArgs> | null
+    where?: OrganizerCouponWhereInput
+    orderBy?: OrganizerCouponOrderByWithRelationInput | OrganizerCouponOrderByWithRelationInput[]
+    cursor?: OrganizerCouponWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: OrganizerCouponScalarFieldEnum | OrganizerCouponScalarFieldEnum[]
   }
 
   /**
@@ -10945,6 +11068,1043 @@ export namespace Prisma {
 
 
   /**
+   * Model OrganizerCoupon
+   */
+
+  export type AggregateOrganizerCoupon = {
+    _count: OrganizerCouponCountAggregateOutputType | null
+    _avg: OrganizerCouponAvgAggregateOutputType | null
+    _sum: OrganizerCouponSumAggregateOutputType | null
+    _min: OrganizerCouponMinAggregateOutputType | null
+    _max: OrganizerCouponMaxAggregateOutputType | null
+  }
+
+  export type OrganizerCouponAvgAggregateOutputType = {
+    organizer_coupon_id: number | null
+    discount: number | null
+    quantity: number | null
+    organizer_id: number | null
+  }
+
+  export type OrganizerCouponSumAggregateOutputType = {
+    organizer_coupon_id: number | null
+    discount: number | null
+    quantity: number | null
+    organizer_id: number | null
+  }
+
+  export type OrganizerCouponMinAggregateOutputType = {
+    organizer_coupon_id: number | null
+    organizer_coupon_code: string | null
+    discount: number | null
+    start_date: Date | null
+    expired_date: Date | null
+    quantity: number | null
+    organizer_id: number | null
+  }
+
+  export type OrganizerCouponMaxAggregateOutputType = {
+    organizer_coupon_id: number | null
+    organizer_coupon_code: string | null
+    discount: number | null
+    start_date: Date | null
+    expired_date: Date | null
+    quantity: number | null
+    organizer_id: number | null
+  }
+
+  export type OrganizerCouponCountAggregateOutputType = {
+    organizer_coupon_id: number
+    organizer_coupon_code: number
+    discount: number
+    start_date: number
+    expired_date: number
+    quantity: number
+    organizer_id: number
+    _all: number
+  }
+
+
+  export type OrganizerCouponAvgAggregateInputType = {
+    organizer_coupon_id?: true
+    discount?: true
+    quantity?: true
+    organizer_id?: true
+  }
+
+  export type OrganizerCouponSumAggregateInputType = {
+    organizer_coupon_id?: true
+    discount?: true
+    quantity?: true
+    organizer_id?: true
+  }
+
+  export type OrganizerCouponMinAggregateInputType = {
+    organizer_coupon_id?: true
+    organizer_coupon_code?: true
+    discount?: true
+    start_date?: true
+    expired_date?: true
+    quantity?: true
+    organizer_id?: true
+  }
+
+  export type OrganizerCouponMaxAggregateInputType = {
+    organizer_coupon_id?: true
+    organizer_coupon_code?: true
+    discount?: true
+    start_date?: true
+    expired_date?: true
+    quantity?: true
+    organizer_id?: true
+  }
+
+  export type OrganizerCouponCountAggregateInputType = {
+    organizer_coupon_id?: true
+    organizer_coupon_code?: true
+    discount?: true
+    start_date?: true
+    expired_date?: true
+    quantity?: true
+    organizer_id?: true
+    _all?: true
+  }
+
+  export type OrganizerCouponAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which OrganizerCoupon to aggregate.
+     */
+    where?: OrganizerCouponWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OrganizerCoupons to fetch.
+     */
+    orderBy?: OrganizerCouponOrderByWithRelationInput | OrganizerCouponOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: OrganizerCouponWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OrganizerCoupons from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OrganizerCoupons.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned OrganizerCoupons
+    **/
+    _count?: true | OrganizerCouponCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: OrganizerCouponAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: OrganizerCouponSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: OrganizerCouponMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: OrganizerCouponMaxAggregateInputType
+  }
+
+  export type GetOrganizerCouponAggregateType<T extends OrganizerCouponAggregateArgs> = {
+        [P in keyof T & keyof AggregateOrganizerCoupon]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateOrganizerCoupon[P]>
+      : GetScalarType<T[P], AggregateOrganizerCoupon[P]>
+  }
+
+
+
+
+  export type OrganizerCouponGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OrganizerCouponWhereInput
+    orderBy?: OrganizerCouponOrderByWithAggregationInput | OrganizerCouponOrderByWithAggregationInput[]
+    by: OrganizerCouponScalarFieldEnum[] | OrganizerCouponScalarFieldEnum
+    having?: OrganizerCouponScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: OrganizerCouponCountAggregateInputType | true
+    _avg?: OrganizerCouponAvgAggregateInputType
+    _sum?: OrganizerCouponSumAggregateInputType
+    _min?: OrganizerCouponMinAggregateInputType
+    _max?: OrganizerCouponMaxAggregateInputType
+  }
+
+  export type OrganizerCouponGroupByOutputType = {
+    organizer_coupon_id: number
+    organizer_coupon_code: string
+    discount: number
+    start_date: Date
+    expired_date: Date
+    quantity: number
+    organizer_id: number | null
+    _count: OrganizerCouponCountAggregateOutputType | null
+    _avg: OrganizerCouponAvgAggregateOutputType | null
+    _sum: OrganizerCouponSumAggregateOutputType | null
+    _min: OrganizerCouponMinAggregateOutputType | null
+    _max: OrganizerCouponMaxAggregateOutputType | null
+  }
+
+  type GetOrganizerCouponGroupByPayload<T extends OrganizerCouponGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<OrganizerCouponGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof OrganizerCouponGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], OrganizerCouponGroupByOutputType[P]>
+            : GetScalarType<T[P], OrganizerCouponGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type OrganizerCouponSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    organizer_coupon_id?: boolean
+    organizer_coupon_code?: boolean
+    discount?: boolean
+    start_date?: boolean
+    expired_date?: boolean
+    quantity?: boolean
+    organizer_id?: boolean
+    organizer?: boolean | OrganizerCoupon$organizerArgs<ExtArgs>
+    Event?: boolean | OrganizerCoupon$EventArgs<ExtArgs>
+  }, ExtArgs["result"]["organizerCoupon"]>
+
+  export type OrganizerCouponSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    organizer_coupon_id?: boolean
+    organizer_coupon_code?: boolean
+    discount?: boolean
+    start_date?: boolean
+    expired_date?: boolean
+    quantity?: boolean
+    organizer_id?: boolean
+    organizer?: boolean | OrganizerCoupon$organizerArgs<ExtArgs>
+  }, ExtArgs["result"]["organizerCoupon"]>
+
+  export type OrganizerCouponSelectScalar = {
+    organizer_coupon_id?: boolean
+    organizer_coupon_code?: boolean
+    discount?: boolean
+    start_date?: boolean
+    expired_date?: boolean
+    quantity?: boolean
+    organizer_id?: boolean
+  }
+
+  export type OrganizerCouponInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    organizer?: boolean | OrganizerCoupon$organizerArgs<ExtArgs>
+    Event?: boolean | OrganizerCoupon$EventArgs<ExtArgs>
+  }
+  export type OrganizerCouponIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    organizer?: boolean | OrganizerCoupon$organizerArgs<ExtArgs>
+  }
+
+  export type $OrganizerCouponPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "OrganizerCoupon"
+    objects: {
+      organizer: Prisma.$OrganizerPayload<ExtArgs> | null
+      Event: Prisma.$EventPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      organizer_coupon_id: number
+      organizer_coupon_code: string
+      discount: number
+      start_date: Date
+      expired_date: Date
+      quantity: number
+      organizer_id: number | null
+    }, ExtArgs["result"]["organizerCoupon"]>
+    composites: {}
+  }
+
+  type OrganizerCouponGetPayload<S extends boolean | null | undefined | OrganizerCouponDefaultArgs> = $Result.GetResult<Prisma.$OrganizerCouponPayload, S>
+
+  type OrganizerCouponCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<OrganizerCouponFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: OrganizerCouponCountAggregateInputType | true
+    }
+
+  export interface OrganizerCouponDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['OrganizerCoupon'], meta: { name: 'OrganizerCoupon' } }
+    /**
+     * Find zero or one OrganizerCoupon that matches the filter.
+     * @param {OrganizerCouponFindUniqueArgs} args - Arguments to find a OrganizerCoupon
+     * @example
+     * // Get one OrganizerCoupon
+     * const organizerCoupon = await prisma.organizerCoupon.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends OrganizerCouponFindUniqueArgs>(args: SelectSubset<T, OrganizerCouponFindUniqueArgs<ExtArgs>>): Prisma__OrganizerCouponClient<$Result.GetResult<Prisma.$OrganizerCouponPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one OrganizerCoupon that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {OrganizerCouponFindUniqueOrThrowArgs} args - Arguments to find a OrganizerCoupon
+     * @example
+     * // Get one OrganizerCoupon
+     * const organizerCoupon = await prisma.organizerCoupon.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends OrganizerCouponFindUniqueOrThrowArgs>(args: SelectSubset<T, OrganizerCouponFindUniqueOrThrowArgs<ExtArgs>>): Prisma__OrganizerCouponClient<$Result.GetResult<Prisma.$OrganizerCouponPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first OrganizerCoupon that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrganizerCouponFindFirstArgs} args - Arguments to find a OrganizerCoupon
+     * @example
+     * // Get one OrganizerCoupon
+     * const organizerCoupon = await prisma.organizerCoupon.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends OrganizerCouponFindFirstArgs>(args?: SelectSubset<T, OrganizerCouponFindFirstArgs<ExtArgs>>): Prisma__OrganizerCouponClient<$Result.GetResult<Prisma.$OrganizerCouponPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first OrganizerCoupon that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrganizerCouponFindFirstOrThrowArgs} args - Arguments to find a OrganizerCoupon
+     * @example
+     * // Get one OrganizerCoupon
+     * const organizerCoupon = await prisma.organizerCoupon.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends OrganizerCouponFindFirstOrThrowArgs>(args?: SelectSubset<T, OrganizerCouponFindFirstOrThrowArgs<ExtArgs>>): Prisma__OrganizerCouponClient<$Result.GetResult<Prisma.$OrganizerCouponPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more OrganizerCoupons that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrganizerCouponFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all OrganizerCoupons
+     * const organizerCoupons = await prisma.organizerCoupon.findMany()
+     * 
+     * // Get first 10 OrganizerCoupons
+     * const organizerCoupons = await prisma.organizerCoupon.findMany({ take: 10 })
+     * 
+     * // Only select the `organizer_coupon_id`
+     * const organizerCouponWithOrganizer_coupon_idOnly = await prisma.organizerCoupon.findMany({ select: { organizer_coupon_id: true } })
+     * 
+     */
+    findMany<T extends OrganizerCouponFindManyArgs>(args?: SelectSubset<T, OrganizerCouponFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrganizerCouponPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a OrganizerCoupon.
+     * @param {OrganizerCouponCreateArgs} args - Arguments to create a OrganizerCoupon.
+     * @example
+     * // Create one OrganizerCoupon
+     * const OrganizerCoupon = await prisma.organizerCoupon.create({
+     *   data: {
+     *     // ... data to create a OrganizerCoupon
+     *   }
+     * })
+     * 
+     */
+    create<T extends OrganizerCouponCreateArgs>(args: SelectSubset<T, OrganizerCouponCreateArgs<ExtArgs>>): Prisma__OrganizerCouponClient<$Result.GetResult<Prisma.$OrganizerCouponPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many OrganizerCoupons.
+     * @param {OrganizerCouponCreateManyArgs} args - Arguments to create many OrganizerCoupons.
+     * @example
+     * // Create many OrganizerCoupons
+     * const organizerCoupon = await prisma.organizerCoupon.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends OrganizerCouponCreateManyArgs>(args?: SelectSubset<T, OrganizerCouponCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many OrganizerCoupons and returns the data saved in the database.
+     * @param {OrganizerCouponCreateManyAndReturnArgs} args - Arguments to create many OrganizerCoupons.
+     * @example
+     * // Create many OrganizerCoupons
+     * const organizerCoupon = await prisma.organizerCoupon.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many OrganizerCoupons and only return the `organizer_coupon_id`
+     * const organizerCouponWithOrganizer_coupon_idOnly = await prisma.organizerCoupon.createManyAndReturn({ 
+     *   select: { organizer_coupon_id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends OrganizerCouponCreateManyAndReturnArgs>(args?: SelectSubset<T, OrganizerCouponCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrganizerCouponPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a OrganizerCoupon.
+     * @param {OrganizerCouponDeleteArgs} args - Arguments to delete one OrganizerCoupon.
+     * @example
+     * // Delete one OrganizerCoupon
+     * const OrganizerCoupon = await prisma.organizerCoupon.delete({
+     *   where: {
+     *     // ... filter to delete one OrganizerCoupon
+     *   }
+     * })
+     * 
+     */
+    delete<T extends OrganizerCouponDeleteArgs>(args: SelectSubset<T, OrganizerCouponDeleteArgs<ExtArgs>>): Prisma__OrganizerCouponClient<$Result.GetResult<Prisma.$OrganizerCouponPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one OrganizerCoupon.
+     * @param {OrganizerCouponUpdateArgs} args - Arguments to update one OrganizerCoupon.
+     * @example
+     * // Update one OrganizerCoupon
+     * const organizerCoupon = await prisma.organizerCoupon.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends OrganizerCouponUpdateArgs>(args: SelectSubset<T, OrganizerCouponUpdateArgs<ExtArgs>>): Prisma__OrganizerCouponClient<$Result.GetResult<Prisma.$OrganizerCouponPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more OrganizerCoupons.
+     * @param {OrganizerCouponDeleteManyArgs} args - Arguments to filter OrganizerCoupons to delete.
+     * @example
+     * // Delete a few OrganizerCoupons
+     * const { count } = await prisma.organizerCoupon.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends OrganizerCouponDeleteManyArgs>(args?: SelectSubset<T, OrganizerCouponDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more OrganizerCoupons.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrganizerCouponUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many OrganizerCoupons
+     * const organizerCoupon = await prisma.organizerCoupon.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends OrganizerCouponUpdateManyArgs>(args: SelectSubset<T, OrganizerCouponUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one OrganizerCoupon.
+     * @param {OrganizerCouponUpsertArgs} args - Arguments to update or create a OrganizerCoupon.
+     * @example
+     * // Update or create a OrganizerCoupon
+     * const organizerCoupon = await prisma.organizerCoupon.upsert({
+     *   create: {
+     *     // ... data to create a OrganizerCoupon
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the OrganizerCoupon we want to update
+     *   }
+     * })
+     */
+    upsert<T extends OrganizerCouponUpsertArgs>(args: SelectSubset<T, OrganizerCouponUpsertArgs<ExtArgs>>): Prisma__OrganizerCouponClient<$Result.GetResult<Prisma.$OrganizerCouponPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of OrganizerCoupons.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrganizerCouponCountArgs} args - Arguments to filter OrganizerCoupons to count.
+     * @example
+     * // Count the number of OrganizerCoupons
+     * const count = await prisma.organizerCoupon.count({
+     *   where: {
+     *     // ... the filter for the OrganizerCoupons we want to count
+     *   }
+     * })
+    **/
+    count<T extends OrganizerCouponCountArgs>(
+      args?: Subset<T, OrganizerCouponCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], OrganizerCouponCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a OrganizerCoupon.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrganizerCouponAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends OrganizerCouponAggregateArgs>(args: Subset<T, OrganizerCouponAggregateArgs>): Prisma.PrismaPromise<GetOrganizerCouponAggregateType<T>>
+
+    /**
+     * Group by OrganizerCoupon.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrganizerCouponGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends OrganizerCouponGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: OrganizerCouponGroupByArgs['orderBy'] }
+        : { orderBy?: OrganizerCouponGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, OrganizerCouponGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetOrganizerCouponGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the OrganizerCoupon model
+   */
+  readonly fields: OrganizerCouponFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for OrganizerCoupon.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__OrganizerCouponClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    organizer<T extends OrganizerCoupon$organizerArgs<ExtArgs> = {}>(args?: Subset<T, OrganizerCoupon$organizerArgs<ExtArgs>>): Prisma__OrganizerClient<$Result.GetResult<Prisma.$OrganizerPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    Event<T extends OrganizerCoupon$EventArgs<ExtArgs> = {}>(args?: Subset<T, OrganizerCoupon$EventArgs<ExtArgs>>): Prisma__EventClient<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the OrganizerCoupon model
+   */ 
+  interface OrganizerCouponFieldRefs {
+    readonly organizer_coupon_id: FieldRef<"OrganizerCoupon", 'Int'>
+    readonly organizer_coupon_code: FieldRef<"OrganizerCoupon", 'String'>
+    readonly discount: FieldRef<"OrganizerCoupon", 'Int'>
+    readonly start_date: FieldRef<"OrganizerCoupon", 'DateTime'>
+    readonly expired_date: FieldRef<"OrganizerCoupon", 'DateTime'>
+    readonly quantity: FieldRef<"OrganizerCoupon", 'Int'>
+    readonly organizer_id: FieldRef<"OrganizerCoupon", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * OrganizerCoupon findUnique
+   */
+  export type OrganizerCouponFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrganizerCoupon
+     */
+    select?: OrganizerCouponSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrganizerCouponInclude<ExtArgs> | null
+    /**
+     * Filter, which OrganizerCoupon to fetch.
+     */
+    where: OrganizerCouponWhereUniqueInput
+  }
+
+  /**
+   * OrganizerCoupon findUniqueOrThrow
+   */
+  export type OrganizerCouponFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrganizerCoupon
+     */
+    select?: OrganizerCouponSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrganizerCouponInclude<ExtArgs> | null
+    /**
+     * Filter, which OrganizerCoupon to fetch.
+     */
+    where: OrganizerCouponWhereUniqueInput
+  }
+
+  /**
+   * OrganizerCoupon findFirst
+   */
+  export type OrganizerCouponFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrganizerCoupon
+     */
+    select?: OrganizerCouponSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrganizerCouponInclude<ExtArgs> | null
+    /**
+     * Filter, which OrganizerCoupon to fetch.
+     */
+    where?: OrganizerCouponWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OrganizerCoupons to fetch.
+     */
+    orderBy?: OrganizerCouponOrderByWithRelationInput | OrganizerCouponOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for OrganizerCoupons.
+     */
+    cursor?: OrganizerCouponWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OrganizerCoupons from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OrganizerCoupons.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of OrganizerCoupons.
+     */
+    distinct?: OrganizerCouponScalarFieldEnum | OrganizerCouponScalarFieldEnum[]
+  }
+
+  /**
+   * OrganizerCoupon findFirstOrThrow
+   */
+  export type OrganizerCouponFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrganizerCoupon
+     */
+    select?: OrganizerCouponSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrganizerCouponInclude<ExtArgs> | null
+    /**
+     * Filter, which OrganizerCoupon to fetch.
+     */
+    where?: OrganizerCouponWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OrganizerCoupons to fetch.
+     */
+    orderBy?: OrganizerCouponOrderByWithRelationInput | OrganizerCouponOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for OrganizerCoupons.
+     */
+    cursor?: OrganizerCouponWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OrganizerCoupons from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OrganizerCoupons.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of OrganizerCoupons.
+     */
+    distinct?: OrganizerCouponScalarFieldEnum | OrganizerCouponScalarFieldEnum[]
+  }
+
+  /**
+   * OrganizerCoupon findMany
+   */
+  export type OrganizerCouponFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrganizerCoupon
+     */
+    select?: OrganizerCouponSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrganizerCouponInclude<ExtArgs> | null
+    /**
+     * Filter, which OrganizerCoupons to fetch.
+     */
+    where?: OrganizerCouponWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OrganizerCoupons to fetch.
+     */
+    orderBy?: OrganizerCouponOrderByWithRelationInput | OrganizerCouponOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing OrganizerCoupons.
+     */
+    cursor?: OrganizerCouponWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OrganizerCoupons from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OrganizerCoupons.
+     */
+    skip?: number
+    distinct?: OrganizerCouponScalarFieldEnum | OrganizerCouponScalarFieldEnum[]
+  }
+
+  /**
+   * OrganizerCoupon create
+   */
+  export type OrganizerCouponCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrganizerCoupon
+     */
+    select?: OrganizerCouponSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrganizerCouponInclude<ExtArgs> | null
+    /**
+     * The data needed to create a OrganizerCoupon.
+     */
+    data: XOR<OrganizerCouponCreateInput, OrganizerCouponUncheckedCreateInput>
+  }
+
+  /**
+   * OrganizerCoupon createMany
+   */
+  export type OrganizerCouponCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many OrganizerCoupons.
+     */
+    data: OrganizerCouponCreateManyInput | OrganizerCouponCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * OrganizerCoupon createManyAndReturn
+   */
+  export type OrganizerCouponCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrganizerCoupon
+     */
+    select?: OrganizerCouponSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many OrganizerCoupons.
+     */
+    data: OrganizerCouponCreateManyInput | OrganizerCouponCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrganizerCouponIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * OrganizerCoupon update
+   */
+  export type OrganizerCouponUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrganizerCoupon
+     */
+    select?: OrganizerCouponSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrganizerCouponInclude<ExtArgs> | null
+    /**
+     * The data needed to update a OrganizerCoupon.
+     */
+    data: XOR<OrganizerCouponUpdateInput, OrganizerCouponUncheckedUpdateInput>
+    /**
+     * Choose, which OrganizerCoupon to update.
+     */
+    where: OrganizerCouponWhereUniqueInput
+  }
+
+  /**
+   * OrganizerCoupon updateMany
+   */
+  export type OrganizerCouponUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update OrganizerCoupons.
+     */
+    data: XOR<OrganizerCouponUpdateManyMutationInput, OrganizerCouponUncheckedUpdateManyInput>
+    /**
+     * Filter which OrganizerCoupons to update
+     */
+    where?: OrganizerCouponWhereInput
+  }
+
+  /**
+   * OrganizerCoupon upsert
+   */
+  export type OrganizerCouponUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrganizerCoupon
+     */
+    select?: OrganizerCouponSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrganizerCouponInclude<ExtArgs> | null
+    /**
+     * The filter to search for the OrganizerCoupon to update in case it exists.
+     */
+    where: OrganizerCouponWhereUniqueInput
+    /**
+     * In case the OrganizerCoupon found by the `where` argument doesn't exist, create a new OrganizerCoupon with this data.
+     */
+    create: XOR<OrganizerCouponCreateInput, OrganizerCouponUncheckedCreateInput>
+    /**
+     * In case the OrganizerCoupon was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<OrganizerCouponUpdateInput, OrganizerCouponUncheckedUpdateInput>
+  }
+
+  /**
+   * OrganizerCoupon delete
+   */
+  export type OrganizerCouponDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrganizerCoupon
+     */
+    select?: OrganizerCouponSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrganizerCouponInclude<ExtArgs> | null
+    /**
+     * Filter which OrganizerCoupon to delete.
+     */
+    where: OrganizerCouponWhereUniqueInput
+  }
+
+  /**
+   * OrganizerCoupon deleteMany
+   */
+  export type OrganizerCouponDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which OrganizerCoupons to delete
+     */
+    where?: OrganizerCouponWhereInput
+  }
+
+  /**
+   * OrganizerCoupon.organizer
+   */
+  export type OrganizerCoupon$organizerArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Organizer
+     */
+    select?: OrganizerSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrganizerInclude<ExtArgs> | null
+    where?: OrganizerWhereInput
+  }
+
+  /**
+   * OrganizerCoupon.Event
+   */
+  export type OrganizerCoupon$EventArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Event
+     */
+    select?: EventSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventInclude<ExtArgs> | null
+    where?: EventWhereInput
+  }
+
+  /**
+   * OrganizerCoupon without action
+   */
+  export type OrganizerCouponDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrganizerCoupon
+     */
+    select?: OrganizerCouponSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrganizerCouponInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model Event
    */
 
@@ -10959,7 +12119,7 @@ export namespace Prisma {
   export type EventAvgAggregateOutputType = {
     event_id: number | null
     organizer_id: number | null
-    coupon_id: number | null
+    organizer_coupon_id: number | null
     event_location_id: number | null
     score: number | null
   }
@@ -10967,7 +12127,7 @@ export namespace Prisma {
   export type EventSumAggregateOutputType = {
     event_id: number | null
     organizer_id: number | null
-    coupon_id: number | null
+    organizer_coupon_id: number | null
     event_location_id: number | null
     score: number | null
   }
@@ -10978,7 +12138,7 @@ export namespace Prisma {
     title: string | null
     description: string | null
     imgEvent: string | null
-    coupon_id: number | null
+    organizer_coupon_id: number | null
     event_location_id: number | null
     startDate: Date | null
     endDate: Date | null
@@ -10996,7 +12156,7 @@ export namespace Prisma {
     title: string | null
     description: string | null
     imgEvent: string | null
-    coupon_id: number | null
+    organizer_coupon_id: number | null
     event_location_id: number | null
     startDate: Date | null
     endDate: Date | null
@@ -11014,7 +12174,7 @@ export namespace Prisma {
     title: number
     description: number
     imgEvent: number
-    coupon_id: number
+    organizer_coupon_id: number
     event_location_id: number
     startDate: number
     endDate: number
@@ -11031,7 +12191,7 @@ export namespace Prisma {
   export type EventAvgAggregateInputType = {
     event_id?: true
     organizer_id?: true
-    coupon_id?: true
+    organizer_coupon_id?: true
     event_location_id?: true
     score?: true
   }
@@ -11039,7 +12199,7 @@ export namespace Prisma {
   export type EventSumAggregateInputType = {
     event_id?: true
     organizer_id?: true
-    coupon_id?: true
+    organizer_coupon_id?: true
     event_location_id?: true
     score?: true
   }
@@ -11050,7 +12210,7 @@ export namespace Prisma {
     title?: true
     description?: true
     imgEvent?: true
-    coupon_id?: true
+    organizer_coupon_id?: true
     event_location_id?: true
     startDate?: true
     endDate?: true
@@ -11068,7 +12228,7 @@ export namespace Prisma {
     title?: true
     description?: true
     imgEvent?: true
-    coupon_id?: true
+    organizer_coupon_id?: true
     event_location_id?: true
     startDate?: true
     endDate?: true
@@ -11086,7 +12246,7 @@ export namespace Prisma {
     title?: true
     description?: true
     imgEvent?: true
-    coupon_id?: true
+    organizer_coupon_id?: true
     event_location_id?: true
     startDate?: true
     endDate?: true
@@ -11191,7 +12351,7 @@ export namespace Prisma {
     title: string
     description: string
     imgEvent: string
-    coupon_id: number
+    organizer_coupon_id: number | null
     event_location_id: number
     startDate: Date
     endDate: Date
@@ -11228,7 +12388,7 @@ export namespace Prisma {
     title?: boolean
     description?: boolean
     imgEvent?: boolean
-    coupon_id?: boolean
+    organizer_coupon_id?: boolean
     event_location_id?: boolean
     startDate?: boolean
     endDate?: boolean
@@ -11240,6 +12400,7 @@ export namespace Prisma {
     score?: boolean
     organizer?: boolean | OrganizerDefaultArgs<ExtArgs>
     event_category?: boolean | Event$event_categoryArgs<ExtArgs>
+    organizer_coupon?: boolean | Event$organizer_couponArgs<ExtArgs>
     event_location?: boolean | Event_LocationDefaultArgs<ExtArgs>
     ticket_types?: boolean | Event$ticket_typesArgs<ExtArgs>
     customer?: boolean | Event$customerArgs<ExtArgs>
@@ -11254,7 +12415,7 @@ export namespace Prisma {
     title?: boolean
     description?: boolean
     imgEvent?: boolean
-    coupon_id?: boolean
+    organizer_coupon_id?: boolean
     event_location_id?: boolean
     startDate?: boolean
     endDate?: boolean
@@ -11265,6 +12426,7 @@ export namespace Prisma {
     updatedAt?: boolean
     score?: boolean
     organizer?: boolean | OrganizerDefaultArgs<ExtArgs>
+    organizer_coupon?: boolean | Event$organizer_couponArgs<ExtArgs>
     event_location?: boolean | Event_LocationDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["event"]>
 
@@ -11274,7 +12436,7 @@ export namespace Prisma {
     title?: boolean
     description?: boolean
     imgEvent?: boolean
-    coupon_id?: boolean
+    organizer_coupon_id?: boolean
     event_location_id?: boolean
     startDate?: boolean
     endDate?: boolean
@@ -11289,6 +12451,7 @@ export namespace Prisma {
   export type EventInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     organizer?: boolean | OrganizerDefaultArgs<ExtArgs>
     event_category?: boolean | Event$event_categoryArgs<ExtArgs>
+    organizer_coupon?: boolean | Event$organizer_couponArgs<ExtArgs>
     event_location?: boolean | Event_LocationDefaultArgs<ExtArgs>
     ticket_types?: boolean | Event$ticket_typesArgs<ExtArgs>
     customer?: boolean | Event$customerArgs<ExtArgs>
@@ -11298,6 +12461,7 @@ export namespace Prisma {
   }
   export type EventIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     organizer?: boolean | OrganizerDefaultArgs<ExtArgs>
+    organizer_coupon?: boolean | Event$organizer_couponArgs<ExtArgs>
     event_location?: boolean | Event_LocationDefaultArgs<ExtArgs>
   }
 
@@ -11306,6 +12470,7 @@ export namespace Prisma {
     objects: {
       organizer: Prisma.$OrganizerPayload<ExtArgs>
       event_category: Prisma.$Event_categoryPayload<ExtArgs>[]
+      organizer_coupon: Prisma.$OrganizerCouponPayload<ExtArgs> | null
       event_location: Prisma.$Event_LocationPayload<ExtArgs>
       ticket_types: Prisma.$Ticket_typesPayload<ExtArgs>[]
       customer: Prisma.$UserPayload<ExtArgs>[]
@@ -11318,7 +12483,7 @@ export namespace Prisma {
       title: string
       description: string
       imgEvent: string
-      coupon_id: number
+      organizer_coupon_id: number | null
       event_location_id: number
       startDate: Date
       endDate: Date
@@ -11694,6 +12859,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     organizer<T extends OrganizerDefaultArgs<ExtArgs> = {}>(args?: Subset<T, OrganizerDefaultArgs<ExtArgs>>): Prisma__OrganizerClient<$Result.GetResult<Prisma.$OrganizerPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
     event_category<T extends Event$event_categoryArgs<ExtArgs> = {}>(args?: Subset<T, Event$event_categoryArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Event_categoryPayload<ExtArgs>, T, "findMany"> | Null>
+    organizer_coupon<T extends Event$organizer_couponArgs<ExtArgs> = {}>(args?: Subset<T, Event$organizer_couponArgs<ExtArgs>>): Prisma__OrganizerCouponClient<$Result.GetResult<Prisma.$OrganizerCouponPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
     event_location<T extends Event_LocationDefaultArgs<ExtArgs> = {}>(args?: Subset<T, Event_LocationDefaultArgs<ExtArgs>>): Prisma__Event_LocationClient<$Result.GetResult<Prisma.$Event_LocationPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
     ticket_types<T extends Event$ticket_typesArgs<ExtArgs> = {}>(args?: Subset<T, Event$ticket_typesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Ticket_typesPayload<ExtArgs>, T, "findMany"> | Null>
     customer<T extends Event$customerArgs<ExtArgs> = {}>(args?: Subset<T, Event$customerArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany"> | Null>
@@ -11733,7 +12899,7 @@ export namespace Prisma {
     readonly title: FieldRef<"Event", 'String'>
     readonly description: FieldRef<"Event", 'String'>
     readonly imgEvent: FieldRef<"Event", 'String'>
-    readonly coupon_id: FieldRef<"Event", 'Int'>
+    readonly organizer_coupon_id: FieldRef<"Event", 'Int'>
     readonly event_location_id: FieldRef<"Event", 'Int'>
     readonly startDate: FieldRef<"Event", 'DateTime'>
     readonly endDate: FieldRef<"Event", 'DateTime'>
@@ -12078,6 +13244,21 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: Event_categoryScalarFieldEnum | Event_categoryScalarFieldEnum[]
+  }
+
+  /**
+   * Event.organizer_coupon
+   */
+  export type Event$organizer_couponArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrganizerCoupon
+     */
+    select?: OrganizerCouponSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrganizerCouponInclude<ExtArgs> | null
+    where?: OrganizerCouponWhereInput
   }
 
   /**
@@ -18112,6 +19293,7 @@ export namespace Prisma {
     payment_method: $Enums.PaymentMethod | null
     createdAt: Date | null
     isPaid: boolean | null
+    payment_proof: string | null
   }
 
   export type TransactionMaxAggregateOutputType = {
@@ -18122,6 +19304,7 @@ export namespace Prisma {
     payment_method: $Enums.PaymentMethod | null
     createdAt: Date | null
     isPaid: boolean | null
+    payment_proof: string | null
   }
 
   export type TransactionCountAggregateOutputType = {
@@ -18132,6 +19315,7 @@ export namespace Prisma {
     payment_method: number
     createdAt: number
     isPaid: number
+    payment_proof: number
     _all: number
   }
 
@@ -18158,6 +19342,7 @@ export namespace Prisma {
     payment_method?: true
     createdAt?: true
     isPaid?: true
+    payment_proof?: true
   }
 
   export type TransactionMaxAggregateInputType = {
@@ -18168,6 +19353,7 @@ export namespace Prisma {
     payment_method?: true
     createdAt?: true
     isPaid?: true
+    payment_proof?: true
   }
 
   export type TransactionCountAggregateInputType = {
@@ -18178,6 +19364,7 @@ export namespace Prisma {
     payment_method?: true
     createdAt?: true
     isPaid?: true
+    payment_proof?: true
     _all?: true
   }
 
@@ -18275,6 +19462,7 @@ export namespace Prisma {
     payment_method: $Enums.PaymentMethod
     createdAt: Date
     isPaid: boolean
+    payment_proof: string | null
     _count: TransactionCountAggregateOutputType | null
     _avg: TransactionAvgAggregateOutputType | null
     _sum: TransactionSumAggregateOutputType | null
@@ -18304,6 +19492,7 @@ export namespace Prisma {
     payment_method?: boolean
     createdAt?: boolean
     isPaid?: boolean
+    payment_proof?: boolean
     transaction_details?: boolean | Transaction$transaction_detailsArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
     _count?: boolean | TransactionCountOutputTypeDefaultArgs<ExtArgs>
@@ -18317,6 +19506,7 @@ export namespace Prisma {
     payment_method?: boolean
     createdAt?: boolean
     isPaid?: boolean
+    payment_proof?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["transaction"]>
 
@@ -18328,6 +19518,7 @@ export namespace Prisma {
     payment_method?: boolean
     createdAt?: boolean
     isPaid?: boolean
+    payment_proof?: boolean
   }
 
   export type TransactionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -18353,6 +19544,7 @@ export namespace Prisma {
       payment_method: $Enums.PaymentMethod
       createdAt: Date
       isPaid: boolean
+      payment_proof: string | null
     }, ExtArgs["result"]["transaction"]>
     composites: {}
   }
@@ -18755,6 +19947,7 @@ export namespace Prisma {
     readonly payment_method: FieldRef<"Transaction", 'PaymentMethod'>
     readonly createdAt: FieldRef<"Transaction", 'DateTime'>
     readonly isPaid: FieldRef<"Transaction", 'Boolean'>
+    readonly payment_proof: FieldRef<"Transaction", 'String'>
   }
     
 
@@ -20219,13 +21412,26 @@ export namespace Prisma {
   export type CouponScalarFieldEnum = (typeof CouponScalarFieldEnum)[keyof typeof CouponScalarFieldEnum]
 
 
+  export const OrganizerCouponScalarFieldEnum: {
+    organizer_coupon_id: 'organizer_coupon_id',
+    organizer_coupon_code: 'organizer_coupon_code',
+    discount: 'discount',
+    start_date: 'start_date',
+    expired_date: 'expired_date',
+    quantity: 'quantity',
+    organizer_id: 'organizer_id'
+  };
+
+  export type OrganizerCouponScalarFieldEnum = (typeof OrganizerCouponScalarFieldEnum)[keyof typeof OrganizerCouponScalarFieldEnum]
+
+
   export const EventScalarFieldEnum: {
     event_id: 'event_id',
     organizer_id: 'organizer_id',
     title: 'title',
     description: 'description',
     imgEvent: 'imgEvent',
-    coupon_id: 'coupon_id',
+    organizer_coupon_id: 'organizer_coupon_id',
     event_location_id: 'event_location_id',
     startDate: 'startDate',
     endDate: 'endDate',
@@ -20307,7 +21513,8 @@ export namespace Prisma {
     total_amount: 'total_amount',
     payment_method: 'payment_method',
     createdAt: 'createdAt',
-    isPaid: 'isPaid'
+    isPaid: 'isPaid',
+    payment_proof: 'payment_proof'
   };
 
   export type TransactionScalarFieldEnum = (typeof TransactionScalarFieldEnum)[keyof typeof TransactionScalarFieldEnum]
@@ -20676,6 +21883,7 @@ export namespace Prisma {
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     bank_account?: XOR<Bank_accountNullableScalarRelationFilter, Bank_accountWhereInput> | null
     events?: EventListRelationFilter
+    OrganizerCoupon?: OrganizerCouponListRelationFilter
   }
 
   export type OrganizerOrderByWithRelationInput = {
@@ -20691,6 +21899,7 @@ export namespace Prisma {
     user?: UserOrderByWithRelationInput
     bank_account?: Bank_accountOrderByWithRelationInput
     events?: EventOrderByRelationAggregateInput
+    OrganizerCoupon?: OrganizerCouponOrderByRelationAggregateInput
   }
 
   export type OrganizerWhereUniqueInput = Prisma.AtLeast<{
@@ -20709,6 +21918,7 @@ export namespace Prisma {
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     bank_account?: XOR<Bank_accountNullableScalarRelationFilter, Bank_accountWhereInput> | null
     events?: EventListRelationFilter
+    OrganizerCoupon?: OrganizerCouponListRelationFilter
   }, "organizer_id" | "organizer_name" | "organizer_email" | "user_id">
 
   export type OrganizerOrderByWithAggregationInput = {
@@ -21036,6 +22246,76 @@ export namespace Prisma {
     expired_date?: DateTimeWithAggregatesFilter<"Coupon"> | Date | string
   }
 
+  export type OrganizerCouponWhereInput = {
+    AND?: OrganizerCouponWhereInput | OrganizerCouponWhereInput[]
+    OR?: OrganizerCouponWhereInput[]
+    NOT?: OrganizerCouponWhereInput | OrganizerCouponWhereInput[]
+    organizer_coupon_id?: IntFilter<"OrganizerCoupon"> | number
+    organizer_coupon_code?: StringFilter<"OrganizerCoupon"> | string
+    discount?: IntFilter<"OrganizerCoupon"> | number
+    start_date?: DateTimeFilter<"OrganizerCoupon"> | Date | string
+    expired_date?: DateTimeFilter<"OrganizerCoupon"> | Date | string
+    quantity?: IntFilter<"OrganizerCoupon"> | number
+    organizer_id?: IntNullableFilter<"OrganizerCoupon"> | number | null
+    organizer?: XOR<OrganizerNullableScalarRelationFilter, OrganizerWhereInput> | null
+    Event?: XOR<EventNullableScalarRelationFilter, EventWhereInput> | null
+  }
+
+  export type OrganizerCouponOrderByWithRelationInput = {
+    organizer_coupon_id?: SortOrder
+    organizer_coupon_code?: SortOrder
+    discount?: SortOrder
+    start_date?: SortOrder
+    expired_date?: SortOrder
+    quantity?: SortOrder
+    organizer_id?: SortOrderInput | SortOrder
+    organizer?: OrganizerOrderByWithRelationInput
+    Event?: EventOrderByWithRelationInput
+  }
+
+  export type OrganizerCouponWhereUniqueInput = Prisma.AtLeast<{
+    organizer_coupon_id?: number
+    organizer_coupon_code?: string
+    AND?: OrganizerCouponWhereInput | OrganizerCouponWhereInput[]
+    OR?: OrganizerCouponWhereInput[]
+    NOT?: OrganizerCouponWhereInput | OrganizerCouponWhereInput[]
+    discount?: IntFilter<"OrganizerCoupon"> | number
+    start_date?: DateTimeFilter<"OrganizerCoupon"> | Date | string
+    expired_date?: DateTimeFilter<"OrganizerCoupon"> | Date | string
+    quantity?: IntFilter<"OrganizerCoupon"> | number
+    organizer_id?: IntNullableFilter<"OrganizerCoupon"> | number | null
+    organizer?: XOR<OrganizerNullableScalarRelationFilter, OrganizerWhereInput> | null
+    Event?: XOR<EventNullableScalarRelationFilter, EventWhereInput> | null
+  }, "organizer_coupon_id" | "organizer_coupon_code">
+
+  export type OrganizerCouponOrderByWithAggregationInput = {
+    organizer_coupon_id?: SortOrder
+    organizer_coupon_code?: SortOrder
+    discount?: SortOrder
+    start_date?: SortOrder
+    expired_date?: SortOrder
+    quantity?: SortOrder
+    organizer_id?: SortOrderInput | SortOrder
+    _count?: OrganizerCouponCountOrderByAggregateInput
+    _avg?: OrganizerCouponAvgOrderByAggregateInput
+    _max?: OrganizerCouponMaxOrderByAggregateInput
+    _min?: OrganizerCouponMinOrderByAggregateInput
+    _sum?: OrganizerCouponSumOrderByAggregateInput
+  }
+
+  export type OrganizerCouponScalarWhereWithAggregatesInput = {
+    AND?: OrganizerCouponScalarWhereWithAggregatesInput | OrganizerCouponScalarWhereWithAggregatesInput[]
+    OR?: OrganizerCouponScalarWhereWithAggregatesInput[]
+    NOT?: OrganizerCouponScalarWhereWithAggregatesInput | OrganizerCouponScalarWhereWithAggregatesInput[]
+    organizer_coupon_id?: IntWithAggregatesFilter<"OrganizerCoupon"> | number
+    organizer_coupon_code?: StringWithAggregatesFilter<"OrganizerCoupon"> | string
+    discount?: IntWithAggregatesFilter<"OrganizerCoupon"> | number
+    start_date?: DateTimeWithAggregatesFilter<"OrganizerCoupon"> | Date | string
+    expired_date?: DateTimeWithAggregatesFilter<"OrganizerCoupon"> | Date | string
+    quantity?: IntWithAggregatesFilter<"OrganizerCoupon"> | number
+    organizer_id?: IntNullableWithAggregatesFilter<"OrganizerCoupon"> | number | null
+  }
+
   export type EventWhereInput = {
     AND?: EventWhereInput | EventWhereInput[]
     OR?: EventWhereInput[]
@@ -21045,7 +22325,7 @@ export namespace Prisma {
     title?: StringFilter<"Event"> | string
     description?: StringFilter<"Event"> | string
     imgEvent?: StringFilter<"Event"> | string
-    coupon_id?: IntFilter<"Event"> | number
+    organizer_coupon_id?: IntNullableFilter<"Event"> | number | null
     event_location_id?: IntFilter<"Event"> | number
     startDate?: DateTimeFilter<"Event"> | Date | string
     endDate?: DateTimeFilter<"Event"> | Date | string
@@ -21057,6 +22337,7 @@ export namespace Prisma {
     score?: IntNullableFilter<"Event"> | number | null
     organizer?: XOR<OrganizerScalarRelationFilter, OrganizerWhereInput>
     event_category?: Event_categoryListRelationFilter
+    organizer_coupon?: XOR<OrganizerCouponNullableScalarRelationFilter, OrganizerCouponWhereInput> | null
     event_location?: XOR<Event_LocationScalarRelationFilter, Event_LocationWhereInput>
     ticket_types?: Ticket_typesListRelationFilter
     customer?: UserListRelationFilter
@@ -21070,7 +22351,7 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     imgEvent?: SortOrder
-    coupon_id?: SortOrder
+    organizer_coupon_id?: SortOrderInput | SortOrder
     event_location_id?: SortOrder
     startDate?: SortOrder
     endDate?: SortOrder
@@ -21082,6 +22363,7 @@ export namespace Prisma {
     score?: SortOrderInput | SortOrder
     organizer?: OrganizerOrderByWithRelationInput
     event_category?: Event_categoryOrderByRelationAggregateInput
+    organizer_coupon?: OrganizerCouponOrderByWithRelationInput
     event_location?: Event_LocationOrderByWithRelationInput
     ticket_types?: Ticket_typesOrderByRelationAggregateInput
     customer?: UserOrderByRelationAggregateInput
@@ -21092,6 +22374,7 @@ export namespace Prisma {
   export type EventWhereUniqueInput = Prisma.AtLeast<{
     event_id?: number
     title?: string
+    organizer_coupon_id?: number
     event_location_id?: number
     AND?: EventWhereInput | EventWhereInput[]
     OR?: EventWhereInput[]
@@ -21099,7 +22382,6 @@ export namespace Prisma {
     organizer_id?: IntFilter<"Event"> | number
     description?: StringFilter<"Event"> | string
     imgEvent?: StringFilter<"Event"> | string
-    coupon_id?: IntFilter<"Event"> | number
     startDate?: DateTimeFilter<"Event"> | Date | string
     endDate?: DateTimeFilter<"Event"> | Date | string
     startTime?: StringFilter<"Event"> | string
@@ -21110,12 +22392,13 @@ export namespace Prisma {
     score?: IntNullableFilter<"Event"> | number | null
     organizer?: XOR<OrganizerScalarRelationFilter, OrganizerWhereInput>
     event_category?: Event_categoryListRelationFilter
+    organizer_coupon?: XOR<OrganizerCouponNullableScalarRelationFilter, OrganizerCouponWhereInput> | null
     event_location?: XOR<Event_LocationScalarRelationFilter, Event_LocationWhereInput>
     ticket_types?: Ticket_typesListRelationFilter
     customer?: UserListRelationFilter
     transaction?: Transaction_DetailListRelationFilter
     review?: ReviewListRelationFilter
-  }, "event_id" | "title" | "event_location_id">
+  }, "event_id" | "title" | "organizer_coupon_id" | "event_location_id">
 
   export type EventOrderByWithAggregationInput = {
     event_id?: SortOrder
@@ -21123,7 +22406,7 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     imgEvent?: SortOrder
-    coupon_id?: SortOrder
+    organizer_coupon_id?: SortOrderInput | SortOrder
     event_location_id?: SortOrder
     startDate?: SortOrder
     endDate?: SortOrder
@@ -21149,7 +22432,7 @@ export namespace Prisma {
     title?: StringWithAggregatesFilter<"Event"> | string
     description?: StringWithAggregatesFilter<"Event"> | string
     imgEvent?: StringWithAggregatesFilter<"Event"> | string
-    coupon_id?: IntWithAggregatesFilter<"Event"> | number
+    organizer_coupon_id?: IntNullableWithAggregatesFilter<"Event"> | number | null
     event_location_id?: IntWithAggregatesFilter<"Event"> | number
     startDate?: DateTimeWithAggregatesFilter<"Event"> | Date | string
     endDate?: DateTimeWithAggregatesFilter<"Event"> | Date | string
@@ -21502,6 +22785,7 @@ export namespace Prisma {
     payment_method?: EnumPaymentMethodFilter<"Transaction"> | $Enums.PaymentMethod
     createdAt?: DateTimeFilter<"Transaction"> | Date | string
     isPaid?: BoolFilter<"Transaction"> | boolean
+    payment_proof?: StringNullableFilter<"Transaction"> | string | null
     transaction_details?: Transaction_DetailListRelationFilter
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
@@ -21514,6 +22798,7 @@ export namespace Prisma {
     payment_method?: SortOrder
     createdAt?: SortOrder
     isPaid?: SortOrder
+    payment_proof?: SortOrderInput | SortOrder
     transaction_details?: Transaction_DetailOrderByRelationAggregateInput
     user?: UserOrderByWithRelationInput
   }
@@ -21529,6 +22814,7 @@ export namespace Prisma {
     payment_method?: EnumPaymentMethodFilter<"Transaction"> | $Enums.PaymentMethod
     createdAt?: DateTimeFilter<"Transaction"> | Date | string
     isPaid?: BoolFilter<"Transaction"> | boolean
+    payment_proof?: StringNullableFilter<"Transaction"> | string | null
     transaction_details?: Transaction_DetailListRelationFilter
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "transaction_id">
@@ -21541,6 +22827,7 @@ export namespace Prisma {
     payment_method?: SortOrder
     createdAt?: SortOrder
     isPaid?: SortOrder
+    payment_proof?: SortOrderInput | SortOrder
     _count?: TransactionCountOrderByAggregateInput
     _avg?: TransactionAvgOrderByAggregateInput
     _max?: TransactionMaxOrderByAggregateInput
@@ -21559,6 +22846,7 @@ export namespace Prisma {
     payment_method?: EnumPaymentMethodWithAggregatesFilter<"Transaction"> | $Enums.PaymentMethod
     createdAt?: DateTimeWithAggregatesFilter<"Transaction"> | Date | string
     isPaid?: BoolWithAggregatesFilter<"Transaction"> | boolean
+    payment_proof?: StringNullableWithAggregatesFilter<"Transaction"> | string | null
   }
 
   export type ReviewWhereInput = {
@@ -21837,6 +23125,7 @@ export namespace Prisma {
     user: UserCreateNestedOneWithoutOrganizerInput
     bank_account?: Bank_accountCreateNestedOneWithoutOrganizerInput
     events?: EventCreateNestedManyWithoutOrganizerInput
+    OrganizerCoupon?: OrganizerCouponCreateNestedManyWithoutOrganizerInput
   }
 
   export type OrganizerUncheckedCreateInput = {
@@ -21851,6 +23140,7 @@ export namespace Prisma {
     user_id: number
     bank_account?: Bank_accountUncheckedCreateNestedOneWithoutOrganizerInput
     events?: EventUncheckedCreateNestedManyWithoutOrganizerInput
+    OrganizerCoupon?: OrganizerCouponUncheckedCreateNestedManyWithoutOrganizerInput
   }
 
   export type OrganizerUpdateInput = {
@@ -21864,6 +23154,7 @@ export namespace Prisma {
     user?: UserUpdateOneRequiredWithoutOrganizerNestedInput
     bank_account?: Bank_accountUpdateOneWithoutOrganizerNestedInput
     events?: EventUpdateManyWithoutOrganizerNestedInput
+    OrganizerCoupon?: OrganizerCouponUpdateManyWithoutOrganizerNestedInput
   }
 
   export type OrganizerUncheckedUpdateInput = {
@@ -21878,6 +23169,7 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     bank_account?: Bank_accountUncheckedUpdateOneWithoutOrganizerNestedInput
     events?: EventUncheckedUpdateManyWithoutOrganizerNestedInput
+    OrganizerCoupon?: OrganizerCouponUncheckedUpdateManyWithoutOrganizerNestedInput
   }
 
   export type OrganizerCreateManyInput = {
@@ -22185,11 +23477,80 @@ export namespace Prisma {
     expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type OrganizerCouponCreateInput = {
+    organizer_coupon_code: string
+    discount: number
+    start_date: Date | string
+    expired_date: Date | string
+    quantity: number
+    organizer?: OrganizerCreateNestedOneWithoutOrganizerCouponInput
+    Event?: EventCreateNestedOneWithoutOrganizer_couponInput
+  }
+
+  export type OrganizerCouponUncheckedCreateInput = {
+    organizer_coupon_id?: number
+    organizer_coupon_code: string
+    discount: number
+    start_date: Date | string
+    expired_date: Date | string
+    quantity: number
+    organizer_id?: number | null
+    Event?: EventUncheckedCreateNestedOneWithoutOrganizer_couponInput
+  }
+
+  export type OrganizerCouponUpdateInput = {
+    organizer_coupon_code?: StringFieldUpdateOperationsInput | string
+    discount?: IntFieldUpdateOperationsInput | number
+    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    organizer?: OrganizerUpdateOneWithoutOrganizerCouponNestedInput
+    Event?: EventUpdateOneWithoutOrganizer_couponNestedInput
+  }
+
+  export type OrganizerCouponUncheckedUpdateInput = {
+    organizer_coupon_id?: IntFieldUpdateOperationsInput | number
+    organizer_coupon_code?: StringFieldUpdateOperationsInput | string
+    discount?: IntFieldUpdateOperationsInput | number
+    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    organizer_id?: NullableIntFieldUpdateOperationsInput | number | null
+    Event?: EventUncheckedUpdateOneWithoutOrganizer_couponNestedInput
+  }
+
+  export type OrganizerCouponCreateManyInput = {
+    organizer_coupon_id?: number
+    organizer_coupon_code: string
+    discount: number
+    start_date: Date | string
+    expired_date: Date | string
+    quantity: number
+    organizer_id?: number | null
+  }
+
+  export type OrganizerCouponUpdateManyMutationInput = {
+    organizer_coupon_code?: StringFieldUpdateOperationsInput | string
+    discount?: IntFieldUpdateOperationsInput | number
+    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    quantity?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type OrganizerCouponUncheckedUpdateManyInput = {
+    organizer_coupon_id?: IntFieldUpdateOperationsInput | number
+    organizer_coupon_code?: StringFieldUpdateOperationsInput | string
+    discount?: IntFieldUpdateOperationsInput | number
+    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    organizer_id?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
   export type EventCreateInput = {
     title: string
     description: string
     imgEvent: string
-    coupon_id: number
     startDate: Date | string
     endDate: Date | string
     startTime: string
@@ -22200,6 +23561,7 @@ export namespace Prisma {
     score?: number | null
     organizer: OrganizerCreateNestedOneWithoutEventsInput
     event_category?: Event_categoryCreateNestedManyWithoutEventInput
+    organizer_coupon?: OrganizerCouponCreateNestedOneWithoutEventInput
     event_location: Event_LocationCreateNestedOneWithoutEventInput
     ticket_types?: Ticket_typesCreateNestedManyWithoutEventInput
     customer?: UserCreateNestedManyWithoutEventInput
@@ -22213,7 +23575,7 @@ export namespace Prisma {
     title: string
     description: string
     imgEvent: string
-    coupon_id: number
+    organizer_coupon_id?: number | null
     event_location_id: number
     startDate: Date | string
     endDate: Date | string
@@ -22234,7 +23596,6 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     imgEvent?: StringFieldUpdateOperationsInput | string
-    coupon_id?: IntFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: StringFieldUpdateOperationsInput | string
@@ -22245,6 +23606,7 @@ export namespace Prisma {
     score?: NullableIntFieldUpdateOperationsInput | number | null
     organizer?: OrganizerUpdateOneRequiredWithoutEventsNestedInput
     event_category?: Event_categoryUpdateManyWithoutEventNestedInput
+    organizer_coupon?: OrganizerCouponUpdateOneWithoutEventNestedInput
     event_location?: Event_LocationUpdateOneRequiredWithoutEventNestedInput
     ticket_types?: Ticket_typesUpdateManyWithoutEventNestedInput
     customer?: UserUpdateManyWithoutEventNestedInput
@@ -22258,7 +23620,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     imgEvent?: StringFieldUpdateOperationsInput | string
-    coupon_id?: IntFieldUpdateOperationsInput | number
+    organizer_coupon_id?: NullableIntFieldUpdateOperationsInput | number | null
     event_location_id?: IntFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22281,7 +23643,7 @@ export namespace Prisma {
     title: string
     description: string
     imgEvent: string
-    coupon_id: number
+    organizer_coupon_id?: number | null
     event_location_id: number
     startDate: Date | string
     endDate: Date | string
@@ -22297,7 +23659,6 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     imgEvent?: StringFieldUpdateOperationsInput | string
-    coupon_id?: IntFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: StringFieldUpdateOperationsInput | string
@@ -22314,7 +23675,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     imgEvent?: StringFieldUpdateOperationsInput | string
-    coupon_id?: IntFieldUpdateOperationsInput | number
+    organizer_coupon_id?: NullableIntFieldUpdateOperationsInput | number | null
     event_location_id?: IntFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22621,6 +23982,7 @@ export namespace Prisma {
     payment_method: $Enums.PaymentMethod
     createdAt?: Date | string
     isPaid: boolean
+    payment_proof?: string | null
     transaction_details?: Transaction_DetailCreateNestedManyWithoutTransactionInput
     user: UserCreateNestedOneWithoutTransactionInput
   }
@@ -22633,6 +23995,7 @@ export namespace Prisma {
     payment_method: $Enums.PaymentMethod
     createdAt?: Date | string
     isPaid: boolean
+    payment_proof?: string | null
     transaction_details?: Transaction_DetailUncheckedCreateNestedManyWithoutTransactionInput
   }
 
@@ -22642,6 +24005,7 @@ export namespace Prisma {
     payment_method?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     isPaid?: BoolFieldUpdateOperationsInput | boolean
+    payment_proof?: NullableStringFieldUpdateOperationsInput | string | null
     transaction_details?: Transaction_DetailUpdateManyWithoutTransactionNestedInput
     user?: UserUpdateOneRequiredWithoutTransactionNestedInput
   }
@@ -22654,6 +24018,7 @@ export namespace Prisma {
     payment_method?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     isPaid?: BoolFieldUpdateOperationsInput | boolean
+    payment_proof?: NullableStringFieldUpdateOperationsInput | string | null
     transaction_details?: Transaction_DetailUncheckedUpdateManyWithoutTransactionNestedInput
   }
 
@@ -22665,6 +24030,7 @@ export namespace Prisma {
     payment_method: $Enums.PaymentMethod
     createdAt?: Date | string
     isPaid: boolean
+    payment_proof?: string | null
   }
 
   export type TransactionUpdateManyMutationInput = {
@@ -22673,6 +24039,7 @@ export namespace Prisma {
     payment_method?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     isPaid?: BoolFieldUpdateOperationsInput | boolean
+    payment_proof?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type TransactionUncheckedUpdateManyInput = {
@@ -22683,6 +24050,7 @@ export namespace Prisma {
     payment_method?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     isPaid?: BoolFieldUpdateOperationsInput | boolean
+    payment_proof?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ReviewCreateInput = {
@@ -23127,6 +24495,16 @@ export namespace Prisma {
     isNot?: Bank_accountWhereInput | null
   }
 
+  export type OrganizerCouponListRelationFilter = {
+    every?: OrganizerCouponWhereInput
+    some?: OrganizerCouponWhereInput
+    none?: OrganizerCouponWhereInput
+  }
+
+  export type OrganizerCouponOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type OrganizerCountOrderByAggregateInput = {
     organizer_id?: SortOrder
     organizer_name?: SortOrder
@@ -23389,10 +24767,64 @@ export namespace Prisma {
     max_amount?: SortOrder
   }
 
+  export type EventNullableScalarRelationFilter = {
+    is?: EventWhereInput | null
+    isNot?: EventWhereInput | null
+  }
+
+  export type OrganizerCouponCountOrderByAggregateInput = {
+    organizer_coupon_id?: SortOrder
+    organizer_coupon_code?: SortOrder
+    discount?: SortOrder
+    start_date?: SortOrder
+    expired_date?: SortOrder
+    quantity?: SortOrder
+    organizer_id?: SortOrder
+  }
+
+  export type OrganizerCouponAvgOrderByAggregateInput = {
+    organizer_coupon_id?: SortOrder
+    discount?: SortOrder
+    quantity?: SortOrder
+    organizer_id?: SortOrder
+  }
+
+  export type OrganizerCouponMaxOrderByAggregateInput = {
+    organizer_coupon_id?: SortOrder
+    organizer_coupon_code?: SortOrder
+    discount?: SortOrder
+    start_date?: SortOrder
+    expired_date?: SortOrder
+    quantity?: SortOrder
+    organizer_id?: SortOrder
+  }
+
+  export type OrganizerCouponMinOrderByAggregateInput = {
+    organizer_coupon_id?: SortOrder
+    organizer_coupon_code?: SortOrder
+    discount?: SortOrder
+    start_date?: SortOrder
+    expired_date?: SortOrder
+    quantity?: SortOrder
+    organizer_id?: SortOrder
+  }
+
+  export type OrganizerCouponSumOrderByAggregateInput = {
+    organizer_coupon_id?: SortOrder
+    discount?: SortOrder
+    quantity?: SortOrder
+    organizer_id?: SortOrder
+  }
+
   export type Event_categoryListRelationFilter = {
     every?: Event_categoryWhereInput
     some?: Event_categoryWhereInput
     none?: Event_categoryWhereInput
+  }
+
+  export type OrganizerCouponNullableScalarRelationFilter = {
+    is?: OrganizerCouponWhereInput | null
+    isNot?: OrganizerCouponWhereInput | null
   }
 
   export type Event_LocationScalarRelationFilter = {
@@ -23420,7 +24852,7 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     imgEvent?: SortOrder
-    coupon_id?: SortOrder
+    organizer_coupon_id?: SortOrder
     event_location_id?: SortOrder
     startDate?: SortOrder
     endDate?: SortOrder
@@ -23435,7 +24867,7 @@ export namespace Prisma {
   export type EventAvgOrderByAggregateInput = {
     event_id?: SortOrder
     organizer_id?: SortOrder
-    coupon_id?: SortOrder
+    organizer_coupon_id?: SortOrder
     event_location_id?: SortOrder
     score?: SortOrder
   }
@@ -23446,7 +24878,7 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     imgEvent?: SortOrder
-    coupon_id?: SortOrder
+    organizer_coupon_id?: SortOrder
     event_location_id?: SortOrder
     startDate?: SortOrder
     endDate?: SortOrder
@@ -23464,7 +24896,7 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     imgEvent?: SortOrder
-    coupon_id?: SortOrder
+    organizer_coupon_id?: SortOrder
     event_location_id?: SortOrder
     startDate?: SortOrder
     endDate?: SortOrder
@@ -23479,7 +24911,7 @@ export namespace Prisma {
   export type EventSumOrderByAggregateInput = {
     event_id?: SortOrder
     organizer_id?: SortOrder
-    coupon_id?: SortOrder
+    organizer_coupon_id?: SortOrder
     event_location_id?: SortOrder
     score?: SortOrder
   }
@@ -23515,11 +24947,6 @@ export namespace Prisma {
   export type Location_countryScalarRelationFilter = {
     is?: Location_countryWhereInput
     isNot?: Location_countryWhereInput
-  }
-
-  export type EventNullableScalarRelationFilter = {
-    is?: EventWhereInput | null
-    isNot?: EventWhereInput | null
   }
 
   export type Event_LocationCountOrderByAggregateInput = {
@@ -23735,6 +25162,7 @@ export namespace Prisma {
     payment_method?: SortOrder
     createdAt?: SortOrder
     isPaid?: SortOrder
+    payment_proof?: SortOrder
   }
 
   export type TransactionAvgOrderByAggregateInput = {
@@ -23752,6 +25180,7 @@ export namespace Prisma {
     payment_method?: SortOrder
     createdAt?: SortOrder
     isPaid?: SortOrder
+    payment_proof?: SortOrder
   }
 
   export type TransactionMinOrderByAggregateInput = {
@@ -23762,6 +25191,7 @@ export namespace Prisma {
     payment_method?: SortOrder
     createdAt?: SortOrder
     isPaid?: SortOrder
+    payment_proof?: SortOrder
   }
 
   export type TransactionSumOrderByAggregateInput = {
@@ -24297,6 +25727,13 @@ export namespace Prisma {
     connect?: EventWhereUniqueInput | EventWhereUniqueInput[]
   }
 
+  export type OrganizerCouponCreateNestedManyWithoutOrganizerInput = {
+    create?: XOR<OrganizerCouponCreateWithoutOrganizerInput, OrganizerCouponUncheckedCreateWithoutOrganizerInput> | OrganizerCouponCreateWithoutOrganizerInput[] | OrganizerCouponUncheckedCreateWithoutOrganizerInput[]
+    connectOrCreate?: OrganizerCouponCreateOrConnectWithoutOrganizerInput | OrganizerCouponCreateOrConnectWithoutOrganizerInput[]
+    createMany?: OrganizerCouponCreateManyOrganizerInputEnvelope
+    connect?: OrganizerCouponWhereUniqueInput | OrganizerCouponWhereUniqueInput[]
+  }
+
   export type Bank_accountUncheckedCreateNestedOneWithoutOrganizerInput = {
     create?: XOR<Bank_accountCreateWithoutOrganizerInput, Bank_accountUncheckedCreateWithoutOrganizerInput>
     connectOrCreate?: Bank_accountCreateOrConnectWithoutOrganizerInput
@@ -24308,6 +25745,13 @@ export namespace Prisma {
     connectOrCreate?: EventCreateOrConnectWithoutOrganizerInput | EventCreateOrConnectWithoutOrganizerInput[]
     createMany?: EventCreateManyOrganizerInputEnvelope
     connect?: EventWhereUniqueInput | EventWhereUniqueInput[]
+  }
+
+  export type OrganizerCouponUncheckedCreateNestedManyWithoutOrganizerInput = {
+    create?: XOR<OrganizerCouponCreateWithoutOrganizerInput, OrganizerCouponUncheckedCreateWithoutOrganizerInput> | OrganizerCouponCreateWithoutOrganizerInput[] | OrganizerCouponUncheckedCreateWithoutOrganizerInput[]
+    connectOrCreate?: OrganizerCouponCreateOrConnectWithoutOrganizerInput | OrganizerCouponCreateOrConnectWithoutOrganizerInput[]
+    createMany?: OrganizerCouponCreateManyOrganizerInputEnvelope
+    connect?: OrganizerCouponWhereUniqueInput | OrganizerCouponWhereUniqueInput[]
   }
 
   export type UserUpdateOneRequiredWithoutOrganizerNestedInput = {
@@ -24342,6 +25786,20 @@ export namespace Prisma {
     deleteMany?: EventScalarWhereInput | EventScalarWhereInput[]
   }
 
+  export type OrganizerCouponUpdateManyWithoutOrganizerNestedInput = {
+    create?: XOR<OrganizerCouponCreateWithoutOrganizerInput, OrganizerCouponUncheckedCreateWithoutOrganizerInput> | OrganizerCouponCreateWithoutOrganizerInput[] | OrganizerCouponUncheckedCreateWithoutOrganizerInput[]
+    connectOrCreate?: OrganizerCouponCreateOrConnectWithoutOrganizerInput | OrganizerCouponCreateOrConnectWithoutOrganizerInput[]
+    upsert?: OrganizerCouponUpsertWithWhereUniqueWithoutOrganizerInput | OrganizerCouponUpsertWithWhereUniqueWithoutOrganizerInput[]
+    createMany?: OrganizerCouponCreateManyOrganizerInputEnvelope
+    set?: OrganizerCouponWhereUniqueInput | OrganizerCouponWhereUniqueInput[]
+    disconnect?: OrganizerCouponWhereUniqueInput | OrganizerCouponWhereUniqueInput[]
+    delete?: OrganizerCouponWhereUniqueInput | OrganizerCouponWhereUniqueInput[]
+    connect?: OrganizerCouponWhereUniqueInput | OrganizerCouponWhereUniqueInput[]
+    update?: OrganizerCouponUpdateWithWhereUniqueWithoutOrganizerInput | OrganizerCouponUpdateWithWhereUniqueWithoutOrganizerInput[]
+    updateMany?: OrganizerCouponUpdateManyWithWhereWithoutOrganizerInput | OrganizerCouponUpdateManyWithWhereWithoutOrganizerInput[]
+    deleteMany?: OrganizerCouponScalarWhereInput | OrganizerCouponScalarWhereInput[]
+  }
+
   export type Bank_accountUncheckedUpdateOneWithoutOrganizerNestedInput = {
     create?: XOR<Bank_accountCreateWithoutOrganizerInput, Bank_accountUncheckedCreateWithoutOrganizerInput>
     connectOrCreate?: Bank_accountCreateOrConnectWithoutOrganizerInput
@@ -24364,6 +25822,20 @@ export namespace Prisma {
     update?: EventUpdateWithWhereUniqueWithoutOrganizerInput | EventUpdateWithWhereUniqueWithoutOrganizerInput[]
     updateMany?: EventUpdateManyWithWhereWithoutOrganizerInput | EventUpdateManyWithWhereWithoutOrganizerInput[]
     deleteMany?: EventScalarWhereInput | EventScalarWhereInput[]
+  }
+
+  export type OrganizerCouponUncheckedUpdateManyWithoutOrganizerNestedInput = {
+    create?: XOR<OrganizerCouponCreateWithoutOrganizerInput, OrganizerCouponUncheckedCreateWithoutOrganizerInput> | OrganizerCouponCreateWithoutOrganizerInput[] | OrganizerCouponUncheckedCreateWithoutOrganizerInput[]
+    connectOrCreate?: OrganizerCouponCreateOrConnectWithoutOrganizerInput | OrganizerCouponCreateOrConnectWithoutOrganizerInput[]
+    upsert?: OrganizerCouponUpsertWithWhereUniqueWithoutOrganizerInput | OrganizerCouponUpsertWithWhereUniqueWithoutOrganizerInput[]
+    createMany?: OrganizerCouponCreateManyOrganizerInputEnvelope
+    set?: OrganizerCouponWhereUniqueInput | OrganizerCouponWhereUniqueInput[]
+    disconnect?: OrganizerCouponWhereUniqueInput | OrganizerCouponWhereUniqueInput[]
+    delete?: OrganizerCouponWhereUniqueInput | OrganizerCouponWhereUniqueInput[]
+    connect?: OrganizerCouponWhereUniqueInput | OrganizerCouponWhereUniqueInput[]
+    update?: OrganizerCouponUpdateWithWhereUniqueWithoutOrganizerInput | OrganizerCouponUpdateWithWhereUniqueWithoutOrganizerInput[]
+    updateMany?: OrganizerCouponUpdateManyWithWhereWithoutOrganizerInput | OrganizerCouponUpdateManyWithWhereWithoutOrganizerInput[]
+    deleteMany?: OrganizerCouponScalarWhereInput | OrganizerCouponScalarWhereInput[]
   }
 
   export type OrganizerCreateNestedOneWithoutBank_accountInput = {
@@ -24482,6 +25954,54 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCouponsInput, UserUpdateWithoutCouponsInput>, UserUncheckedUpdateWithoutCouponsInput>
   }
 
+  export type OrganizerCreateNestedOneWithoutOrganizerCouponInput = {
+    create?: XOR<OrganizerCreateWithoutOrganizerCouponInput, OrganizerUncheckedCreateWithoutOrganizerCouponInput>
+    connectOrCreate?: OrganizerCreateOrConnectWithoutOrganizerCouponInput
+    connect?: OrganizerWhereUniqueInput
+  }
+
+  export type EventCreateNestedOneWithoutOrganizer_couponInput = {
+    create?: XOR<EventCreateWithoutOrganizer_couponInput, EventUncheckedCreateWithoutOrganizer_couponInput>
+    connectOrCreate?: EventCreateOrConnectWithoutOrganizer_couponInput
+    connect?: EventWhereUniqueInput
+  }
+
+  export type EventUncheckedCreateNestedOneWithoutOrganizer_couponInput = {
+    create?: XOR<EventCreateWithoutOrganizer_couponInput, EventUncheckedCreateWithoutOrganizer_couponInput>
+    connectOrCreate?: EventCreateOrConnectWithoutOrganizer_couponInput
+    connect?: EventWhereUniqueInput
+  }
+
+  export type OrganizerUpdateOneWithoutOrganizerCouponNestedInput = {
+    create?: XOR<OrganizerCreateWithoutOrganizerCouponInput, OrganizerUncheckedCreateWithoutOrganizerCouponInput>
+    connectOrCreate?: OrganizerCreateOrConnectWithoutOrganizerCouponInput
+    upsert?: OrganizerUpsertWithoutOrganizerCouponInput
+    disconnect?: OrganizerWhereInput | boolean
+    delete?: OrganizerWhereInput | boolean
+    connect?: OrganizerWhereUniqueInput
+    update?: XOR<XOR<OrganizerUpdateToOneWithWhereWithoutOrganizerCouponInput, OrganizerUpdateWithoutOrganizerCouponInput>, OrganizerUncheckedUpdateWithoutOrganizerCouponInput>
+  }
+
+  export type EventUpdateOneWithoutOrganizer_couponNestedInput = {
+    create?: XOR<EventCreateWithoutOrganizer_couponInput, EventUncheckedCreateWithoutOrganizer_couponInput>
+    connectOrCreate?: EventCreateOrConnectWithoutOrganizer_couponInput
+    upsert?: EventUpsertWithoutOrganizer_couponInput
+    disconnect?: EventWhereInput | boolean
+    delete?: EventWhereInput | boolean
+    connect?: EventWhereUniqueInput
+    update?: XOR<XOR<EventUpdateToOneWithWhereWithoutOrganizer_couponInput, EventUpdateWithoutOrganizer_couponInput>, EventUncheckedUpdateWithoutOrganizer_couponInput>
+  }
+
+  export type EventUncheckedUpdateOneWithoutOrganizer_couponNestedInput = {
+    create?: XOR<EventCreateWithoutOrganizer_couponInput, EventUncheckedCreateWithoutOrganizer_couponInput>
+    connectOrCreate?: EventCreateOrConnectWithoutOrganizer_couponInput
+    upsert?: EventUpsertWithoutOrganizer_couponInput
+    disconnect?: EventWhereInput | boolean
+    delete?: EventWhereInput | boolean
+    connect?: EventWhereUniqueInput
+    update?: XOR<XOR<EventUpdateToOneWithWhereWithoutOrganizer_couponInput, EventUpdateWithoutOrganizer_couponInput>, EventUncheckedUpdateWithoutOrganizer_couponInput>
+  }
+
   export type OrganizerCreateNestedOneWithoutEventsInput = {
     create?: XOR<OrganizerCreateWithoutEventsInput, OrganizerUncheckedCreateWithoutEventsInput>
     connectOrCreate?: OrganizerCreateOrConnectWithoutEventsInput
@@ -24492,6 +26012,12 @@ export namespace Prisma {
     create?: XOR<Event_categoryCreateWithoutEventInput, Event_categoryUncheckedCreateWithoutEventInput> | Event_categoryCreateWithoutEventInput[] | Event_categoryUncheckedCreateWithoutEventInput[]
     connectOrCreate?: Event_categoryCreateOrConnectWithoutEventInput | Event_categoryCreateOrConnectWithoutEventInput[]
     connect?: Event_categoryWhereUniqueInput | Event_categoryWhereUniqueInput[]
+  }
+
+  export type OrganizerCouponCreateNestedOneWithoutEventInput = {
+    create?: XOR<OrganizerCouponCreateWithoutEventInput, OrganizerCouponUncheckedCreateWithoutEventInput>
+    connectOrCreate?: OrganizerCouponCreateOrConnectWithoutEventInput
+    connect?: OrganizerCouponWhereUniqueInput
   }
 
   export type Event_LocationCreateNestedOneWithoutEventInput = {
@@ -24579,6 +26105,16 @@ export namespace Prisma {
     update?: Event_categoryUpdateWithWhereUniqueWithoutEventInput | Event_categoryUpdateWithWhereUniqueWithoutEventInput[]
     updateMany?: Event_categoryUpdateManyWithWhereWithoutEventInput | Event_categoryUpdateManyWithWhereWithoutEventInput[]
     deleteMany?: Event_categoryScalarWhereInput | Event_categoryScalarWhereInput[]
+  }
+
+  export type OrganizerCouponUpdateOneWithoutEventNestedInput = {
+    create?: XOR<OrganizerCouponCreateWithoutEventInput, OrganizerCouponUncheckedCreateWithoutEventInput>
+    connectOrCreate?: OrganizerCouponCreateOrConnectWithoutEventInput
+    upsert?: OrganizerCouponUpsertWithoutEventInput
+    disconnect?: OrganizerCouponWhereInput | boolean
+    delete?: OrganizerCouponWhereInput | boolean
+    connect?: OrganizerCouponWhereUniqueInput
+    update?: XOR<XOR<OrganizerCouponUpdateToOneWithWhereWithoutEventInput, OrganizerCouponUpdateWithoutEventInput>, OrganizerCouponUncheckedUpdateWithoutEventInput>
   }
 
   export type Event_LocationUpdateOneRequiredWithoutEventNestedInput = {
@@ -25460,6 +26996,7 @@ export namespace Prisma {
     organizer_bio?: string | null
     bank_account?: Bank_accountCreateNestedOneWithoutOrganizerInput
     events?: EventCreateNestedManyWithoutOrganizerInput
+    OrganizerCoupon?: OrganizerCouponCreateNestedManyWithoutOrganizerInput
   }
 
   export type OrganizerUncheckedCreateWithoutUserInput = {
@@ -25473,6 +27010,7 @@ export namespace Prisma {
     organizer_bio?: string | null
     bank_account?: Bank_accountUncheckedCreateNestedOneWithoutOrganizerInput
     events?: EventUncheckedCreateNestedManyWithoutOrganizerInput
+    OrganizerCoupon?: OrganizerCouponUncheckedCreateNestedManyWithoutOrganizerInput
   }
 
   export type OrganizerCreateOrConnectWithoutUserInput = {
@@ -25538,6 +27076,7 @@ export namespace Prisma {
     payment_method: $Enums.PaymentMethod
     createdAt?: Date | string
     isPaid: boolean
+    payment_proof?: string | null
     transaction_details?: Transaction_DetailCreateNestedManyWithoutTransactionInput
   }
 
@@ -25548,6 +27087,7 @@ export namespace Prisma {
     payment_method: $Enums.PaymentMethod
     createdAt?: Date | string
     isPaid: boolean
+    payment_proof?: string | null
     transaction_details?: Transaction_DetailUncheckedCreateNestedManyWithoutTransactionInput
   }
 
@@ -25565,7 +27105,6 @@ export namespace Prisma {
     title: string
     description: string
     imgEvent: string
-    coupon_id: number
     startDate: Date | string
     endDate: Date | string
     startTime: string
@@ -25576,6 +27115,7 @@ export namespace Prisma {
     score?: number | null
     organizer: OrganizerCreateNestedOneWithoutEventsInput
     event_category?: Event_categoryCreateNestedManyWithoutEventInput
+    organizer_coupon?: OrganizerCouponCreateNestedOneWithoutEventInput
     event_location: Event_LocationCreateNestedOneWithoutEventInput
     ticket_types?: Ticket_typesCreateNestedManyWithoutEventInput
     transaction?: Transaction_DetailCreateNestedManyWithoutEventInput
@@ -25588,7 +27128,7 @@ export namespace Prisma {
     title: string
     description: string
     imgEvent: string
-    coupon_id: number
+    organizer_coupon_id?: number | null
     event_location_id: number
     startDate: Date | string
     endDate: Date | string
@@ -25763,6 +27303,7 @@ export namespace Prisma {
     organizer_bio?: NullableStringFieldUpdateOperationsInput | string | null
     bank_account?: Bank_accountUpdateOneWithoutOrganizerNestedInput
     events?: EventUpdateManyWithoutOrganizerNestedInput
+    OrganizerCoupon?: OrganizerCouponUpdateManyWithoutOrganizerNestedInput
   }
 
   export type OrganizerUncheckedUpdateWithoutUserInput = {
@@ -25776,6 +27317,7 @@ export namespace Prisma {
     organizer_bio?: NullableStringFieldUpdateOperationsInput | string | null
     bank_account?: Bank_accountUncheckedUpdateOneWithoutOrganizerNestedInput
     events?: EventUncheckedUpdateManyWithoutOrganizerNestedInput
+    OrganizerCoupon?: OrganizerCouponUncheckedUpdateManyWithoutOrganizerNestedInput
   }
 
   export type ReviewUpsertWithWhereUniqueWithoutUserInput = {
@@ -25862,6 +27404,7 @@ export namespace Prisma {
     payment_method?: EnumPaymentMethodFilter<"Transaction"> | $Enums.PaymentMethod
     createdAt?: DateTimeFilter<"Transaction"> | Date | string
     isPaid?: BoolFilter<"Transaction"> | boolean
+    payment_proof?: StringNullableFilter<"Transaction"> | string | null
   }
 
   export type EventUpsertWithWhereUniqueWithoutCustomerInput = {
@@ -25889,7 +27432,7 @@ export namespace Prisma {
     title?: StringFilter<"Event"> | string
     description?: StringFilter<"Event"> | string
     imgEvent?: StringFilter<"Event"> | string
-    coupon_id?: IntFilter<"Event"> | number
+    organizer_coupon_id?: IntNullableFilter<"Event"> | number | null
     event_location_id?: IntFilter<"Event"> | number
     startDate?: DateTimeFilter<"Event"> | Date | string
     endDate?: DateTimeFilter<"Event"> | Date | string
@@ -26117,7 +27660,6 @@ export namespace Prisma {
     title: string
     description: string
     imgEvent: string
-    coupon_id: number
     startDate: Date | string
     endDate: Date | string
     startTime: string
@@ -26127,6 +27669,7 @@ export namespace Prisma {
     updatedAt: Date | string
     score?: number | null
     event_category?: Event_categoryCreateNestedManyWithoutEventInput
+    organizer_coupon?: OrganizerCouponCreateNestedOneWithoutEventInput
     event_location: Event_LocationCreateNestedOneWithoutEventInput
     ticket_types?: Ticket_typesCreateNestedManyWithoutEventInput
     customer?: UserCreateNestedManyWithoutEventInput
@@ -26139,7 +27682,7 @@ export namespace Prisma {
     title: string
     description: string
     imgEvent: string
-    coupon_id: number
+    organizer_coupon_id?: number | null
     event_location_id: number
     startDate: Date | string
     endDate: Date | string
@@ -26163,6 +27706,35 @@ export namespace Prisma {
 
   export type EventCreateManyOrganizerInputEnvelope = {
     data: EventCreateManyOrganizerInput | EventCreateManyOrganizerInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type OrganizerCouponCreateWithoutOrganizerInput = {
+    organizer_coupon_code: string
+    discount: number
+    start_date: Date | string
+    expired_date: Date | string
+    quantity: number
+    Event?: EventCreateNestedOneWithoutOrganizer_couponInput
+  }
+
+  export type OrganizerCouponUncheckedCreateWithoutOrganizerInput = {
+    organizer_coupon_id?: number
+    organizer_coupon_code: string
+    discount: number
+    start_date: Date | string
+    expired_date: Date | string
+    quantity: number
+    Event?: EventUncheckedCreateNestedOneWithoutOrganizer_couponInput
+  }
+
+  export type OrganizerCouponCreateOrConnectWithoutOrganizerInput = {
+    where: OrganizerCouponWhereUniqueInput
+    create: XOR<OrganizerCouponCreateWithoutOrganizerInput, OrganizerCouponUncheckedCreateWithoutOrganizerInput>
+  }
+
+  export type OrganizerCouponCreateManyOrganizerInputEnvelope = {
+    data: OrganizerCouponCreateManyOrganizerInput | OrganizerCouponCreateManyOrganizerInput[]
     skipDuplicates?: boolean
   }
 
@@ -26258,6 +27830,35 @@ export namespace Prisma {
     data: XOR<EventUpdateManyMutationInput, EventUncheckedUpdateManyWithoutOrganizerInput>
   }
 
+  export type OrganizerCouponUpsertWithWhereUniqueWithoutOrganizerInput = {
+    where: OrganizerCouponWhereUniqueInput
+    update: XOR<OrganizerCouponUpdateWithoutOrganizerInput, OrganizerCouponUncheckedUpdateWithoutOrganizerInput>
+    create: XOR<OrganizerCouponCreateWithoutOrganizerInput, OrganizerCouponUncheckedCreateWithoutOrganizerInput>
+  }
+
+  export type OrganizerCouponUpdateWithWhereUniqueWithoutOrganizerInput = {
+    where: OrganizerCouponWhereUniqueInput
+    data: XOR<OrganizerCouponUpdateWithoutOrganizerInput, OrganizerCouponUncheckedUpdateWithoutOrganizerInput>
+  }
+
+  export type OrganizerCouponUpdateManyWithWhereWithoutOrganizerInput = {
+    where: OrganizerCouponScalarWhereInput
+    data: XOR<OrganizerCouponUpdateManyMutationInput, OrganizerCouponUncheckedUpdateManyWithoutOrganizerInput>
+  }
+
+  export type OrganizerCouponScalarWhereInput = {
+    AND?: OrganizerCouponScalarWhereInput | OrganizerCouponScalarWhereInput[]
+    OR?: OrganizerCouponScalarWhereInput[]
+    NOT?: OrganizerCouponScalarWhereInput | OrganizerCouponScalarWhereInput[]
+    organizer_coupon_id?: IntFilter<"OrganizerCoupon"> | number
+    organizer_coupon_code?: StringFilter<"OrganizerCoupon"> | string
+    discount?: IntFilter<"OrganizerCoupon"> | number
+    start_date?: DateTimeFilter<"OrganizerCoupon"> | Date | string
+    expired_date?: DateTimeFilter<"OrganizerCoupon"> | Date | string
+    quantity?: IntFilter<"OrganizerCoupon"> | number
+    organizer_id?: IntNullableFilter<"OrganizerCoupon"> | number | null
+  }
+
   export type OrganizerCreateWithoutBank_accountInput = {
     organizer_name: string
     organizer_email: string
@@ -26268,6 +27869,7 @@ export namespace Prisma {
     organizer_bio?: string | null
     user: UserCreateNestedOneWithoutOrganizerInput
     events?: EventCreateNestedManyWithoutOrganizerInput
+    OrganizerCoupon?: OrganizerCouponCreateNestedManyWithoutOrganizerInput
   }
 
   export type OrganizerUncheckedCreateWithoutBank_accountInput = {
@@ -26281,6 +27883,7 @@ export namespace Prisma {
     organizer_bio?: string | null
     user_id: number
     events?: EventUncheckedCreateNestedManyWithoutOrganizerInput
+    OrganizerCoupon?: OrganizerCouponUncheckedCreateNestedManyWithoutOrganizerInput
   }
 
   export type OrganizerCreateOrConnectWithoutBank_accountInput = {
@@ -26309,6 +27912,7 @@ export namespace Prisma {
     organizer_bio?: NullableStringFieldUpdateOperationsInput | string | null
     user?: UserUpdateOneRequiredWithoutOrganizerNestedInput
     events?: EventUpdateManyWithoutOrganizerNestedInput
+    OrganizerCoupon?: OrganizerCouponUpdateManyWithoutOrganizerNestedInput
   }
 
   export type OrganizerUncheckedUpdateWithoutBank_accountInput = {
@@ -26322,6 +27926,7 @@ export namespace Prisma {
     organizer_bio?: NullableStringFieldUpdateOperationsInput | string | null
     user_id?: IntFieldUpdateOperationsInput | number
     events?: EventUncheckedUpdateManyWithoutOrganizerNestedInput
+    OrganizerCoupon?: OrganizerCouponUncheckedUpdateManyWithoutOrganizerNestedInput
   }
 
   export type UserCreateWithoutPointsInput = {
@@ -26759,6 +28364,178 @@ export namespace Prisma {
     event?: EventUncheckedUpdateManyWithoutCustomerNestedInput
   }
 
+  export type OrganizerCreateWithoutOrganizerCouponInput = {
+    organizer_name: string
+    organizer_email: string
+    organizer_phone: string
+    organizer_address: string
+    organizer_logo?: string | null
+    organizer_banner?: string | null
+    organizer_bio?: string | null
+    user: UserCreateNestedOneWithoutOrganizerInput
+    bank_account?: Bank_accountCreateNestedOneWithoutOrganizerInput
+    events?: EventCreateNestedManyWithoutOrganizerInput
+  }
+
+  export type OrganizerUncheckedCreateWithoutOrganizerCouponInput = {
+    organizer_id?: number
+    organizer_name: string
+    organizer_email: string
+    organizer_phone: string
+    organizer_address: string
+    organizer_logo?: string | null
+    organizer_banner?: string | null
+    organizer_bio?: string | null
+    user_id: number
+    bank_account?: Bank_accountUncheckedCreateNestedOneWithoutOrganizerInput
+    events?: EventUncheckedCreateNestedManyWithoutOrganizerInput
+  }
+
+  export type OrganizerCreateOrConnectWithoutOrganizerCouponInput = {
+    where: OrganizerWhereUniqueInput
+    create: XOR<OrganizerCreateWithoutOrganizerCouponInput, OrganizerUncheckedCreateWithoutOrganizerCouponInput>
+  }
+
+  export type EventCreateWithoutOrganizer_couponInput = {
+    title: string
+    description: string
+    imgEvent: string
+    startDate: Date | string
+    endDate: Date | string
+    startTime: string
+    endTime: string
+    timezone: string
+    createdAt?: Date | string
+    updatedAt: Date | string
+    score?: number | null
+    organizer: OrganizerCreateNestedOneWithoutEventsInput
+    event_category?: Event_categoryCreateNestedManyWithoutEventInput
+    event_location: Event_LocationCreateNestedOneWithoutEventInput
+    ticket_types?: Ticket_typesCreateNestedManyWithoutEventInput
+    customer?: UserCreateNestedManyWithoutEventInput
+    transaction?: Transaction_DetailCreateNestedManyWithoutEventInput
+    review?: ReviewCreateNestedManyWithoutEventInput
+  }
+
+  export type EventUncheckedCreateWithoutOrganizer_couponInput = {
+    event_id?: number
+    organizer_id: number
+    title: string
+    description: string
+    imgEvent: string
+    event_location_id: number
+    startDate: Date | string
+    endDate: Date | string
+    startTime: string
+    endTime: string
+    timezone: string
+    createdAt?: Date | string
+    updatedAt: Date | string
+    score?: number | null
+    event_category?: Event_categoryUncheckedCreateNestedManyWithoutEventInput
+    ticket_types?: Ticket_typesUncheckedCreateNestedManyWithoutEventInput
+    customer?: UserUncheckedCreateNestedManyWithoutEventInput
+    transaction?: Transaction_DetailUncheckedCreateNestedManyWithoutEventInput
+    review?: ReviewUncheckedCreateNestedManyWithoutEventInput
+  }
+
+  export type EventCreateOrConnectWithoutOrganizer_couponInput = {
+    where: EventWhereUniqueInput
+    create: XOR<EventCreateWithoutOrganizer_couponInput, EventUncheckedCreateWithoutOrganizer_couponInput>
+  }
+
+  export type OrganizerUpsertWithoutOrganizerCouponInput = {
+    update: XOR<OrganizerUpdateWithoutOrganizerCouponInput, OrganizerUncheckedUpdateWithoutOrganizerCouponInput>
+    create: XOR<OrganizerCreateWithoutOrganizerCouponInput, OrganizerUncheckedCreateWithoutOrganizerCouponInput>
+    where?: OrganizerWhereInput
+  }
+
+  export type OrganizerUpdateToOneWithWhereWithoutOrganizerCouponInput = {
+    where?: OrganizerWhereInput
+    data: XOR<OrganizerUpdateWithoutOrganizerCouponInput, OrganizerUncheckedUpdateWithoutOrganizerCouponInput>
+  }
+
+  export type OrganizerUpdateWithoutOrganizerCouponInput = {
+    organizer_name?: StringFieldUpdateOperationsInput | string
+    organizer_email?: StringFieldUpdateOperationsInput | string
+    organizer_phone?: StringFieldUpdateOperationsInput | string
+    organizer_address?: StringFieldUpdateOperationsInput | string
+    organizer_logo?: NullableStringFieldUpdateOperationsInput | string | null
+    organizer_banner?: NullableStringFieldUpdateOperationsInput | string | null
+    organizer_bio?: NullableStringFieldUpdateOperationsInput | string | null
+    user?: UserUpdateOneRequiredWithoutOrganizerNestedInput
+    bank_account?: Bank_accountUpdateOneWithoutOrganizerNestedInput
+    events?: EventUpdateManyWithoutOrganizerNestedInput
+  }
+
+  export type OrganizerUncheckedUpdateWithoutOrganizerCouponInput = {
+    organizer_id?: IntFieldUpdateOperationsInput | number
+    organizer_name?: StringFieldUpdateOperationsInput | string
+    organizer_email?: StringFieldUpdateOperationsInput | string
+    organizer_phone?: StringFieldUpdateOperationsInput | string
+    organizer_address?: StringFieldUpdateOperationsInput | string
+    organizer_logo?: NullableStringFieldUpdateOperationsInput | string | null
+    organizer_banner?: NullableStringFieldUpdateOperationsInput | string | null
+    organizer_bio?: NullableStringFieldUpdateOperationsInput | string | null
+    user_id?: IntFieldUpdateOperationsInput | number
+    bank_account?: Bank_accountUncheckedUpdateOneWithoutOrganizerNestedInput
+    events?: EventUncheckedUpdateManyWithoutOrganizerNestedInput
+  }
+
+  export type EventUpsertWithoutOrganizer_couponInput = {
+    update: XOR<EventUpdateWithoutOrganizer_couponInput, EventUncheckedUpdateWithoutOrganizer_couponInput>
+    create: XOR<EventCreateWithoutOrganizer_couponInput, EventUncheckedCreateWithoutOrganizer_couponInput>
+    where?: EventWhereInput
+  }
+
+  export type EventUpdateToOneWithWhereWithoutOrganizer_couponInput = {
+    where?: EventWhereInput
+    data: XOR<EventUpdateWithoutOrganizer_couponInput, EventUncheckedUpdateWithoutOrganizer_couponInput>
+  }
+
+  export type EventUpdateWithoutOrganizer_couponInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    imgEvent?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    startTime?: StringFieldUpdateOperationsInput | string
+    endTime?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    score?: NullableIntFieldUpdateOperationsInput | number | null
+    organizer?: OrganizerUpdateOneRequiredWithoutEventsNestedInput
+    event_category?: Event_categoryUpdateManyWithoutEventNestedInput
+    event_location?: Event_LocationUpdateOneRequiredWithoutEventNestedInput
+    ticket_types?: Ticket_typesUpdateManyWithoutEventNestedInput
+    customer?: UserUpdateManyWithoutEventNestedInput
+    transaction?: Transaction_DetailUpdateManyWithoutEventNestedInput
+    review?: ReviewUpdateManyWithoutEventNestedInput
+  }
+
+  export type EventUncheckedUpdateWithoutOrganizer_couponInput = {
+    event_id?: IntFieldUpdateOperationsInput | number
+    organizer_id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    imgEvent?: StringFieldUpdateOperationsInput | string
+    event_location_id?: IntFieldUpdateOperationsInput | number
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    startTime?: StringFieldUpdateOperationsInput | string
+    endTime?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    score?: NullableIntFieldUpdateOperationsInput | number | null
+    event_category?: Event_categoryUncheckedUpdateManyWithoutEventNestedInput
+    ticket_types?: Ticket_typesUncheckedUpdateManyWithoutEventNestedInput
+    customer?: UserUncheckedUpdateManyWithoutEventNestedInput
+    transaction?: Transaction_DetailUncheckedUpdateManyWithoutEventNestedInput
+    review?: ReviewUncheckedUpdateManyWithoutEventNestedInput
+  }
+
   export type OrganizerCreateWithoutEventsInput = {
     organizer_name: string
     organizer_email: string
@@ -26769,6 +28546,7 @@ export namespace Prisma {
     organizer_bio?: string | null
     user: UserCreateNestedOneWithoutOrganizerInput
     bank_account?: Bank_accountCreateNestedOneWithoutOrganizerInput
+    OrganizerCoupon?: OrganizerCouponCreateNestedManyWithoutOrganizerInput
   }
 
   export type OrganizerUncheckedCreateWithoutEventsInput = {
@@ -26782,6 +28560,7 @@ export namespace Prisma {
     organizer_bio?: string | null
     user_id: number
     bank_account?: Bank_accountUncheckedCreateNestedOneWithoutOrganizerInput
+    OrganizerCoupon?: OrganizerCouponUncheckedCreateNestedManyWithoutOrganizerInput
   }
 
   export type OrganizerCreateOrConnectWithoutEventsInput = {
@@ -26801,6 +28580,30 @@ export namespace Prisma {
   export type Event_categoryCreateOrConnectWithoutEventInput = {
     where: Event_categoryWhereUniqueInput
     create: XOR<Event_categoryCreateWithoutEventInput, Event_categoryUncheckedCreateWithoutEventInput>
+  }
+
+  export type OrganizerCouponCreateWithoutEventInput = {
+    organizer_coupon_code: string
+    discount: number
+    start_date: Date | string
+    expired_date: Date | string
+    quantity: number
+    organizer?: OrganizerCreateNestedOneWithoutOrganizerCouponInput
+  }
+
+  export type OrganizerCouponUncheckedCreateWithoutEventInput = {
+    organizer_coupon_id?: number
+    organizer_coupon_code: string
+    discount: number
+    start_date: Date | string
+    expired_date: Date | string
+    quantity: number
+    organizer_id?: number | null
+  }
+
+  export type OrganizerCouponCreateOrConnectWithoutEventInput = {
+    where: OrganizerCouponWhereUniqueInput
+    create: XOR<OrganizerCouponCreateWithoutEventInput, OrganizerCouponUncheckedCreateWithoutEventInput>
   }
 
   export type Event_LocationCreateWithoutEventInput = {
@@ -26969,6 +28772,7 @@ export namespace Prisma {
     organizer_bio?: NullableStringFieldUpdateOperationsInput | string | null
     user?: UserUpdateOneRequiredWithoutOrganizerNestedInput
     bank_account?: Bank_accountUpdateOneWithoutOrganizerNestedInput
+    OrganizerCoupon?: OrganizerCouponUpdateManyWithoutOrganizerNestedInput
   }
 
   export type OrganizerUncheckedUpdateWithoutEventsInput = {
@@ -26982,6 +28786,7 @@ export namespace Prisma {
     organizer_bio?: NullableStringFieldUpdateOperationsInput | string | null
     user_id?: IntFieldUpdateOperationsInput | number
     bank_account?: Bank_accountUncheckedUpdateOneWithoutOrganizerNestedInput
+    OrganizerCoupon?: OrganizerCouponUncheckedUpdateManyWithoutOrganizerNestedInput
   }
 
   export type Event_categoryUpsertWithWhereUniqueWithoutEventInput = {
@@ -27006,6 +28811,36 @@ export namespace Prisma {
     NOT?: Event_categoryScalarWhereInput | Event_categoryScalarWhereInput[]
     event_category_id?: IntFilter<"Event_category"> | number
     category_name?: StringFilter<"Event_category"> | string
+  }
+
+  export type OrganizerCouponUpsertWithoutEventInput = {
+    update: XOR<OrganizerCouponUpdateWithoutEventInput, OrganizerCouponUncheckedUpdateWithoutEventInput>
+    create: XOR<OrganizerCouponCreateWithoutEventInput, OrganizerCouponUncheckedCreateWithoutEventInput>
+    where?: OrganizerCouponWhereInput
+  }
+
+  export type OrganizerCouponUpdateToOneWithWhereWithoutEventInput = {
+    where?: OrganizerCouponWhereInput
+    data: XOR<OrganizerCouponUpdateWithoutEventInput, OrganizerCouponUncheckedUpdateWithoutEventInput>
+  }
+
+  export type OrganizerCouponUpdateWithoutEventInput = {
+    organizer_coupon_code?: StringFieldUpdateOperationsInput | string
+    discount?: IntFieldUpdateOperationsInput | number
+    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    organizer?: OrganizerUpdateOneWithoutOrganizerCouponNestedInput
+  }
+
+  export type OrganizerCouponUncheckedUpdateWithoutEventInput = {
+    organizer_coupon_id?: IntFieldUpdateOperationsInput | number
+    organizer_coupon_code?: StringFieldUpdateOperationsInput | string
+    discount?: IntFieldUpdateOperationsInput | number
+    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    organizer_id?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type Event_LocationUpsertWithoutEventInput = {
@@ -27115,7 +28950,6 @@ export namespace Prisma {
     title: string
     description: string
     imgEvent: string
-    coupon_id: number
     startDate: Date | string
     endDate: Date | string
     startTime: string
@@ -27125,6 +28959,7 @@ export namespace Prisma {
     updatedAt: Date | string
     score?: number | null
     organizer: OrganizerCreateNestedOneWithoutEventsInput
+    organizer_coupon?: OrganizerCouponCreateNestedOneWithoutEventInput
     event_location: Event_LocationCreateNestedOneWithoutEventInput
     ticket_types?: Ticket_typesCreateNestedManyWithoutEventInput
     customer?: UserCreateNestedManyWithoutEventInput
@@ -27138,7 +28973,7 @@ export namespace Prisma {
     title: string
     description: string
     imgEvent: string
-    coupon_id: number
+    organizer_coupon_id?: number | null
     event_location_id: number
     startDate: Date | string
     endDate: Date | string
@@ -27207,7 +29042,6 @@ export namespace Prisma {
     title: string
     description: string
     imgEvent: string
-    coupon_id: number
     startDate: Date | string
     endDate: Date | string
     startTime: string
@@ -27218,6 +29052,7 @@ export namespace Prisma {
     score?: number | null
     organizer: OrganizerCreateNestedOneWithoutEventsInput
     event_category?: Event_categoryCreateNestedManyWithoutEventInput
+    organizer_coupon?: OrganizerCouponCreateNestedOneWithoutEventInput
     ticket_types?: Ticket_typesCreateNestedManyWithoutEventInput
     customer?: UserCreateNestedManyWithoutEventInput
     transaction?: Transaction_DetailCreateNestedManyWithoutEventInput
@@ -27230,7 +29065,7 @@ export namespace Prisma {
     title: string
     description: string
     imgEvent: string
-    coupon_id: number
+    organizer_coupon_id?: number | null
     startDate: Date | string
     endDate: Date | string
     startTime: string
@@ -27306,7 +29141,6 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     imgEvent?: StringFieldUpdateOperationsInput | string
-    coupon_id?: IntFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: StringFieldUpdateOperationsInput | string
@@ -27317,6 +29151,7 @@ export namespace Prisma {
     score?: NullableIntFieldUpdateOperationsInput | number | null
     organizer?: OrganizerUpdateOneRequiredWithoutEventsNestedInput
     event_category?: Event_categoryUpdateManyWithoutEventNestedInput
+    organizer_coupon?: OrganizerCouponUpdateOneWithoutEventNestedInput
     ticket_types?: Ticket_typesUpdateManyWithoutEventNestedInput
     customer?: UserUpdateManyWithoutEventNestedInput
     transaction?: Transaction_DetailUpdateManyWithoutEventNestedInput
@@ -27329,7 +29164,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     imgEvent?: StringFieldUpdateOperationsInput | string
-    coupon_id?: IntFieldUpdateOperationsInput | number
+    organizer_coupon_id?: NullableIntFieldUpdateOperationsInput | number | null
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: StringFieldUpdateOperationsInput | string
@@ -27447,7 +29282,6 @@ export namespace Prisma {
     title: string
     description: string
     imgEvent: string
-    coupon_id: number
     startDate: Date | string
     endDate: Date | string
     startTime: string
@@ -27458,6 +29292,7 @@ export namespace Prisma {
     score?: number | null
     organizer: OrganizerCreateNestedOneWithoutEventsInput
     event_category?: Event_categoryCreateNestedManyWithoutEventInput
+    organizer_coupon?: OrganizerCouponCreateNestedOneWithoutEventInput
     event_location: Event_LocationCreateNestedOneWithoutEventInput
     customer?: UserCreateNestedManyWithoutEventInput
     transaction?: Transaction_DetailCreateNestedManyWithoutEventInput
@@ -27470,7 +29305,7 @@ export namespace Prisma {
     title: string
     description: string
     imgEvent: string
-    coupon_id: number
+    organizer_coupon_id?: number | null
     event_location_id: number
     startDate: Date | string
     endDate: Date | string
@@ -27533,7 +29368,6 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     imgEvent?: StringFieldUpdateOperationsInput | string
-    coupon_id?: IntFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: StringFieldUpdateOperationsInput | string
@@ -27544,6 +29378,7 @@ export namespace Prisma {
     score?: NullableIntFieldUpdateOperationsInput | number | null
     organizer?: OrganizerUpdateOneRequiredWithoutEventsNestedInput
     event_category?: Event_categoryUpdateManyWithoutEventNestedInput
+    organizer_coupon?: OrganizerCouponUpdateOneWithoutEventNestedInput
     event_location?: Event_LocationUpdateOneRequiredWithoutEventNestedInput
     customer?: UserUpdateManyWithoutEventNestedInput
     transaction?: Transaction_DetailUpdateManyWithoutEventNestedInput
@@ -27556,7 +29391,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     imgEvent?: StringFieldUpdateOperationsInput | string
-    coupon_id?: IntFieldUpdateOperationsInput | number
+    organizer_coupon_id?: NullableIntFieldUpdateOperationsInput | number | null
     event_location_id?: IntFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -27638,7 +29473,6 @@ export namespace Prisma {
     title: string
     description: string
     imgEvent: string
-    coupon_id: number
     startDate: Date | string
     endDate: Date | string
     startTime: string
@@ -27649,6 +29483,7 @@ export namespace Prisma {
     score?: number | null
     organizer: OrganizerCreateNestedOneWithoutEventsInput
     event_category?: Event_categoryCreateNestedManyWithoutEventInput
+    organizer_coupon?: OrganizerCouponCreateNestedOneWithoutEventInput
     event_location: Event_LocationCreateNestedOneWithoutEventInput
     ticket_types?: Ticket_typesCreateNestedManyWithoutEventInput
     customer?: UserCreateNestedManyWithoutEventInput
@@ -27661,7 +29496,7 @@ export namespace Prisma {
     title: string
     description: string
     imgEvent: string
-    coupon_id: number
+    organizer_coupon_id?: number | null
     event_location_id: number
     startDate: Date | string
     endDate: Date | string
@@ -27708,6 +29543,7 @@ export namespace Prisma {
     payment_method: $Enums.PaymentMethod
     createdAt?: Date | string
     isPaid: boolean
+    payment_proof?: string | null
     user: UserCreateNestedOneWithoutTransactionInput
   }
 
@@ -27719,6 +29555,7 @@ export namespace Prisma {
     payment_method: $Enums.PaymentMethod
     createdAt?: Date | string
     isPaid: boolean
+    payment_proof?: string | null
   }
 
   export type TransactionCreateOrConnectWithoutTransaction_detailsInput = {
@@ -27793,7 +29630,6 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     imgEvent?: StringFieldUpdateOperationsInput | string
-    coupon_id?: IntFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: StringFieldUpdateOperationsInput | string
@@ -27804,6 +29640,7 @@ export namespace Prisma {
     score?: NullableIntFieldUpdateOperationsInput | number | null
     organizer?: OrganizerUpdateOneRequiredWithoutEventsNestedInput
     event_category?: Event_categoryUpdateManyWithoutEventNestedInput
+    organizer_coupon?: OrganizerCouponUpdateOneWithoutEventNestedInput
     event_location?: Event_LocationUpdateOneRequiredWithoutEventNestedInput
     ticket_types?: Ticket_typesUpdateManyWithoutEventNestedInput
     customer?: UserUpdateManyWithoutEventNestedInput
@@ -27816,7 +29653,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     imgEvent?: StringFieldUpdateOperationsInput | string
-    coupon_id?: IntFieldUpdateOperationsInput | number
+    organizer_coupon_id?: NullableIntFieldUpdateOperationsInput | number | null
     event_location_id?: IntFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -27875,6 +29712,7 @@ export namespace Prisma {
     payment_method?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     isPaid?: BoolFieldUpdateOperationsInput | boolean
+    payment_proof?: NullableStringFieldUpdateOperationsInput | string | null
     user?: UserUpdateOneRequiredWithoutTransactionNestedInput
   }
 
@@ -27886,6 +29724,7 @@ export namespace Prisma {
     payment_method?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     isPaid?: BoolFieldUpdateOperationsInput | boolean
+    payment_proof?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type Transaction_DetailCreateWithoutTransactionInput = {
@@ -28033,7 +29872,6 @@ export namespace Prisma {
     title: string
     description: string
     imgEvent: string
-    coupon_id: number
     startDate: Date | string
     endDate: Date | string
     startTime: string
@@ -28044,6 +29882,7 @@ export namespace Prisma {
     score?: number | null
     organizer: OrganizerCreateNestedOneWithoutEventsInput
     event_category?: Event_categoryCreateNestedManyWithoutEventInput
+    organizer_coupon?: OrganizerCouponCreateNestedOneWithoutEventInput
     event_location: Event_LocationCreateNestedOneWithoutEventInput
     ticket_types?: Ticket_typesCreateNestedManyWithoutEventInput
     customer?: UserCreateNestedManyWithoutEventInput
@@ -28056,7 +29895,7 @@ export namespace Prisma {
     title: string
     description: string
     imgEvent: string
-    coupon_id: number
+    organizer_coupon_id?: number | null
     event_location_id: number
     startDate: Date | string
     endDate: Date | string
@@ -28138,7 +29977,6 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     imgEvent?: StringFieldUpdateOperationsInput | string
-    coupon_id?: IntFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: StringFieldUpdateOperationsInput | string
@@ -28149,6 +29987,7 @@ export namespace Prisma {
     score?: NullableIntFieldUpdateOperationsInput | number | null
     organizer?: OrganizerUpdateOneRequiredWithoutEventsNestedInput
     event_category?: Event_categoryUpdateManyWithoutEventNestedInput
+    organizer_coupon?: OrganizerCouponUpdateOneWithoutEventNestedInput
     event_location?: Event_LocationUpdateOneRequiredWithoutEventNestedInput
     ticket_types?: Ticket_typesUpdateManyWithoutEventNestedInput
     customer?: UserUpdateManyWithoutEventNestedInput
@@ -28161,7 +30000,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     imgEvent?: StringFieldUpdateOperationsInput | string
-    coupon_id?: IntFieldUpdateOperationsInput | number
+    organizer_coupon_id?: NullableIntFieldUpdateOperationsInput | number | null
     event_location_id?: IntFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -28270,6 +30109,7 @@ export namespace Prisma {
     payment_method: $Enums.PaymentMethod
     createdAt?: Date | string
     isPaid: boolean
+    payment_proof?: string | null
   }
 
   export type PointUpdateWithoutUserInput = {
@@ -28376,6 +30216,7 @@ export namespace Prisma {
     payment_method?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     isPaid?: BoolFieldUpdateOperationsInput | boolean
+    payment_proof?: NullableStringFieldUpdateOperationsInput | string | null
     transaction_details?: Transaction_DetailUpdateManyWithoutTransactionNestedInput
   }
 
@@ -28386,6 +30227,7 @@ export namespace Prisma {
     payment_method?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     isPaid?: BoolFieldUpdateOperationsInput | boolean
+    payment_proof?: NullableStringFieldUpdateOperationsInput | string | null
     transaction_details?: Transaction_DetailUncheckedUpdateManyWithoutTransactionNestedInput
   }
 
@@ -28396,13 +30238,13 @@ export namespace Prisma {
     payment_method?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     isPaid?: BoolFieldUpdateOperationsInput | boolean
+    payment_proof?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type EventUpdateWithoutCustomerInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     imgEvent?: StringFieldUpdateOperationsInput | string
-    coupon_id?: IntFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: StringFieldUpdateOperationsInput | string
@@ -28413,6 +30255,7 @@ export namespace Prisma {
     score?: NullableIntFieldUpdateOperationsInput | number | null
     organizer?: OrganizerUpdateOneRequiredWithoutEventsNestedInput
     event_category?: Event_categoryUpdateManyWithoutEventNestedInput
+    organizer_coupon?: OrganizerCouponUpdateOneWithoutEventNestedInput
     event_location?: Event_LocationUpdateOneRequiredWithoutEventNestedInput
     ticket_types?: Ticket_typesUpdateManyWithoutEventNestedInput
     transaction?: Transaction_DetailUpdateManyWithoutEventNestedInput
@@ -28425,7 +30268,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     imgEvent?: StringFieldUpdateOperationsInput | string
-    coupon_id?: IntFieldUpdateOperationsInput | number
+    organizer_coupon_id?: NullableIntFieldUpdateOperationsInput | number | null
     event_location_id?: IntFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -28447,7 +30290,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     imgEvent?: StringFieldUpdateOperationsInput | string
-    coupon_id?: IntFieldUpdateOperationsInput | number
+    organizer_coupon_id?: NullableIntFieldUpdateOperationsInput | number | null
     event_location_id?: IntFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -28491,7 +30334,7 @@ export namespace Prisma {
     title: string
     description: string
     imgEvent: string
-    coupon_id: number
+    organizer_coupon_id?: number | null
     event_location_id: number
     startDate: Date | string
     endDate: Date | string
@@ -28503,11 +30346,19 @@ export namespace Prisma {
     score?: number | null
   }
 
+  export type OrganizerCouponCreateManyOrganizerInput = {
+    organizer_coupon_id?: number
+    organizer_coupon_code: string
+    discount: number
+    start_date: Date | string
+    expired_date: Date | string
+    quantity: number
+  }
+
   export type EventUpdateWithoutOrganizerInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     imgEvent?: StringFieldUpdateOperationsInput | string
-    coupon_id?: IntFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: StringFieldUpdateOperationsInput | string
@@ -28517,6 +30368,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     score?: NullableIntFieldUpdateOperationsInput | number | null
     event_category?: Event_categoryUpdateManyWithoutEventNestedInput
+    organizer_coupon?: OrganizerCouponUpdateOneWithoutEventNestedInput
     event_location?: Event_LocationUpdateOneRequiredWithoutEventNestedInput
     ticket_types?: Ticket_typesUpdateManyWithoutEventNestedInput
     customer?: UserUpdateManyWithoutEventNestedInput
@@ -28529,7 +30381,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     imgEvent?: StringFieldUpdateOperationsInput | string
-    coupon_id?: IntFieldUpdateOperationsInput | number
+    organizer_coupon_id?: NullableIntFieldUpdateOperationsInput | number | null
     event_location_id?: IntFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -28551,7 +30403,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     imgEvent?: StringFieldUpdateOperationsInput | string
-    coupon_id?: IntFieldUpdateOperationsInput | number
+    organizer_coupon_id?: NullableIntFieldUpdateOperationsInput | number | null
     event_location_id?: IntFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -28561,6 +30413,34 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     score?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type OrganizerCouponUpdateWithoutOrganizerInput = {
+    organizer_coupon_code?: StringFieldUpdateOperationsInput | string
+    discount?: IntFieldUpdateOperationsInput | number
+    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    Event?: EventUpdateOneWithoutOrganizer_couponNestedInput
+  }
+
+  export type OrganizerCouponUncheckedUpdateWithoutOrganizerInput = {
+    organizer_coupon_id?: IntFieldUpdateOperationsInput | number
+    organizer_coupon_code?: StringFieldUpdateOperationsInput | string
+    discount?: IntFieldUpdateOperationsInput | number
+    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    Event?: EventUncheckedUpdateOneWithoutOrganizer_couponNestedInput
+  }
+
+  export type OrganizerCouponUncheckedUpdateManyWithoutOrganizerInput = {
+    organizer_coupon_id?: IntFieldUpdateOperationsInput | number
+    organizer_coupon_code?: StringFieldUpdateOperationsInput | string
+    discount?: IntFieldUpdateOperationsInput | number
+    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    quantity?: IntFieldUpdateOperationsInput | number
   }
 
   export type UserCreateManyReferredInput = {
@@ -28795,7 +30675,6 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     imgEvent?: StringFieldUpdateOperationsInput | string
-    coupon_id?: IntFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     startTime?: StringFieldUpdateOperationsInput | string
@@ -28805,6 +30684,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     score?: NullableIntFieldUpdateOperationsInput | number | null
     organizer?: OrganizerUpdateOneRequiredWithoutEventsNestedInput
+    organizer_coupon?: OrganizerCouponUpdateOneWithoutEventNestedInput
     event_location?: Event_LocationUpdateOneRequiredWithoutEventNestedInput
     ticket_types?: Ticket_typesUpdateManyWithoutEventNestedInput
     customer?: UserUpdateManyWithoutEventNestedInput
@@ -28818,7 +30698,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     imgEvent?: StringFieldUpdateOperationsInput | string
-    coupon_id?: IntFieldUpdateOperationsInput | number
+    organizer_coupon_id?: NullableIntFieldUpdateOperationsInput | number | null
     event_location_id?: IntFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -28840,7 +30720,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     imgEvent?: StringFieldUpdateOperationsInput | string
-    coupon_id?: IntFieldUpdateOperationsInput | number
+    organizer_coupon_id?: NullableIntFieldUpdateOperationsInput | number | null
     event_location_id?: IntFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string

@@ -21,7 +21,7 @@ model User {
   user_id    Int      @id @default(autoincrement())
   name       String
   email      String   @unique
-  phone         String?
+  phone      String?
   password   String
   pfp_url    String?
   created_at DateTime @default(now())
@@ -74,8 +74,9 @@ model Organizer {
   user_id Int  @unique
   user    User @relation(fields: [user_id], references: [user_id])
 
-  bank_account Bank_account?
-  events       Event[]
+  bank_account    Bank_account?
+  events          Event[]
+  OrganizerCoupon OrganizerCoupon[]
 
   @@map("organizer")
 }
@@ -133,34 +134,48 @@ model Coupon {
   max_amount   Int?
   start_date   DateTime @default(now())
   expired_date DateTime
+  isActive     Boolean @default(true)
 
   @@map("coupons")
 }
 
+model OrganizerCoupon {
+  organizer_coupon_id   Int        @id @default(autoincrement())
+  organizer_coupon_code String     @unique
+  discount              Int
+  start_date            DateTime
+  expired_date          DateTime
+  quantity              Int
+  organizer_id          Int?
+  organizer             Organizer? @relation(fields: [organizer_id], references: [organizer_id])
+  Event                 Event?
+}
+
 //Event
 model Event {
-  event_id          Int                  @id @default(autoincrement())
-  organizer_id      Int
-  organizer         Organizer            @relation(fields: [organizer_id], references: [organizer_id])
-  event_category    Event_category[]     @relation("Event_categories") //Expected to hold multiple categories per event
-  title             String               @unique
-  description       String
-  imgEvent          String
-  coupon_id         Int //Decide the schema of coupon in relation to event! ***
-  event_location_id Int                  @unique
-  event_location    Event_Location       @relation(fields: [event_location_id], references: [event_location_id])
-  ticket_types      Ticket_types[]
-  startDate         DateTime
-  endDate           DateTime
-  startTime         String
-  endTime           String
-  timezone          String
-  createdAt         DateTime             @default(now())
-  updatedAt         DateTime
-  score             Int?
-  customer          User[]               @relation("Customer_event")
-  transaction       Transaction_Detail[]
-  review            Review[]
+  event_id            Int                  @id @default(autoincrement())
+  organizer_id        Int
+  organizer           Organizer            @relation(fields: [organizer_id], references: [organizer_id])
+  event_category      Event_category[]     @relation("Event_categories") //Expected to hold multiple categories per event
+  title               String               @unique
+  description         String
+  imgEvent            String
+  organizer_coupon_id Int?                 @unique //Decide the schema of coupon in relation to event! ***
+  organizer_coupon    OrganizerCoupon?     @relation(fields: [organizer_coupon_id], references: [organizer_coupon_id])
+  event_location_id   Int                  @unique
+  event_location      Event_Location       @relation(fields: [event_location_id], references: [event_location_id])
+  ticket_types        Ticket_types[]
+  startDate           DateTime
+  endDate             DateTime
+  startTime           String
+  endTime             String
+  timezone            String
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime
+  score               Int?
+  customer            User[]               @relation("Customer_event")
+  transaction         Transaction_Detail[]
+  review              Review[]
 
   @@map("event")
 }
@@ -243,6 +258,7 @@ model Transaction {
   payment_method      PaymentMethod //Explore more about Midtrans API! ***
   createdAt           DateTime             @default(now())
   isPaid              Boolean
+  payment_proof       String?
 
   @@map("transaction")
 }

@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { prisma } from "../config/prisma";
 import ResponseHandler from "../utils/responseHandler";
+import { cloudinaryUpload } from "../config/cloudinary";
 import { connect } from "http2";
 
 export class TransactionController {
@@ -274,17 +275,18 @@ export class TransactionController {
   async paidTransaction(req: Request, res: Response): Promise<any> {
     try {
       const transactionId = req.params.id;
-      const { eventId } = req.body;
+      const { eventId, organizerCouponId } = req.body;
       const userId = res.locals.dcrypt.user_id;
 
-      console.log("Ini req.body");
+      console.log("Ini update transaction:", organizerCouponId);
       const ticket = req.body.session.ticket.data;
 
       const updateTransaction = await prisma.$transaction(async (tx) => {
-        const response = await prisma.transaction.update({
+        const response = await tx.transaction.update({
           where: { transaction_id: parseInt(transactionId) },
           data: { isPaid: true },
         });
+
         //adding user to event-user relation. Will allow user to review after the date of event has passed
         const updatingUser = await tx.event.update({
           where: { event_id: parseInt(eventId) },
@@ -326,10 +328,24 @@ export class TransactionController {
                 ticket_types_id: value.ticketTypesId,
               },
             });
+            if (organizerCouponId && organizerCouponId > 0) {
+              const updateOrganizerCoupon = await tx.organizerCoupon.update({
+                where: {
+                  organizer_coupon_id: organizerCouponId,
+                },
+                data: {
+                  quantity: {
+                    decrement: 1,
+                  },
+                },
+              });
+              console.log("Ini voucher quantity left:", updateOrganizerCoupon);
+            }
+
             return updateQuantity;
           });
         });
-
+        console.log("ini response: ", response);
         return response;
       });
       console.log("ini response dari paid: ", updateTransaction);
@@ -370,6 +386,36 @@ export class TransactionController {
         500,
         error
       );
+    }
+  }
+
+  async generateProofPayment(req: Request, res: Response): Promise<any> {
+    try {
+      const userId = res.locals.dcrypt.user_id;
+      const { transactionId } = req.body;
+      if (!req.file) {
+        throw new Error("No file uploaded");
+      }
+      console.log("Ini transactionId:", transactionId);
+      console.log("Ini req.file", req.file);
+      const { secure_url } = await cloudinaryUpload(req.file, "proofOfPayment");
+      const updateProofOfPayment = await prisma.transaction.update({
+        where: {
+          transaction_id: transactionId,
+        },
+        data: {
+          payment_proof: secure_url,
+        },
+      });
+      return ResponseHandler.success(
+        res,
+        "Upload Success",
+        200,
+        updateProofOfPayment
+      );
+    } catch (error) {
+      console.log(error);
+      return ResponseHandler.error(res, "Upload failed", 500);
     }
   }
 
