@@ -126,7 +126,7 @@ export class EventController {
             createdAt: new Date(),
             updatedAt: new Date(),
             timezone: eventTimeDate.timezone,
-            score: score,
+            score: 0,
             event_location_id: eventLoc.event_location_id,
           },
         });
@@ -508,9 +508,30 @@ export class EventController {
         take: 8,
       });
 
+      const categoriesTwo = await prisma.event.findMany({
+        where: {
+          event_category: {
+            some: {
+              category_name: "International",
+            },
+          },
+        },
+
+        include: {
+          event_category: true,
+          ticket_types: true,
+          organizer: true,
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+        take: 8,
+      });
+
       const response = {
         topEvents,
         categories,
+        categoriesTwo,
         location,
         organizer,
       };
