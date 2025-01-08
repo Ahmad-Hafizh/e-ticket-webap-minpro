@@ -22330,6 +22330,76 @@ export namespace Prisma {
     organizer_id?: IntNullableWithAggregatesFilter<"OrganizerCoupon"> | number | null
   }
 
+  export type OrganizerCouponWhereInput = {
+    AND?: OrganizerCouponWhereInput | OrganizerCouponWhereInput[]
+    OR?: OrganizerCouponWhereInput[]
+    NOT?: OrganizerCouponWhereInput | OrganizerCouponWhereInput[]
+    organizer_coupon_id?: IntFilter<"OrganizerCoupon"> | number
+    organizer_coupon_code?: StringFilter<"OrganizerCoupon"> | string
+    discount?: IntFilter<"OrganizerCoupon"> | number
+    start_date?: DateTimeFilter<"OrganizerCoupon"> | Date | string
+    expired_date?: DateTimeFilter<"OrganizerCoupon"> | Date | string
+    quantity?: IntFilter<"OrganizerCoupon"> | number
+    organizer_id?: IntNullableFilter<"OrganizerCoupon"> | number | null
+    organizer?: XOR<OrganizerNullableScalarRelationFilter, OrganizerWhereInput> | null
+    Event?: XOR<EventNullableScalarRelationFilter, EventWhereInput> | null
+  }
+
+  export type OrganizerCouponOrderByWithRelationInput = {
+    organizer_coupon_id?: SortOrder
+    organizer_coupon_code?: SortOrder
+    discount?: SortOrder
+    start_date?: SortOrder
+    expired_date?: SortOrder
+    quantity?: SortOrder
+    organizer_id?: SortOrderInput | SortOrder
+    organizer?: OrganizerOrderByWithRelationInput
+    Event?: EventOrderByWithRelationInput
+  }
+
+  export type OrganizerCouponWhereUniqueInput = Prisma.AtLeast<{
+    organizer_coupon_id?: number
+    organizer_coupon_code?: string
+    AND?: OrganizerCouponWhereInput | OrganizerCouponWhereInput[]
+    OR?: OrganizerCouponWhereInput[]
+    NOT?: OrganizerCouponWhereInput | OrganizerCouponWhereInput[]
+    discount?: IntFilter<"OrganizerCoupon"> | number
+    start_date?: DateTimeFilter<"OrganizerCoupon"> | Date | string
+    expired_date?: DateTimeFilter<"OrganizerCoupon"> | Date | string
+    quantity?: IntFilter<"OrganizerCoupon"> | number
+    organizer_id?: IntNullableFilter<"OrganizerCoupon"> | number | null
+    organizer?: XOR<OrganizerNullableScalarRelationFilter, OrganizerWhereInput> | null
+    Event?: XOR<EventNullableScalarRelationFilter, EventWhereInput> | null
+  }, "organizer_coupon_id" | "organizer_coupon_code">
+
+  export type OrganizerCouponOrderByWithAggregationInput = {
+    organizer_coupon_id?: SortOrder
+    organizer_coupon_code?: SortOrder
+    discount?: SortOrder
+    start_date?: SortOrder
+    expired_date?: SortOrder
+    quantity?: SortOrder
+    organizer_id?: SortOrderInput | SortOrder
+    _count?: OrganizerCouponCountOrderByAggregateInput
+    _avg?: OrganizerCouponAvgOrderByAggregateInput
+    _max?: OrganizerCouponMaxOrderByAggregateInput
+    _min?: OrganizerCouponMinOrderByAggregateInput
+    _sum?: OrganizerCouponSumOrderByAggregateInput
+  }
+
+  export type OrganizerCouponScalarWhereWithAggregatesInput = {
+    AND?: OrganizerCouponScalarWhereWithAggregatesInput | OrganizerCouponScalarWhereWithAggregatesInput[]
+    OR?: OrganizerCouponScalarWhereWithAggregatesInput[]
+    NOT?: OrganizerCouponScalarWhereWithAggregatesInput | OrganizerCouponScalarWhereWithAggregatesInput[]
+    organizer_coupon_id?: IntWithAggregatesFilter<"OrganizerCoupon"> | number
+    organizer_coupon_code?: StringWithAggregatesFilter<"OrganizerCoupon"> | string
+    discount?: IntWithAggregatesFilter<"OrganizerCoupon"> | number
+    start_date?: DateTimeWithAggregatesFilter<"OrganizerCoupon"> | Date | string
+    expired_date?: DateTimeWithAggregatesFilter<"OrganizerCoupon"> | Date | string
+    quantity?: IntWithAggregatesFilter<"OrganizerCoupon"> | number
+    organizer_id?: IntNullableWithAggregatesFilter<"OrganizerCoupon"> | number | null
+  }
+
   export type EventWhereInput = {
     AND?: EventWhereInput | EventWhereInput[]
     OR?: EventWhereInput[]
@@ -23496,6 +23566,76 @@ export namespace Prisma {
     start_date?: DateTimeFieldUpdateOperationsInput | Date | string
     expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type OrganizerCouponCreateInput = {
+    organizer_coupon_code: string
+    discount: number
+    start_date: Date | string
+    expired_date: Date | string
+    quantity: number
+    organizer?: OrganizerCreateNestedOneWithoutOrganizerCouponInput
+    Event?: EventCreateNestedOneWithoutOrganizer_couponInput
+  }
+
+  export type OrganizerCouponUncheckedCreateInput = {
+    organizer_coupon_id?: number
+    organizer_coupon_code: string
+    discount: number
+    start_date: Date | string
+    expired_date: Date | string
+    quantity: number
+    organizer_id?: number | null
+    Event?: EventUncheckedCreateNestedOneWithoutOrganizer_couponInput
+  }
+
+  export type OrganizerCouponUpdateInput = {
+    organizer_coupon_code?: StringFieldUpdateOperationsInput | string
+    discount?: IntFieldUpdateOperationsInput | number
+    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    organizer?: OrganizerUpdateOneWithoutOrganizerCouponNestedInput
+    Event?: EventUpdateOneWithoutOrganizer_couponNestedInput
+  }
+
+  export type OrganizerCouponUncheckedUpdateInput = {
+    organizer_coupon_id?: IntFieldUpdateOperationsInput | number
+    organizer_coupon_code?: StringFieldUpdateOperationsInput | string
+    discount?: IntFieldUpdateOperationsInput | number
+    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    organizer_id?: NullableIntFieldUpdateOperationsInput | number | null
+    Event?: EventUncheckedUpdateOneWithoutOrganizer_couponNestedInput
+  }
+
+  export type OrganizerCouponCreateManyInput = {
+    organizer_coupon_id?: number
+    organizer_coupon_code: string
+    discount: number
+    start_date: Date | string
+    expired_date: Date | string
+    quantity: number
+    organizer_id?: number | null
+  }
+
+  export type OrganizerCouponUpdateManyMutationInput = {
+    organizer_coupon_code?: StringFieldUpdateOperationsInput | string
+    discount?: IntFieldUpdateOperationsInput | number
+    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    quantity?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type OrganizerCouponUncheckedUpdateManyInput = {
+    organizer_coupon_id?: IntFieldUpdateOperationsInput | number
+    organizer_coupon_code?: StringFieldUpdateOperationsInput | string
+    discount?: IntFieldUpdateOperationsInput | number
+    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    organizer_id?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type OrganizerCouponCreateInput = {

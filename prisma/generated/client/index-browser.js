@@ -205,6 +205,16 @@ exports.Prisma.OrganizerCouponScalarFieldEnum = {
   organizer_id: 'organizer_id'
 };
 
+exports.Prisma.OrganizerCouponScalarFieldEnum = {
+  organizer_coupon_id: 'organizer_coupon_id',
+  organizer_coupon_code: 'organizer_coupon_code',
+  discount: 'discount',
+  start_date: 'start_date',
+  expired_date: 'expired_date',
+  quantity: 'quantity',
+  organizer_id: 'organizer_id'
+};
+
 exports.Prisma.EventScalarFieldEnum = {
   event_id: 'event_id',
   organizer_id: 'organizer_id',

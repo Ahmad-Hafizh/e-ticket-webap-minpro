@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.EventController = void 0;
 const prisma_1 = require("../config/prisma");
 const responseHandler_1 = __importDefault(require("../utils/responseHandler"));
+const cloudinary_1 = require("../config/cloudinary");
 //
 class EventController {
     getAllEvent(req, res, next) {
@@ -44,22 +45,23 @@ class EventController {
     createEvent(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const userId = 17;
                 const organizer = yield prisma_1.prisma.organizer.findUnique({
-                    where: { user_id: userId },
+                    where: { user_id: res.locals.dcrypt.user_id },
                 });
-                // const organizer = await prisma.organizer.findUnique({
-                //   where: { user_id: res.locals.dcrypt.user_id },
-                // });
                 if (!organizer) {
                     throw new Error("User unauthorized");
                 }
-                const { eventTitle, eventDescription, eventTimeDate, eventCategory, eventLocation, ticketTypes, eventImg, organizerCouponInput, score, } = req.body;
-                // if (!req.file) {
-                //   throw new Error("No file uploaded");
-                // }
-                // console.log("Ini req.file:", req.file);
-                // const { secure_url } = await cloudinaryUpload(req.file, "eventBanner");
+                const { eventTitle, eventDescription, score } = req.body;
+                if (!req.file) {
+                    throw new Error("No file uploaded");
+                }
+                //JSON PARSING FIRST
+                const eventLocation = JSON.parse(req.body.eventLocation);
+                const eventTimeDate = JSON.parse(req.body.eventTimeDate);
+                const organizerCouponInput = JSON.parse(req.body.organizerCouponInput);
+                const ticketTypes = JSON.parse(req.body.ticketTypes);
+                const eventCategoryInput = JSON.parse(req.body.eventCategory);
+                const { secure_url } = yield (0, cloudinary_1.cloudinaryUpload)(req.file, "eventBanner");
                 const response = yield prisma_1.prisma.$transaction((tx) => __awaiter(this, void 0, void 0, function* () {
                     //Create and/or update city
                     const city = yield tx.location_city.upsert({
@@ -89,8 +91,8 @@ class EventController {
                             organizer_id: organizer === null || organizer === void 0 ? void 0 : organizer.organizer_id,
                             start_date: new Date(organizerCouponInput.startDate),
                             expired_date: new Date(organizerCouponInput.endDate),
-                            discount: organizerCouponInput.discount,
-                            quantity: organizerCouponInput.quantity,
+                            discount: parseInt(organizerCouponInput.discount),
+                            quantity: parseInt(organizerCouponInput.quantity),
                         },
                     });
                     //Created Event
@@ -98,14 +100,14 @@ class EventController {
                         data: {
                             organizer_id: organizer === null || organizer === void 0 ? void 0 : organizer.organizer_id,
                             event_category: {
-                                connect: eventCategory.map((value) => ({
+                                connect: eventCategoryInput.map((value) => ({
                                     category_name: value,
                                 })),
                             },
                             title: eventTitle,
                             description: eventDescription,
                             organizer_coupon_id: organizerCoupon.organizer_coupon_id,
-                            imgEvent: eventImg,
+                            imgEvent: secure_url,
                             startDate: new Date(eventTimeDate.startDate),
                             endDate: new Date(eventTimeDate.endDate),
                             startTime: eventTimeDate.startTime,
@@ -121,8 +123,8 @@ class EventController {
                     const ticket = ticketTypes.map((value) => ({
                         event_id: event.event_id,
                         types: value.types,
-                        price: value.price,
-                        quantity_available: value.quantityAvailable,
+                        price: parseInt(value.price),
+                        quantity_available: parseInt(value.quantityAvailable),
                     }));
                     //Input ticket array to prisma
                     yield tx.ticket_types.createMany({
@@ -131,15 +133,6 @@ class EventController {
                     });
                     return event;
                 }));
-                // await transporter.sendMail({
-                //   from: "e-ticket",
-                //   to: user.email,
-                //   subject: "Your event is ready to rock",
-                //   html: `<div>
-                //      <h1>Thank you ${user.name}, your event is ready to rock.</h1>
-                //      <p>Invite people to attract more audience</p>
-                //      </div>`,
-                // });
                 return responseHandler_1.default.success(res, "Event created successfully!", 201, response);
             }
             catch (error) {
@@ -364,14 +357,6 @@ class EventController {
     //pricemax = maximum price
     //sortby = sorting by
     //orderby = order by
-    //getEventByMostPurchased (HOT EVENT) => REDIS
-    hotEvent(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-            }
-            catch (error) { }
-        });
-    }
     getEventLocation(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -397,6 +382,9 @@ class EventController {
                         ticket_types: true,
                         organizer: true,
                     },
+                    orderBy: {
+                        createdAt: "desc",
+                    },
                     take: 3,
                 });
                 const categories = yield prisma_1.prisma.event.findMany({
@@ -411,6 +399,9 @@ class EventController {
                         event_category: true,
                         ticket_types: true,
                         organizer: true,
+                    },
+                    orderBy: {
+                        createdAt: "desc",
                     },
                     take: 8,
                 });

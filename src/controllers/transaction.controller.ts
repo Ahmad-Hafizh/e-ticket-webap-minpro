@@ -279,6 +279,7 @@ export class TransactionController {
       const userId = res.locals.dcrypt.user_id;
 
       console.log("Ini update transaction:", organizerCouponId);
+      console.log("Ini update transaction:", organizerCouponId);
       const ticket = req.body.session.ticket.data;
 
       const updateTransaction = await prisma.$transaction(async (tx) => {
@@ -342,9 +343,24 @@ export class TransactionController {
               console.log("Ini voucher quantity left:", updateOrganizerCoupon);
             }
 
+            if (organizerCouponId && organizerCouponId > 0) {
+              const updateOrganizerCoupon = await tx.organizerCoupon.update({
+                where: {
+                  organizer_coupon_id: organizerCouponId,
+                },
+                data: {
+                  quantity: {
+                    decrement: 1,
+                  },
+                },
+              });
+              console.log("Ini voucher quantity left:", updateOrganizerCoupon);
+            }
+
             return updateQuantity;
           });
         });
+        console.log("ini response: ", response);
         console.log("ini response: ", response);
         return response;
       });
@@ -367,8 +383,7 @@ export class TransactionController {
 
   async getTransactionbyUser(req: Request, res: Response): Promise<any> {
     try {
-      //   const userId = res.locals.dcrypt.user_id;
-      const userId = parseInt(req.params.id);
+      const userId = res.locals.dcrypt.user_id;
       const transaction = await prisma.transaction.findMany({
         where: { user_id: userId },
       });
@@ -401,7 +416,7 @@ export class TransactionController {
       const { secure_url } = await cloudinaryUpload(req.file, "proofOfPayment");
       const updateProofOfPayment = await prisma.transaction.update({
         where: {
-          transaction_id: transactionId,
+          transaction_id: parseInt(transactionId),
         },
         data: {
           payment_proof: secure_url,
@@ -419,55 +434,55 @@ export class TransactionController {
     }
   }
 
-  // async getTransactionbyOrganizer(req: Request, res: Response): Promise<any> {
-  //   try {
-  //     // const organizerId = res.locals.dcrypt.user_id;
-  //     const organizerId = parseInt(req.params.id);
-  //     const response = await prisma.$transaction(async (tx) => {
-  //       const organizer = await prisma.organizer.findUnique({
-  //         where: {
-  //           user_id: organizerId,
-  //         },
-  //       });
+  async getTransactionbyOrganizer(req: Request, res: Response): Promise<any> {
+    try {
+      const userId = res.locals.dcrypt.user_id;
+      const response = await prisma.$transaction(async (tx) => {
+        const organizer = await tx.organizer.findUnique({
+          where: {
+            user_id: userId,
+          },
+        });
 
-  //       const transactionsByOrganizer = await prisma.transaction.findMany({
-  //         where: {
-  //           transaction_details: {
-  //             some: {
-  //               event: {
-  //                 organizer: {
-  //                   organizer_id: organizerId,
-  //                 },
-  //               },
-  //             },
-  //           },
-  //         },
-  //         //   include: {
-  //         //     transaction_details: {
-  //         //       include: {
-  //         //         event: true,
-  //         //         user: true,
-  //         //       },
-  //         //     },
-  //         //   },
-  //       });
+        console.log("Ini organizer", organizer);
+        const transactionsByOrganizer = await tx.transaction.findMany({
+          where: {
+            transaction_details: {
+              some: {
+                event: {
+                  organizer: {
+                    organizer_id: organizer?.organizer_id,
+                  },
+                },
+              },
+            },
+          },
+          include: {
+            transaction_details: {
+              include: {
+                event: true,
+              },
+            },
+          },
+        });
 
-  //       return transactionsByOrganizer;
-  //     });
+        return transactionsByOrganizer;
+      });
 
-  //     return ResponseHandler.success(
-  //       res,
-  //       "Get transaction by organizer success!",
-  //       201,
-  //       response
-  //     );
-  //   } catch (error) {
-  //     return ResponseHandler.error(
-  //       res,
-  //       "Get transaction by organizer error!",
-  //       500,
-  //       error
-  //     );
-  //   }
-  // }
+      return ResponseHandler.success(
+        res,
+        "Get transaction by organizer success!",
+        201,
+        response
+      );
+    } catch (error) {
+      console.log("ini eror:", error);
+      return ResponseHandler.error(
+        res,
+        "Get transaction by organizer error!",
+        500,
+        error
+      );
+    }
+  }
 }
