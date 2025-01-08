@@ -45,19 +45,31 @@ class EventController {
     createEvent(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
+                const userId = 18;
                 const organizer = yield prisma_1.prisma.organizer.findUnique({
-                    where: { user_id: res.locals.dcrypt.user_id },
+                    where: { user_id: userId },
                 });
+                // const organizer = await prisma.organizer.findUnique({
+                //   where: { user_id: res.locals.dcrypt.user_id },
+                // });
                 if (!organizer) {
                     throw new Error("User unauthorized");
                 }
-                const { eventTitle, eventDescription, eventTimeDate, eventCategory, eventLocation, ticketTypes, eventImg, score, } = req.body;
+                const { eventTitle, eventDescription, eventCategory, ticketTypes, eventImg, score, } = req.body;
                 if (!req.file) {
                     throw new Error("No file uploaded");
                 }
+                //JSON PARSING FIRST
+                const eventLocation = JSON.parse(req.body.eventLocation);
+                const eventTimeDate = JSON.parse(req.body.eventTimeDate);
+                const organizerCouponInput = JSON.parse(req.body.organizerCouponInput);
+                const eventCategoryInput = eventCategory.split(",");
+                console.log("Ini req.body: ", req.body);
+                console.log("Ini req.file:", req.file);
                 const { secure_url } = yield (0, cloudinary_1.cloudinaryUpload)(req.file, "eventBanner");
                 const response = yield prisma_1.prisma.$transaction((tx) => __awaiter(this, void 0, void 0, function* () {
                     //Create and/or update city
+                    console.log("Ini city: ", eventLocation.city);
                     const city = yield tx.location_city.upsert({
                         where: { city_name: eventLocation.city },
                         update: {},
@@ -79,18 +91,28 @@ class EventController {
                             zipcode: eventLocation.zipcode,
                         },
                     });
+                    const organizerCoupon = yield tx.organizerCoupon.create({
+                        data: {
+                            organizer_coupon_code: organizerCouponInput.organizer_coupon_code,
+                            organizer_id: organizer === null || organizer === void 0 ? void 0 : organizer.organizer_id,
+                            start_date: new Date(organizerCouponInput.startDate),
+                            expired_date: new Date(organizerCouponInput.endDate),
+                            discount: parseInt(organizerCouponInput.discount),
+                            quantity: parseInt(organizerCouponInput.quantity),
+                        },
+                    });
                     //Created Event
                     const event = yield tx.event.create({
                         data: {
                             organizer_id: organizer === null || organizer === void 0 ? void 0 : organizer.organizer_id,
                             event_category: {
-                                connect: eventCategory.map((value) => ({
+                                connect: eventCategoryInput.map((value) => ({
                                     category_name: value,
                                 })),
                             },
                             title: eventTitle,
                             description: eventDescription,
-                            coupon_id: 1,
+                            organizer_coupon_id: organizerCoupon.organizer_coupon_id,
                             imgEvent: secure_url,
                             startDate: new Date(eventTimeDate.startDate),
                             endDate: new Date(eventTimeDate.endDate),
@@ -148,7 +170,7 @@ class EventController {
                 if (!organizer) {
                     throw new Error("User unauthorized");
                 }
-                const { eventTitle, eventDescription, eventTimeDate, eventCategory, eventLocation, ticketTypes, eventImg, } = req.body;
+                const { eventTitle, eventDescription, eventTimeDate, eventCategory, eventLocation, ticketTypes, eventImg, organizerCouponInput, } = req.body;
                 const params = parseInt(req.params.id);
                 const checkEventExist = yield prisma_1.prisma.event.findUnique({
                     where: {
@@ -208,7 +230,7 @@ class EventController {
                             },
                             title: eventTitle || checkEventExist.title,
                             description: eventDescription || checkEventExist.description,
-                            coupon_id: 1,
+                            organizer_coupon_id: 1,
                             imgEvent: eventImg || checkEventExist.imgEvent,
                             startDate: new Date(eventTimeDate.startDate) || checkEventExist.startDate,
                             endDate: new Date(eventTimeDate.endDate) || checkEventExist.endDate,
@@ -323,6 +345,7 @@ class EventController {
                         ticket_types: true,
                         organizer: true,
                         customer: true,
+                        organizer_coupon: true,
                         review: {
                             include: {
                                 user: true,

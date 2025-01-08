@@ -23,6 +23,13 @@ export class TransactionRouter {
     // );
 
     this.route.post(
+      "/proof",
+      uploaderMemory().single("proofOfPayment"),
+      verifyToken,
+      this.transactionController.generateProofPayment
+    );
+
+    this.route.post(
       "/:id",
       verifyToken,
       this.transactionController.generateTransactionAndDetails
@@ -40,25 +47,18 @@ export class TransactionRouter {
     //   this.transactionController.getTransactionDetails
     // );
 
-    this.route.post(
-      "/proof",
-      uploaderMemory().single("proofOfPayment"),
-      // verifyToken,
-      this.transactionController.generateProofPayment
+    this.route.get(
+      "/user",
+      verifyToken,
+      this.transactionController.getTransactionbyUser
     );
 
-    // this.route.get(
-    //   "/:id",
-    //   //   verifyToken,
-    //   this.transactionController.getTransactionbyUser
-    // );
-
-    // this.route.post(
-    //   "/:id",
-    //   //   verifyToken,
-    //   //   organizerAuthorization,
-    //   this.transactionController.getTransactionbyOrganizer
-    // );
+    this.route.get(
+      "/organizer",
+      verifyToken,
+      organizerAuthorization,
+      this.transactionController.getTransactionbyOrganizer
+    );
   }
 
   public getRouter(): Router {

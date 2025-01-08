@@ -235,12 +235,12 @@ class TransactionController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const transactionId = req.params.id;
-                const { eventId } = req.body;
+                const { eventId, organizerCouponId } = req.body;
                 const userId = res.locals.dcrypt.user_id;
-                console.log("Ini req.body");
+                console.log("Ini update transaction:", organizerCouponId);
                 const ticket = req.body.session.ticket.data;
                 const updateTransaction = yield prisma_1.prisma.$transaction((tx) => __awaiter(this, void 0, void 0, function* () {
-                    const response = yield prisma_1.prisma.transaction.update({
+                    const response = yield tx.transaction.update({
                         where: { transaction_id: parseInt(transactionId) },
                         data: { isPaid: true },
                     });
@@ -276,9 +276,23 @@ class TransactionController {
                                     ticket_types_id: value.ticketTypesId,
                                 },
                             });
+                            if (organizerCouponId && organizerCouponId > 0) {
+                                const updateOrganizerCoupon = yield tx.organizerCoupon.update({
+                                    where: {
+                                        organizer_coupon_id: organizerCouponId,
+                                    },
+                                    data: {
+                                        quantity: {
+                                            decrement: 1,
+                                        },
+                                    },
+                                });
+                                console.log("Ini voucher quantity left:", updateOrganizerCoupon);
+                            }
                             return updateQuantity;
                         }));
                     }));
+                    console.log("ini response: ", response);
                     return response;
                 }));
                 console.log("ini response dari paid: ", updateTransaction);
@@ -292,8 +306,7 @@ class TransactionController {
     getTransactionbyUser(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                //   const userId = res.locals.dcrypt.user_id;
-                const userId = parseInt(req.params.id);
+                const userId = res.locals.dcrypt.user_id;
                 const transaction = yield prisma_1.prisma.transaction.findMany({
                     where: { user_id: userId },
                 });
@@ -317,7 +330,7 @@ class TransactionController {
                 const { secure_url } = yield (0, cloudinary_1.cloudinaryUpload)(req.file, "proofOfPayment");
                 const updateProofOfPayment = yield prisma_1.prisma.transaction.update({
                     where: {
-                        transaction_id: transactionId,
+                        transaction_id: parseInt(transactionId),
                     },
                     data: {
                         payment_proof: secure_url,
@@ -328,6 +341,41 @@ class TransactionController {
             catch (error) {
                 console.log(error);
                 return responseHandler_1.default.error(res, "Upload failed", 500);
+            }
+        });
+    }
+    getTransactionbyOrganizer(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const userId = res.locals.dcrypt.user_id;
+                const response = yield prisma_1.prisma.$transaction((tx) => __awaiter(this, void 0, void 0, function* () {
+                    const organizer = yield tx.organizer.findUnique({
+                        where: {
+                            user_id: userId,
+                        },
+                    });
+                    if (!organizer) {
+                        throw new Error("Organizer not found for the given user.");
+                    }
+                    const transactionsByOrganizer = yield tx.transaction.findMany({
+                        where: {
+                            transaction_details: {
+                                some: {
+                                    event: {
+                                        organizer: {
+                                            organizer_id: organizer === null || organizer === void 0 ? void 0 : organizer.organizer_id,
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    });
+                    return transactionsByOrganizer;
+                }));
+                return responseHandler_1.default.success(res, "Get transaction by organizer success!", 201, response);
+            }
+            catch (error) {
+                return responseHandler_1.default.error(res, "Get transaction by organizer error!", 500, error);
             }
         });
     }

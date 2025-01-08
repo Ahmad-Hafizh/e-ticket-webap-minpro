@@ -172,6 +172,7 @@ model Event {
   createdAt           DateTime             @default(now())
   updatedAt           DateTime
   score               Int?
+  status              EventStatus
   customer            User[]               @relation("Customer_event")
   transaction         Transaction_Detail[]
   review              Review[]
@@ -282,6 +283,12 @@ enum PaymentMethod {
 enum Role {
   user
   organizer
+}
+
+enum EventStatus {
+  Draft
+  Active
+  Unactive
 }
 
 enum AddressName {

@@ -47,13 +47,9 @@ export class EventController {
     next: NextFunction
   ): Promise<any> {
     try {
-      const userId = 17;
       const organizer = await prisma.organizer.findUnique({
-        where: { user_id: userId },
+        where: { user_id: res.locals.dcrypt.user_id },
       });
-      // const organizer = await prisma.organizer.findUnique({
-      //   where: { user_id: res.locals.dcrypt.user_id },
-      // });
 
       if (!organizer) {
         throw new Error("User unauthorized");
@@ -62,22 +58,25 @@ export class EventController {
       const {
         eventTitle,
         eventDescription,
-        eventTimeDate,
         eventCategory,
-        eventLocation,
-        ticketTypes,
+
         eventImg,
-        organizerCouponInput,
         score,
       } = req.body;
 
-      // if (!req.file) {
-      //   throw new Error("No file uploaded");
-      // }
+      if (!req.file) {
+        throw new Error("No file uploaded");
+      }
+      //JSON PARSING FIRST
+      const eventLocation = JSON.parse(req.body.eventLocation);
+      const eventTimeDate = JSON.parse(req.body.eventTimeDate);
+      const organizerCouponInput = JSON.parse(req.body.organizerCouponInput);
+      const ticketTypes = JSON.parse(req.body.ticketTypes);
+      const eventCategoryInput = JSON.parse(req.body.eventCategory);
+      console.log("Ini req.body: ", req.body);
+      console.log("Ini req.file:", req.file);
 
-      // console.log("Ini req.file:", req.file);
-
-      // const { secure_url } = await cloudinaryUpload(req.file, "eventBanner");
+      const { secure_url } = await cloudinaryUpload(req.file, "eventBanner");
 
       const response = await prisma.$transaction(async (tx) => {
         //Create and/or update city
@@ -86,6 +85,7 @@ export class EventController {
           update: {},
           create: { city_name: eventLocation.city },
         });
+        console.log("Ini city: ", city);
 
         //Create and/or update country
         const country = await tx.location_country.upsert({
@@ -93,6 +93,7 @@ export class EventController {
           update: {},
           create: { country_name: eventLocation.country },
         });
+        console.log("Ini country: ", country);
 
         //Create Address
         const eventLoc = await tx.event_Location.create({
@@ -104,6 +105,7 @@ export class EventController {
             zipcode: eventLocation.zipcode,
           },
         });
+        console.log("Ini event loc: ", eventLoc);
 
         const organizerCoupon = await tx.organizerCoupon.create({
           data: {
@@ -111,24 +113,25 @@ export class EventController {
             organizer_id: organizer?.organizer_id as number,
             start_date: new Date(organizerCouponInput.startDate),
             expired_date: new Date(organizerCouponInput.endDate),
-            discount: organizerCouponInput.discount,
-            quantity: organizerCouponInput.quantity,
+            discount: parseInt(organizerCouponInput.discount),
+            quantity: parseInt(organizerCouponInput.quantity),
           },
         });
+        console.log("Ini organizer coupon: ", organizerCoupon);
 
         //Created Event
         const event = await tx.event.create({
           data: {
             organizer_id: organizer?.organizer_id as number,
             event_category: {
-              connect: eventCategory.map((value: string) => ({
+              connect: eventCategoryInput.map((value: string) => ({
                 category_name: value,
               })),
             },
             title: eventTitle,
             description: eventDescription,
             organizer_coupon_id: organizerCoupon.organizer_coupon_id,
-            imgEvent: eventImg,
+            imgEvent: secure_url,
             startDate: new Date(eventTimeDate.startDate),
             endDate: new Date(eventTimeDate.endDate),
             startTime: eventTimeDate.startTime,
@@ -145,8 +148,8 @@ export class EventController {
         const ticket = ticketTypes.map((value: any) => ({
           event_id: event.event_id,
           types: value.types,
-          price: value.price,
-          quantity_available: value.quantityAvailable,
+          price: parseInt(value.price),
+          quantity_available: parseInt(value.quantityAvailable),
         }));
 
         //Input ticket array to prisma
