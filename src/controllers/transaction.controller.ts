@@ -279,6 +279,7 @@ export class TransactionController {
       const userId = res.locals.dcrypt.user_id;
 
       console.log("Ini update transaction:", organizerCouponId);
+      console.log("Ini update transaction:", organizerCouponId);
       const ticket = req.body.session.ticket.data;
 
       const updateTransaction = await prisma.$transaction(async (tx) => {
@@ -342,9 +343,24 @@ export class TransactionController {
               console.log("Ini voucher quantity left:", updateOrganizerCoupon);
             }
 
+            if (organizerCouponId && organizerCouponId > 0) {
+              const updateOrganizerCoupon = await tx.organizerCoupon.update({
+                where: {
+                  organizer_coupon_id: organizerCouponId,
+                },
+                data: {
+                  quantity: {
+                    decrement: 1,
+                  },
+                },
+              });
+              console.log("Ini voucher quantity left:", updateOrganizerCoupon);
+            }
+
             return updateQuantity;
           });
         });
+        console.log("ini response: ", response);
         console.log("ini response: ", response);
         return response;
       });

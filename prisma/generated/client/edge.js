@@ -182,6 +182,7 @@ exports.Prisma.EventScalarFieldEnum = {
   description: 'description',
   imgEvent: 'imgEvent',
   organizer_coupon_id: 'organizer_coupon_id',
+  organizer_coupon_id: 'organizer_coupon_id',
   event_location_id: 'event_location_id',
   startDate: 'startDate',
   endDate: 'endDate',
@@ -242,6 +243,8 @@ exports.Prisma.TransactionScalarFieldEnum = {
   total_amount: 'total_amount',
   payment_method: 'payment_method',
   createdAt: 'createdAt',
+  isPaid: 'isPaid',
+  payment_proof: 'payment_proof'
   isPaid: 'isPaid',
   payment_proof: 'payment_proof'
 };
@@ -309,6 +312,7 @@ exports.Prisma.ModelName = {
   Referral: 'Referral',
   Social_media: 'Social_media',
   Coupon: 'Coupon',
+  OrganizerCoupon: 'OrganizerCoupon',
   OrganizerCoupon: 'OrganizerCoupon',
   Event: 'Event',
   Event_category: 'Event_category',
