@@ -19,7 +19,11 @@ class TransactionRouter {
         // );
         this.route.post("/:id", verifyToken_1.verifyToken, this.transactionController.generateTransactionAndDetails);
         this.route.patch("/:id", verifyToken_1.verifyToken, this.transactionController.paidTransaction);
-        this.route.get("/details", verifyToken_1.verifyToken, this.transactionController.getTransactionDetails);
+        // this.route.get(
+        //   "/details",
+        //   verifyToken,
+        //   this.transactionController.getTransactionDetails
+        // );
         this.route.post("/proof", (0, uploader_1.uploaderMemory)().single("proofOfPayment"), 
         // verifyToken,
         this.transactionController.generateProofPayment);

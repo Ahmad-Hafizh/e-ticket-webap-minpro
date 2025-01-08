@@ -235,12 +235,12 @@ class TransactionController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const transactionId = req.params.id;
-                const { eventId } = req.body;
+                const { eventId, organizerCouponId } = req.body;
                 const userId = res.locals.dcrypt.user_id;
-                console.log("Ini req.body");
+                console.log("Ini update transaction:", organizerCouponId);
                 const ticket = req.body.session.ticket.data;
                 const updateTransaction = yield prisma_1.prisma.$transaction((tx) => __awaiter(this, void 0, void 0, function* () {
-                    const response = yield prisma_1.prisma.transaction.update({
+                    const response = yield tx.transaction.update({
                         where: { transaction_id: parseInt(transactionId) },
                         data: { isPaid: true },
                     });
@@ -276,9 +276,23 @@ class TransactionController {
                                     ticket_types_id: value.ticketTypesId,
                                 },
                             });
+                            if (organizerCouponId && organizerCouponId > 0) {
+                                const updateOrganizerCoupon = yield tx.organizerCoupon.update({
+                                    where: {
+                                        organizer_coupon_id: organizerCouponId,
+                                    },
+                                    data: {
+                                        quantity: {
+                                            decrement: 1,
+                                        },
+                                    },
+                                });
+                                console.log("Ini voucher quantity left:", updateOrganizerCoupon);
+                            }
                             return updateQuantity;
                         }));
                     }));
+                    console.log("ini response: ", response);
                     return response;
                 }));
                 console.log("ini response dari paid: ", updateTransaction);

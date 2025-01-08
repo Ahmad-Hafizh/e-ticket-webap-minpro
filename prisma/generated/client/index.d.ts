@@ -10083,6 +10083,7 @@ export namespace Prisma {
     max_amount: number | null
     start_date: Date | null
     expired_date: Date | null
+    isActive: boolean | null
   }
 
   export type CouponMaxAggregateOutputType = {
@@ -10094,6 +10095,7 @@ export namespace Prisma {
     max_amount: number | null
     start_date: Date | null
     expired_date: Date | null
+    isActive: boolean | null
   }
 
   export type CouponCountAggregateOutputType = {
@@ -10105,6 +10107,7 @@ export namespace Prisma {
     max_amount: number
     start_date: number
     expired_date: number
+    isActive: number
     _all: number
   }
 
@@ -10132,6 +10135,7 @@ export namespace Prisma {
     max_amount?: true
     start_date?: true
     expired_date?: true
+    isActive?: true
   }
 
   export type CouponMaxAggregateInputType = {
@@ -10143,6 +10147,7 @@ export namespace Prisma {
     max_amount?: true
     start_date?: true
     expired_date?: true
+    isActive?: true
   }
 
   export type CouponCountAggregateInputType = {
@@ -10154,6 +10159,7 @@ export namespace Prisma {
     max_amount?: true
     start_date?: true
     expired_date?: true
+    isActive?: true
     _all?: true
   }
 
@@ -10252,6 +10258,7 @@ export namespace Prisma {
     max_amount: number | null
     start_date: Date
     expired_date: Date
+    isActive: boolean
     _count: CouponCountAggregateOutputType | null
     _avg: CouponAvgAggregateOutputType | null
     _sum: CouponSumAggregateOutputType | null
@@ -10282,6 +10289,7 @@ export namespace Prisma {
     max_amount?: boolean
     start_date?: boolean
     expired_date?: boolean
+    isActive?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["coupon"]>
 
@@ -10294,6 +10302,7 @@ export namespace Prisma {
     max_amount?: boolean
     start_date?: boolean
     expired_date?: boolean
+    isActive?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["coupon"]>
 
@@ -10306,6 +10315,7 @@ export namespace Prisma {
     max_amount?: boolean
     start_date?: boolean
     expired_date?: boolean
+    isActive?: boolean
   }
 
   export type CouponInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -10329,6 +10339,7 @@ export namespace Prisma {
       max_amount: number | null
       start_date: Date
       expired_date: Date
+      isActive: boolean
     }, ExtArgs["result"]["coupon"]>
     composites: {}
   }
@@ -10731,6 +10742,7 @@ export namespace Prisma {
     readonly max_amount: FieldRef<"Coupon", 'Int'>
     readonly start_date: FieldRef<"Coupon", 'DateTime'>
     readonly expired_date: FieldRef<"Coupon", 'DateTime'>
+    readonly isActive: FieldRef<"Coupon", 'Boolean'>
   }
     
 
@@ -21402,7 +21414,8 @@ export namespace Prisma {
     discount: 'discount',
     max_amount: 'max_amount',
     start_date: 'start_date',
-    expired_date: 'expired_date'
+    expired_date: 'expired_date',
+    isActive: 'isActive'
   };
 
   export type CouponScalarFieldEnum = (typeof CouponScalarFieldEnum)[keyof typeof CouponScalarFieldEnum]
@@ -22182,6 +22195,7 @@ export namespace Prisma {
     max_amount?: IntNullableFilter<"Coupon"> | number | null
     start_date?: DateTimeFilter<"Coupon"> | Date | string
     expired_date?: DateTimeFilter<"Coupon"> | Date | string
+    isActive?: BoolFilter<"Coupon"> | boolean
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
@@ -22194,6 +22208,7 @@ export namespace Prisma {
     max_amount?: SortOrderInput | SortOrder
     start_date?: SortOrder
     expired_date?: SortOrder
+    isActive?: SortOrder
     user?: UserOrderByWithRelationInput
   }
 
@@ -22209,6 +22224,7 @@ export namespace Prisma {
     max_amount?: IntNullableFilter<"Coupon"> | number | null
     start_date?: DateTimeFilter<"Coupon"> | Date | string
     expired_date?: DateTimeFilter<"Coupon"> | Date | string
+    isActive?: BoolFilter<"Coupon"> | boolean
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "coupon_id">
 
@@ -22221,6 +22237,7 @@ export namespace Prisma {
     max_amount?: SortOrderInput | SortOrder
     start_date?: SortOrder
     expired_date?: SortOrder
+    isActive?: SortOrder
     _count?: CouponCountOrderByAggregateInput
     _avg?: CouponAvgOrderByAggregateInput
     _max?: CouponMaxOrderByAggregateInput
@@ -22240,6 +22257,7 @@ export namespace Prisma {
     max_amount?: IntNullableWithAggregatesFilter<"Coupon"> | number | null
     start_date?: DateTimeWithAggregatesFilter<"Coupon"> | Date | string
     expired_date?: DateTimeWithAggregatesFilter<"Coupon"> | Date | string
+    isActive?: BoolWithAggregatesFilter<"Coupon"> | boolean
   }
 
   export type OrganizerCouponWhereInput = {
@@ -23407,6 +23425,7 @@ export namespace Prisma {
     max_amount?: number | null
     start_date?: Date | string
     expired_date: Date | string
+    isActive?: boolean
     user: UserCreateNestedOneWithoutCouponsInput
   }
 
@@ -23419,6 +23438,7 @@ export namespace Prisma {
     max_amount?: number | null
     start_date?: Date | string
     expired_date: Date | string
+    isActive?: boolean
   }
 
   export type CouponUpdateInput = {
@@ -23428,6 +23448,7 @@ export namespace Prisma {
     max_amount?: NullableIntFieldUpdateOperationsInput | number | null
     start_date?: DateTimeFieldUpdateOperationsInput | Date | string
     expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     user?: UserUpdateOneRequiredWithoutCouponsNestedInput
   }
 
@@ -23440,6 +23461,7 @@ export namespace Prisma {
     max_amount?: NullableIntFieldUpdateOperationsInput | number | null
     start_date?: DateTimeFieldUpdateOperationsInput | Date | string
     expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type CouponCreateManyInput = {
@@ -23451,6 +23473,7 @@ export namespace Prisma {
     max_amount?: number | null
     start_date?: Date | string
     expired_date: Date | string
+    isActive?: boolean
   }
 
   export type CouponUpdateManyMutationInput = {
@@ -23460,6 +23483,7 @@ export namespace Prisma {
     max_amount?: NullableIntFieldUpdateOperationsInput | number | null
     start_date?: DateTimeFieldUpdateOperationsInput | Date | string
     expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type CouponUncheckedUpdateManyInput = {
@@ -23471,6 +23495,7 @@ export namespace Prisma {
     max_amount?: NullableIntFieldUpdateOperationsInput | number | null
     start_date?: DateTimeFieldUpdateOperationsInput | Date | string
     expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type OrganizerCouponCreateInput = {
@@ -24725,6 +24750,7 @@ export namespace Prisma {
     max_amount?: SortOrder
     start_date?: SortOrder
     expired_date?: SortOrder
+    isActive?: SortOrder
   }
 
   export type CouponAvgOrderByAggregateInput = {
@@ -24743,6 +24769,7 @@ export namespace Prisma {
     max_amount?: SortOrder
     start_date?: SortOrder
     expired_date?: SortOrder
+    isActive?: SortOrder
   }
 
   export type CouponMinOrderByAggregateInput = {
@@ -24754,6 +24781,7 @@ export namespace Prisma {
     max_amount?: SortOrder
     start_date?: SortOrder
     expired_date?: SortOrder
+    isActive?: SortOrder
   }
 
   export type CouponSumOrderByAggregateInput = {
@@ -26960,6 +26988,7 @@ export namespace Prisma {
     max_amount?: number | null
     start_date?: Date | string
     expired_date: Date | string
+    isActive?: boolean
   }
 
   export type CouponUncheckedCreateWithoutUserInput = {
@@ -26970,6 +26999,7 @@ export namespace Prisma {
     max_amount?: number | null
     start_date?: Date | string
     expired_date: Date | string
+    isActive?: boolean
   }
 
   export type CouponCreateOrConnectWithoutUserInput = {
@@ -27276,6 +27306,7 @@ export namespace Prisma {
     max_amount?: IntNullableFilter<"Coupon"> | number | null
     start_date?: DateTimeFilter<"Coupon"> | Date | string
     expired_date?: DateTimeFilter<"Coupon"> | Date | string
+    isActive?: BoolFilter<"Coupon"> | boolean
   }
 
   export type OrganizerUpsertWithoutUserInput = {
@@ -30079,6 +30110,7 @@ export namespace Prisma {
     max_amount?: number | null
     start_date?: Date | string
     expired_date: Date | string
+    isActive?: boolean
   }
 
   export type ReviewCreateManyUserInput = {
@@ -30135,6 +30167,7 @@ export namespace Prisma {
     max_amount?: NullableIntFieldUpdateOperationsInput | number | null
     start_date?: DateTimeFieldUpdateOperationsInput | Date | string
     expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type CouponUncheckedUpdateWithoutUserInput = {
@@ -30145,6 +30178,7 @@ export namespace Prisma {
     max_amount?: NullableIntFieldUpdateOperationsInput | number | null
     start_date?: DateTimeFieldUpdateOperationsInput | Date | string
     expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type CouponUncheckedUpdateManyWithoutUserInput = {
@@ -30155,6 +30189,7 @@ export namespace Prisma {
     max_amount?: NullableIntFieldUpdateOperationsInput | number | null
     start_date?: DateTimeFieldUpdateOperationsInput | Date | string
     expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type ReviewUpdateWithoutUserInput = {
