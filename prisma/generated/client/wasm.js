@@ -191,7 +191,8 @@ exports.Prisma.CouponScalarFieldEnum = {
   discount: 'discount',
   max_amount: 'max_amount',
   start_date: 'start_date',
-  expired_date: 'expired_date'
+  expired_date: 'expired_date',
+  isActive: 'isActive'
 };
 
 exports.Prisma.OrganizerCouponScalarFieldEnum = {

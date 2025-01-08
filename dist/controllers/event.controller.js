@@ -15,7 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.EventController = void 0;
 const prisma_1 = require("../config/prisma");
 const responseHandler_1 = __importDefault(require("../utils/responseHandler"));
-const cloudinary_1 = require("../config/cloudinary");
 //
 class EventController {
     getAllEvent(req, res, next) {
@@ -45,17 +44,22 @@ class EventController {
     createEvent(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
+                const userId = 17;
                 const organizer = yield prisma_1.prisma.organizer.findUnique({
-                    where: { user_id: res.locals.dcrypt.user_id },
+                    where: { user_id: userId },
                 });
+                // const organizer = await prisma.organizer.findUnique({
+                //   where: { user_id: res.locals.dcrypt.user_id },
+                // });
                 if (!organizer) {
                     throw new Error("User unauthorized");
                 }
-                const { eventTitle, eventDescription, eventTimeDate, eventCategory, eventLocation, ticketTypes, eventImg, score, } = req.body;
-                if (!req.file) {
-                    throw new Error("No file uploaded");
-                }
-                const { secure_url } = yield (0, cloudinary_1.cloudinaryUpload)(req.file, "eventBanner");
+                const { eventTitle, eventDescription, eventTimeDate, eventCategory, eventLocation, ticketTypes, eventImg, organizerCouponInput, score, } = req.body;
+                // if (!req.file) {
+                //   throw new Error("No file uploaded");
+                // }
+                // console.log("Ini req.file:", req.file);
+                // const { secure_url } = await cloudinaryUpload(req.file, "eventBanner");
                 const response = yield prisma_1.prisma.$transaction((tx) => __awaiter(this, void 0, void 0, function* () {
                     //Create and/or update city
                     const city = yield tx.location_city.upsert({
@@ -79,6 +83,16 @@ class EventController {
                             zipcode: eventLocation.zipcode,
                         },
                     });
+                    const organizerCoupon = yield tx.organizerCoupon.create({
+                        data: {
+                            organizer_coupon_code: organizerCouponInput.organizer_coupon_code,
+                            organizer_id: organizer === null || organizer === void 0 ? void 0 : organizer.organizer_id,
+                            start_date: new Date(organizerCouponInput.startDate),
+                            expired_date: new Date(organizerCouponInput.endDate),
+                            discount: organizerCouponInput.discount,
+                            quantity: organizerCouponInput.quantity,
+                        },
+                    });
                     //Created Event
                     const event = yield tx.event.create({
                         data: {
@@ -90,8 +104,8 @@ class EventController {
                             },
                             title: eventTitle,
                             description: eventDescription,
-                            coupon_id: 1,
-                            imgEvent: secure_url,
+                            organizer_coupon_id: organizerCoupon.organizer_coupon_id,
+                            imgEvent: eventImg,
                             startDate: new Date(eventTimeDate.startDate),
                             endDate: new Date(eventTimeDate.endDate),
                             startTime: eventTimeDate.startTime,
@@ -148,7 +162,7 @@ class EventController {
                 if (!organizer) {
                     throw new Error("User unauthorized");
                 }
-                const { eventTitle, eventDescription, eventTimeDate, eventCategory, eventLocation, ticketTypes, eventImg, } = req.body;
+                const { eventTitle, eventDescription, eventTimeDate, eventCategory, eventLocation, ticketTypes, eventImg, organizerCouponInput, } = req.body;
                 const params = parseInt(req.params.id);
                 const checkEventExist = yield prisma_1.prisma.event.findUnique({
                     where: {
@@ -208,7 +222,7 @@ class EventController {
                             },
                             title: eventTitle || checkEventExist.title,
                             description: eventDescription || checkEventExist.description,
-                            coupon_id: 1,
+                            organizer_coupon_id: 1,
                             imgEvent: eventImg || checkEventExist.imgEvent,
                             startDate: new Date(eventTimeDate.startDate) || checkEventExist.startDate,
                             endDate: new Date(eventTimeDate.endDate) || checkEventExist.endDate,
@@ -323,6 +337,7 @@ class EventController {
                         ticket_types: true,
                         organizer: true,
                         customer: true,
+                        organizer_coupon: true,
                         review: {
                             include: {
                                 user: true,
