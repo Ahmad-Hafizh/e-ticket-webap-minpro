@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { prisma } from '../config/prisma';
 import ResponseHandler from '../utils/responseHandler';
 
-class Rewards {
+export class RewardsController {
   async getUserCoupon(req: Request, res: Response, next: NextFunction): Promise<any> {
     try {
       const user = res.locals.user;
@@ -81,7 +81,7 @@ class Rewards {
       return ResponseHandler.error(res, 'restore coupon failed', 500);
     }
   }
-  async usePoint(req: Request, res: Response, next: NextFunction): Promise<any> {
+  async getPointsByPrice(req: Request, res: Response, next: NextFunction): Promise<any> {
     try {
       const user = res.locals.user;
       const today = new Date();
@@ -96,23 +96,23 @@ class Rewards {
       });
       const usePointId: any = [];
       const fixPointAmount = points.reduce((c, e) => {
-        const transactionAmount = parseInt(req.body.transactionAmount);
+        const transactionAmount = parseInt(req.body.transaction_amount);
         if (c + e.amount <= transactionAmount) {
           usePointId.push(e);
         }
         return c + e.amount <= transactionAmount ? c + e.amount : c;
       }, 0);
 
-      usePointId.forEach(async (e: any) => {
-        const usedPoints = await prisma.point.update({
-          where: {
-            point_id: e.point_id,
-          },
-          data: {
-            isActive: false,
-          },
-        });
-      });
+      // usePointId.forEach(async (e: any) => {
+      //   const usedPoints = await prisma.point.update({
+      //     where: {
+      //       point_id: e.point_id,
+      //     },
+      //     data: {
+      //       isActive: false,
+      //     },
+      //   });
+      // });
 
       return ResponseHandler.success(res, 'use point success', 200, { point_pay: fixPointAmount, points_id: usePointId });
     } catch (error) {

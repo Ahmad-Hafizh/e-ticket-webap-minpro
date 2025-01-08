@@ -6,11 +6,13 @@ import { verifyToken } from '../middlewares/verifyToken';
 import { uploaderMemory } from '../middlewares/uploader';
 import { organizerAuthorization } from '../middlewares/orgAuthor';
 import { ProfileController } from '../controllers/profile.controllers';
+import { RewardsController } from '../controllers/reward.controller';
 
 export class UserRouter {
   private route: Router;
   private userController: UserController;
   private profileController: ProfileController;
+  private rewardsController: RewardsController;
 
   constructor() {
     // router config
@@ -20,6 +22,7 @@ export class UserRouter {
     // controllers needs to be created new instances to run
     this.userController = new UserController();
     this.profileController = new ProfileController();
+    this.rewardsController = new RewardsController();
 
     this.initializeRouters();
   }
@@ -43,6 +46,14 @@ export class UserRouter {
     this.route.get('/profile', this.profileController.getUserProfile);
     this.route.patch('/update-pfp', uploaderMemory().single('imgProfile'), this.profileController.updatePfp);
     this.route.patch('/update-profile', this.profileController.updateProfile);
+
+    // reward controller
+    this.route.get('/coupon', this.rewardsController.getUserCoupon);
+    this.route.get('/point', this.rewardsController.getUserPoint);
+    this.route.post('/get-point-by-price', this.rewardsController.getPointsByPrice);
+    this.route.get('/referral', this.rewardsController.getReferred);
+    this.route.patch('/use-coupon', this.rewardsController.useCoupon);
+    this.route.patch('/restore-coupon', this.rewardsController.restoreCoupon);
   }
 
   // returning the routes so it can be use in app by calling it as a method

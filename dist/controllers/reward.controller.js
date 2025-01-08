@@ -12,9 +12,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.RewardsController = void 0;
 const prisma_1 = require("../config/prisma");
 const responseHandler_1 = __importDefault(require("../utils/responseHandler"));
-class Rewards {
+class RewardsController {
     getUserCoupon(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -103,7 +104,7 @@ class Rewards {
             }
         });
     }
-    usePoint(req, res, next) {
+    getPointsByPrice(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const user = res.locals.user;
@@ -119,22 +120,22 @@ class Rewards {
                 });
                 const usePointId = [];
                 const fixPointAmount = points.reduce((c, e) => {
-                    const transactionAmount = parseInt(req.body.transactionAmount);
+                    const transactionAmount = parseInt(req.body.transaction_amount);
                     if (c + e.amount <= transactionAmount) {
                         usePointId.push(e);
                     }
                     return c + e.amount <= transactionAmount ? c + e.amount : c;
                 }, 0);
-                usePointId.forEach((e) => __awaiter(this, void 0, void 0, function* () {
-                    const usedPoints = yield prisma_1.prisma.point.update({
-                        where: {
-                            point_id: e.point_id,
-                        },
-                        data: {
-                            isActive: false,
-                        },
-                    });
-                }));
+                // usePointId.forEach(async (e: any) => {
+                //   const usedPoints = await prisma.point.update({
+                //     where: {
+                //       point_id: e.point_id,
+                //     },
+                //     data: {
+                //       isActive: false,
+                //     },
+                //   });
+                // });
                 return responseHandler_1.default.success(res, 'use point success', 200, { point_pay: fixPointAmount, points_id: usePointId });
             }
             catch (error) {
@@ -189,3 +190,4 @@ class Rewards {
         });
     }
 }
+exports.RewardsController = RewardsController;
