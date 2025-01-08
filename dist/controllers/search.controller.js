@@ -27,9 +27,6 @@ class SearchController {
                 country, //country id
                 pricemin, pricemax, sortby, orderby, keyword, page, } = req.query;
                 const url = req.url;
-                console.log(url);
-                console.log("Ini page", page);
-                console.log("ini organizer id:", eo);
                 //PR CEK QUERY
                 let cityIds;
                 if (city) {
@@ -46,7 +43,6 @@ class SearchController {
                 const categoriesList = cat
                     ? cat.split(",").map((name) => name.trim())
                     : undefined;
-                console.log("Ini categoriesList", categoriesList);
                 let countryIds;
                 if (countryIds) {
                     const countryNames = country
@@ -79,7 +75,7 @@ class SearchController {
                         },
                         organizer_id: eoId ? eoId : undefined,
                         ticket_types: {
-                            every: {
+                            some: {
                                 price: {
                                     gte: parseInt(pricemin) || undefined, //query by price min
                                     lte: parseInt(pricemax) || undefined, //query by price max
@@ -115,24 +111,40 @@ class SearchController {
                         organizer: true,
                     },
                     orderBy: {
-                        [sortby]: orderby || undefined, //Akses properti sortby (isinya nama properti).
+                        createdAt: "desc", //Akses properti sortby (isinya nama properti).
                     },
                 });
                 //Filter price range
-                const priceRange = result.map((value) => {
-                    const minPrice = value.ticket_types.length
-                        ? Math.min(...value.ticket_types.map((value) => value.price))
-                        : null;
-                    return Object.assign(Object.assign({}, value), { min_price: minPrice });
-                });
-                const filteredEventFinal = priceRange.filter((value) => {
-                    if (pricemin && value.min_price < parseInt(pricemin)) {
-                        return false;
-                    }
-                    else if (pricemax && value.min_price > parseInt(pricemax)) {
-                        return false;
-                    }
-                    return true;
+                // const priceRange = result.map((value: any) => {
+                //   const minPrice = value.ticket_types.length
+                //     ? Math.min(...value.ticket_types.map((value: any) => value.price))
+                //     : null;
+                //   return {
+                //     ...value,
+                //     min_price: minPrice as any,
+                //   };
+                // });
+                // const filteredEventFinal = priceRange.filter((value: any) => {
+                //   if (pricemin && value.min_price < parseInt(pricemin as string)) {
+                //     return false;
+                //   } else if (pricemax && value.min_price > parseInt(pricemax as string)) {
+                //     return false;
+                //   }
+                //   return true;
+                // });
+                // Filter events where any ticket type falls within the price range
+                const filteredEventFinal = result.filter((event) => {
+                    const ticketMatches = event.ticket_types.some((ticket) => {
+                        const price = ticket.price;
+                        const withinMin = pricemin
+                            ? price >= parseInt(pricemin)
+                            : true;
+                        const withinMax = pricemax
+                            ? price <= parseInt(pricemax)
+                            : true;
+                        return withinMin && withinMax;
+                    });
+                    return ticketMatches;
                 });
                 //Count how many items sesuai filter di db
                 const totalEvents = yield prisma_1.prisma.event.count({
