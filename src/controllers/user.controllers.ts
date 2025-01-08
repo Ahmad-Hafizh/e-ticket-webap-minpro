@@ -5,7 +5,6 @@ import { transporter } from '../config/nodemailer';
 import { sign } from 'jsonwebtoken';
 import { compareSync } from 'bcrypt';
 import { hashPassword } from '../utils/hashPassword';
-import { cloudinaryUpload } from '../config/cloudinary';
 
 export class UserController {
   async signUp(req: Request, res: Response, next: NextFunction): Promise<any> {
@@ -276,6 +275,26 @@ export class UserController {
       return ResponseHandler.error(res, 'your reset password is success', 200);
     } catch (error) {
       return ResponseHandler.error(res, 'Your reset password is failed', 500, error);
+    }
+  }
+
+  async updateUser(req: Request, res: Response, next: NextFunction): Promise<any> {
+    try {
+      const user = res.locals.user;
+      await prisma.user.update({
+        where: {
+          user_id: user.user_id,
+          email: user.email,
+        },
+        data: {
+          name: req.body.name,
+          phone: req.body.phone,
+        },
+      });
+
+      return ResponseHandler.success(res, 'Update account is success', 200);
+    } catch (error) {
+      return ResponseHandler.error(res, 'Update account is failed', 500, error);
     }
   }
 }
