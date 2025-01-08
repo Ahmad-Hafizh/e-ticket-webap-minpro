@@ -166,7 +166,8 @@ exports.Prisma.PointScalarFieldEnum = {
   user_id: 'user_id',
   amount: 'amount',
   added_date: 'added_date',
-  expired_date: 'expired_date'
+  expired_date: 'expired_date',
+  isActive: 'isActive'
 };
 
 exports.Prisma.ReferralScalarFieldEnum = {
@@ -220,7 +221,8 @@ exports.Prisma.EventScalarFieldEnum = {
   timezone: 'timezone',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  score: 'score'
+  score: 'score',
+  isActive: 'isActive'
 };
 
 exports.Prisma.Event_categoryScalarFieldEnum = {

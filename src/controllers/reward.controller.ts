@@ -104,16 +104,63 @@ class Rewards {
       }, 0);
 
       usePointId.forEach(async (e: any) => {
-        const usedPoints = await prisma.point.delete({
+        const usedPoints = await prisma.point.update({
           where: {
             point_id: e.point_id,
+          },
+          data: {
+            isActive: false,
           },
         });
       });
 
-      return ResponseHandler.success(res, 'use point success', 200);
+      return ResponseHandler.success(res, 'use point success', 200, { point_pay: fixPointAmount, points_id: usePointId });
     } catch (error) {
       return ResponseHandler.error(res, 'use point failed', 500);
+    }
+  }
+  async restorePoint(req: Request, res: Response, next: NextFunction): Promise<any> {
+    try {
+      const user = res.locals.user;
+      const points_id = req.body.points_id;
+
+      points_id.forEach(async (e: any | number) => {
+        const usedPoints = await prisma.point.update({
+          where: {
+            point_id: e.point_id,
+            expired_date: {
+              gte: new Date(),
+            },
+          },
+          data: {
+            isActive: true,
+          },
+        });
+      });
+    } catch (error) {
+      return ResponseHandler.error(res, 'restore point failed', 500);
+    }
+  }
+
+  async getReferred(req: Request, res: Response, next: NextFunction): Promise<any> {
+    try {
+      const user = res.locals.user;
+      const referral = await prisma.referral.findUnique({
+        where: { user_id: user.user_id },
+      });
+
+      const referred = await prisma.user.findMany({
+        select: {
+          pfp_url: true,
+          name: true,
+          email: true,
+        },
+        where: { referred_id: referral?.referral_id },
+      });
+
+      return ResponseHandler.success(res, 'get referral success', 200, referred);
+    } catch (error) {
+      return ResponseHandler.error(res, 'get referral failed', 500);
     }
   }
 }

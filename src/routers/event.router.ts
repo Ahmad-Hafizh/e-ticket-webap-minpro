@@ -21,10 +21,10 @@ export class EventRouter {
     this.route.get("/all", this.eventController.getAllEvent);
     this.route.post(
       "/",
-      // createEventValidator,
-      // uploaderMemory().single("eventBanner"),
-      // verifyToken,
-      // organizerAuthorization,
+      createEventValidator,
+      uploaderMemory().single("eventBanner"),
+      verifyToken,
+      organizerAuthorization,
       this.eventController.createEvent
     );
     this.route.get("/location", this.eventController.getEventLocation);

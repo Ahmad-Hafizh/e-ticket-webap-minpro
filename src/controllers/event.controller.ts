@@ -47,37 +47,27 @@ export class EventController {
     next: NextFunction
   ): Promise<any> {
     try {
-      const userId = 17;
       const organizer = await prisma.organizer.findUnique({
-        where: { user_id: userId },
+        where: { user_id: res.locals.dcrypt.user_id },
       });
-      // const organizer = await prisma.organizer.findUnique({
-      //   where: { user_id: res.locals.dcrypt.user_id },
-      // });
 
       if (!organizer) {
         throw new Error("User unauthorized");
       }
 
-      const {
-        eventTitle,
-        eventDescription,
-        eventTimeDate,
-        eventCategory,
-        eventLocation,
-        ticketTypes,
-        eventImg,
-        organizerCouponInput,
-        score,
-      } = req.body;
+      const { eventTitle, eventDescription, score } = req.body;
 
-      // if (!req.file) {
-      //   throw new Error("No file uploaded");
-      // }
+      if (!req.file) {
+        throw new Error("No file uploaded");
+      }
+      //JSON PARSING FIRST
+      const eventLocation = JSON.parse(req.body.eventLocation);
+      const eventTimeDate = JSON.parse(req.body.eventTimeDate);
+      const organizerCouponInput = JSON.parse(req.body.organizerCouponInput);
+      const ticketTypes = JSON.parse(req.body.ticketTypes);
+      const eventCategoryInput = JSON.parse(req.body.eventCategory);
 
-      // console.log("Ini req.file:", req.file);
-
-      // const { secure_url } = await cloudinaryUpload(req.file, "eventBanner");
+      const { secure_url } = await cloudinaryUpload(req.file, "eventBanner");
 
       const response = await prisma.$transaction(async (tx) => {
         //Create and/or update city
@@ -111,8 +101,8 @@ export class EventController {
             organizer_id: organizer?.organizer_id as number,
             start_date: new Date(organizerCouponInput.startDate),
             expired_date: new Date(organizerCouponInput.endDate),
-            discount: organizerCouponInput.discount,
-            quantity: organizerCouponInput.quantity,
+            discount: parseInt(organizerCouponInput.discount),
+            quantity: parseInt(organizerCouponInput.quantity),
           },
         });
 
@@ -121,14 +111,14 @@ export class EventController {
           data: {
             organizer_id: organizer?.organizer_id as number,
             event_category: {
-              connect: eventCategory.map((value: string) => ({
+              connect: eventCategoryInput.map((value: string) => ({
                 category_name: value,
               })),
             },
             title: eventTitle,
             description: eventDescription,
             organizer_coupon_id: organizerCoupon.organizer_coupon_id,
-            imgEvent: eventImg,
+            imgEvent: secure_url,
             startDate: new Date(eventTimeDate.startDate),
             endDate: new Date(eventTimeDate.endDate),
             startTime: eventTimeDate.startTime,
@@ -136,7 +126,7 @@ export class EventController {
             createdAt: new Date(),
             updatedAt: new Date(),
             timezone: eventTimeDate.timezone,
-            score: score,
+            score: 0,
             event_location_id: eventLoc.event_location_id,
           },
         });
@@ -145,8 +135,8 @@ export class EventController {
         const ticket = ticketTypes.map((value: any) => ({
           event_id: event.event_id,
           types: value.types,
-          price: value.price,
-          quantity_available: value.quantityAvailable,
+          price: parseInt(value.price),
+          quantity_available: parseInt(value.quantityAvailable),
         }));
 
         //Input ticket array to prisma
@@ -156,16 +146,6 @@ export class EventController {
         });
         return event;
       });
-
-      // await transporter.sendMail({
-      //   from: "e-ticket",
-      //   to: user.email,
-      //   subject: "Your event is ready to rock",
-      //   html: `<div>
-      //      <h1>Thank you ${user.name}, your event is ready to rock.</h1>
-      //      <p>Invite people to attract more audience</p>
-      //      </div>`,
-      // });
 
       return ResponseHandler.success(
         res,
@@ -416,7 +396,6 @@ export class EventController {
   ): Promise<any> {
     try {
       const { title } = req.params;
-
       const response = await prisma.event.findFirst({
         where: {
           title: title,
@@ -459,12 +438,6 @@ export class EventController {
   //sortby = sorting by
   //orderby = order by
 
-  //getEventByMostPurchased (HOT EVENT) => REDIS
-  async hotEvent(req: Request, res: Response): Promise<any> {
-    try {
-    } catch (error) {}
-  }
-
   async getEventLocation(req: Request, res: Response): Promise<any> {
     try {
       const location = await prisma.location_city.findMany();
@@ -492,6 +465,9 @@ export class EventController {
           ticket_types: true,
           organizer: true,
         },
+        orderBy: {
+          createdAt: "desc",
+        },
         take: 3,
       });
 
@@ -508,6 +484,9 @@ export class EventController {
           event_category: true,
           ticket_types: true,
           organizer: true,
+        },
+        orderBy: {
+          createdAt: "desc",
         },
         take: 8,
       });
@@ -529,9 +508,30 @@ export class EventController {
         take: 8,
       });
 
+      const categoriesTwo = await prisma.event.findMany({
+        where: {
+          event_category: {
+            some: {
+              category_name: "International",
+            },
+          },
+        },
+
+        include: {
+          event_category: true,
+          ticket_types: true,
+          organizer: true,
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+        take: 8,
+      });
+
       const response = {
         topEvents,
         categories,
+        categoriesTwo,
         location,
         organizer,
       };

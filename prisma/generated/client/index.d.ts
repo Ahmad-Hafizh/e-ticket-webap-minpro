@@ -7159,6 +7159,7 @@ export namespace Prisma {
     amount: number | null
     added_date: Date | null
     expired_date: Date | null
+    isActive: boolean | null
   }
 
   export type PointMaxAggregateOutputType = {
@@ -7167,6 +7168,7 @@ export namespace Prisma {
     amount: number | null
     added_date: Date | null
     expired_date: Date | null
+    isActive: boolean | null
   }
 
   export type PointCountAggregateOutputType = {
@@ -7175,6 +7177,7 @@ export namespace Prisma {
     amount: number
     added_date: number
     expired_date: number
+    isActive: number
     _all: number
   }
 
@@ -7197,6 +7200,7 @@ export namespace Prisma {
     amount?: true
     added_date?: true
     expired_date?: true
+    isActive?: true
   }
 
   export type PointMaxAggregateInputType = {
@@ -7205,6 +7209,7 @@ export namespace Prisma {
     amount?: true
     added_date?: true
     expired_date?: true
+    isActive?: true
   }
 
   export type PointCountAggregateInputType = {
@@ -7213,6 +7218,7 @@ export namespace Prisma {
     amount?: true
     added_date?: true
     expired_date?: true
+    isActive?: true
     _all?: true
   }
 
@@ -7308,6 +7314,7 @@ export namespace Prisma {
     amount: number
     added_date: Date
     expired_date: Date
+    isActive: boolean
     _count: PointCountAggregateOutputType | null
     _avg: PointAvgAggregateOutputType | null
     _sum: PointSumAggregateOutputType | null
@@ -7335,6 +7342,7 @@ export namespace Prisma {
     amount?: boolean
     added_date?: boolean
     expired_date?: boolean
+    isActive?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["point"]>
 
@@ -7344,6 +7352,7 @@ export namespace Prisma {
     amount?: boolean
     added_date?: boolean
     expired_date?: boolean
+    isActive?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["point"]>
 
@@ -7353,6 +7362,7 @@ export namespace Prisma {
     amount?: boolean
     added_date?: boolean
     expired_date?: boolean
+    isActive?: boolean
   }
 
   export type PointInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7373,6 +7383,7 @@ export namespace Prisma {
       amount: number
       added_date: Date
       expired_date: Date
+      isActive: boolean
     }, ExtArgs["result"]["point"]>
     composites: {}
   }
@@ -7772,6 +7783,7 @@ export namespace Prisma {
     readonly amount: FieldRef<"Point", 'Int'>
     readonly added_date: FieldRef<"Point", 'DateTime'>
     readonly expired_date: FieldRef<"Point", 'DateTime'>
+    readonly isActive: FieldRef<"Point", 'Boolean'>
   }
     
 
@@ -12156,6 +12168,7 @@ export namespace Prisma {
     createdAt: Date | null
     updatedAt: Date | null
     score: number | null
+    isActive: boolean | null
   }
 
   export type EventMaxAggregateOutputType = {
@@ -12174,6 +12187,7 @@ export namespace Prisma {
     createdAt: Date | null
     updatedAt: Date | null
     score: number | null
+    isActive: boolean | null
   }
 
   export type EventCountAggregateOutputType = {
@@ -12192,6 +12206,7 @@ export namespace Prisma {
     createdAt: number
     updatedAt: number
     score: number
+    isActive: number
     _all: number
   }
 
@@ -12228,6 +12243,7 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     score?: true
+    isActive?: true
   }
 
   export type EventMaxAggregateInputType = {
@@ -12246,6 +12262,7 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     score?: true
+    isActive?: true
   }
 
   export type EventCountAggregateInputType = {
@@ -12264,6 +12281,7 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     score?: true
+    isActive?: true
     _all?: true
   }
 
@@ -12369,6 +12387,7 @@ export namespace Prisma {
     createdAt: Date
     updatedAt: Date
     score: number | null
+    isActive: boolean
     _count: EventCountAggregateOutputType | null
     _avg: EventAvgAggregateOutputType | null
     _sum: EventSumAggregateOutputType | null
@@ -12406,6 +12425,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     score?: boolean
+    isActive?: boolean
     organizer?: boolean | OrganizerDefaultArgs<ExtArgs>
     event_category?: boolean | Event$event_categoryArgs<ExtArgs>
     organizer_coupon?: boolean | Event$organizer_couponArgs<ExtArgs>
@@ -12433,6 +12453,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     score?: boolean
+    isActive?: boolean
     organizer?: boolean | OrganizerDefaultArgs<ExtArgs>
     organizer_coupon?: boolean | Event$organizer_couponArgs<ExtArgs>
     event_location?: boolean | Event_LocationDefaultArgs<ExtArgs>
@@ -12454,6 +12475,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     score?: boolean
+    isActive?: boolean
   }
 
   export type EventInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -12501,6 +12523,7 @@ export namespace Prisma {
       createdAt: Date
       updatedAt: Date
       score: number | null
+      isActive: boolean
     }, ExtArgs["result"]["event"]>
     composites: {}
   }
@@ -12917,6 +12940,7 @@ export namespace Prisma {
     readonly createdAt: FieldRef<"Event", 'DateTime'>
     readonly updatedAt: FieldRef<"Event", 'DateTime'>
     readonly score: FieldRef<"Event", 'Int'>
+    readonly isActive: FieldRef<"Event", 'Boolean'>
   }
     
 
@@ -21380,7 +21404,8 @@ export namespace Prisma {
     user_id: 'user_id',
     amount: 'amount',
     added_date: 'added_date',
-    expired_date: 'expired_date'
+    expired_date: 'expired_date',
+    isActive: 'isActive'
   };
 
   export type PointScalarFieldEnum = (typeof PointScalarFieldEnum)[keyof typeof PointScalarFieldEnum]
@@ -21449,7 +21474,8 @@ export namespace Prisma {
     timezone: 'timezone',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
-    score: 'score'
+    score: 'score',
+    isActive: 'isActive'
   };
 
   export type EventScalarFieldEnum = (typeof EventScalarFieldEnum)[keyof typeof EventScalarFieldEnum]
@@ -22028,6 +22054,7 @@ export namespace Prisma {
     amount?: IntFilter<"Point"> | number
     added_date?: DateTimeFilter<"Point"> | Date | string
     expired_date?: DateTimeFilter<"Point"> | Date | string
+    isActive?: BoolFilter<"Point"> | boolean
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
@@ -22037,6 +22064,7 @@ export namespace Prisma {
     amount?: SortOrder
     added_date?: SortOrder
     expired_date?: SortOrder
+    isActive?: SortOrder
     user?: UserOrderByWithRelationInput
   }
 
@@ -22049,6 +22077,7 @@ export namespace Prisma {
     amount?: IntFilter<"Point"> | number
     added_date?: DateTimeFilter<"Point"> | Date | string
     expired_date?: DateTimeFilter<"Point"> | Date | string
+    isActive?: BoolFilter<"Point"> | boolean
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "point_id">
 
@@ -22058,6 +22087,7 @@ export namespace Prisma {
     amount?: SortOrder
     added_date?: SortOrder
     expired_date?: SortOrder
+    isActive?: SortOrder
     _count?: PointCountOrderByAggregateInput
     _avg?: PointAvgOrderByAggregateInput
     _max?: PointMaxOrderByAggregateInput
@@ -22074,6 +22104,7 @@ export namespace Prisma {
     amount?: IntWithAggregatesFilter<"Point"> | number
     added_date?: DateTimeWithAggregatesFilter<"Point"> | Date | string
     expired_date?: DateTimeWithAggregatesFilter<"Point"> | Date | string
+    isActive?: BoolWithAggregatesFilter<"Point"> | boolean
   }
 
   export type ReferralWhereInput = {
@@ -22349,6 +22380,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Event"> | Date | string
     updatedAt?: DateTimeFilter<"Event"> | Date | string
     score?: IntNullableFilter<"Event"> | number | null
+    isActive?: BoolFilter<"Event"> | boolean
     organizer?: XOR<OrganizerScalarRelationFilter, OrganizerWhereInput>
     event_category?: Event_categoryListRelationFilter
     organizer_coupon?: XOR<OrganizerCouponNullableScalarRelationFilter, OrganizerCouponWhereInput> | null
@@ -22375,6 +22407,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     score?: SortOrderInput | SortOrder
+    isActive?: SortOrder
     organizer?: OrganizerOrderByWithRelationInput
     event_category?: Event_categoryOrderByRelationAggregateInput
     organizer_coupon?: OrganizerCouponOrderByWithRelationInput
@@ -22404,6 +22437,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Event"> | Date | string
     updatedAt?: DateTimeFilter<"Event"> | Date | string
     score?: IntNullableFilter<"Event"> | number | null
+    isActive?: BoolFilter<"Event"> | boolean
     organizer?: XOR<OrganizerScalarRelationFilter, OrganizerWhereInput>
     event_category?: Event_categoryListRelationFilter
     organizer_coupon?: XOR<OrganizerCouponNullableScalarRelationFilter, OrganizerCouponWhereInput> | null
@@ -22430,6 +22464,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     score?: SortOrderInput | SortOrder
+    isActive?: SortOrder
     _count?: EventCountOrderByAggregateInput
     _avg?: EventAvgOrderByAggregateInput
     _max?: EventMaxOrderByAggregateInput
@@ -22456,6 +22491,7 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"Event"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Event"> | Date | string
     score?: IntNullableWithAggregatesFilter<"Event"> | number | null
+    isActive?: BoolWithAggregatesFilter<"Event"> | boolean
   }
 
   export type Event_categoryWhereInput = {
@@ -23276,6 +23312,7 @@ export namespace Prisma {
     amount: number
     added_date?: Date | string
     expired_date: Date | string
+    isActive?: boolean
     user: UserCreateNestedOneWithoutPointsInput
   }
 
@@ -23285,12 +23322,14 @@ export namespace Prisma {
     amount: number
     added_date?: Date | string
     expired_date: Date | string
+    isActive?: boolean
   }
 
   export type PointUpdateInput = {
     amount?: IntFieldUpdateOperationsInput | number
     added_date?: DateTimeFieldUpdateOperationsInput | Date | string
     expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     user?: UserUpdateOneRequiredWithoutPointsNestedInput
   }
 
@@ -23300,6 +23339,7 @@ export namespace Prisma {
     amount?: IntFieldUpdateOperationsInput | number
     added_date?: DateTimeFieldUpdateOperationsInput | Date | string
     expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type PointCreateManyInput = {
@@ -23308,12 +23348,14 @@ export namespace Prisma {
     amount: number
     added_date?: Date | string
     expired_date: Date | string
+    isActive?: boolean
   }
 
   export type PointUpdateManyMutationInput = {
     amount?: IntFieldUpdateOperationsInput | number
     added_date?: DateTimeFieldUpdateOperationsInput | Date | string
     expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type PointUncheckedUpdateManyInput = {
@@ -23322,6 +23364,7 @@ export namespace Prisma {
     amount?: IntFieldUpdateOperationsInput | number
     added_date?: DateTimeFieldUpdateOperationsInput | Date | string
     expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type ReferralCreateInput = {
@@ -23580,6 +23623,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt: Date | string
     score?: number | null
+    isActive?: boolean
     organizer: OrganizerCreateNestedOneWithoutEventsInput
     event_category?: Event_categoryCreateNestedManyWithoutEventInput
     organizer_coupon?: OrganizerCouponCreateNestedOneWithoutEventInput
@@ -23606,6 +23650,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt: Date | string
     score?: number | null
+    isActive?: boolean
     event_category?: Event_categoryUncheckedCreateNestedManyWithoutEventInput
     ticket_types?: Ticket_typesUncheckedCreateNestedManyWithoutEventInput
     customer?: UserUncheckedCreateNestedManyWithoutEventInput
@@ -23625,6 +23670,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     score?: NullableIntFieldUpdateOperationsInput | number | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     organizer?: OrganizerUpdateOneRequiredWithoutEventsNestedInput
     event_category?: Event_categoryUpdateManyWithoutEventNestedInput
     organizer_coupon?: OrganizerCouponUpdateOneWithoutEventNestedInput
@@ -23651,6 +23697,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     score?: NullableIntFieldUpdateOperationsInput | number | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     event_category?: Event_categoryUncheckedUpdateManyWithoutEventNestedInput
     ticket_types?: Ticket_typesUncheckedUpdateManyWithoutEventNestedInput
     customer?: UserUncheckedUpdateManyWithoutEventNestedInput
@@ -23674,6 +23721,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt: Date | string
     score?: number | null
+    isActive?: boolean
   }
 
   export type EventUpdateManyMutationInput = {
@@ -23688,6 +23736,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     score?: NullableIntFieldUpdateOperationsInput | number | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type EventUncheckedUpdateManyInput = {
@@ -23706,6 +23755,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     score?: NullableIntFieldUpdateOperationsInput | number | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type Event_categoryCreateInput = {
@@ -24617,6 +24667,7 @@ export namespace Prisma {
     amount?: SortOrder
     added_date?: SortOrder
     expired_date?: SortOrder
+    isActive?: SortOrder
   }
 
   export type PointAvgOrderByAggregateInput = {
@@ -24631,6 +24682,7 @@ export namespace Prisma {
     amount?: SortOrder
     added_date?: SortOrder
     expired_date?: SortOrder
+    isActive?: SortOrder
   }
 
   export type PointMinOrderByAggregateInput = {
@@ -24639,6 +24691,7 @@ export namespace Prisma {
     amount?: SortOrder
     added_date?: SortOrder
     expired_date?: SortOrder
+    isActive?: SortOrder
   }
 
   export type PointSumOrderByAggregateInput = {
@@ -24886,6 +24939,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     score?: SortOrder
+    isActive?: SortOrder
   }
 
   export type EventAvgOrderByAggregateInput = {
@@ -24912,6 +24966,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     score?: SortOrder
+    isActive?: SortOrder
   }
 
   export type EventMinOrderByAggregateInput = {
@@ -24930,6 +24985,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     score?: SortOrder
+    isActive?: SortOrder
   }
 
   export type EventSumOrderByAggregateInput = {
@@ -26962,6 +27018,7 @@ export namespace Prisma {
     amount: number
     added_date?: Date | string
     expired_date: Date | string
+    isActive?: boolean
   }
 
   export type PointUncheckedCreateWithoutUserInput = {
@@ -26969,6 +27026,7 @@ export namespace Prisma {
     amount: number
     added_date?: Date | string
     expired_date: Date | string
+    isActive?: boolean
   }
 
   export type PointCreateOrConnectWithoutUserInput = {
@@ -27139,6 +27197,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt: Date | string
     score?: number | null
+    isActive?: boolean
     organizer: OrganizerCreateNestedOneWithoutEventsInput
     event_category?: Event_categoryCreateNestedManyWithoutEventInput
     organizer_coupon?: OrganizerCouponCreateNestedOneWithoutEventInput
@@ -27164,6 +27223,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt: Date | string
     score?: number | null
+    isActive?: boolean
     event_category?: Event_categoryUncheckedCreateNestedManyWithoutEventInput
     ticket_types?: Ticket_typesUncheckedCreateNestedManyWithoutEventInput
     transaction?: Transaction_DetailUncheckedCreateNestedManyWithoutEventInput
@@ -27276,6 +27336,7 @@ export namespace Prisma {
     amount?: IntFilter<"Point"> | number
     added_date?: DateTimeFilter<"Point"> | Date | string
     expired_date?: DateTimeFilter<"Point"> | Date | string
+    isActive?: BoolFilter<"Point"> | boolean
   }
 
   export type CouponUpsertWithWhereUniqueWithoutUserInput = {
@@ -27469,6 +27530,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Event"> | Date | string
     updatedAt?: DateTimeFilter<"Event"> | Date | string
     score?: IntNullableFilter<"Event"> | number | null
+    isActive?: BoolFilter<"Event"> | boolean
   }
 
   export type Social_mediaCreateWithoutProfileInput = {
@@ -27695,6 +27757,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt: Date | string
     score?: number | null
+    isActive?: boolean
     event_category?: Event_categoryCreateNestedManyWithoutEventInput
     organizer_coupon?: OrganizerCouponCreateNestedOneWithoutEventInput
     event_location: Event_LocationCreateNestedOneWithoutEventInput
@@ -27719,6 +27782,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt: Date | string
     score?: number | null
+    isActive?: boolean
     event_category?: Event_categoryUncheckedCreateNestedManyWithoutEventInput
     ticket_types?: Ticket_typesUncheckedCreateNestedManyWithoutEventInput
     customer?: UserUncheckedCreateNestedManyWithoutEventInput
@@ -28435,6 +28499,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt: Date | string
     score?: number | null
+    isActive?: boolean
     organizer: OrganizerCreateNestedOneWithoutEventsInput
     event_category?: Event_categoryCreateNestedManyWithoutEventInput
     event_location: Event_LocationCreateNestedOneWithoutEventInput
@@ -28459,6 +28524,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt: Date | string
     score?: number | null
+    isActive?: boolean
     event_category?: Event_categoryUncheckedCreateNestedManyWithoutEventInput
     ticket_types?: Ticket_typesUncheckedCreateNestedManyWithoutEventInput
     customer?: UserUncheckedCreateNestedManyWithoutEventInput
@@ -28532,6 +28598,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     score?: NullableIntFieldUpdateOperationsInput | number | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     organizer?: OrganizerUpdateOneRequiredWithoutEventsNestedInput
     event_category?: Event_categoryUpdateManyWithoutEventNestedInput
     event_location?: Event_LocationUpdateOneRequiredWithoutEventNestedInput
@@ -28556,6 +28623,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     score?: NullableIntFieldUpdateOperationsInput | number | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     event_category?: Event_categoryUncheckedUpdateManyWithoutEventNestedInput
     ticket_types?: Ticket_typesUncheckedUpdateManyWithoutEventNestedInput
     customer?: UserUncheckedUpdateManyWithoutEventNestedInput
@@ -28985,6 +29053,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt: Date | string
     score?: number | null
+    isActive?: boolean
     organizer: OrganizerCreateNestedOneWithoutEventsInput
     organizer_coupon?: OrganizerCouponCreateNestedOneWithoutEventInput
     event_location: Event_LocationCreateNestedOneWithoutEventInput
@@ -29010,6 +29079,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt: Date | string
     score?: number | null
+    isActive?: boolean
     ticket_types?: Ticket_typesUncheckedCreateNestedManyWithoutEventInput
     customer?: UserUncheckedCreateNestedManyWithoutEventInput
     transaction?: Transaction_DetailUncheckedCreateNestedManyWithoutEventInput
@@ -29077,6 +29147,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt: Date | string
     score?: number | null
+    isActive?: boolean
     organizer: OrganizerCreateNestedOneWithoutEventsInput
     event_category?: Event_categoryCreateNestedManyWithoutEventInput
     organizer_coupon?: OrganizerCouponCreateNestedOneWithoutEventInput
@@ -29101,6 +29172,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt: Date | string
     score?: number | null
+    isActive?: boolean
     event_category?: Event_categoryUncheckedCreateNestedManyWithoutEventInput
     ticket_types?: Ticket_typesUncheckedCreateNestedManyWithoutEventInput
     customer?: UserUncheckedCreateNestedManyWithoutEventInput
@@ -29176,6 +29248,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     score?: NullableIntFieldUpdateOperationsInput | number | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     organizer?: OrganizerUpdateOneRequiredWithoutEventsNestedInput
     event_category?: Event_categoryUpdateManyWithoutEventNestedInput
     organizer_coupon?: OrganizerCouponUpdateOneWithoutEventNestedInput
@@ -29200,6 +29273,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     score?: NullableIntFieldUpdateOperationsInput | number | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     event_category?: Event_categoryUncheckedUpdateManyWithoutEventNestedInput
     ticket_types?: Ticket_typesUncheckedUpdateManyWithoutEventNestedInput
     customer?: UserUncheckedUpdateManyWithoutEventNestedInput
@@ -29317,6 +29391,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt: Date | string
     score?: number | null
+    isActive?: boolean
     organizer: OrganizerCreateNestedOneWithoutEventsInput
     event_category?: Event_categoryCreateNestedManyWithoutEventInput
     organizer_coupon?: OrganizerCouponCreateNestedOneWithoutEventInput
@@ -29342,6 +29417,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt: Date | string
     score?: number | null
+    isActive?: boolean
     event_category?: Event_categoryUncheckedCreateNestedManyWithoutEventInput
     customer?: UserUncheckedCreateNestedManyWithoutEventInput
     transaction?: Transaction_DetailUncheckedCreateNestedManyWithoutEventInput
@@ -29403,6 +29479,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     score?: NullableIntFieldUpdateOperationsInput | number | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     organizer?: OrganizerUpdateOneRequiredWithoutEventsNestedInput
     event_category?: Event_categoryUpdateManyWithoutEventNestedInput
     organizer_coupon?: OrganizerCouponUpdateOneWithoutEventNestedInput
@@ -29428,6 +29505,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     score?: NullableIntFieldUpdateOperationsInput | number | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     event_category?: Event_categoryUncheckedUpdateManyWithoutEventNestedInput
     customer?: UserUncheckedUpdateManyWithoutEventNestedInput
     transaction?: Transaction_DetailUncheckedUpdateManyWithoutEventNestedInput
@@ -29508,6 +29586,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt: Date | string
     score?: number | null
+    isActive?: boolean
     organizer: OrganizerCreateNestedOneWithoutEventsInput
     event_category?: Event_categoryCreateNestedManyWithoutEventInput
     organizer_coupon?: OrganizerCouponCreateNestedOneWithoutEventInput
@@ -29533,6 +29612,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt: Date | string
     score?: number | null
+    isActive?: boolean
     event_category?: Event_categoryUncheckedCreateNestedManyWithoutEventInput
     ticket_types?: Ticket_typesUncheckedCreateNestedManyWithoutEventInput
     customer?: UserUncheckedCreateNestedManyWithoutEventInput
@@ -29665,6 +29745,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     score?: NullableIntFieldUpdateOperationsInput | number | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     organizer?: OrganizerUpdateOneRequiredWithoutEventsNestedInput
     event_category?: Event_categoryUpdateManyWithoutEventNestedInput
     organizer_coupon?: OrganizerCouponUpdateOneWithoutEventNestedInput
@@ -29690,6 +29771,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     score?: NullableIntFieldUpdateOperationsInput | number | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     event_category?: Event_categoryUncheckedUpdateManyWithoutEventNestedInput
     ticket_types?: Ticket_typesUncheckedUpdateManyWithoutEventNestedInput
     customer?: UserUncheckedUpdateManyWithoutEventNestedInput
@@ -29907,6 +29989,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt: Date | string
     score?: number | null
+    isActive?: boolean
     organizer: OrganizerCreateNestedOneWithoutEventsInput
     event_category?: Event_categoryCreateNestedManyWithoutEventInput
     organizer_coupon?: OrganizerCouponCreateNestedOneWithoutEventInput
@@ -29932,6 +30015,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt: Date | string
     score?: number | null
+    isActive?: boolean
     event_category?: Event_categoryUncheckedCreateNestedManyWithoutEventInput
     ticket_types?: Ticket_typesUncheckedCreateNestedManyWithoutEventInput
     customer?: UserUncheckedCreateNestedManyWithoutEventInput
@@ -30012,6 +30096,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     score?: NullableIntFieldUpdateOperationsInput | number | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     organizer?: OrganizerUpdateOneRequiredWithoutEventsNestedInput
     event_category?: Event_categoryUpdateManyWithoutEventNestedInput
     organizer_coupon?: OrganizerCouponUpdateOneWithoutEventNestedInput
@@ -30037,6 +30122,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     score?: NullableIntFieldUpdateOperationsInput | number | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     event_category?: Event_categoryUncheckedUpdateManyWithoutEventNestedInput
     ticket_types?: Ticket_typesUncheckedUpdateManyWithoutEventNestedInput
     customer?: UserUncheckedUpdateManyWithoutEventNestedInput
@@ -30100,6 +30186,7 @@ export namespace Prisma {
     amount: number
     added_date?: Date | string
     expired_date: Date | string
+    isActive?: boolean
   }
 
   export type CouponCreateManyUserInput = {
@@ -30144,6 +30231,7 @@ export namespace Prisma {
     amount?: IntFieldUpdateOperationsInput | number
     added_date?: DateTimeFieldUpdateOperationsInput | Date | string
     expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type PointUncheckedUpdateWithoutUserInput = {
@@ -30151,6 +30239,7 @@ export namespace Prisma {
     amount?: IntFieldUpdateOperationsInput | number
     added_date?: DateTimeFieldUpdateOperationsInput | Date | string
     expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type PointUncheckedUpdateManyWithoutUserInput = {
@@ -30158,6 +30247,7 @@ export namespace Prisma {
     amount?: IntFieldUpdateOperationsInput | number
     added_date?: DateTimeFieldUpdateOperationsInput | Date | string
     expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type CouponUpdateWithoutUserInput = {
@@ -30284,6 +30374,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     score?: NullableIntFieldUpdateOperationsInput | number | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     organizer?: OrganizerUpdateOneRequiredWithoutEventsNestedInput
     event_category?: Event_categoryUpdateManyWithoutEventNestedInput
     organizer_coupon?: OrganizerCouponUpdateOneWithoutEventNestedInput
@@ -30309,6 +30400,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     score?: NullableIntFieldUpdateOperationsInput | number | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     event_category?: Event_categoryUncheckedUpdateManyWithoutEventNestedInput
     ticket_types?: Ticket_typesUncheckedUpdateManyWithoutEventNestedInput
     transaction?: Transaction_DetailUncheckedUpdateManyWithoutEventNestedInput
@@ -30331,6 +30423,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     score?: NullableIntFieldUpdateOperationsInput | number | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type Social_mediaCreateManyProfileInput = {
@@ -30375,6 +30468,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt: Date | string
     score?: number | null
+    isActive?: boolean
   }
 
   export type OrganizerCouponCreateManyOrganizerInput = {
@@ -30398,6 +30492,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     score?: NullableIntFieldUpdateOperationsInput | number | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     event_category?: Event_categoryUpdateManyWithoutEventNestedInput
     organizer_coupon?: OrganizerCouponUpdateOneWithoutEventNestedInput
     event_location?: Event_LocationUpdateOneRequiredWithoutEventNestedInput
@@ -30422,6 +30517,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     score?: NullableIntFieldUpdateOperationsInput | number | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     event_category?: Event_categoryUncheckedUpdateManyWithoutEventNestedInput
     ticket_types?: Ticket_typesUncheckedUpdateManyWithoutEventNestedInput
     customer?: UserUncheckedUpdateManyWithoutEventNestedInput
@@ -30444,6 +30540,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     score?: NullableIntFieldUpdateOperationsInput | number | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type OrganizerCouponUpdateWithoutOrganizerInput = {
@@ -30714,6 +30811,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     score?: NullableIntFieldUpdateOperationsInput | number | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     organizer?: OrganizerUpdateOneRequiredWithoutEventsNestedInput
     organizer_coupon?: OrganizerCouponUpdateOneWithoutEventNestedInput
     event_location?: Event_LocationUpdateOneRequiredWithoutEventNestedInput
@@ -30739,6 +30837,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     score?: NullableIntFieldUpdateOperationsInput | number | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     ticket_types?: Ticket_typesUncheckedUpdateManyWithoutEventNestedInput
     customer?: UserUncheckedUpdateManyWithoutEventNestedInput
     transaction?: Transaction_DetailUncheckedUpdateManyWithoutEventNestedInput
@@ -30761,6 +30860,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     score?: NullableIntFieldUpdateOperationsInput | number | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type Event_LocationCreateManyCityInput = {

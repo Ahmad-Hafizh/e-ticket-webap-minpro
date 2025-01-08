@@ -126,16 +126,65 @@ class Rewards {
                     return c + e.amount <= transactionAmount ? c + e.amount : c;
                 }, 0);
                 usePointId.forEach((e) => __awaiter(this, void 0, void 0, function* () {
-                    const usedPoints = yield prisma_1.prisma.point.delete({
+                    const usedPoints = yield prisma_1.prisma.point.update({
                         where: {
                             point_id: e.point_id,
                         },
+                        data: {
+                            isActive: false,
+                        },
                     });
                 }));
-                return responseHandler_1.default.success(res, 'use point success', 200);
+                return responseHandler_1.default.success(res, 'use point success', 200, { point_pay: fixPointAmount, points_id: usePointId });
             }
             catch (error) {
                 return responseHandler_1.default.error(res, 'use point failed', 500);
+            }
+        });
+    }
+    restorePoint(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const user = res.locals.user;
+                const points_id = req.body.points_id;
+                points_id.forEach((e) => __awaiter(this, void 0, void 0, function* () {
+                    const usedPoints = yield prisma_1.prisma.point.update({
+                        where: {
+                            point_id: e.point_id,
+                            expired_date: {
+                                gte: new Date(),
+                            },
+                        },
+                        data: {
+                            isActive: true,
+                        },
+                    });
+                }));
+            }
+            catch (error) {
+                return responseHandler_1.default.error(res, 'restore point failed', 500);
+            }
+        });
+    }
+    getReferred(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const user = res.locals.user;
+                const referral = yield prisma_1.prisma.referral.findUnique({
+                    where: { user_id: user.user_id },
+                });
+                const referred = yield prisma_1.prisma.user.findMany({
+                    select: {
+                        pfp_url: true,
+                        name: true,
+                        email: true,
+                    },
+                    where: { referred_id: referral === null || referral === void 0 ? void 0 : referral.referral_id },
+                });
+                return responseHandler_1.default.success(res, 'get referral success', 200, referred);
+            }
+            catch (error) {
+                return responseHandler_1.default.error(res, 'get referral failed', 500);
             }
         });
     }

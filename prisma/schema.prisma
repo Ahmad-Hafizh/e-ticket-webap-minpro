@@ -48,12 +48,12 @@ model User {
 model Profile {
   profile_id    Int            @id @default(autoincrement())
   social_medias Social_media[]
-  address      String?
-  city         String?
-  country      String?
-  zipcode      String?
-  birth_date String?
-  gender Gender?
+  address       String?
+  city          String?
+  country       String?
+  zipcode       String?
+  birth_date    String?
+  gender        Gender?
   user_id       Int            @unique
   user          User           @relation(fields: [user_id], references: [user_id])
 
@@ -99,6 +99,7 @@ model Point {
   amount       Int
   added_date   DateTime @default(now())
   expired_date DateTime
+  isActive     Boolean @default(true)
 
   @@map("points")
 }
@@ -134,7 +135,7 @@ model Coupon {
   max_amount   Int?
   start_date   DateTime @default(now())
   expired_date DateTime
-  isActive     Boolean @default(true)
+  isActive     Boolean  @default(true)
 
   @@map("coupons")
 }
@@ -173,6 +174,7 @@ model Event {
   createdAt           DateTime             @default(now())
   updatedAt           DateTime
   score               Int?
+  isActive            Boolean              @default(true)
   customer            User[]               @relation("Customer_event")
   transaction         Transaction_Detail[]
   review              Review[]
