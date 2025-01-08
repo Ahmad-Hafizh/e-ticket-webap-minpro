@@ -22,9 +22,6 @@ export class SearchController {
         page,
       } = req.query;
       const url = req.url;
-      console.log(url);
-      console.log("Ini page", page);
-      console.log("ini organizer id:", eo);
       //PR CEK QUERY
 
       let cityIds: number[] | undefined;
@@ -43,7 +40,6 @@ export class SearchController {
       const categoriesList = cat
         ? (cat as string).split(",").map((name) => name.trim())
         : undefined;
-      console.log("Ini categoriesList", categoriesList);
 
       let countryIds: number[] | undefined;
       if (countryIds) {
@@ -118,7 +114,7 @@ export class SearchController {
         },
 
         orderBy: {
-          [sortby as string]: orderby || undefined, //Akses properti sortby (isinya nama properti).
+          createdAt: "desc", //Akses properti sortby (isinya nama properti).
         },
       });
 

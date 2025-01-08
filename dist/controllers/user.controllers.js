@@ -274,5 +274,26 @@ class UserController {
             }
         });
     }
+    updateUser(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const user = res.locals.user;
+                yield prisma_1.prisma.user.update({
+                    where: {
+                        user_id: user.user_id,
+                        email: user.email,
+                    },
+                    data: {
+                        name: req.body.name,
+                        phone: req.body.phone,
+                    },
+                });
+                return responseHandler_1.default.success(res, 'Update account is success', 200);
+            }
+            catch (error) {
+                return responseHandler_1.default.error(res, 'Update account is failed', 500, error);
+            }
+        });
+    }
 }
 exports.UserController = UserController;

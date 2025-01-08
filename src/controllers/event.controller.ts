@@ -55,14 +55,7 @@ export class EventController {
         throw new Error("User unauthorized");
       }
 
-      const {
-        eventTitle,
-        eventDescription,
-        eventCategory,
-
-        eventImg,
-        score,
-      } = req.body;
+      const { eventTitle, eventDescription, score } = req.body;
 
       if (!req.file) {
         throw new Error("No file uploaded");
@@ -73,8 +66,6 @@ export class EventController {
       const organizerCouponInput = JSON.parse(req.body.organizerCouponInput);
       const ticketTypes = JSON.parse(req.body.ticketTypes);
       const eventCategoryInput = JSON.parse(req.body.eventCategory);
-      console.log("Ini req.body: ", req.body);
-      console.log("Ini req.file:", req.file);
 
       const { secure_url } = await cloudinaryUpload(req.file, "eventBanner");
 
@@ -85,7 +76,6 @@ export class EventController {
           update: {},
           create: { city_name: eventLocation.city },
         });
-        console.log("Ini city: ", city);
 
         //Create and/or update country
         const country = await tx.location_country.upsert({
@@ -93,7 +83,6 @@ export class EventController {
           update: {},
           create: { country_name: eventLocation.country },
         });
-        console.log("Ini country: ", country);
 
         //Create Address
         const eventLoc = await tx.event_Location.create({
@@ -105,7 +94,6 @@ export class EventController {
             zipcode: eventLocation.zipcode,
           },
         });
-        console.log("Ini event loc: ", eventLoc);
 
         const organizerCoupon = await tx.organizerCoupon.create({
           data: {
@@ -117,7 +105,6 @@ export class EventController {
             quantity: parseInt(organizerCouponInput.quantity),
           },
         });
-        console.log("Ini organizer coupon: ", organizerCoupon);
 
         //Created Event
         const event = await tx.event.create({
@@ -159,16 +146,6 @@ export class EventController {
         });
         return event;
       });
-
-      // await transporter.sendMail({
-      //   from: "e-ticket",
-      //   to: user.email,
-      //   subject: "Your event is ready to rock",
-      //   html: `<div>
-      //      <h1>Thank you ${user.name}, your event is ready to rock.</h1>
-      //      <p>Invite people to attract more audience</p>
-      //      </div>`,
-      // });
 
       return ResponseHandler.success(
         res,
@@ -419,7 +396,6 @@ export class EventController {
   ): Promise<any> {
     try {
       const { title } = req.params;
-
       const response = await prisma.event.findFirst({
         where: {
           title: title,
@@ -462,12 +438,6 @@ export class EventController {
   //sortby = sorting by
   //orderby = order by
 
-  //getEventByMostPurchased (HOT EVENT) => REDIS
-  async hotEvent(req: Request, res: Response): Promise<any> {
-    try {
-    } catch (error) {}
-  }
-
   async getEventLocation(req: Request, res: Response): Promise<any> {
     try {
       const location = await prisma.location_city.findMany();
@@ -495,6 +465,9 @@ export class EventController {
           ticket_types: true,
           organizer: true,
         },
+        orderBy: {
+          createdAt: "desc",
+        },
         take: 3,
       });
 
@@ -511,6 +484,9 @@ export class EventController {
           event_category: true,
           ticket_types: true,
           organizer: true,
+        },
+        orderBy: {
+          createdAt: "desc",
         },
         take: 8,
       });

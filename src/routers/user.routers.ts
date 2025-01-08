@@ -37,6 +37,7 @@ export class UserRouter {
     this.route.get('/verify', this.userController.verifyEmail);
     this.route.patch('/recover-password', this.userController.recoverPassword);
     this.route.patch('/update-role', this.userController.updateUserRole);
+    this.route.patch('/update-user', this.userController.updateUser);
 
     // profile controller
     this.route.get('/profile', this.profileController.getUserProfile);
