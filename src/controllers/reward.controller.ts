@@ -2,10 +2,12 @@ import { Request, Response, NextFunction } from "express";
 import { prisma } from "../config/prisma";
 import ResponseHandler from "../utils/responseHandler";
 
-
 export class RewardsController {
-  async getUserCoupon(req: Request, res: Response, next: NextFunction): Promise<any> {
-
+  async getUserCoupon(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<any> {
     try {
       const user = res.locals.user;
       const today = new Date();
@@ -49,6 +51,7 @@ export class RewardsController {
       return ResponseHandler.error(res, "get point failed", 500);
     }
   }
+
   async useCoupon(
     req: Request,
     res: Response,
@@ -70,6 +73,7 @@ export class RewardsController {
       return ResponseHandler.error(res, "use coupon failed", 500);
     }
   }
+
   async restoreCoupon(
     req: Request,
     res: Response,
@@ -96,8 +100,11 @@ export class RewardsController {
     }
   }
 
-  async getPointsByPrice(req: Request, res: Response, next: NextFunction): Promise<any> {
-
+  async getPointsByPrice(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<any> {
     try {
       const user = res.locals.user;
       const today = new Date();
@@ -112,7 +119,7 @@ export class RewardsController {
       });
       const usePointId: any = [];
       const fixPointAmount = points.reduce((c, e) => {
-        const transactionAmount = parseInt(req.body.transaction_amount);
+        const transactionAmount = parseInt(req.body.transactionAmount);
         if (c + e.amount <= transactionAmount) {
           usePointId.push(e);
         }
@@ -130,12 +137,19 @@ export class RewardsController {
       //   });
       // });
 
-      return ResponseHandler.success(res, 'use point success', 200, { point_pay: fixPointAmount, points_id: usePointId });
+      return ResponseHandler.success(res, "use point success", 200, {
+        point_pay: fixPointAmount,
+        points_id: usePointId,
+      });
     } catch (error) {
-      return ResponseHandler.error(res, 'use point failed', 500);
+      return ResponseHandler.error(res, "use point failed", 500);
     }
   }
-  async restorePoint(req: Request, res: Response, next: NextFunction): Promise<any> {
+  async restorePoint(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<any> {
     try {
       const user = res.locals.user;
       const points_id = req.body.points_id;
@@ -154,17 +168,20 @@ export class RewardsController {
         });
       });
     } catch (error) {
-      return ResponseHandler.error(res, 'restore point failed', 500);
+      return ResponseHandler.error(res, "restore point failed", 500);
     }
   }
 
-  async getReferred(req: Request, res: Response, next: NextFunction): Promise<any> {
+  async getReferred(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<any> {
     try {
       const user = res.locals.user;
       const referral = await prisma.referral.findUnique({
         where: { user_id: user.user_id },
       });
-
 
       const referred = await prisma.user.findMany({
         select: {
@@ -175,10 +192,12 @@ export class RewardsController {
         where: { referred_id: referral?.referral_id },
       });
 
-      return ResponseHandler.success(res, 'get referral success', 200, referred);
+      return ResponseHandler.success(res, "get referral success", 200, {
+        referred,
+        referralCode: referral?.referral_code,
+      });
     } catch (error) {
-      return ResponseHandler.error(res, 'get referral failed', 500);
-
+      return ResponseHandler.error(res, "get referral failed", 500);
     }
   }
 }

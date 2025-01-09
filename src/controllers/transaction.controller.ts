@@ -280,7 +280,7 @@ export class TransactionController {
 
       console.log("Ini update transaction:", organizerCouponId);
       console.log("Ini update transaction:", organizerCouponId);
-      const ticket = req.body.session.ticket.data;
+      // const ticket = req.body.session.ticket.data;
 
       const updateTransaction = await prisma.$transaction(async (tx) => {
         const response = await tx.transaction.update({
@@ -298,9 +298,17 @@ export class TransactionController {
           },
         });
 
+        const getTransactionDetails = await tx.transaction_Detail.findMany({
+          where: {
+            transaction_id: parseInt(transactionId),
+          },
+          include: {
+            ticket_types: true,
+          },
+        });
         console.log("Ini updating user: ", updatingUser);
 
-        ticket.map(async (value: any, index: number) => {
+        getTransactionDetails.map(async (value: any, index: number) => {
           console.log("Ini value:", value);
           const updateTicket = await prisma.$transaction(async (tx) => {
             const checkTicketTypes = await tx.ticket_types.findUnique({
@@ -356,7 +364,6 @@ export class TransactionController {
               });
               console.log("Ini voucher quantity left:", updateOrganizerCoupon);
             }
-
             return updateQuantity;
           });
         });
@@ -388,6 +395,9 @@ export class TransactionController {
         where: { user_id: userId },
         include: {
           transaction_details: { include: { event: true } },
+        },
+        orderBy: {
+          createdAt: "desc",
         },
       });
 
