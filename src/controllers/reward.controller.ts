@@ -1,9 +1,13 @@
-import { Request, Response, NextFunction } from 'express';
-import { prisma } from '../config/prisma';
-import ResponseHandler from '../utils/responseHandler';
+import { Request, Response, NextFunction } from "express";
+import { prisma } from "../config/prisma";
+import ResponseHandler from "../utils/responseHandler";
 
 class Rewards {
-  async getUserCoupon(req: Request, res: Response, next: NextFunction): Promise<any> {
+  async getUserCoupon(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<any> {
     try {
       const user = res.locals.user;
       const today = new Date();
@@ -16,16 +20,20 @@ class Rewards {
           },
         },
         orderBy: {
-          expired_date: 'asc',
+          expired_date: "asc",
         },
       });
 
-      return ResponseHandler.success(res, 'get coupon success', 200, coupons);
+      return ResponseHandler.success(res, "get coupon success", 200, coupons);
     } catch (error) {
-      return ResponseHandler.error(res, 'get coupon failed', 500);
+      return ResponseHandler.error(res, "get coupon failed", 500);
     }
   }
-  async getUserPoint(req: Request, res: Response, next: NextFunction): Promise<any> {
+  async getUserPoint(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<any> {
     try {
       const user = res.locals.user;
       const today = new Date();
@@ -38,12 +46,16 @@ class Rewards {
         },
       });
 
-      return ResponseHandler.success(res, 'get coupon success', 200, points);
+      return ResponseHandler.success(res, "get coupon success", 200, points);
     } catch (error) {
-      return ResponseHandler.error(res, 'get point failed', 500);
+      return ResponseHandler.error(res, "get point failed", 500);
     }
   }
-  async useCoupon(req: Request, res: Response, next: NextFunction): Promise<any> {
+  async useCoupon(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<any> {
     try {
       const user = res.locals.user;
       const usedCoupon = await prisma.coupon.update({
@@ -55,12 +67,16 @@ class Rewards {
           isActive: false,
         },
       });
-      return ResponseHandler.success(res, 'use coupon success', 200);
+      return ResponseHandler.success(res, "use coupon success", 200);
     } catch (error) {
-      return ResponseHandler.error(res, 'use coupon failed', 500);
+      return ResponseHandler.error(res, "use coupon failed", 500);
     }
   }
-  async restoreCoupon(req: Request, res: Response, next: NextFunction): Promise<any> {
+  async restoreCoupon(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<any> {
     try {
       const user = res.locals.user;
       const today = new Date();
@@ -76,12 +92,16 @@ class Rewards {
           isActive: true,
         },
       });
-      return ResponseHandler.success(res, 'restore coupon success', 200);
+      return ResponseHandler.success(res, "restore coupon success", 200);
     } catch (error) {
-      return ResponseHandler.error(res, 'restore coupon failed', 500);
+      return ResponseHandler.error(res, "restore coupon failed", 500);
     }
   }
-  async usePoint(req: Request, res: Response, next: NextFunction): Promise<any> {
+  async usePoint(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<any> {
     try {
       const user = res.locals.user;
       const today = new Date();
@@ -111,9 +131,9 @@ class Rewards {
         });
       });
 
-      return ResponseHandler.success(res, 'use point success', 200);
+      return ResponseHandler.success(res, "use point success", 200);
     } catch (error) {
-      return ResponseHandler.error(res, 'use point failed', 500);
+      return ResponseHandler.error(res, "use point failed", 500);
     }
   }
 }

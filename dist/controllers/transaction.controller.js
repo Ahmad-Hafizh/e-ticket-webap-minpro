@@ -324,7 +324,15 @@ class TransactionController {
                 const userId = res.locals.dcrypt.user_id;
                 const transaction = yield prisma_1.prisma.transaction.findMany({
                     where: { user_id: userId },
+                    include: {
+                        transaction_details: { include: { event: true } },
+                    },
                 });
+                // const transaction_Detail = await prisma.transaction_Detail.findMany({
+                //   include: {
+                //     event: true,
+                //   },
+                // });
                 return responseHandler_1.default.success(res, "Get transaction by user success", 201, transaction);
             }
             catch (error) {
