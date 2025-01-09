@@ -327,6 +327,9 @@ class TransactionController {
                     include: {
                         transaction_details: { include: { event: true } },
                     },
+                    orderBy: {
+                        createdAt: "desc",
+                    },
                 });
                 // const transaction_Detail = await prisma.transaction_Detail.findMany({
                 //   include: {
