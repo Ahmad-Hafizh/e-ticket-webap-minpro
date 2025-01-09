@@ -280,21 +280,12 @@ export class TransactionController {
 
       console.log("Ini update transaction:", organizerCouponId);
       console.log("Ini update transaction:", organizerCouponId);
-      // const ticket = req.body.session.ticket.data;
+      const ticket = req.body.session.ticket.data;
 
       const updateTransaction = await prisma.$transaction(async (tx) => {
         const response = await tx.transaction.update({
           where: { transaction_id: parseInt(transactionId) },
           data: { isPaid: true },
-        });
-
-        const getTransactionDetails = await tx.transaction_Detail.findMany({
-          where: {
-            transaction_id: parseInt(transactionId),
-          },
-          include: {
-            ticket_types: true,
-          },
         });
 
         //adding user to event-user relation. Will allow user to review after the date of event has passed
@@ -309,24 +300,23 @@ export class TransactionController {
 
         console.log("Ini updating user: ", updatingUser);
 
-        getTransactionDetails.map(async (value: any, index: number) => {
+        ticket.map(async (value: any, index: number) => {
           console.log("Ini value:", value);
           const updateTicket = await prisma.$transaction(async (tx) => {
             const checkTicketTypes = await tx.ticket_types.findUnique({
               where: {
-                ticket_types_id: value.ticket_types_id,
+                ticket_types_id: value.ticketTypesId,
               },
             });
 
-            console.log("Ini value quantity bought: ", value.quantity_bought);
+            console.log("Ini value quantity bought: ", value.quantityBought);
             console.log(
               "Ini value quantity available: ",
               checkTicketTypes?.quantity_available
             );
-
             const quantityLeft =
               (checkTicketTypes?.quantity_available as number) -
-              parseInt(value.quantity_bought);
+              parseInt(value.quantityBought);
 
             console.log("Ini quantity left: ", quantityLeft);
 
@@ -336,7 +326,7 @@ export class TransactionController {
                 quantity_available: quantityLeft,
               },
               where: {
-                ticket_types_id: value.ticket_types_id,
+                ticket_types_id: value.ticketTypesId,
               },
             });
             if (organizerCouponId && organizerCouponId > 0) {
@@ -396,7 +386,16 @@ export class TransactionController {
       const userId = res.locals.dcrypt.user_id;
       const transaction = await prisma.transaction.findMany({
         where: { user_id: userId },
+        include: {
+          transaction_details: { include: { event: true } },
+        },
       });
+
+      // const transaction_Detail = await prisma.transaction_Detail.findMany({
+      //   include: {
+      //     event: true,
+      //   },
+      // });
 
       return ResponseHandler.success(
         res,
