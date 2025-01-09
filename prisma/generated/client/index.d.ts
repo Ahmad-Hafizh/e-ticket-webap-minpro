@@ -7159,6 +7159,7 @@ export namespace Prisma {
     amount: number | null
     added_date: Date | null
     expired_date: Date | null
+    isActive: boolean | null
   }
 
   export type PointMaxAggregateOutputType = {
@@ -7167,6 +7168,7 @@ export namespace Prisma {
     amount: number | null
     added_date: Date | null
     expired_date: Date | null
+    isActive: boolean | null
   }
 
   export type PointCountAggregateOutputType = {
@@ -7175,6 +7177,7 @@ export namespace Prisma {
     amount: number
     added_date: number
     expired_date: number
+    isActive: number
     _all: number
   }
 
@@ -7197,6 +7200,7 @@ export namespace Prisma {
     amount?: true
     added_date?: true
     expired_date?: true
+    isActive?: true
   }
 
   export type PointMaxAggregateInputType = {
@@ -7205,6 +7209,7 @@ export namespace Prisma {
     amount?: true
     added_date?: true
     expired_date?: true
+    isActive?: true
   }
 
   export type PointCountAggregateInputType = {
@@ -7213,6 +7218,7 @@ export namespace Prisma {
     amount?: true
     added_date?: true
     expired_date?: true
+    isActive?: true
     _all?: true
   }
 
@@ -7308,6 +7314,7 @@ export namespace Prisma {
     amount: number
     added_date: Date
     expired_date: Date
+    isActive: boolean
     _count: PointCountAggregateOutputType | null
     _avg: PointAvgAggregateOutputType | null
     _sum: PointSumAggregateOutputType | null
@@ -7335,6 +7342,7 @@ export namespace Prisma {
     amount?: boolean
     added_date?: boolean
     expired_date?: boolean
+    isActive?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["point"]>
 
@@ -7344,6 +7352,7 @@ export namespace Prisma {
     amount?: boolean
     added_date?: boolean
     expired_date?: boolean
+    isActive?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["point"]>
 
@@ -7353,6 +7362,7 @@ export namespace Prisma {
     amount?: boolean
     added_date?: boolean
     expired_date?: boolean
+    isActive?: boolean
   }
 
   export type PointInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7373,6 +7383,7 @@ export namespace Prisma {
       amount: number
       added_date: Date
       expired_date: Date
+      isActive: boolean
     }, ExtArgs["result"]["point"]>
     composites: {}
   }
@@ -7772,6 +7783,7 @@ export namespace Prisma {
     readonly amount: FieldRef<"Point", 'Int'>
     readonly added_date: FieldRef<"Point", 'DateTime'>
     readonly expired_date: FieldRef<"Point", 'DateTime'>
+    readonly isActive: FieldRef<"Point", 'Boolean'>
   }
     
 
@@ -21392,7 +21404,8 @@ export namespace Prisma {
     user_id: 'user_id',
     amount: 'amount',
     added_date: 'added_date',
-    expired_date: 'expired_date'
+    expired_date: 'expired_date',
+    isActive: 'isActive'
   };
 
   export type PointScalarFieldEnum = (typeof PointScalarFieldEnum)[keyof typeof PointScalarFieldEnum]
@@ -22041,6 +22054,7 @@ export namespace Prisma {
     amount?: IntFilter<"Point"> | number
     added_date?: DateTimeFilter<"Point"> | Date | string
     expired_date?: DateTimeFilter<"Point"> | Date | string
+    isActive?: BoolFilter<"Point"> | boolean
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
@@ -22050,6 +22064,7 @@ export namespace Prisma {
     amount?: SortOrder
     added_date?: SortOrder
     expired_date?: SortOrder
+    isActive?: SortOrder
     user?: UserOrderByWithRelationInput
   }
 
@@ -22062,6 +22077,7 @@ export namespace Prisma {
     amount?: IntFilter<"Point"> | number
     added_date?: DateTimeFilter<"Point"> | Date | string
     expired_date?: DateTimeFilter<"Point"> | Date | string
+    isActive?: BoolFilter<"Point"> | boolean
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "point_id">
 
@@ -22071,6 +22087,7 @@ export namespace Prisma {
     amount?: SortOrder
     added_date?: SortOrder
     expired_date?: SortOrder
+    isActive?: SortOrder
     _count?: PointCountOrderByAggregateInput
     _avg?: PointAvgOrderByAggregateInput
     _max?: PointMaxOrderByAggregateInput
@@ -22087,6 +22104,7 @@ export namespace Prisma {
     amount?: IntWithAggregatesFilter<"Point"> | number
     added_date?: DateTimeWithAggregatesFilter<"Point"> | Date | string
     expired_date?: DateTimeWithAggregatesFilter<"Point"> | Date | string
+    isActive?: BoolWithAggregatesFilter<"Point"> | boolean
   }
 
   export type ReferralWhereInput = {
@@ -23294,6 +23312,7 @@ export namespace Prisma {
     amount: number
     added_date?: Date | string
     expired_date: Date | string
+    isActive?: boolean
     user: UserCreateNestedOneWithoutPointsInput
   }
 
@@ -23303,12 +23322,14 @@ export namespace Prisma {
     amount: number
     added_date?: Date | string
     expired_date: Date | string
+    isActive?: boolean
   }
 
   export type PointUpdateInput = {
     amount?: IntFieldUpdateOperationsInput | number
     added_date?: DateTimeFieldUpdateOperationsInput | Date | string
     expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     user?: UserUpdateOneRequiredWithoutPointsNestedInput
   }
 
@@ -23318,6 +23339,7 @@ export namespace Prisma {
     amount?: IntFieldUpdateOperationsInput | number
     added_date?: DateTimeFieldUpdateOperationsInput | Date | string
     expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type PointCreateManyInput = {
@@ -23326,12 +23348,14 @@ export namespace Prisma {
     amount: number
     added_date?: Date | string
     expired_date: Date | string
+    isActive?: boolean
   }
 
   export type PointUpdateManyMutationInput = {
     amount?: IntFieldUpdateOperationsInput | number
     added_date?: DateTimeFieldUpdateOperationsInput | Date | string
     expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type PointUncheckedUpdateManyInput = {
@@ -23340,6 +23364,7 @@ export namespace Prisma {
     amount?: IntFieldUpdateOperationsInput | number
     added_date?: DateTimeFieldUpdateOperationsInput | Date | string
     expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type ReferralCreateInput = {
@@ -24642,6 +24667,7 @@ export namespace Prisma {
     amount?: SortOrder
     added_date?: SortOrder
     expired_date?: SortOrder
+    isActive?: SortOrder
   }
 
   export type PointAvgOrderByAggregateInput = {
@@ -24656,6 +24682,7 @@ export namespace Prisma {
     amount?: SortOrder
     added_date?: SortOrder
     expired_date?: SortOrder
+    isActive?: SortOrder
   }
 
   export type PointMinOrderByAggregateInput = {
@@ -24664,6 +24691,7 @@ export namespace Prisma {
     amount?: SortOrder
     added_date?: SortOrder
     expired_date?: SortOrder
+    isActive?: SortOrder
   }
 
   export type PointSumOrderByAggregateInput = {
@@ -26990,6 +27018,7 @@ export namespace Prisma {
     amount: number
     added_date?: Date | string
     expired_date: Date | string
+    isActive?: boolean
   }
 
   export type PointUncheckedCreateWithoutUserInput = {
@@ -26997,6 +27026,7 @@ export namespace Prisma {
     amount: number
     added_date?: Date | string
     expired_date: Date | string
+    isActive?: boolean
   }
 
   export type PointCreateOrConnectWithoutUserInput = {
@@ -27306,6 +27336,7 @@ export namespace Prisma {
     amount?: IntFilter<"Point"> | number
     added_date?: DateTimeFilter<"Point"> | Date | string
     expired_date?: DateTimeFilter<"Point"> | Date | string
+    isActive?: BoolFilter<"Point"> | boolean
   }
 
   export type CouponUpsertWithWhereUniqueWithoutUserInput = {
@@ -30155,6 +30186,7 @@ export namespace Prisma {
     amount: number
     added_date?: Date | string
     expired_date: Date | string
+    isActive?: boolean
   }
 
   export type CouponCreateManyUserInput = {
@@ -30199,6 +30231,7 @@ export namespace Prisma {
     amount?: IntFieldUpdateOperationsInput | number
     added_date?: DateTimeFieldUpdateOperationsInput | Date | string
     expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type PointUncheckedUpdateWithoutUserInput = {
@@ -30206,6 +30239,7 @@ export namespace Prisma {
     amount?: IntFieldUpdateOperationsInput | number
     added_date?: DateTimeFieldUpdateOperationsInput | Date | string
     expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type PointUncheckedUpdateManyWithoutUserInput = {
@@ -30213,6 +30247,7 @@ export namespace Prisma {
     amount?: IntFieldUpdateOperationsInput | number
     added_date?: DateTimeFieldUpdateOperationsInput | Date | string
     expired_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type CouponUpdateWithoutUserInput = {
