@@ -280,12 +280,21 @@ export class TransactionController {
 
       console.log("Ini update transaction:", organizerCouponId);
       console.log("Ini update transaction:", organizerCouponId);
-      const ticket = req.body.session.ticket.data;
+      // const ticket = req.body.session.ticket.data;
 
       const updateTransaction = await prisma.$transaction(async (tx) => {
         const response = await tx.transaction.update({
           where: { transaction_id: parseInt(transactionId) },
           data: { isPaid: true },
+        });
+
+        const getTransactionDetails = await tx.transaction_Detail.findMany({
+          where: {
+            transaction_id: parseInt(transactionId),
+          },
+          include: {
+            ticket_types: true,
+          },
         });
 
         //adding user to event-user relation. Will allow user to review after the date of event has passed
@@ -300,23 +309,24 @@ export class TransactionController {
 
         console.log("Ini updating user: ", updatingUser);
 
-        ticket.map(async (value: any, index: number) => {
+        getTransactionDetails.map(async (value: any, index: number) => {
           console.log("Ini value:", value);
           const updateTicket = await prisma.$transaction(async (tx) => {
             const checkTicketTypes = await tx.ticket_types.findUnique({
               where: {
-                ticket_types_id: value.ticketTypesId,
+                ticket_types_id: value.ticket_types_id,
               },
             });
 
-            console.log("Ini value quantity bought: ", value.quantityBought);
+            console.log("Ini value quantity bought: ", value.quantity_bought);
             console.log(
               "Ini value quantity available: ",
               checkTicketTypes?.quantity_available
             );
+
             const quantityLeft =
               (checkTicketTypes?.quantity_available as number) -
-              parseInt(value.quantityBought);
+              parseInt(value.quantity_bought);
 
             console.log("Ini quantity left: ", quantityLeft);
 
@@ -326,7 +336,7 @@ export class TransactionController {
                 quantity_available: quantityLeft,
               },
               where: {
-                ticket_types_id: value.ticketTypesId,
+                ticket_types_id: value.ticket_types_id,
               },
             });
             if (organizerCouponId && organizerCouponId > 0) {

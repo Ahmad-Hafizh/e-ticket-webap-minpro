@@ -455,94 +455,99 @@ export class EventController {
 
   async getEventMainPage(req: Request, res: Response): Promise<any> {
     try {
-      const topEvents = await prisma.event.findMany({
-        where: {
-          score: {
-            gte: 2,
-          },
-        },
-        include: {
-          ticket_types: true,
-          organizer: true,
-        },
-        orderBy: {
-          createdAt: "desc",
-        },
-        take: 3,
-      });
-
-      const categories = await prisma.event.findMany({
-        where: {
-          event_category: {
-            some: {
-              category_name: "Music",
+      const responsePrisma = await prisma.$transaction(async (tx) => {
+        const topEvents = await tx.event.findMany({
+          where: {
+            score: {
+              gte: 2,
             },
           },
-        },
-
-        include: {
-          event_category: true,
-          ticket_types: true,
-          organizer: true,
-        },
-        orderBy: {
-          createdAt: "desc",
-        },
-        take: 8,
-      });
-
-      const location = await prisma.event.findMany({
-        where: {
-          event_location: {
-            location_city_id: 15,
+          include: {
+            ticket_types: true,
+            organizer: true,
           },
-        },
-        include: {
-          ticket_types: true,
-          organizer: true,
-        },
-        take: 8,
-      });
+          orderBy: {
+            createdAt: "desc",
+          },
+          take: 3,
+        });
 
-      const organizer = await prisma.organizer.findMany({
-        take: 8,
-      });
-
-      const categoriesTwo = await prisma.event.findMany({
-        where: {
-          event_category: {
-            some: {
-              category_name: "International",
+        const categories = await tx.event.findMany({
+          where: {
+            event_category: {
+              some: {
+                category_name: "Music",
+              },
             },
           },
-        },
 
-        include: {
-          event_category: true,
-          ticket_types: true,
-          organizer: true,
-        },
-        orderBy: {
-          createdAt: "desc",
-        },
-        take: 8,
+          include: {
+            event_category: true,
+            ticket_types: true,
+            organizer: true,
+          },
+          orderBy: {
+            createdAt: "desc",
+          },
+          take: 8,
+        });
+
+        const location = await tx.event.findMany({
+          where: {
+            event_location: {
+              location_city_id: 15,
+            },
+          },
+          include: {
+            ticket_types: true,
+            organizer: true,
+          },
+          take: 8,
+        });
+
+        const organizer = await tx.organizer.findMany({
+          take: 8,
+        });
+
+        const categoriesTwo = await tx.event.findMany({
+          where: {
+            event_category: {
+              some: {
+                category_name: "International",
+              },
+            },
+          },
+
+          include: {
+            event_category: true,
+            ticket_types: true,
+            organizer: true,
+          },
+          orderBy: {
+            createdAt: "desc",
+          },
+          take: 8,
+        });
+
+        const response = {
+          topEvents,
+          categories,
+          categoriesTwo,
+          location,
+          organizer,
+        };
+
+        return response;
       });
-
-      const response = {
-        topEvents,
-        categories,
-        categoriesTwo,
-        location,
-        organizer,
-      };
 
       return ResponseHandler.success(
         res,
         "Get all event success",
         200,
-        response
+        responsePrisma
       );
     } catch (error) {
+      console.log(error);
       return ResponseHandler.error(res, "Get all event error", 500);
     }
   }
