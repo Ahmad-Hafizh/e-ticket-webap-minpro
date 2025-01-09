@@ -59,7 +59,7 @@ class UserController {
                         html: `<div>
              <h1>Thank you ${createUserFlow.name}, for registrater your account</h1>
              <p>klik link below to verify your account</p>
-             <a href='${process.env.FE_URL}/verify-email?a_t=${authToken}'>Verify Account</a>
+             <a href='${process.env.FE_URL}/verify-email/${authToken}'>Verify Account</a>
              </div>`,
                     });
                 }));
@@ -247,7 +247,7 @@ class UserController {
                     html: `<div>
         <h1>Hi ${findUser.name}, Seems like you forgot your password</h1>
         <p>klik link below to recover your password, if its not you try call police</p>
-        <a href='${process.env.FE_URL}/recover-password?a_t=${authToken}'>recover password</a>
+        <a href='${process.env.FE_URL}/recover-password/${authToken}'>recover password</a>
         </div>`,
                 });
                 return responseHandler_1.default.success(res, 'An Email sended to your mail', 200);

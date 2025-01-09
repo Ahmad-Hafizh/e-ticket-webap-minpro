@@ -99,6 +99,7 @@ model Point {
   amount       Int
   added_date   DateTime @default(now())
   expired_date DateTime
+  isActive     Boolean @default(true)
 
   @@map("points")
 }
