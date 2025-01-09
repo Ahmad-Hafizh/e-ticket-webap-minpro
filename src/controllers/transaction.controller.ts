@@ -386,7 +386,16 @@ export class TransactionController {
       const userId = res.locals.dcrypt.user_id;
       const transaction = await prisma.transaction.findMany({
         where: { user_id: userId },
+        include: {
+          transaction_details: { include: { event: true } },
+        },
       });
+
+      // const transaction_Detail = await prisma.transaction_Detail.findMany({
+      //   include: {
+      //     event: true,
+      //   },
+      // });
 
       return ResponseHandler.success(
         res,
