@@ -29,13 +29,13 @@ class Rewards {
                         },
                     },
                     orderBy: {
-                        expired_date: 'asc',
+                        expired_date: "asc",
                     },
                 });
-                return responseHandler_1.default.success(res, 'get coupon success', 200, coupons);
+                return responseHandler_1.default.success(res, "get coupon success", 200, coupons);
             }
             catch (error) {
-                return responseHandler_1.default.error(res, 'get coupon failed', 500);
+                return responseHandler_1.default.error(res, "get coupon failed", 500);
             }
         });
     }
@@ -52,10 +52,10 @@ class Rewards {
                         },
                     },
                 });
-                return responseHandler_1.default.success(res, 'get coupon success', 200, points);
+                return responseHandler_1.default.success(res, "get coupon success", 200, points);
             }
             catch (error) {
-                return responseHandler_1.default.error(res, 'get point failed', 500);
+                return responseHandler_1.default.error(res, "get point failed", 500);
             }
         });
     }
@@ -72,10 +72,10 @@ class Rewards {
                         isActive: false,
                     },
                 });
-                return responseHandler_1.default.success(res, 'use coupon success', 200);
+                return responseHandler_1.default.success(res, "use coupon success", 200);
             }
             catch (error) {
-                return responseHandler_1.default.error(res, 'use coupon failed', 500);
+                return responseHandler_1.default.error(res, "use coupon failed", 500);
             }
         });
     }
@@ -96,10 +96,10 @@ class Rewards {
                         isActive: true,
                     },
                 });
-                return responseHandler_1.default.success(res, 'restore coupon success', 200);
+                return responseHandler_1.default.success(res, "restore coupon success", 200);
             }
             catch (error) {
-                return responseHandler_1.default.error(res, 'restore coupon failed', 500);
+                return responseHandler_1.default.error(res, "restore coupon failed", 500);
             }
         });
     }
@@ -132,10 +132,10 @@ class Rewards {
                         },
                     });
                 }));
-                return responseHandler_1.default.success(res, 'use point success', 200);
+                return responseHandler_1.default.success(res, "use point success", 200);
             }
             catch (error) {
-                return responseHandler_1.default.error(res, 'use point failed', 500);
+                return responseHandler_1.default.error(res, "use point failed", 500);
             }
         });
     }
